@@ -120,7 +120,7 @@ def collect_data(page):
     first_data = page.evaluate(
         """
         async (url) => {
-            const res = await fetch(url + "?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=", {
+            const res = await fetch(url + "?page=0&size=20&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=", {
                 credentials: "include"
             });
             return await res.json();
@@ -132,14 +132,11 @@ def collect_data(page):
     total_page = first_data.get("totalPage", 1)
     all_riders.extend(first_data.get("data", []))
 
-    print(f"API 전체 페이지 수: {total_page}")
-    print(f"1페이지 기사 수: {len(first_data.get('data', []))}")
-
     for page_no in range(1, total_page):
         data = page.evaluate(
             """
             async ({url, pageNo}) => {
-                const res = await fetch(url + `?page=${pageNo}&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=`, {
+                const res = await fetch(url + `?page=${pageNo}&size=20&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=`, {
                     credentials: "include"
                 });
                 return await res.json();
@@ -147,10 +144,7 @@ def collect_data(page):
             """,
             {"url": API_URL, "pageNo": page_no},
         )
-
-        page_rows = data.get("data", [])
-        print(f"{page_no + 1}페이지 기사 수: {len(page_rows)}")
-        all_riders.extend(page_rows)
+        all_riders.extend(data.get("data", []))
 
     return all_riders
 
@@ -209,11 +203,8 @@ def make_dashboard_data(riders):
         name = rider.get("name", "").strip()
         acc = rider.get("deliveryAcceptanceCount", {})
         peak = rider.get("deliveryPeakTimeCount", {})
-
         complete = acc.get("complete", 0)
         reject = acc.get("reject", 0)
-        cancel = acc.get("cancel", 0)
-        rider_fault = acc.get("riderFault", 0)
 
         item = {
             "name": name,
@@ -222,8 +213,8 @@ def make_dashboard_data(riders):
             "status": rider.get("status", {}).get("desc", ""),
             "complete": complete,
             "reject": reject,
-            "cancel": cancel,
-            "riderFault": rider_fault,
+            "cancel": acc.get("cancel", 0),
+            "riderFault": acc.get("riderFault", 0),
             "morning": peak.get("morning", 0),
             "afternoon": peak.get("afternoon", 0),
             "evening": peak.get("evening", 0),
@@ -246,6 +237,7 @@ def make_dashboard_data(riders):
         }
 
     total = summary(result)
+
     weekly = load_weekly()
 
     return {
@@ -713,31 +705,10 @@ def git_push():
 
     subprocess.run(["git", "add", "data.json", "index.html", "d_a.py"], cwd=BASE_DIR)
 
-    if WEEKLY_FILE.exists():
-        subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
-
-    commit_result = subprocess.run(
-        ["git", "commit", "-m", "auto update"],
-        cwd=BASE_DIR,
-        capture_output=True,
-        text=True
-    )
-
-    if commit_result.returncode != 0:
-        print("커밋할 변경사항 없음 또는 커밋 생략")
-        print(commit_result.stdout)
-        print(commit_result.stderr)
-        return
-
-    push_result = subprocess.run(
-        ["git", "push"],
-        cwd=BASE_DIR,
-        capture_output=True,
-        text=True
-    )
-
-    print(push_result.stdout)
-    print(push_result.stderr)
+if WEEKLY_FILE.exists():
+    subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
+    subprocess.run(["git", "commit", "-m", "auto update"], cwd=BASE_DIR)
+    subprocess.run(["git", "push"], cwd=BASE_DIR)
 
 
 def main():
@@ -767,17 +738,6 @@ def main():
                 print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
                 riders = collect_data(page)
-
-                print(f"수집된 전체 기사 수: {len(riders)}")
-                print("앞 10명 이름:")
-                print([r.get("name") for r in riders[:10]])
-
-                raw_total_complete = 0
-                for r in riders:
-                    raw_total_complete += r.get("deliveryAcceptanceCount", {}).get("complete", 0)
-
-                print(f"API 원본 전체 완료 합계: {raw_total_complete}")
-
                 data = make_dashboard_data(riders)
 
                 save_weekly_if_close(data)
@@ -787,8 +747,8 @@ def main():
                 save_html()
                 git_push()
 
-                print(f"대시보드 전체 완료: {data['total']['complete']}건")
-                print(f"대시보드 수락률: {data['total']['acceptRate']}%")
+                print(f"전체 완료: {data['total']['complete']}건")
+                print(f"수락률: {data['total']['acceptRate']}%")
                 print("업데이트 완료")
                 print(f"{REFRESH_SECONDS}초 후 다시 수집합니다.")
 
