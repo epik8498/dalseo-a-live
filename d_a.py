@@ -554,7 +554,7 @@ body.dark .rider{background:rgba(18,18,18,.92);box-shadow:none}
       <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
       <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="dayRate">0%</div></div>
       <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val red" id="onlineCount">0명</div></div>
-      <div class="sum"><div class="sum-title">소닉/달서</div><div class="sum-val red" id="teamCount">0/0</div></div>
+      <div class="sum"><div class="sum-title">(접속중)소닉/달서</div><div class="sum-val red" id="teamCount">0/0</div></div>
     </div>
   </div>
 
@@ -625,7 +625,8 @@ function render(){
   document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("dayRate").innerText=d.total.acceptRate+"%";
   document.getElementById("onlineCount").innerText=n(d.total.onlineCount)+"명";
-  document.getElementById("teamCount").innerText=n(sonic.summary.count)+"/"+n(dalseo.summary.count);
+  document.getElementById("teamCount").innerText=
+  n(sonic.summary.onlineCount)+"/"+n(dalseo.summary.onlineCount);
   document.getElementById("footerTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 
   const periods=[
