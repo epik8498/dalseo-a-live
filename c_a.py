@@ -155,7 +155,7 @@ def parse_clipboard_text(text):
             hourly.append(to_int(lines[phone_idx + 9 + h]))
 
         user_id = lines[phone_idx + 33]
-        is_online = status in ["운행중", "운행 중", "온라인", "접속중"]
+        is_online = status not in ["미접속", "운행 종료", "운행종료", "종료", "오프라인", "-"]
 
         riders.append({
             "name": name,
