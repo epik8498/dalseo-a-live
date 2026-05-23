@@ -15,7 +15,7 @@ MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 98
 
 BASE_DIR = Path(__file__).parent
-DATA_FILE = BASE_DIR / "data.json"
+DATA_FILE = BASE_DIR / "data_junggua.json"
 HTML_FILE = BASE_DIR / "index.html"
 WEEKLY_FILE = BASE_DIR / "weekly.json"
 
@@ -333,7 +333,7 @@ let DATA=null;let FILTER="전체";function n(v){return Number(v||0).toLocaleStri
 def git_push():
     if not AUTO_GIT_PUSH:
         return
-    subprocess.run(["git", "add", "data.json", "index.html", "c_a.py", "logo.png"], cwd=BASE_DIR)
+    subprocess.run(["git", "add", "data_junggua.json", "index.html", "c_a.py", "logo.png"], cwd=BASE_DIR)
     if WEEKLY_FILE.exists():
         subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
     commit = subprocess.run(["git", "commit", "-m", "auto update"], cwd=BASE_DIR, capture_output=True, text=True)
