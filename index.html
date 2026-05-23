@@ -5,395 +5,136 @@
 <title>SUPERSONIC 달서A 관제판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root {
-    --red:#e60012;
-    --dark:#111111;
-    --green:#00e676;
-    --gray:#f4f4f4;
-}
-* { box-sizing:border-box; }
-body {
-    margin:0;
-    background:#ffffff;
-    font-family: Arial, sans-serif;
-    color:#111;
-}
-.wrap {
-    max-width:560px;
-    margin:0 auto;
-    padding:14px;
-}
-.top-btn {
-    border:3px solid #111;
-    background:#fff;
-    padding:8px 30px;
-    font-weight:800;
-    font-size:16px;
-}
-.logo {
-    text-align:center;
-    margin-top:-8px;
-}
-.logo-mark {
-    font-size:58px;
-    color:var(--red);
-    font-weight:900;
-    line-height:1;
-}
-.logo-title {
-    color:var(--red);
-    font-size:28px;
-    font-weight:900;
-}
-.logo-sub {
-    font-weight:800;
-    font-size:16px;
-}
-.area-now {
-    text-align:center;
-    margin:18px 0 10px;
-    font-weight:800;
-}
-.area-tabs {
-    display:flex;
-    gap:6px;
-    margin:12px 0;
-}
-.area-tabs button {
-    flex:1;
-    padding:9px 0;
-    border:2px solid #111;
-    background:#fff;
-    font-weight:800;
-}
-.area-tabs button.active {
-    background:var(--red);
-    color:white;
-    border-color:var(--red);
-}
-.summary-box {
-    border:4px solid var(--red);
-    border-radius:18px;
-    padding:10px;
-    margin:12px 0 24px;
-}
-.grid-3 {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-}
-.sum-cell {
-    text-align:center;
-    padding:10px 4px;
-    border-bottom:1px solid var(--red);
-}
-.sum-cell:nth-child(3n+2) {
-    border-left:1px solid var(--red);
-    border-right:1px solid var(--red);
-}
-.sum-title {
-    font-size:12px;
-    font-weight:800;
-}
-.sum-val {
-    font-size:16px;
-    font-weight:900;
-    margin-top:5px;
-}
-.section-title {
-    text-align:center;
-    font-size:14px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-.team-goals {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:18px;
-    margin:20px 0;
-}
-.goal-card {
-    border:3px solid var(--red);
-    border-radius:16px;
-    padding:10px;
-}
-.goal-row {
-    display:grid;
-    grid-template-columns:48px 1fr 48px;
-    gap:6px;
-    align-items:center;
-    margin:8px 0;
-    font-size:13px;
-    font-weight:800;
-}
-.bar {
-    height:14px;
-    background:#eee;
-    border-radius:999px;
-    overflow:hidden;
-}
-.fill {
-    height:100%;
-    background:var(--red);
-    border-radius:999px;
-}
-.filter-row {
-    display:flex;
-    gap:8px;
-    margin:22px 0 14px;
-}
-.filter-row button {
-    flex:1;
-    border:1px solid #111;
-    background:#fff;
-    padding:6px 0;
-    font-weight:800;
-}
-.filter-row button.active {
-    background:#111;
-    color:#fff;
-}
-.rider-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.rider-card {
-    border:3px solid #111;
-    border-radius:14px;
-    padding:10px;
-    position:relative;
-}
-.rider-card.green {
-    border-color:var(--green);
-}
-.rider-name {
-    font-size:21px;
-    font-weight:900;
-    margin-bottom:8px;
-}
-.warn {
-    position:absolute;
-    right:10px;
-    top:10px;
-    font-size:13px;
-    background:#fff3cd;
-    border:1px solid #ffd666;
-    padding:2px 6px;
-    border-radius:999px;
-}
-.rider-stats {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    text-align:center;
-    font-size:12px;
-    gap:4px;
-}
-.rider-stats b {
-    display:block;
-    font-size:15px;
-}
-.periods {
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    text-align:center;
-    margin-top:10px;
-    font-size:12px;
-}
-.weekly {
-    border:3px solid #111;
-    border-radius:16px;
-    padding:10px;
-    margin:20px 0;
-}
-.weekly table {
-    width:100%;
-    border-collapse:collapse;
-    font-size:12px;
-}
-.weekly th, .weekly td {
-    border-bottom:1px solid #ddd;
-    padding:6px;
-    text-align:center;
-}
-.time {
-    text-align:center;
-    color:#555;
-    font-size:13px;
-    margin:8px 0;
-}
-@media(max-width:420px) {
-    .rider-grid { grid-template-columns:1fr; }
-}
+:root{--red:#e60012;--black:#111;--green:#00e676}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;font-family:Arial,sans-serif;color:#111}
+.wrap{max-width:560px;margin:0 auto;padding:14px}
+.top-btn{border:3px solid #111;background:#fff;padding:8px 30px;font-weight:900;font-size:16px}
+.logo{text-align:center;margin-top:-6px}
+.logo-mark{font-size:58px;color:var(--red);font-weight:900;line-height:1}
+.logo-title{color:var(--red);font-size:28px;font-weight:900}
+.logo-sub{font-weight:800;font-size:16px}
+.area-now{text-align:center;margin:18px 0 10px;font-weight:900}
+.time{text-align:center;color:#555;font-size:13px;margin:8px 0}
+.area-tabs{display:flex;gap:6px;margin:12px 0}
+.area-tabs button{flex:1;padding:9px 0;border:2px solid #111;background:#fff;font-weight:900}
+.area-tabs button.active{background:var(--red);color:#fff;border-color:var(--red)}
+.summary-box{border:4px solid var(--red);border-radius:18px;padding:10px;margin:12px 0 24px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr)}
+.sum-cell{text-align:center;padding:10px 4px;border-bottom:1px solid var(--red)}
+.sum-cell:nth-child(3n+2){border-left:1px solid var(--red);border-right:1px solid var(--red)}
+.sum-title{font-size:12px;font-weight:900}
+.sum-val{font-size:17px;font-weight:900;margin-top:5px}
+.team-goals{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:20px 0}
+.goal-card{border:3px solid var(--red);border-radius:16px;padding:10px}
+.section-title{text-align:center;font-size:14px;font-weight:900;margin-bottom:8px}
+.goal-row{display:grid;grid-template-columns:48px 1fr 52px;gap:6px;align-items:center;margin:8px 0;font-size:13px;font-weight:900}
+.bar{height:14px;background:#eee;border-radius:999px;overflow:hidden}
+.fill{height:100%;background:var(--red);border-radius:999px}
+.filter-row{display:flex;gap:8px;margin:22px 0 14px}
+.filter-row button{flex:1;border:1px solid #111;background:#fff;padding:6px 0;font-weight:900}
+.filter-row button.active{background:#111;color:#fff}
+.rider-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rider-card{border:3px solid #111;border-radius:14px;padding:10px;position:relative}
+.rider-card.green{border-color:var(--green)}
+.rider-name{font-size:21px;font-weight:900;margin-bottom:8px}
+.warn{position:absolute;right:8px;top:8px;font-size:12px;background:#fff3cd;border:1px solid #ffd666;padding:2px 6px;border-radius:999px}
+.rider-stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;font-size:12px;gap:4px}
+.rider-stats b{display:block;font-size:15px}
+.periods{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;margin-top:10px;font-size:12px}
+.weekly{border:3px solid #111;border-radius:16px;padding:10px;margin:20px 0}
+.weekly table{width:100%;border-collapse:collapse;font-size:12px}
+.weekly th,.weekly td{border-bottom:1px solid #ddd;padding:6px;text-align:center}
+@media(max-width:420px){.rider-grid{grid-template-columns:1fr}.team-goals{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-    <button class="top-btn">권역이동</button>
-
-    <div class="logo">
-        <div class="logo-mark">S</div>
-        <div class="logo-title">SUPERSONIC</div>
-        <div class="logo-sub">배민 | 쿠팡블럭사</div>
-    </div>
-
-    <div class="area-now" id="areaNow"></div>
-    <div class="time" id="timeNow"></div>
-
-    <div class="area-tabs" id="areaTabs"></div>
-
-    <div class="summary-box">
-        <div class="grid-3">
-            <div class="sum-cell"><div class="sum-title">주간 총완료</div><div class="sum-val" id="weekComplete">0</div></div>
-            <div class="sum-cell"><div class="sum-title">주간 거절/취소</div><div class="sum-val" id="weekReject">0/0</div></div>
-            <div class="sum-cell"><div class="sum-title">주간수락률/여유거절</div><div class="sum-val" id="weekRate">0% / 0</div></div>
-
-            <div class="sum-cell"><div class="sum-title">당일 완료</div><div class="sum-val" id="dayComplete">0</div></div>
-            <div class="sum-cell"><div class="sum-title">당일 거절/취소</div><div class="sum-val" id="dayReject">0/0</div></div>
-            <div class="sum-cell"><div class="sum-title">당일수락률</div><div class="sum-val" id="dayRate">0%</div></div>
-
-            <div class="sum-cell"><div class="sum-title">현재구간</div><div class="sum-val" id="currentPeriod">-</div></div>
-            <div class="sum-cell"><div class="sum-title">소닉팀</div><div class="sum-val" id="sonicTotal">0</div></div>
-            <div class="sum-cell"><div class="sum-title">달서팀</div><div class="sum-val" id="dalseoTotal">0</div></div>
-        </div>
-    </div>
-
-    <div class="team-goals" id="teamGoals"></div>
-
-    <div class="filter-row">
-        <button onclick="setFilter('전체')" id="f전체">전체</button>
-        <button onclick="setFilter('소닉팀')" id="f소닉팀">소닉</button>
-        <button onclick="setFilter('달서팀')" id="f달서팀">달서</button>
-        <button onclick="setSort()" id="sortBtn">완료순</button>
-    </div>
-
-    <div class="rider-grid" id="riderGrid"></div>
-
-    <div class="weekly">
-        <h3>주간 마감 실적</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>날짜</th>
-                    <th>완료</th>
-                    <th>거절</th>
-                    <th>수락률</th>
-                    <th>여유</th>
-                </tr>
-            </thead>
-            <tbody id="weeklyTable"></tbody>
-        </table>
-    </div>
+<button class="top-btn">권역이동</button>
+<div class="logo">
+<div class="logo-mark">S</div>
+<div class="logo-title">SUPERSONIC</div>
+<div class="logo-sub">배민 | 쿠팡블럭사</div>
 </div>
-
+<div class="area-now" id="areaNow"></div>
+<div class="time" id="timeNow"></div>
+<div class="area-tabs" id="areaTabs"></div>
+<div class="summary-box">
+<div class="grid-3">
+<div class="sum-cell"><div class="sum-title">주간 총완료</div><div class="sum-val" id="weekComplete">0</div></div>
+<div class="sum-cell"><div class="sum-title">주간 거절/취소</div><div class="sum-val" id="weekReject">0/0</div></div>
+<div class="sum-cell"><div class="sum-title">주간수락률/여유거절</div><div class="sum-val" id="weekRate">0% / 0</div></div>
+<div class="sum-cell"><div class="sum-title">당일 완료</div><div class="sum-val" id="dayComplete">0</div></div>
+<div class="sum-cell"><div class="sum-title">당일 거절/취소</div><div class="sum-val" id="dayReject">0/0</div></div>
+<div class="sum-cell"><div class="sum-title">당일수락률</div><div class="sum-val" id="dayRate">0%</div></div>
+<div class="sum-cell"><div class="sum-title">현재구간</div><div class="sum-val" id="currentPeriod">-</div></div>
+<div class="sum-cell"><div class="sum-title">소닉팀</div><div class="sum-val" id="sonicTotal">0</div></div>
+<div class="sum-cell"><div class="sum-title">달서팀</div><div class="sum-val" id="dalseoTotal">0</div></div>
+</div>
+</div>
+<div class="team-goals" id="teamGoals"></div>
+<div class="filter-row">
+<button onclick="setFilter('전체')" id="f전체">전체</button>
+<button onclick="setFilter('소닉팀')" id="f소닉팀">소닉</button>
+<button onclick="setFilter('달서팀')" id="f달서팀">달서</button>
+<button onclick="setSort()" id="sortBtn">완료순</button>
+</div>
+<div class="rider-grid" id="riderGrid"></div>
+<div class="weekly">
+<h3>주간 마감 실적</h3>
+<table>
+<thead><tr><th>날짜</th><th>완료</th><th>거절</th><th>수락률</th><th>여유</th></tr></thead>
+<tbody id="weeklyTable"></tbody>
+</table>
+</div>
+</div>
 <script>
-let DATA = null;
-let FILTER = "전체";
-let SORT_DESC = true;
-
-function pct(now, target) {
-    if (!target || target <= 0) return 0;
-    return Math.min(100, Math.round((now / target) * 100));
+let DATA=null;let FILTER="전체";let SORT_DESC=true;
+function pct(now,target){if(!target||target<=0)return 0;return Math.min(100,Math.round((now/target)*100));}
+function setFilter(v){FILTER=v;render();}
+function setSort(){SORT_DESC=!SORT_DESC;render();}
+async function loadData(){const res=await fetch("data.json?time="+Date.now());DATA=await res.json();render();}
+function render(){
+ const d=DATA;if(!d)return;
+ document.getElementById("areaNow").innerText=`(${d.area} 보고있는 권역)`;
+ document.getElementById("timeNow").innerText=`마지막 업데이트 ${d.updatedAt} | 영업일 ${d.businessDate}`;
+ document.getElementById("areaTabs").innerHTML=d.areas.map(a=>`<button class="${a===d.area?'active':''}">${a}</button>`).join("");
+ const wc=d.weekly.reduce((s,x)=>s+x.totalComplete,0);
+ const wr=d.weekly.reduce((s,x)=>s+x.totalReject,0);
+ const wcan=d.weekly.reduce((s,x)=>s+x.totalCancel,0);
+ const wrate=wc+wr===0?100:Math.round((wc/(wc+wr))*1000)/10;
+ const wspare=Math.floor(wc*2/98)-wr;
+ document.getElementById("weekComplete").innerText=wc;
+ document.getElementById("weekReject").innerText=`${wr}/${wcan}`;
+ document.getElementById("weekRate").innerText=`${wrate}% / ${wspare}`;
+ document.getElementById("dayComplete").innerText=d.total.complete;
+ document.getElementById("dayReject").innerText=`${d.total.reject}/${d.total.cancel}`;
+ document.getElementById("dayRate").innerText=`${d.total.acceptRate}%`;
+ document.getElementById("currentPeriod").innerText=d.currentPeriodLabel;
+ document.getElementById("sonicTotal").innerText=d.teams["소닉팀"]?d.teams["소닉팀"].summary.complete:0;
+ document.getElementById("dalseoTotal").innerText=d.teams["달서팀"]?d.teams["달서팀"].summary.complete:0;
+ document.getElementById("teamGoals").innerHTML=Object.entries(d.teams).map(([team,obj])=>{
+  const s=obj.summary;const t=obj.targets;
+  return `<div class="goal-card"><div class="section-title">${team} 구간 실적 / 목표</div>
+  ${["morning","afternoon","evening","midnight"].map(p=>`
+  <div class="goal-row"><div>${p==="morning"?"오전":p==="afternoon"?"오후":p==="evening"?"저녁":"심야"}</div>
+  <div class="bar"><div class="fill" style="width:${pct(s[p],t[p])}%"></div></div><div>${s[p]}/${t[p]}</div></div>`).join("")}</div>`;
+ }).join("");
+ document.querySelectorAll(".filter-row button").forEach(b=>b.classList.remove("active"));
+ document.getElementById("f"+FILTER).classList.add("active");
+ let riders=[...d.riders];if(FILTER!=="전체")riders=riders.filter(r=>r.team===FILTER);
+ riders.sort((a,b)=>SORT_DESC?b.complete-a.complete:a.complete-b.complete);
+ document.getElementById("riderGrid").innerHTML=riders.map(r=>`
+ <div class="rider-card ${r.complete>0?'green':''}">
+ ${r.warning?'<div class="warn">⚠ 수락률</div>':''}
+ <div class="rider-name">${r.name}</div>
+ <div class="rider-stats"><div>완료<b>${r.complete}</b></div><div>거절/취소<b>${r.reject}/${r.cancel}</b></div><div>수락률<b>${r.acceptRate}%</b></div></div>
+ <div class="periods"><div>오전<br>${r.morning}</div><div>오후<br>${r.afternoon}</div><div>저녁<br>${r.evening}</div><div>심야<br>${r.midnight}</div></div>
+ </div>`).join("");
+ document.getElementById("weeklyTable").innerHTML=d.weekly.slice().reverse().map(w=>`
+ <tr><td>${w.businessDate}</td><td>${w.totalComplete}</td><td>${w.totalReject}</td><td>${w.acceptRate}%</td><td>${w.spareRejects}</td></tr>`).join("");
 }
-
-function setFilter(v) {
-    FILTER = v;
-    render();
-}
-
-function setSort() {
-    SORT_DESC = !SORT_DESC;
-    render();
-}
-
-async function loadData() {
-    const res = await fetch("data.json?time=" + Date.now());
-    DATA = await res.json();
-    render();
-}
-
-function render() {
-    const d = DATA;
-    if (!d) return;
-
-    document.getElementById("areaNow").innerText = `(${d.area} 보고있는 권역)`;
-    document.getElementById("timeNow").innerText = `마지막 업데이트 ${d.updatedAt} | 영업일 ${d.businessDate}`;
-
-    document.getElementById("areaTabs").innerHTML = d.areas.map(a => `
-        <button class="${a === d.area ? 'active' : ''}">${a}</button>
-    `).join("");
-
-    const weeklyComplete = d.weekly.reduce((s,x)=>s+x.totalComplete,0);
-    const weeklyReject = d.weekly.reduce((s,x)=>s+x.totalReject,0);
-    const weeklyCancel = d.weekly.reduce((s,x)=>s+x.totalCancel,0);
-    const weeklyRate = weeklyComplete + weeklyReject === 0 ? 100 : Math.round((weeklyComplete / (weeklyComplete + weeklyReject)) * 1000) / 10;
-    const weeklySpare = Math.floor(weeklyComplete * 2 / 98) - weeklyReject;
-
-    document.getElementById("weekComplete").innerText = weeklyComplete;
-    document.getElementById("weekReject").innerText = `${weeklyReject}/${weeklyCancel}`;
-    document.getElementById("weekRate").innerText = `${weeklyRate}% / ${weeklySpare}`;
-
-    document.getElementById("dayComplete").innerText = d.total.complete;
-    document.getElementById("dayReject").innerText = `${d.total.reject}/${d.total.cancel}`;
-    document.getElementById("dayRate").innerText = `${d.total.acceptRate}%`;
-    document.getElementById("currentPeriod").innerText = d.currentPeriodLabel;
-
-    document.getElementById("sonicTotal").innerText = d.teams["소닉팀"] ? d.teams["소닉팀"].summary.complete : 0;
-    document.getElementById("dalseoTotal").innerText = d.teams["달서팀"] ? d.teams["달서팀"].summary.complete : 0;
-
-    document.getElementById("teamGoals").innerHTML = Object.entries(d.teams).map(([team, obj]) => {
-        const s = obj.summary;
-        const t = obj.targets;
-        return `
-        <div class="goal-card">
-            <div class="section-title">${team} 완료총량 / 달성해야하는 총량</div>
-            ${["morning","afternoon","evening","midnight"].map(p => `
-                <div class="goal-row">
-                    <div>${p === "morning" ? "오전" : p === "afternoon" ? "오후" : p === "evening" ? "저녁" : "심야"}</div>
-                    <div class="bar"><div class="fill" style="width:${pct(s[p], t[p])}%"></div></div>
-                    <div>${s[p]}/${t[p]}</div>
-                </div>
-            `).join("")}
-        </div>`;
-    }).join("");
-
-    document.querySelectorAll(".filter-row button").forEach(b => b.classList.remove("active"));
-    document.getElementById("f" + FILTER).classList.add("active");
-
-    let riders = [...d.riders];
-    if (FILTER !== "전체") riders = riders.filter(r => r.team === FILTER);
-    riders.sort((a,b) => SORT_DESC ? b.complete - a.complete : a.complete - b.complete);
-
-    document.getElementById("riderGrid").innerHTML = riders.map(r => `
-        <div class="rider-card ${r.complete > 0 ? 'green' : ''}">
-            ${r.warning ? '<div class="warn">⚠ 수락률</div>' : ''}
-            <div class="rider-name">${r.name}</div>
-            <div class="rider-stats">
-                <div>완료<b>${r.complete}</b></div>
-                <div>거절/취소<b>${r.reject}/${r.cancel}</b></div>
-                <div>수락률<b>${r.acceptRate}%</b></div>
-            </div>
-            <div class="periods">
-                <div>오전<br>${r.morning}</div>
-                <div>오후<br>${r.afternoon}</div>
-                <div>저녁<br>${r.evening}</div>
-                <div>심야<br>${r.midnight}</div>
-            </div>
-        </div>
-    `).join("");
-
-    document.getElementById("weeklyTable").innerHTML = d.weekly.slice().reverse().map(w => `
-        <tr>
-            <td>${w.businessDate}</td>
-            <td>${w.totalComplete}</td>
-            <td>${w.totalReject}</td>
-            <td>${w.acceptRate}%</td>
-            <td>${w.spareRejects}</td>
-        </tr>
-    `).join("");
-}
-
-loadData();
-setInterval(loadData, 30000);
+loadData();setInterval(loadData,30000);
 </script>
 </body>
 </html>
