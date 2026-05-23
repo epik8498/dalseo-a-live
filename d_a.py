@@ -338,108 +338,393 @@ def save_html():
 <title>SUPERSONIC 달서A 관제판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+:root{
+  --red:#e60012;
+  --blue:#006fd6;
+  --text:#111;
+  --muted:#777;
+  --line:#e6e6e6;
+  --card:#fff;
+  --bg:#fff;
+  --soft:#f7f7f7;
+}
+body.dark{
+  --text:#fff;
+  --muted:#cfcfcf;
+  --line:#333;
+  --card:#151515;
+  --bg:#080808;
+  --soft:#111;
+}
 *{box-sizing:border-box}
 body{
   margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:Arial,'Noto Sans KR',sans-serif;
-  color:#111;
+}
+body.dark{
   background:
-    linear-gradient(rgba(255,255,255,.92),rgba(255,255,255,.96)),
-    url('logo.png') center 80px / 520px auto no-repeat;
+    linear-gradient(135deg,rgba(0,0,0,.92),rgba(15,15,15,.96)),
+    url('logo.png') right 60px top 90px / 380px auto no-repeat;
 }
-.wrap{max-width:540px;margin:0 auto;padding:12px 12px 40px}
-.top{position:relative;text-align:center;padding-top:8px}
+.wrap{
+  max-width:760px;
+  margin:0 auto;
+  padding:16px 14px 40px;
+}
+.top{
+  position:relative;
+  text-align:center;
+  padding-top:6px;
+}
 .move{
-  position:absolute;left:0;top:0;
-  border:3px solid #111;background:#fff;
-  padding:8px 26px;font-weight:900;font-size:15px
+  position:absolute;
+  left:0;
+  top:4px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 18px;
+  font-weight:900;
+  font-size:15px;
 }
-.logo-img{width:140px;margin-top:10px}
-.brand{color:#e60012;font-size:28px;font-weight:900;margin-top:4px}
-.sub{font-weight:800;font-size:14px}
-.area{font-weight:900;text-align:center;margin:18px 0 14px}
-
+.mode{
+  position:absolute;
+  right:0;
+  top:4px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:10px;
+  padding:10px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.logo-img{
+  width:96px;
+}
+.brand{
+  color:var(--red);
+  font-size:30px;
+  font-weight:1000;
+  font-style:italic;
+  margin-top:4px;
+}
+.sub{
+  font-size:15px;
+  font-weight:900;
+}
+.area{
+  margin:10px 0 16px;
+  text-align:center;
+  font-size:16px;
+  font-weight:900;
+}
+.area b{color:var(--red)}
 .summary{
-  border:3px solid #e60012;border-radius:16px;background:rgba(255,255,255,.92);
-  overflow:hidden;margin-bottom:18px
+  border:2px solid var(--red);
+  border-radius:16px;
+  background:rgba(255,255,255,.82);
+  overflow:hidden;
+  margin-bottom:20px;
 }
-.summary-grid{display:grid;grid-template-columns:repeat(3,1fr)}
-.sum{padding:11px 4px;text-align:center;border-bottom:1px solid #ff9aa2}
-.sum:nth-child(3n+2){border-left:1px solid #ff9aa2;border-right:1px solid #ff9aa2}
-.sum-title{font-size:12px;font-weight:900}
-.sum-val{font-size:17px;color:#e60012;font-weight:900;margin-top:4px}
-
-.period-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+body.dark .summary{
+  background:rgba(15,15,15,.78);
+}
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+}
+.sum{
+  padding:15px 6px;
+  text-align:center;
+  border-right:1px solid var(--line);
+}
+.sum:nth-child(5n){border-right:0}
+.sum.topline{
+  border-bottom:1px solid var(--line);
+}
+.sum-title{
+  font-size:12px;
+  font-weight:900;
+  color:var(--text);
+}
+.sum-val{
+  margin-top:6px;
+  font-size:22px;
+  font-weight:1000;
+}
+.sum-val.red{color:var(--red)}
+.section-title{
+  margin:22px 0 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:21px;
+  font-weight:1000;
+}
+.section-title .icon{
+  color:var(--red);
+}
+.period-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:22px;
+}
 .period-card{
-  background:rgba(255,255,255,.96);border:3px solid #e60012;border-radius:15px;
-  padding:12px;box-shadow:0 4px 12px rgba(0,0,0,.08)
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
-.period-title{font-size:13px;font-weight:900;margin-bottom:9px}
-.goal-line{display:grid;grid-template-columns:36px 1fr 44px;gap:6px;align-items:center;margin:8px 0}
-.goal-name{font-weight:900}
-.bar{height:15px;background:#eee;border-radius:999px;overflow:hidden}
-.fill{height:100%;background:#e60012;border-radius:999px}
-.goal-num{text-align:right;font-size:12px;font-weight:900}
-
-.controls{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
-.filters{display:flex;gap:5px}
-.filters button,.sort select{
-  border:1px solid #111;background:#fff;padding:6px 14px;font-weight:900
+body.dark .period-card{
+  box-shadow:none;
+  background:rgba(20,20,20,.9);
 }
-.filters button.active{background:#111;color:#fff}
-.sort{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:900}
-
-.riders{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.period-head{
+  font-size:18px;
+  font-weight:1000;
+  margin-bottom:4px;
+}
+.period-sub{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:900;
+}
+.period-total{
+  margin:14px 0 12px;
+  text-align:center;
+  font-size:24px;
+  font-weight:1000;
+}
+.period-total span:first-child{color:var(--red)}
+.period-total span:last-child{color:var(--text)}
+.total-bar{
+  height:12px;
+  background:#e9e9e9;
+  border-radius:999px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+body.dark .total-bar{background:#333}
+.total-fill{
+  height:100%;
+  background:var(--red);
+  border-radius:999px;
+}
+.team-line{
+  display:grid;
+  grid-template-columns:36px 1fr auto;
+  align-items:center;
+  gap:8px;
+  font-size:13px;
+  font-weight:900;
+  margin:8px 0;
+}
+.team-name{font-size:14px}
+.team-num .done{color:var(--red)}
+.team-num .goal{color:var(--blue)}
+.small-bar{
+  height:10px;
+  background:#ececec;
+  border-radius:999px;
+  overflow:hidden;
+}
+body.dark .small-bar{background:#333}
+.small-fill.red{height:100%;background:var(--red)}
+.small-fill.blue{height:100%;background:var(--blue)}
+.controls{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:20px 0 14px;
+}
+.filters{
+  display:flex;
+  gap:10px;
+}
+.filters button{
+  min-width:82px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:8px;
+  padding:11px 14px;
+  font-weight:900;
+  cursor:pointer;
+}
+.filters button.active{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+}
+.sort{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:900;
+}
+.sort select{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:8px;
+  padding:11px 16px;
+  font-weight:900;
+}
+.riders{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
 .rider{
-  background:rgba(255,255,255,.96);border:3px solid #111;border-radius:14px;padding:11px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
 }
-.rider.active{border-color:#00d26a}
-.rider-name{font-size:21px;font-weight:900}
-.warn{float:right;background:#ffe58f;border-radius:999px;padding:3px 6px;font-size:11px;font-weight:900}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin-top:10px;font-size:12px}
-.stats b{display:block;font-size:15px}
-.times{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;margin-top:10px;font-size:12px}
-
-@media(max-width:440px){
-  .period-grid,.riders{grid-template-columns:1fr}
-  .move{position:static;margin-bottom:8px}
+.rider.active{
+  border:2px solid #00c853;
+}
+body.dark .rider{
+  background:rgba(18,18,18,.92);
+  box-shadow:none;
+}
+.rider-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.rider-name{
+  font-size:22px;
+  font-weight:1000;
+}
+.dot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:var(--red);
+  margin-right:8px;
+}
+.arrow{
+  color:var(--muted);
+  font-size:22px;
+}
+.warn{
+  color:#ffb000;
+  font-size:12px;
+  font-weight:900;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin-top:14px;
+  text-align:center;
+}
+.stat{
+  border-right:1px solid var(--line);
+}
+.stat:last-child{border-right:0}
+.stat small{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+  color:var(--text);
+}
+.stat b{
+  display:block;
+  margin-top:4px;
+  font-size:18px;
+}
+.stat b.red{color:var(--red)}
+.times{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+  margin-top:12px;
+  padding-top:10px;
+  text-align:center;
+}
+.times div{
+  border-right:1px solid var(--line);
+  font-size:12px;
+  font-weight:900;
+}
+.times div:last-child{border-right:0}
+.times b{
+  display:block;
+  color:var(--red);
+  font-size:16px;
+  margin-top:3px;
+}
+.footer{
+  text-align:center;
+  color:var(--muted);
+  font-weight:900;
+  padding:24px 0 4px;
+}
+@media(max-width:720px){
+  .summary-grid{grid-template-columns:repeat(3,1fr)}
+  .sum:nth-child(5n){border-right:1px solid var(--line)}
+  .sum:nth-child(3n){border-right:0}
+  .period-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .move,.mode{position:static;margin:4px}
+  .top{padding-top:0}
+  .summary-grid{grid-template-columns:repeat(3,1fr)}
+  .period-grid{grid-template-columns:1fr}
+  .riders{grid-template-columns:1fr}
+  .controls{flex-direction:column;align-items:stretch}
+  .filters{display:grid;grid-template-columns:repeat(3,1fr)}
+  .filters button{min-width:0}
+  .sort{justify-content:flex-end}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
+
   <div class="top">
     <button class="move">권역이동</button>
+    <button class="mode" onclick="toggleMode()" id="modeBtn">🌙 다크 모드</button>
     <img src="logo.png" class="logo-img">
     <div class="brand">SUPERSONIC</div>
     <div class="sub">배민 | 쿠팡협력사</div>
+    <div class="area">현재 권역 : <b id="areaText">달서A</b></div>
   </div>
-
-  <div class="area" id="areaText">(현재보고있는 권역)</div>
 
   <div class="summary">
     <div class="summary-grid">
-      <div class="sum"><div class="sum-title">주간 총완료</div><div class="sum-val" id="weekComplete">0</div></div>
-      <div class="sum"><div class="sum-title">주간 거절/취소/배달취소</div><div class="sum-val" id="weekReject">0/0/0</div></div>
-      <div class="sum"><div class="sum-title">주간수락률/여유거절</div><div class="sum-val" id="weekRate">0% / 0</div></div>
+      <div class="sum topline"><div class="sum-title">총 물량</div><div class="sum-val" id="totalVolume">0</div></div>
+      <div class="sum topline"><div class="sum-title">총 발주량</div><div class="sum-val" id="totalOrder">0</div></div>
+      <div class="sum topline"><div class="sum-title">총 완료량</div><div class="sum-val" id="totalComplete">0</div></div>
+      <div class="sum topline"><div class="sum-title">총 수락률</div><div class="sum-val" id="totalRate">0%</div></div>
+      <div class="sum topline"><div class="sum-title">총 여유거절</div><div class="sum-val red" id="totalSpare">0</div></div>
 
-      <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val" id="dayComplete">0</div></div>
-      <div class="sum"><div class="sum-title">당일 거절/취소/배달취소</div><div class="sum-val" id="dayReject">0/0/0</div></div>
-      <div class="sum"><div class="sum-title">당일수락률</div><div class="sum-val" id="dayRate">0%</div></div>
-
-      <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val" id="totalCount">0</div></div>
-      <div class="sum"><div class="sum-title">소닉팀</div><div class="sum-val" id="sonicCount">0</div></div>
-      <div class="sum"><div class="sum-title">달서팀</div><div class="sum-val" id="dalseoCount">0</div></div>
+      <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
+      <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
+      <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="dayRate">0%</div></div>
+      <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val red" id="totalCount">0명</div></div>
+      <div class="sum"><div class="sum-title">소닉/달서</div><div class="sum-val red" id="teamCount">0/0</div></div>
     </div>
   </div>
 
+  <div class="section-title"><span class="icon">▮</span> 구간별 실적 <span style="font-size:14px;font-weight:900">(완료 / 발주량)</span></div>
   <div class="period-grid" id="periodCards"></div>
 
   <div class="controls">
     <div class="filters">
       <button onclick="setFilter('전체')" id="f전체">전체</button>
-      <button onclick="setFilter('소닉팀')" id="f소닉팀">소닉</button>
-      <button onclick="setFilter('달서팀')" id="f달서팀">달서</button>
+      <button onclick="setFilter('소닉팀')" id="f소닉팀">소닉팀</button>
+      <button onclick="setFilter('달서팀')" id="f달서팀">달서팀</button>
     </div>
     <div class="sort">
       정렬:
@@ -451,6 +736,9 @@ body{
   </div>
 
   <div class="riders" id="riderGrid"></div>
+
+  <div class="footer" id="footerTime">마지막 업데이트 : -</div>
+
 </div>
 
 <script>
@@ -458,8 +746,19 @@ let DATA=null;
 let FILTER="전체";
 
 function n(v){return Number(v||0).toLocaleString()}
-function pct(a,b){return !b?0:Math.min(100,Math.round(a/b*100))}
+function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}
 function setFilter(v){FILTER=v;render()}
+
+function toggleMode(){
+  document.body.classList.toggle("dark");
+  const dark=document.body.classList.contains("dark");
+  localStorage.setItem("mode",dark?"dark":"light");
+  document.getElementById("modeBtn").innerText=dark?"☀ 라이트 모드":"🌙 다크 모드";
+}
+
+if(localStorage.getItem("mode")==="dark"){
+  document.body.classList.add("dark");
+}
 
 async function loadData(){
   const res=await fetch("data.json?time="+Date.now());
@@ -473,45 +772,62 @@ function render(){
   const sonic=d.teams["소닉팀"]||{summary:{},targets:{}};
   const dalseo=d.teams["달서팀"]||{summary:{},targets:{}};
 
-  document.getElementById("areaText").innerText=`(현재보고있는 권역 : ${d.area})`;
+  const totalOrder =
+    (sonic.targets.total||0) + (dalseo.targets.total||0);
+
+  document.getElementById("modeBtn").innerText=
+    document.body.classList.contains("dark")?"☀ 라이트 모드":"🌙 다크 모드";
+
+  document.getElementById("areaText").innerText=d.area;
+  document.getElementById("totalVolume").innerText=n(totalOrder);
+  document.getElementById("totalOrder").innerText=n(totalOrder);
+  document.getElementById("totalComplete").innerText=n(d.total.complete);
+  document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
+  document.getElementById("totalSpare").innerText=n(d.total.spareRejects);
   document.getElementById("dayComplete").innerText=n(d.total.complete);
-  document.getElementById("dayReject").innerText=`${n(d.total.reject)}/${n(d.total.cancel)}/${n(d.total.riderFault)}`;
+  document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("dayRate").innerText=d.total.acceptRate+"%";
   document.getElementById("totalCount").innerText=n(d.total.count)+"명";
-  document.getElementById("sonicCount").innerText=n(sonic.summary.count)+"명";
-  document.getElementById("dalseoCount").innerText=n(dalseo.summary.count)+"명";
-
-  const wc=(d.weekly||[]).reduce((s,x)=>s+x.totalComplete,0);
-  const wr=(d.weekly||[]).reduce((s,x)=>s+x.totalReject,0);
-  const wcan=(d.weekly||[]).reduce((s,x)=>s+x.totalCancel,0);
-  const wrate=wc+wr===0?100:Math.round((wc/(wc+wr))*1000)/10;
-  const wspare=Math.floor(wc*2/98)-wr;
-  document.getElementById("weekComplete").innerText=n(wc);
-  document.getElementById("weekReject").innerText=`${n(wr)}/${n(wcan)}/0`;
-  document.getElementById("weekRate").innerText=`${wrate}% / ${n(wspare)}`;
+  document.getElementById("teamCount").innerText=n(sonic.summary.count)+"/"+n(dalseo.summary.count);
+  document.getElementById("footerTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 
   const periods=[
-    ["morning","오전피크"],
-    ["afternoon","오후논피크"],
-    ["evening","저녁피크"],
-    ["midnight","심야논피크"]
+    ["morning","☀","오전 피크"],
+    ["afternoon","☀","오후 논피크"],
+    ["evening","🌇","저녁 피크"],
+    ["midnight","🌙","심야 논피크"]
   ];
 
-  document.getElementById("periodCards").innerHTML=periods.map(([key,label])=>`
-    <div class="period-card">
-      <div class="period-title">${label} 완료총량 / 달성해야하는 총량</div>
-      <div class="goal-line">
-        <div class="goal-name">소닉</div>
-        <div class="bar"><div class="fill" style="width:${pct(sonic.summary[key],sonic.targets[key])}%"></div></div>
-        <div class="goal-num">${n(sonic.summary[key])}/${n(sonic.targets[key])}</div>
+  document.getElementById("periodCards").innerHTML=periods.map(([key,icon,label])=>{
+    const sonicDone=sonic.summary[key]||0;
+    const dalseoDone=dalseo.summary[key]||0;
+    const sonicGoal=sonic.targets[key]||0;
+    const dalseoGoal=dalseo.targets[key]||0;
+    const totalDone=sonicDone+dalseoDone;
+    const totalGoal=sonicGoal+dalseoGoal;
+    const totalPct=pct(totalDone,totalGoal);
+
+    return `
+      <div class="period-card">
+        <div class="period-head">${icon} ${label}</div>
+        <div class="period-sub">완료 / 발주량</div>
+        <div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div>
+        <div class="total-bar"><div class="total-fill" style="width:${totalPct}%"></div></div>
+
+        <div class="team-line">
+          <div class="team-name">소닉</div>
+          <div class="small-bar"><div class="small-fill red" style="width:${pct(sonicDone,sonicGoal)}%"></div></div>
+          <div class="team-num"><span class="done">${n(sonicDone)}</span> / <span class="goal">${n(sonicGoal)}</span></div>
+        </div>
+
+        <div class="team-line">
+          <div class="team-name">달서</div>
+          <div class="small-bar"><div class="small-fill blue" style="width:${pct(dalseoDone,dalseoGoal)}%"></div></div>
+          <div class="team-num"><span class="done">${n(dalseoDone)}</span> / <span class="goal">${n(dalseoGoal)}</span></div>
+        </div>
       </div>
-      <div class="goal-line">
-        <div class="goal-name">달서</div>
-        <div class="bar"><div class="fill" style="width:${pct(dalseo.summary[key],dalseo.targets[key])}%"></div></div>
-        <div class="goal-num">${n(dalseo.summary[key])}/${n(dalseo.targets[key])}</div>
-      </div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
   document.getElementById("f"+FILTER).classList.add("active");
@@ -525,18 +841,22 @@ function render(){
 
   document.getElementById("riderGrid").innerHTML=riders.map(r=>`
     <div class="rider ${r.complete>0?'active':''}">
-      ${r.warning?'<span class="warn">⚠</span>':''}
-      <div class="rider-name">${r.name}</div>
-      <div class="stats">
-        <div>완료<b>${n(r.complete)}</b></div>
-        <div>거절/취소<b>${n(r.reject)}/${n(r.cancel)}</b></div>
-        <div>수락률<b>${r.acceptRate}%</b></div>
+      <div class="rider-top">
+        <div class="rider-name"><span class="dot"></span>${r.name}</div>
+        <div>${r.warning?'<span class="warn">80%↓</span>':'<span class="arrow">›</span>'}</div>
       </div>
+
+      <div class="stats">
+        <div class="stat"><small>완료</small><b class="red">${n(r.complete)}</b></div>
+        <div class="stat"><small>거절/취소</small><b>${n(r.reject)} / ${n(r.cancel)}</b></div>
+        <div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div>
+      </div>
+
       <div class="times">
-        <div>오전<br>${n(r.morning)}</div>
-        <div>오후<br>${n(r.afternoon)}</div>
-        <div>저녁<br>${n(r.evening)}</div>
-        <div>심야<br>${n(r.midnight)}</div>
+        <div>오전<b>${n(r.morning)}</b></div>
+        <div>오후<b>${n(r.afternoon)}</b></div>
+        <div>저녁<b>${n(r.evening)}</b></div>
+        <div>심야<b>${n(r.midnight)}</b></div>
       </div>
     </div>
   `).join("");
