@@ -161,7 +161,7 @@ def parse_clipboard_text(text):
 
         user_id = lines[phone_idx + 33]
 
-        is_online = any(x in status for x in ["운행중", "운행 중", "온라인", "접속", "운행"])
+        is_online = status in ["운행중", "운행 중", "온라인", "접속중"]
 
         riders.append({
             "name": name,
