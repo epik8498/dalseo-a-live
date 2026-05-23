@@ -131,13 +131,15 @@ def is_bad_name(value):
 
 
 def detect_online(status):
-    status = str(status).strip()
-    offline_words = ["미접속", "운행 종료", "운행종료", "종료", "오프라인", "-"]
-    if status in offline_words:
+    status = str(status).replace(" ", "").strip()
+
+    if status == "운행중":
+        return True
+
+    if status == "운행종료":
         return False
-    if status == "":
-        return False
-    return True
+
+    return False
 
 
 def parse_clipboard_text(text):
@@ -212,6 +214,7 @@ def parse_clipboard_text(text):
             "hourly": hourly,
             "acceptRate": calc_accept_rate(complete, reject),
             "warning": calc_accept_rate(complete, reject) < 80,
+            "isOnline": detect_online(status),
         })
 
         i = phone_idx + 34
