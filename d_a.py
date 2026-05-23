@@ -2,7 +2,6 @@ import json
 import math
 import subprocess
 import time
-import re
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
@@ -114,11 +113,8 @@ def to_int(value):
 def set_page_number(url, page_no):
     parsed = urlparse(url)
     qs = parse_qs(parsed.query)
-
     qs["page"] = [str(page_no)]
-    if "size" not in qs:
-        qs["size"] = ["100"]
-
+    qs["size"] = ["100"]
     new_query = urlencode(qs, doseq=True)
     return urlunparse(parsed._replace(query=new_query))
 
@@ -131,38 +127,49 @@ def parse_clipboard_text(text):
     while i < len(lines):
         name = lines[i]
 
-        if i + 34 >= len(lines):
+        if i + 35 >= len(lines):
             i += 1
             continue
 
-        phone = lines[i + 1]
+        status = "미접속"
+
+        if lines[i + 1].startswith("010-"):
+            phone_idx = i + 1
+        else:
+            status = lines[i + 1]
+            phone_idx = i + 2
+
+        phone = lines[phone_idx]
 
         if not phone.startswith("010-"):
             i += 1
             continue
 
-        complete = to_int(lines[i + 2])
-        reject = to_int(lines[i + 3])
-        cancel = to_int(lines[i + 4])
-        rider_fault = to_int(lines[i + 5])
+        complete = to_int(lines[phone_idx + 1])
+        reject = to_int(lines[phone_idx + 2])
+        cancel = to_int(lines[phone_idx + 3])
+        rider_fault = to_int(lines[phone_idx + 4])
 
-        morning = to_int(lines[i + 6])
-        afternoon = to_int(lines[i + 7])
-        evening = to_int(lines[i + 8])
-        midnight = to_int(lines[i + 9])
+        morning = to_int(lines[phone_idx + 5])
+        afternoon = to_int(lines[phone_idx + 6])
+        evening = to_int(lines[phone_idx + 7])
+        midnight = to_int(lines[phone_idx + 8])
 
         hourly = []
         for h in range(24):
-            hourly.append(to_int(lines[i + 10 + h]))
+            hourly.append(to_int(lines[phone_idx + 9 + h]))
 
-        user_id = lines[i + 34]
+        user_id = lines[phone_idx + 33]
+
+        is_online = any(x in status for x in ["운행중", "운행 중", "온라인", "접속", "운행"])
 
         riders.append({
             "name": name,
             "phone": phone,
             "userId": user_id,
             "team": team_of(name),
-            "status": "",
+            "status": status,
+            "isOnline": is_online,
             "complete": complete,
             "reject": reject,
             "cancel": cancel,
@@ -176,7 +183,7 @@ def parse_clipboard_text(text):
             "warning": calc_accept_rate(complete, reject) < 80,
         })
 
-        i += 35
+        i = phone_idx + 34
 
     return riders
 
@@ -245,6 +252,7 @@ def summary(rows):
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
         "count": len(rows),
+        "onlineCount": sum(1 for r in rows if r.get("isOnline")),
         "acceptRate": calc_accept_rate(complete, reject),
         "spareRejects": spare_rejects(complete, reject),
     }
@@ -326,9 +334,11 @@ def make_data(riders):
         "weekly": load_weekly(),
     }
 
+
 def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
 
 def save_html():
     html = """<!DOCTYPE html>
@@ -341,12 +351,12 @@ def save_html():
 :root{
   --red:#e60012;
   --blue:#006fd6;
+  --green:#00c853;
   --text:#111;
   --muted:#777;
   --line:#e6e6e6;
   --card:#fff;
   --bg:#fff;
-  --soft:#f7f7f7;
 }
 body.dark{
   --text:#fff;
@@ -354,7 +364,6 @@ body.dark{
   --line:#333;
   --card:#151515;
   --bg:#080808;
-  --soft:#111;
 }
 *{box-sizing:border-box}
 body{
@@ -368,60 +377,22 @@ body.dark{
     linear-gradient(135deg,rgba(0,0,0,.92),rgba(15,15,15,.96)),
     url('logo.png') right 60px top 90px / 380px auto no-repeat;
 }
-.wrap{
-  max-width:760px;
-  margin:0 auto;
-  padding:16px 14px 40px;
-}
-.top{
-  position:relative;
-  text-align:center;
-  padding-top:6px;
-}
-.move{
-  position:absolute;
-  left:0;
-  top:4px;
-  border:1px solid var(--line);
-  background:var(--card);
-  color:var(--text);
-  border-radius:10px;
-  padding:10px 18px;
-  font-weight:900;
-  font-size:15px;
-}
-.mode{
-  position:absolute;
-  right:0;
-  top:4px;
+.wrap{max-width:760px;margin:0 auto;padding:16px 14px 40px}
+.top{position:relative;text-align:center;padding-top:6px}
+.move,.mode{
   border:1px solid var(--line);
   background:var(--card);
   color:var(--text);
   border-radius:10px;
   padding:10px 14px;
   font-weight:900;
-  cursor:pointer;
 }
-.logo-img{
-  width:96px;
-}
-.brand{
-  color:var(--red);
-  font-size:30px;
-  font-weight:1000;
-  font-style:italic;
-  margin-top:4px;
-}
-.sub{
-  font-size:15px;
-  font-weight:900;
-}
-.area{
-  margin:10px 0 16px;
-  text-align:center;
-  font-size:16px;
-  font-weight:900;
-}
+.move{position:absolute;left:0;top:4px}
+.mode{position:absolute;right:0;top:4px;cursor:pointer}
+.logo-img{width:96px}
+.brand{color:var(--red);font-size:30px;font-weight:1000;font-style:italic;margin-top:4px}
+.sub{font-size:15px;font-weight:900}
+.area{margin:10px 0 16px;text-align:center;font-size:16px;font-weight:900}
 .area b{color:var(--red)}
 .summary{
   border:2px solid var(--red);
@@ -430,32 +401,13 @@ body.dark{
   overflow:hidden;
   margin-bottom:20px;
 }
-body.dark .summary{
-  background:rgba(15,15,15,.78);
-}
-.summary-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-}
-.sum{
-  padding:15px 6px;
-  text-align:center;
-  border-right:1px solid var(--line);
-}
+body.dark .summary{background:rgba(15,15,15,.78)}
+.summary-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.sum{padding:15px 6px;text-align:center;border-right:1px solid var(--line)}
 .sum:nth-child(5n){border-right:0}
-.sum.topline{
-  border-bottom:1px solid var(--line);
-}
-.sum-title{
-  font-size:12px;
-  font-weight:900;
-  color:var(--text);
-}
-.sum-val{
-  margin-top:6px;
-  font-size:22px;
-  font-weight:1000;
-}
+.sum.topline{border-bottom:1px solid var(--line)}
+.sum-title{font-size:12px;font-weight:900}
+.sum-val{margin-top:6px;font-size:22px;font-weight:1000}
 .sum-val.red{color:var(--red)}
 .section-title{
   margin:22px 0 12px;
@@ -465,15 +417,8 @@ body.dark .summary{
   font-size:21px;
   font-weight:1000;
 }
-.section-title .icon{
-  color:var(--red);
-}
-.period-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-bottom:22px;
-}
+.section-title .icon{color:var(--red)}
+.period-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 .period-card{
   background:var(--card);
   border:1px solid var(--line);
@@ -481,73 +426,24 @@ body.dark .summary{
   padding:14px;
   box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
-body.dark .period-card{
-  box-shadow:none;
-  background:rgba(20,20,20,.9);
-}
-.period-head{
-  font-size:18px;
-  font-weight:1000;
-  margin-bottom:4px;
-}
-.period-sub{
-  font-size:12px;
-  color:var(--muted);
-  font-weight:900;
-}
-.period-total{
-  margin:14px 0 12px;
-  text-align:center;
-  font-size:24px;
-  font-weight:1000;
-}
+body.dark .period-card{box-shadow:none;background:rgba(20,20,20,.9)}
+.period-head{font-size:18px;font-weight:1000;margin-bottom:4px}
+.period-sub{font-size:12px;color:var(--muted);font-weight:900}
+.period-total{margin:14px 0 12px;text-align:center;font-size:24px;font-weight:1000}
 .period-total span:first-child{color:var(--red)}
-.period-total span:last-child{color:var(--text)}
-.total-bar{
-  height:12px;
-  background:#e9e9e9;
-  border-radius:999px;
-  overflow:hidden;
-  margin-bottom:14px;
-}
+.total-bar{height:12px;background:#e9e9e9;border-radius:999px;overflow:hidden;margin-bottom:14px}
 body.dark .total-bar{background:#333}
-.total-fill{
-  height:100%;
-  background:var(--red);
-  border-radius:999px;
-}
-.team-line{
-  display:grid;
-  grid-template-columns:36px 1fr auto;
-  align-items:center;
-  gap:8px;
-  font-size:13px;
-  font-weight:900;
-  margin:8px 0;
-}
+.total-fill{height:100%;background:var(--red);border-radius:999px}
+.team-line{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:8px;font-size:13px;font-weight:900;margin:8px 0}
 .team-name{font-size:14px}
 .team-num .done{color:var(--red)}
 .team-num .goal{color:var(--blue)}
-.small-bar{
-  height:10px;
-  background:#ececec;
-  border-radius:999px;
-  overflow:hidden;
-}
+.small-bar{height:10px;background:#ececec;border-radius:999px;overflow:hidden}
 body.dark .small-bar{background:#333}
 .small-fill.red{height:100%;background:var(--red)}
 .small-fill.blue{height:100%;background:var(--blue)}
-.controls{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin:20px 0 14px;
-}
-.filters{
-  display:flex;
-  gap:10px;
-}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 14px}
+.filters{display:flex;gap:10px}
 .filters button{
   min-width:82px;
   border:1px solid var(--line);
@@ -558,17 +454,8 @@ body.dark .small-bar{background:#333}
   font-weight:900;
   cursor:pointer;
 }
-.filters button.active{
-  background:var(--red);
-  border-color:var(--red);
-  color:#fff;
-}
-.sort{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:900;
-}
+.filters button.active{background:var(--red);border-color:var(--red);color:#fff}
+.sort{display:flex;align-items:center;gap:8px;font-weight:900}
 .sort select{
   border:1px solid var(--line);
   background:var(--card);
@@ -577,11 +464,7 @@ body.dark .small-bar{background:#333}
   padding:11px 16px;
   font-weight:900;
 }
-.riders{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
+.riders{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rider{
   background:var(--card);
   border:1px solid var(--line);
@@ -589,60 +472,34 @@ body.dark .small-bar{background:#333}
   padding:14px 16px;
   box-shadow:0 4px 14px rgba(0,0,0,.05);
 }
-.rider.active{
-  border:2px solid #00c853;
-}
-body.dark .rider{
-  background:rgba(18,18,18,.92);
-  box-shadow:none;
-}
-.rider-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.rider-name{
-  font-size:22px;
-  font-weight:1000;
-}
+.rider.active{border:2px solid var(--green)}
+body.dark .rider{background:rgba(18,18,18,.92);box-shadow:none}
+.rider-top{display:flex;justify-content:space-between;align-items:center}
+.rider-name{font-size:22px;font-weight:1000}
 .dot{
   display:inline-block;
   width:10px;
   height:10px;
   border-radius:999px;
-  background:var(--red);
+  background:#bbb;
   margin-right:8px;
 }
-.arrow{
-  color:var(--muted);
-  font-size:22px;
-}
-.warn{
-  color:#ffb000;
-  font-size:12px;
+.rider.active .dot{background:var(--green)}
+.status{
+  font-size:11px;
   font-weight:900;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#eee;
+  color:#555;
 }
-.stats{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  margin-top:14px;
-  text-align:center;
-}
-.stat{
-  border-right:1px solid var(--line);
-}
+.rider.active .status{background:#d9ffe8;color:#006b2c}
+.warn{color:#ff9f00;font-size:12px;font-weight:900;margin-left:4px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;text-align:center}
+.stat{border-right:1px solid var(--line)}
 .stat:last-child{border-right:0}
-.stat small{
-  display:block;
-  font-size:12px;
-  font-weight:900;
-  color:var(--text);
-}
-.stat b{
-  display:block;
-  margin-top:4px;
-  font-size:18px;
-}
+.stat small{display:block;font-size:12px;font-weight:900}
+.stat b{display:block;margin-top:4px;font-size:18px}
 .stat b.red{color:var(--red)}
 .times{
   display:grid;
@@ -652,24 +509,10 @@ body.dark .rider{
   padding-top:10px;
   text-align:center;
 }
-.times div{
-  border-right:1px solid var(--line);
-  font-size:12px;
-  font-weight:900;
-}
+.times div{border-right:1px solid var(--line);font-size:12px;font-weight:900}
 .times div:last-child{border-right:0}
-.times b{
-  display:block;
-  color:var(--red);
-  font-size:16px;
-  margin-top:3px;
-}
-.footer{
-  text-align:center;
-  color:var(--muted);
-  font-weight:900;
-  padding:24px 0 4px;
-}
+.times b{display:block;color:var(--red);font-size:16px;margin-top:3px}
+.footer{text-align:center;color:var(--muted);font-weight:900;padding:24px 0 4px}
 @media(max-width:720px){
   .summary-grid{grid-template-columns:repeat(3,1fr)}
   .sum:nth-child(5n){border-right:1px solid var(--line)}
@@ -678,7 +521,6 @@ body.dark .rider{
 }
 @media(max-width:520px){
   .move,.mode{position:static;margin:4px}
-  .top{padding-top:0}
   .summary-grid{grid-template-columns:repeat(3,1fr)}
   .period-grid{grid-template-columns:1fr}
   .riders{grid-template-columns:1fr}
@@ -691,7 +533,6 @@ body.dark .rider{
 </head>
 <body>
 <div class="wrap">
-
   <div class="top">
     <button class="move">권역이동</button>
     <button class="mode" onclick="toggleMode()" id="modeBtn">🌙 다크 모드</button>
@@ -712,7 +553,7 @@ body.dark .rider{
       <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
       <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
       <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="dayRate">0%</div></div>
-      <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val red" id="totalCount">0명</div></div>
+      <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val red" id="onlineCount">0명</div></div>
       <div class="sum"><div class="sum-title">소닉/달서</div><div class="sum-val red" id="teamCount">0/0</div></div>
     </div>
   </div>
@@ -736,9 +577,7 @@ body.dark .rider{
   </div>
 
   <div class="riders" id="riderGrid"></div>
-
   <div class="footer" id="footerTime">마지막 업데이트 : -</div>
-
 </div>
 
 <script>
@@ -771,9 +610,7 @@ function render(){
 
   const sonic=d.teams["소닉팀"]||{summary:{},targets:{}};
   const dalseo=d.teams["달서팀"]||{summary:{},targets:{}};
-
-  const totalOrder =
-    (sonic.targets.total||0) + (dalseo.targets.total||0);
+  const totalOrder=(sonic.targets.total||0)+(dalseo.targets.total||0);
 
   document.getElementById("modeBtn").innerText=
     document.body.classList.contains("dark")?"☀ 라이트 모드":"🌙 다크 모드";
@@ -787,7 +624,7 @@ function render(){
   document.getElementById("dayComplete").innerText=n(d.total.complete);
   document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("dayRate").innerText=d.total.acceptRate+"%";
-  document.getElementById("totalCount").innerText=n(d.total.count)+"명";
+  document.getElementById("onlineCount").innerText=n(d.total.onlineCount)+"명";
   document.getElementById("teamCount").innerText=n(sonic.summary.count)+"/"+n(dalseo.summary.count);
   document.getElementById("footerTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 
@@ -805,14 +642,13 @@ function render(){
     const dalseoGoal=dalseo.targets[key]||0;
     const totalDone=sonicDone+dalseoDone;
     const totalGoal=sonicGoal+dalseoGoal;
-    const totalPct=pct(totalDone,totalGoal);
 
     return `
       <div class="period-card">
         <div class="period-head">${icon} ${label}</div>
         <div class="period-sub">완료 / 발주량</div>
         <div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div>
-        <div class="total-bar"><div class="total-fill" style="width:${totalPct}%"></div></div>
+        <div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>
 
         <div class="team-line">
           <div class="team-name">소닉</div>
@@ -840,10 +676,13 @@ function render(){
   else riders.sort((a,b)=>b.complete-a.complete);
 
   document.getElementById("riderGrid").innerHTML=riders.map(r=>`
-    <div class="rider ${r.complete>0?'active':''}">
+    <div class="rider ${r.isOnline?'active':''}">
       <div class="rider-top">
         <div class="rider-name"><span class="dot"></span>${r.name}</div>
-        <div>${r.warning?'<span class="warn">80%↓</span>':'<span class="arrow">›</span>'}</div>
+        <div>
+          <span class="status">${r.isOnline?'접속중':'미접속'}</span>
+          ${r.warning?'<span class="warn">80%↓</span>':''}
+        </div>
       </div>
 
       <div class="stats">
@@ -908,7 +747,6 @@ def run_update(page):
 
     if len(riders) == 0:
         print("기사 데이터를 못 읽었습니다.")
-        print("확인: 기사페이지인지, 표가 보이는지, 100개 보기가 적용됐는지 확인하세요.")
         return
 
     data = make_data(riders)
@@ -921,13 +759,13 @@ def run_update(page):
 
     print(f"업로드 완료: {data['updatedAt']}")
     print(f"전체 기사 수: {data['total']['count']}")
+    print(f"접속중 기사 수: {data['total']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"수락률: {data['total']['acceptRate']}%")
 
 
 def main():
     print("SUPERSONIC 달서A 자동 수집기")
-    print("")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
