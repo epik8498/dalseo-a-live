@@ -5,39 +5,39 @@
     "달서B",
     "중구A"
   ],
-  "updatedAt": "2026-05-24 06:54:53",
+  "updatedAt": "2026-05-24 06:56:05",
   "businessDate": "2026-05-24",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1,
+    "complete": 2,
     "reject": 1,
     "cancel": 0,
     "riderFault": 0,
-    "morning": 1,
+    "morning": 2,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 0,
-    "acceptRate": 50.0,
+    "acceptRate": 66.7,
     "spareRejects": -1
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1,
+        "complete": 2,
         "reject": 1,
         "cancel": 0,
         "riderFault": 0,
-        "morning": 1,
+        "morning": 2,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 51,
         "onlineCount": 0,
-        "acceptRate": 50.0,
+        "acceptRate": 66.7,
         "spareRejects": -1
       },
       "targets": {
@@ -56,16 +56,16 @@
           "team": "소닉팀",
           "status": "미접속",
           "isOnline": false,
-          "complete": 1,
+          "complete": 2,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 1,
+          "morning": 2,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
           "hourly": [
-            1,
+            2,
             0,
             0,
             0,
@@ -90,7 +90,7 @@
             0,
             0
           ],
-          "acceptRate": 50.0,
+          "acceptRate": 66.7,
           "warning": true
         },
         {
@@ -3298,16 +3298,16 @@
       "team": "소닉팀",
       "status": "미접속",
       "isOnline": false,
-      "complete": 1,
+      "complete": 2,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 1,
+      "morning": 2,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
       "hourly": [
-        1,
+        2,
         0,
         0,
         0,
@@ -3332,7 +3332,7 @@
         0,
         0
       ],
-      "acceptRate": 50.0,
+      "acceptRate": 66.7,
       "warning": true
     },
     {
