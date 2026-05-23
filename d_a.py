@@ -847,7 +847,7 @@ def git_push():
     if not AUTO_GIT_PUSH:
         return
 
-    subprocess.run(["git", "add", "data.json", "index.html", "d_a.py"], cwd=BASE_DIR)
+    subprocess.run(["git", "add", "data.json", "index.html", "d_a.py", "logo.png"], cwd=BASE_DIR)
 
     if WEEKLY_FILE.exists():
         subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
