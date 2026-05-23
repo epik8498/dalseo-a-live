@@ -340,208 +340,128 @@ def save_html():
 <title>SUPERSONIC 달서A 관제판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-:root{
-  --red:#e60012;
-  --black:#101010;
-  --green:#00d26a;
-  --dark:#171717;
-  --gray:#f5f5f5;
-  --line:#e9e9e9;
-  --yellow:#ffcc00;
-}
 *{box-sizing:border-box}
 body{
   margin:0;
-  background:linear-gradient(180deg,#ffffff 0%,#f4f4f4 100%);
+  background:#f4f5f7;
   font-family:Arial,'Noto Sans KR',sans-serif;
   color:#111;
 }
 .wrap{
-  max-width:620px;
+  max-width:760px;
   margin:0 auto;
-  padding:16px 14px 34px;
+  padding:16px;
 }
 .header{
-  background:#fff;
-  border:3px solid var(--black);
-  border-radius:22px;
-  padding:14px 14px 16px;
-  box-shadow:0 8px 0 #111;
-}
-.top-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.move-btn{
-  border:2px solid #111;
-  background:#fff;
-  border-radius:999px;
-  padding:8px 16px;
-  font-weight:900;
-}
-.live{
   background:#111;
   color:#fff;
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:12px;
-  font-weight:900;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:14px;
 }
-.live span{color:var(--green)}
-.logo{text-align:center;margin-top:10px}
-.logo-mark{
-  font-size:64px;
-  color:var(--red);
-  font-weight:1000;
-  line-height:0.9;
-}
-.logo-title{
-  color:var(--red);
+.logo{
   font-size:30px;
-  font-weight:1000;
-  letter-spacing:-1px;
-}
-.logo-sub{
-  font-size:14px;
   font-weight:900;
+  color:#ff1e1e;
+}
+.sub{
+  font-size:13px;
+  margin-top:4px;
+  color:#ddd;
 }
 .time{
-  margin-top:12px;
-  text-align:center;
+  margin-top:10px;
   font-size:12px;
-  color:#666;
-  font-weight:700;
+  color:#aaa;
 }
-.area-tabs{
+.tabs{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
-  margin:18px 0;
+  margin:14px 0;
 }
-.area-tabs button{
+.tabs button{
   border:2px solid #111;
   background:#fff;
-  border-radius:14px;
-  padding:11px 0;
-  font-weight:1000;
-  font-size:14px;
+  border-radius:12px;
+  padding:10px;
+  font-weight:900;
 }
-.area-tabs button.active{
-  background:var(--red);
-  border-color:var(--red);
+.tabs button.active{
+  background:#e60012;
   color:#fff;
-  box-shadow:0 4px 0 #9c000b;
+  border-color:#e60012;
 }
-.main-kpi{
+.hero{
   display:grid;
-  grid-template-columns:1.3fr 1fr;
+  grid-template-columns:2fr 1fr 1fr;
   gap:10px;
   margin-bottom:12px;
 }
-.hero-card{
-  background:var(--red);
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+.card.red{
+  background:#e60012;
   color:#fff;
-  border-radius:22px;
-  padding:18px;
-  box-shadow:0 8px 18px rgba(230,0,18,.25);
 }
-.hero-label{font-size:13px;font-weight:900;opacity:.9}
-.hero-value{font-size:48px;font-weight:1000;line-height:1;margin-top:8px}
-.hero-sub{font-size:12px;margin-top:8px;font-weight:800}
-.kpi-stack{
-  display:grid;
-  gap:10px;
-}
-.kpi-card{
+.card.black{
   background:#111;
   color:#fff;
-  border-radius:18px;
-  padding:14px;
 }
-.kpi-card.light{
-  background:#fff;
-  color:#111;
-  border:2px solid #111;
+.label{
+  font-size:12px;
+  font-weight:900;
+  color:#777;
 }
-.kpi-label{font-size:12px;font-weight:900;color:#999}
-.kpi-card.light .kpi-label{color:#666}
-.kpi-value{font-size:24px;font-weight:1000;margin-top:5px}
-.summary-grid{
+.red .label,.black .label{
+  color:rgba(255,255,255,.75);
+}
+.value{
+  font-size:30px;
+  font-weight:900;
+  margin-top:6px;
+}
+.big{
+  font-size:52px;
+}
+.grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:9px;
-  margin:10px 0 18px;
+  gap:10px;
+  margin-bottom:12px;
 }
-.mini-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:18px;
-  padding:12px 8px;
-  text-align:center;
-  box-shadow:0 4px 12px rgba(0,0,0,.05);
-}
-.mini-title{
-  font-size:11px;
-  color:#666;
+.section{
+  margin:24px 0 10px;
+  font-size:20px;
   font-weight:900;
 }
-.mini-value{
-  font-size:18px;
-  font-weight:1000;
-  margin-top:5px;
-}
-.section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-end;
-  margin:22px 2px 10px;
-}
-.section-title{
-  font-size:18px;
-  font-weight:1000;
-}
-.section-sub{
-  font-size:11px;
-  color:#777;
-  font-weight:800;
-}
-.team-goals{
+.team-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-.goal-card{
+.team-card{
   background:#fff;
   border:2px solid #111;
-  border-radius:20px;
-  padding:13px;
-  box-shadow:0 6px 0 #111;
+  border-radius:18px;
+  padding:14px;
 }
-.goal-card.sonic{border-color:#111}
-.goal-card.dalseo{border-color:var(--red);box-shadow:0 6px 0 var(--red)}
-.goal-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-weight:1000;
+.team-title{
+  font-size:18px;
+  font-weight:900;
   margin-bottom:10px;
 }
-.set-badge{
-  font-size:11px;
-  background:#111;
-  color:#fff;
-  border-radius:999px;
-  padding:4px 7px;
+.row{
+  margin:10px 0;
 }
-.goal-card.dalseo .set-badge{background:var(--red)}
-.goal-row{
-  margin:9px 0;
-}
-.goal-top{
+.row-top{
   display:flex;
   justify-content:space-between;
-  font-size:12px;
+  font-size:13px;
   font-weight:900;
   margin-bottom:5px;
 }
@@ -553,76 +473,73 @@ body{
 }
 .fill{
   height:100%;
-  background:linear-gradient(90deg,var(--red),#ff6b6b);
-  border-radius:999px;
-  transition:.3s;
+  background:#e60012;
 }
-.filter-row{
+.filters{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:8px;
-  margin:16px 0 12px;
+  margin:14px 0;
 }
-.filter-row button{
+.filters button{
   border:1px solid #111;
   background:#fff;
   border-radius:999px;
-  padding:9px 0;
-  font-weight:1000;
+  padding:8px;
+  font-weight:900;
 }
-.filter-row button.active{
+.filters button.active{
   background:#111;
   color:#fff;
 }
-.rider-grid{
+.riders{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(2,1fr);
   gap:12px;
 }
-.rider-card{
+.rider{
   background:#111;
   color:#fff;
-  border-radius:20px;
-  padding:13px;
-  position:relative;
+  border-radius:18px;
+  padding:14px;
   border:3px solid #111;
-  box-shadow:0 6px 14px rgba(0,0,0,.14);
+  position:relative;
 }
-.rider-card.green{
-  background:#f8fff9;
+.rider.active{
+  background:#f7fff9;
   color:#111;
-  border-color:var(--green);
+  border-color:#00d26a;
 }
 .rider-name{
-  font-size:21px;
-  font-weight:1000;
-  letter-spacing:-1px;
-  padding-right:42px;
+  font-size:22px;
+  font-weight:900;
 }
-.team-chip{
+.team{
   display:inline-block;
   margin-top:5px;
   font-size:11px;
   font-weight:900;
-  border-radius:999px;
-  padding:3px 8px;
-  background:#222;
+  background:#333;
   color:#fff;
+  border-radius:999px;
+  padding:4px 8px;
 }
-.rider-card.green .team-chip{background:var(--green);color:#042b15}
+.rider.active .team{
+  background:#00d26a;
+  color:#053818;
+}
 .warn{
   position:absolute;
-  top:10px;
   right:10px;
-  background:#fff3bf;
-  color:#6b4e00;
-  border:1px solid #ffd43b;
+  top:10px;
+  background:#ffe58f;
+  color:#6b5200;
   border-radius:999px;
   padding:4px 7px;
   font-size:11px;
-  font-weight:1000;
+  font-weight:900;
 }
-.rider-stats{
+.stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:6px;
@@ -630,73 +547,69 @@ body{
 }
 .stat{
   background:rgba(255,255,255,.1);
-  border-radius:12px;
-  padding:8px 4px;
+  border-radius:10px;
   text-align:center;
+  padding:8px 4px;
 }
-.rider-card.green .stat{background:#f0f0f0}
-.stat span{
-  font-size:10px;
+.rider.active .stat{
+  background:#ececec;
+}
+.stat small{
+  display:block;
   color:#aaa;
   font-weight:900;
 }
-.rider-card.green .stat span{color:#666}
+.rider.active .stat small{
+  color:#666;
+}
 .stat b{
-  display:block;
   font-size:17px;
-  margin-top:3px;
 }
 .periods{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:4px;
-  margin-top:9px;
+  gap:5px;
+  margin-top:10px;
+  font-size:12px;
   text-align:center;
-  font-size:11px;
-  font-weight:900;
 }
 .periods div{
-  background:rgba(255,255,255,.08);
-  border-radius:10px;
+  background:rgba(255,255,255,.1);
+  border-radius:8px;
   padding:6px 2px;
 }
-.rider-card.green .periods div{background:#eef8f0}
+.rider.active .periods div{
+  background:#eef8f0;
+}
 .weekly{
-  background:#fff;
-  border:2px solid #111;
-  border-radius:20px;
-  padding:14px;
   margin-top:24px;
-  box-shadow:0 6px 0 #111;
+  background:#fff;
+  border-radius:18px;
+  padding:14px;
 }
-.weekly h3{
-  margin:0 0 10px;
-  font-size:17px;
-}
-.weekly table{
+table{
   width:100%;
   border-collapse:collapse;
-  font-size:12px;
+  font-size:13px;
 }
-.weekly th,.weekly td{
+th,td{
   padding:8px 4px;
-  text-align:center;
   border-bottom:1px solid #eee;
-}
-.weekly th{
-  color:#777;
-}
-.notice{
-  margin-top:14px;
   text-align:center;
-  color:#777;
-  font-size:11px;
-  font-weight:800;
 }
-@media(max-width:460px){
-  .main-kpi{grid-template-columns:1fr}
-  .team-goals{grid-template-columns:1fr}
-  .rider-grid{grid-template-columns:1fr}
+.error{
+  background:#fff3f3;
+  border:2px solid #e60012;
+  padding:16px;
+  border-radius:14px;
+  color:#e60012;
+  font-weight:900;
+}
+@media(max-width:520px){
+  .hero{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr}
+  .riders{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -704,97 +617,75 @@ body{
 <div class="wrap">
 
   <div class="header">
-    <div class="top-row">
-      <button class="move-btn">권역이동</button>
-      <div class="live"><span>●</span> LIVE</div>
-    </div>
-
-    <div class="logo">
-      <div class="logo-mark">S</div>
-      <div class="logo-title">SUPERSONIC</div>
-      <div class="logo-sub">배민 | 쿠팡블럭사</div>
-    </div>
-
-    <div class="time" id="timeNow"></div>
+    <div class="logo">SUPERSONIC</div>
+    <div class="sub">달서A 실시간 자동 관제판</div>
+    <div class="time" id="timeNow">데이터 불러오는 중...</div>
   </div>
 
-  <div class="area-tabs" id="areaTabs"></div>
+  <div class="tabs" id="areaTabs"></div>
 
-  <div class="main-kpi">
-    <div class="hero-card">
-      <div class="hero-label">당일 총 완료</div>
-      <div class="hero-value" id="dayComplete">0</div>
-      <div class="hero-sub" id="areaNow"></div>
+  <div id="errorBox"></div>
+
+  <div class="hero">
+    <div class="card red">
+      <div class="label">당일 총 완료</div>
+      <div class="value big" id="totalComplete">0</div>
     </div>
-    <div class="kpi-stack">
-      <div class="kpi-card">
-        <div class="kpi-label">당일 수락률</div>
-        <div class="kpi-value" id="dayRate">0%</div>
-      </div>
-      <div class="kpi-card light">
-        <div class="kpi-label">현재 구간</div>
-        <div class="kpi-value" id="currentPeriod">-</div>
-      </div>
+    <div class="card black">
+      <div class="label">수락률</div>
+      <div class="value" id="acceptRate">0%</div>
+    </div>
+    <div class="card">
+      <div class="label">현재구간</div>
+      <div class="value" id="currentPeriod">-</div>
     </div>
   </div>
 
-  <div class="summary-grid">
-    <div class="mini-card">
-      <div class="mini-title">거절 / 취소</div>
-      <div class="mini-value" id="dayReject">0/0</div>
+  <div class="grid">
+    <div class="card">
+      <div class="label">전체 기사</div>
+      <div class="value" id="totalCount">0</div>
     </div>
-    <div class="mini-card">
-      <div class="mini-title">소닉팀 완료</div>
-      <div class="mini-value" id="sonicTotal">0</div>
+    <div class="card">
+      <div class="label">거절 / 취소</div>
+      <div class="value" id="rejectCancel">0/0</div>
     </div>
-    <div class="mini-card">
-      <div class="mini-title">달서팀 완료</div>
-      <div class="mini-value" id="dalseoTotal">0</div>
-    </div>
-  </div>
-
-  <div class="summary-grid">
-    <div class="mini-card">
-      <div class="mini-title">주간 총완료</div>
-      <div class="mini-value" id="weekComplete">0</div>
-    </div>
-    <div class="mini-card">
-      <div class="mini-title">주간 거절/취소</div>
-      <div class="mini-value" id="weekReject">0/0</div>
-    </div>
-    <div class="mini-card">
-      <div class="mini-title">주간수락률/여유</div>
-      <div class="mini-value" id="weekRate">0% / 0</div>
+    <div class="card">
+      <div class="label">여유거절</div>
+      <div class="value" id="spareRejects">0</div>
     </div>
   </div>
 
-  <div class="section-head">
-    <div>
-      <div class="section-title">구간별 목표 현황</div>
-      <div class="section-sub">요일별 목표 × 팀 세트 자동계산</div>
+  <div class="grid">
+    <div class="card">
+      <div class="label">소닉팀 완료</div>
+      <div class="value" id="sonicComplete">0</div>
+    </div>
+    <div class="card">
+      <div class="label">달서팀 완료</div>
+      <div class="value" id="dalseoComplete">0</div>
+    </div>
+    <div class="card">
+      <div class="label">업데이트</div>
+      <div class="value" style="font-size:16px" id="updatedAt">-</div>
     </div>
   </div>
 
-  <div class="team-goals" id="teamGoals"></div>
+  <div class="section">구간별 목표 현황</div>
+  <div class="team-grid" id="teamGoals"></div>
 
-  <div class="section-head">
-    <div>
-      <div class="section-title">기사 실적 카드</div>
-      <div class="section-sub">초록=실적 발생 / 검정=대기 또는 0건 / ⚠ 수락률 80% 미만</div>
-    </div>
-  </div>
-
-  <div class="filter-row">
+  <div class="section">기사 실적 카드</div>
+  <div class="filters">
     <button onclick="setFilter('전체')" id="f전체">전체</button>
     <button onclick="setFilter('소닉팀')" id="f소닉팀">소닉</button>
     <button onclick="setFilter('달서팀')" id="f달서팀">달서</button>
-    <button onclick="setSort()" id="sortBtn">완료순</button>
+    <button onclick="toggleSort()" id="sortBtn">완료순</button>
   </div>
 
-  <div class="rider-grid" id="riderGrid"></div>
+  <div class="riders" id="riderGrid"></div>
 
   <div class="weekly">
-    <h3>주간 마감 실적</h3>
+    <div class="section" style="margin-top:0">주간 마감 실적</div>
     <table>
       <thead>
         <tr>
@@ -809,123 +700,141 @@ body{
     </table>
   </div>
 
-  <div class="notice">30초마다 화면 데이터 확인 · 수집기는 60초마다 GitHub 업로드</div>
 </div>
 
 <script>
-let DATA=null;
-let FILTER="전체";
-let SORT_DESC=true;
+let DATA = null;
+let FILTER = "전체";
+let SORT_DESC = true;
 
-function pct(now,target){
-  if(!target||target<=0)return 0;
-  return Math.min(100,Math.round((now/target)*100));
+function num(v){
+  return Number(v || 0).toLocaleString();
+}
+
+function pct(now, target){
+  if(!target || target <= 0) return 0;
+  return Math.min(100, Math.round((now / target) * 100));
 }
 
 function setFilter(v){
-  FILTER=v;
+  FILTER = v;
   render();
 }
 
-function setSort(){
-  SORT_DESC=!SORT_DESC;
+function toggleSort(){
+  SORT_DESC = !SORT_DESC;
   render();
 }
 
 async function loadData(){
-  const res=await fetch("data.json?time="+Date.now());
-  DATA=await res.json();
-  render();
+  try{
+    const res = await fetch("data.json?time=" + Date.now());
+    DATA = await res.json();
+    document.getElementById("errorBox").innerHTML = "";
+    render();
+  }catch(e){
+    document.getElementById("errorBox").innerHTML =
+      '<div class="error">data.json을 읽지 못했습니다. GitHub 업로드 또는 파일명을 확인하세요.</div>';
+    console.error(e);
+  }
 }
 
 function render(){
-  const d=DATA;
-  if(!d)return;
+  const d = DATA;
+  if(!d) return;
 
-  document.getElementById("areaNow").innerText=`${d.area} 실시간 관제`;
-  document.getElementById("timeNow").innerText=`마지막 업데이트 ${d.updatedAt} · 영업일 ${d.businessDate}`;
+  document.getElementById("timeNow").innerText =
+    "마지막 업데이트: " + d.updatedAt + " / 영업일: " + d.businessDate;
 
-  document.getElementById("areaTabs").innerHTML=d.areas.map(a=>`
-    <button class="${a===d.area?'active':''}">${a}</button>
+  document.getElementById("areaTabs").innerHTML = (d.areas || []).map(a => `
+    <button class="${a === d.area ? "active" : ""}">${a}</button>
   `).join("");
 
-  const wc=d.weekly.reduce((s,x)=>s+x.totalComplete,0);
-  const wr=d.weekly.reduce((s,x)=>s+x.totalReject,0);
-  const wcan=d.weekly.reduce((s,x)=>s+x.totalCancel,0);
-  const wrate=wc+wr===0?100:Math.round((wc/(wc+wr))*1000)/10;
-  const wspare=Math.floor(wc*2/98)-wr;
+  document.getElementById("totalComplete").innerText = num(d.total.complete);
+  document.getElementById("acceptRate").innerText = d.total.acceptRate + "%";
+  document.getElementById("currentPeriod").innerText = d.currentPeriodLabel;
+  document.getElementById("totalCount").innerText = num(d.total.count);
+  document.getElementById("rejectCancel").innerText = num(d.total.reject) + "/" + num(d.total.cancel);
+  document.getElementById("spareRejects").innerText = num(d.total.spareRejects);
+  document.getElementById("updatedAt").innerText = d.updatedAt.split(" ")[1] || d.updatedAt;
 
-  document.getElementById("weekComplete").innerText=wc;
-  document.getElementById("weekReject").innerText=`${wr}/${wcan}`;
-  document.getElementById("weekRate").innerText=`${wrate}% / ${wspare}`;
+  const sonic = d.teams["소닉팀"] ? d.teams["소닉팀"].summary.complete : 0;
+  const dalseo = d.teams["달서팀"] ? d.teams["달서팀"].summary.complete : 0;
 
-  document.getElementById("dayComplete").innerText=d.total.complete;
-  document.getElementById("dayReject").innerText=`${d.total.reject}/${d.total.cancel}`;
-  document.getElementById("dayRate").innerText=`${d.total.acceptRate}%`;
-  document.getElementById("currentPeriod").innerText=d.currentPeriodLabel;
+  document.getElementById("sonicComplete").innerText = num(sonic);
+  document.getElementById("dalseoComplete").innerText = num(dalseo);
 
-  document.getElementById("sonicTotal").innerText=d.teams["소닉팀"]?d.teams["소닉팀"].summary.complete:0;
-  document.getElementById("dalseoTotal").innerText=d.teams["달서팀"]?d.teams["달서팀"].summary.complete:0;
+  document.getElementById("teamGoals").innerHTML = Object.entries(d.teams).map(([team, obj]) => {
+    const s = obj.summary;
+    const t = obj.targets;
 
-  document.getElementById("teamGoals").innerHTML=Object.entries(d.teams).map(([team,obj])=>{
-    const s=obj.summary;
-    const t=obj.targets;
-    const cardClass=team==="달서팀"?"dalseo":"sonic";
-
-    return `<div class="goal-card ${cardClass}">
-      <div class="goal-title">
-        <div>${team}</div>
-        <div class="set-badge">${t.sets}세트</div>
+    return `
+      <div class="team-card">
+        <div class="team-title">${team} <span style="font-size:12px;color:#777">${t.sets}세트</span></div>
+        ${["morning","afternoon","evening","midnight"].map(p => {
+          const label = p === "morning" ? "오전" : p === "afternoon" ? "오후" : p === "evening" ? "저녁" : "심야";
+          return `
+            <div class="row">
+              <div class="row-top">
+                <span>${label}</span>
+                <span>${num(s[p])} / ${num(t[p])}</span>
+              </div>
+              <div class="bar">
+                <div class="fill" style="width:${pct(s[p], t[p])}%"></div>
+              </div>
+            </div>
+          `;
+        }).join("")}
       </div>
-      ${["morning","afternoon","evening","midnight"].map(p=>{
-        const label=p==="morning"?"오전":p==="afternoon"?"오후":p==="evening"?"저녁":"심야";
-        return `<div class="goal-row">
-          <div class="goal-top"><span>${label}</span><span>${s[p]} / ${t[p]}</span></div>
-          <div class="bar"><div class="fill" style="width:${pct(s[p],t[p])}%"></div></div>
-        </div>`;
-      }).join("")}
-    </div>`;
+    `;
   }).join("");
 
-  document.querySelectorAll(".filter-row button").forEach(b=>b.classList.remove("active"));
-  document.getElementById("f"+FILTER).classList.add("active");
+  document.querySelectorAll(".filters button").forEach(b => b.classList.remove("active"));
+  const filterBtn = document.getElementById("f" + FILTER);
+  if(filterBtn) filterBtn.classList.add("active");
 
-  let riders=[...d.riders];
-  if(FILTER!=="전체")riders=riders.filter(r=>r.team===FILTER);
-  riders.sort((a,b)=>SORT_DESC?b.complete-a.complete:a.complete-b.complete);
+  let riders = Array.isArray(d.riders) ? [...d.riders] : [];
 
-  document.getElementById("riderGrid").innerHTML=riders.map(r=>`
-    <div class="rider-card ${r.complete>0?'green':''}">
-      ${r.warning?'<div class="warn">⚠ 80%↓</div>':''}
+  if(FILTER !== "전체"){
+    riders = riders.filter(r => r.team === FILTER);
+  }
+
+  riders.sort((a,b) => SORT_DESC ? b.complete - a.complete : a.complete - b.complete);
+
+  document.getElementById("riderGrid").innerHTML = riders.map(r => `
+    <div class="rider ${r.complete > 0 ? "active" : ""}">
+      ${r.warning ? '<div class="warn">⚠ 80%↓</div>' : ''}
       <div class="rider-name">${r.name}</div>
-      <div class="team-chip">${r.team}</div>
-      <div class="rider-stats">
-        <div class="stat"><span>완료</span><b>${r.complete}</b></div>
-        <div class="stat"><span>거절/취소</span><b>${r.reject}/${r.cancel}</b></div>
-        <div class="stat"><span>수락률</span><b>${r.acceptRate}%</b></div>
+      <div class="team">${r.team}</div>
+
+      <div class="stats">
+        <div class="stat"><small>완료</small><b>${num(r.complete)}</b></div>
+        <div class="stat"><small>거절/취소</small><b>${num(r.reject)}/${num(r.cancel)}</b></div>
+        <div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div>
       </div>
+
       <div class="periods">
-        <div>오전<br>${r.morning}</div>
-        <div>오후<br>${r.afternoon}</div>
-        <div>저녁<br>${r.evening}</div>
-        <div>심야<br>${r.midnight}</div>
+        <div>오전<br>${num(r.morning)}</div>
+        <div>오후<br>${num(r.afternoon)}</div>
+        <div>저녁<br>${num(r.evening)}</div>
+        <div>심야<br>${num(r.midnight)}</div>
       </div>
     </div>
   `).join("");
 
-  document.getElementById("weeklyTable").innerHTML=d.weekly.slice().reverse().map(w=>`
+  document.getElementById("weeklyTable").innerHTML = (d.weekly || []).slice().reverse().map(w => `
     <tr>
       <td>${w.businessDate}</td>
-      <td>${w.totalComplete}</td>
-      <td>${w.totalReject}</td>
+      <td>${num(w.totalComplete)}</td>
+      <td>${num(w.totalReject)}</td>
       <td>${w.acceptRate}%</td>
-      <td>${w.spareRejects}</td>
+      <td>${num(w.spareRejects)}</td>
     </tr>
   `).join("");
 }
 
 loadData();
-setInterval(loadData,30000);
+setInterval(loadData, 30000);
 </script>
 </body>
 </html>
