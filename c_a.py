@@ -125,9 +125,11 @@ def parse_clipboard_text(text):
     i = 0
     while i < len(lines):
         name = lines[i]
-        if i + 35 >= len(lines):
-            i += 1
-            continue
+        if name == "-":
+    i += 1
+    continue
+        
+        
 
         status = "미접속"
         if lines[i + 1].startswith("010-"):
