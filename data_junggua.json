@@ -5,7 +5,7 @@
     "달서B",
     "중구A"
   ],
-  "updatedAt": "2026-05-24 06:48:59",
+  "updatedAt": "2026-05-24 06:52:28",
   "businessDate": "2026-05-24",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
@@ -20,7 +20,7 @@
     "evening": 0,
     "midnight": 0,
     "count": 73,
-    "onlineCount": 1,
+    "onlineCount": 0,
     "acceptRate": 50.0,
     "spareRejects": -1
   },
@@ -36,7 +36,7 @@
         "evening": 0,
         "midnight": 0,
         "count": 51,
-        "onlineCount": 1,
+        "onlineCount": 0,
         "acceptRate": 50.0,
         "spareRejects": -1
       },
@@ -94,12 +94,12 @@
           "warning": true
         },
         {
-          "name": "-",
+          "name": "강우기",
           "phone": "010-5745-6300",
           "userId": "aa57456300",
           "team": "소닉팀",
-          "status": "강우기",
-          "isOnline": true,
+          "status": "미접속",
+          "isOnline": false,
           "complete": 0,
           "reject": 0,
           "cancel": 0,
@@ -3336,12 +3336,12 @@
       "warning": true
     },
     {
-      "name": "-",
+      "name": "강우기",
       "phone": "010-5745-6300",
       "userId": "aa57456300",
       "team": "소닉팀",
-      "status": "강우기",
-      "isOnline": true,
+      "status": "미접속",
+      "isOnline": false,
       "complete": 0,
       "reject": 0,
       "cancel": 0,

@@ -64,6 +64,7 @@ def business_date(now):
 def current_period(now):
     h = now.hour
     weekend = now.weekday() >= 5
+
     if weekend:
         if 6 <= h <= 13:
             return "morning"
@@ -74,8 +75,10 @@ def current_period(now):
             return "morning"
         if 13 <= h <= 16:
             return "afternoon"
+
     if 17 <= h <= 19:
         return "evening"
+
     return "midnight"
 
 
@@ -119,27 +122,59 @@ def set_page_number(url, page_no):
     return urlunparse(parsed._replace(query=new_query))
 
 
+def is_bad_name(value):
+    bad_values = {
+        "-", "상태", "이름", "기사명", "라이더명", "전화번호",
+        "완료", "거절", "취소", "배달취소", "배차취소"
+    }
+    return value in bad_values or value.startswith("010-")
+
+
+def detect_online(status):
+    status = str(status).strip()
+    offline_words = ["미접속", "운행 종료", "운행종료", "종료", "오프라인", "-"]
+    if status in offline_words:
+        return False
+    if status == "":
+        return False
+    return True
+
+
 def parse_clipboard_text(text):
     lines = [x.strip() for x in text.splitlines() if x.strip()]
     riders = []
+
     i = 0
     while i < len(lines):
         name = lines[i]
-        if name == "-":
-    i += 1
-    continue
-        
-        
+
+        if is_bad_name(name):
+            i += 1
+            continue
+
+        if i + 35 >= len(lines):
+            i += 1
+            continue
 
         status = "미접속"
+
         if lines[i + 1].startswith("010-"):
             phone_idx = i + 1
         else:
             status = lines[i + 1]
             phone_idx = i + 2
 
+        if phone_idx >= len(lines):
+            i += 1
+            continue
+
         phone = lines[phone_idx]
+
         if not phone.startswith("010-"):
+            i += 1
+            continue
+
+        if phone_idx + 33 >= len(lines):
             i += 1
             continue
 
@@ -147,6 +182,7 @@ def parse_clipboard_text(text):
         reject = to_int(lines[phone_idx + 2])
         cancel = to_int(lines[phone_idx + 3])
         rider_fault = to_int(lines[phone_idx + 4])
+
         morning = to_int(lines[phone_idx + 5])
         afternoon = to_int(lines[phone_idx + 6])
         evening = to_int(lines[phone_idx + 7])
@@ -157,7 +193,6 @@ def parse_clipboard_text(text):
             hourly.append(to_int(lines[phone_idx + 9 + h]))
 
         user_id = lines[phone_idx + 33]
-        is_online = status not in ["미접속", "운행 종료", "운행종료", "종료", "오프라인", "-"]
 
         riders.append({
             "name": name,
@@ -165,7 +200,7 @@ def parse_clipboard_text(text):
             "userId": user_id,
             "team": team_of(name),
             "status": status,
-            "isOnline": is_online,
+            "isOnline": detect_online(status),
             "complete": complete,
             "reject": reject,
             "cancel": cancel,
@@ -178,7 +213,9 @@ def parse_clipboard_text(text):
             "acceptRate": calc_accept_rate(complete, reject),
             "warning": calc_accept_rate(complete, reject) < 80,
         })
+
         i = phone_idx + 34
+
     return riders
 
 
@@ -195,18 +232,24 @@ def collect_all_pages_by_copy(page):
     base_url = page.url
     all_riders = []
     seen = set()
+
     for page_no in range(MAX_PAGES):
         target_url = set_page_number(base_url, page_no)
         print(f"{page_no + 1}페이지 이동: {target_url}")
+
         page.goto(target_url)
         page.wait_for_load_state("networkidle")
         time.sleep(1.5)
+
         text = copy_current_page_text(page)
         riders = parse_clipboard_text(text)
+
         print(f"{page_no + 1}페이지 읽은 기사 수: {len(riders)}")
+
         if len(riders) == 0:
             print("빈 페이지라서 수집 종료")
             break
+
         new_count = 0
         for r in riders:
             key = r["name"] + "_" + r["phone"]
@@ -214,10 +257,13 @@ def collect_all_pages_by_copy(page):
                 seen.add(key)
                 all_riders.append(r)
                 new_count += 1
+
         print(f"{page_no + 1}페이지 신규 기사 수: {new_count}")
+
         if new_count == 0:
             print("새 기사 없음. 마지막 페이지로 판단하고 종료")
             break
+
     print(f"전체 수집 기사 수: {len(all_riders)}")
     return all_riders
 
@@ -226,6 +272,7 @@ def summary(rows):
     complete = sum(r["complete"] for r in rows)
     reject = sum(r["reject"] for r in rows)
     cancel = sum(r["cancel"] for r in rows)
+
     return {
         "complete": complete,
         "reject": reject,
@@ -245,10 +292,12 @@ def summary(rows):
 def team_targets(now):
     base = dict(zip(PERIODS, DAY_TARGETS[now.weekday()]))
     result = {}
+
     for team, sets in AREA_CONFIG[AREA_NAME].items():
         result[team] = {p: math.ceil(base[p] * sets) for p in PERIODS}
         result[team]["total"] = sum(result[team][p] for p in PERIODS)
         result[team]["sets"] = sets
+
     return result
 
 
@@ -261,12 +310,16 @@ def load_weekly():
 
 def save_weekly_if_close(data):
     now = datetime.now()
+
     if not (now.hour == 3 and now.minute >= 30):
         return
+
     weekly = load_weekly()
     today_key = data["businessDate"]
+
     if any(x.get("businessDate") == today_key for x in weekly):
         return
+
     weekly.append({
         "businessDate": today_key,
         "closedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -276,7 +329,9 @@ def save_weekly_if_close(data):
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
     })
+
     weekly = weekly[-14:]
+
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
 
@@ -284,8 +339,10 @@ def save_weekly_if_close(data):
 def make_data(riders):
     now = datetime.now()
     riders.sort(key=lambda x: x["complete"], reverse=True)
+
     targets = team_targets(now)
     teams = {}
+
     for team in AREA_CONFIG[AREA_NAME].keys():
         rows = [r for r in riders if r["team"] == team]
         teams[team] = {
@@ -293,6 +350,7 @@ def make_data(riders):
             "targets": targets[team],
             "riders": rows,
         }
+
     return {
         "area": AREA_NAME,
         "areas": ["달서A", "달서B", "중구A"],
@@ -327,10 +385,7 @@ def git_push():
     )
 
     if WEEKLY_FILE.exists():
-        subprocess.run(
-            ["git", "add", "weekly.json"],
-            cwd=BASE_DIR
-        )
+        subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
 
     commit = subprocess.run(
         ["git", "commit", "-m", "auto update"],
@@ -362,14 +417,11 @@ def run_update(page):
         return
 
     data = make_data(riders)
-
     save_weekly_if_close(data)
     data["weekly"] = load_weekly()
 
     save_json(data)
-
-    # save_html()
-
+    save_html()
     git_push()
 
     print(f"업로드 완료: {data['updatedAt']}")
@@ -410,7 +462,6 @@ def main():
 
             try:
                 run_update(page)
-
             except Exception as e:
                 print("오류 발생:")
                 print(e)
