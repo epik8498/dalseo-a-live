@@ -9,20 +9,20 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 23:16:54",
+  "updatedAt": "2026-05-24 23:18:05",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1476,
+    "complete": 1477,
     "reject": 180,
     "cancel": 41,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
     "evening": 408,
-    "midnight": 252,
+    "midnight": 253,
     "count": 173,
     "onlineCount": 10,
     "acceptRate": 89.1,
@@ -31,18 +31,18 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1224,
+        "complete": 1225,
         "reject": 156,
         "cancel": 28,
         "riderFault": 1,
         "morning": 437,
         "afternoon": 262,
         "evening": 328,
-        "midnight": 197,
+        "midnight": 198,
         "count": 141,
         "onlineCount": 10,
         "acceptRate": 88.7,
-        "spareRejects": -132
+        "spareRejects": -131
       },
       "targets": {
         "morning": 231,
@@ -1600,14 +1600,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 13,
+          "complete": 14,
           "reject": 12,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 4,
-          "midnight": 9,
+          "midnight": 10,
           "hourly": [
             0,
             0,
@@ -1625,7 +1625,7 @@
             4,
             4,
             3,
-            2,
+            3,
             0,
             0,
             0,
@@ -1634,7 +1634,7 @@
             0,
             0
           ],
-          "acceptRate": 52.0,
+          "acceptRate": 53.8,
           "warning": true
         },
         {
@@ -9506,14 +9506,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 13,
+      "complete": 14,
       "reject": 12,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 4,
-      "midnight": 9,
+      "midnight": 10,
       "hourly": [
         0,
         0,
@@ -9531,7 +9531,7 @@
         4,
         4,
         3,
-        2,
+        3,
         0,
         0,
         0,
@@ -9540,7 +9540,7 @@
         0,
         0
       ],
-      "acceptRate": 52.0,
+      "acceptRate": 53.8,
       "warning": true
     },
     {
