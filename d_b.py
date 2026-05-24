@@ -87,6 +87,10 @@ DAY_TARGETS = {
     6: [33, 22, 35, 30],
 }
 
+SPECIAL_DAY_TARGET_WEEKDAY = {
+    "2026-05-25": 6,
+}
+
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
 PERIOD_LABELS = {
     "morning": "오전피크",
@@ -400,7 +404,8 @@ def summary(rows):
 
 
 def team_targets(now):
-    base = dict(zip(PERIODS, DAY_TARGETS[now.weekday()]))
+    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(now.strftime("%Y-%m-%d"), now.weekday())
+    base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     result = {}
 
     for team, sets in AREA_CONFIG[AREA_NAME].items():
