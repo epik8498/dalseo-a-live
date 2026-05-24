@@ -1,12 +1,12 @@
 import json
 import math
+import re
 import subprocess
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
-import pyperclip
 from playwright.sync_api import sync_playwright
 
 AUTO_GIT_PUSH = True
@@ -17,20 +17,22 @@ TARGET_ACCEPT_RATE = 98
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_dalseoa.json"
 HTML_FILE = BASE_DIR / "index.html"
-WEEKLY_FILE = BASE_DIR / "weekly.json"
+WEEKLY_FILE = BASE_DIR / "weekly_dalseoa.json"
 
 AREA_NAME = "달서A"
 
-DALSEO_T_RIDERS = [
-    "김민승", "윤창근", "김병국", "신호준", "김영빈",
-    "김용우", "박지원", "김탁기", "김병철", "정영훈",
-    "김태광", "배재현", "김형민", "문승수", "이상민",
-    "정성훈", "이주철", "박기홍", "정판호", "나미영",
-    "황호용", "김영철", "남승훈", "남수현", "김민서",
-    "신진관", "임선미", "여재환", "정주현", "김기현",
-    "김범준", "이윤석", "양혜진", "김민우", "김혜성",
-    "김기헌", "조대영", "정승덕", "임상완", "김우진"
+DALSEO_TEAM_RIDERS = [
+    '김민승', '윤창근', '김병국', '신호준', '김영빈',
+    '김용우', '박지원', '김탁기', '김병철', '정영훈',
+    '김태광', '배재현', '김형민', '문승수', '이상민',
+    '정성훈', '이주철', '박기홍', '정판호', '나미영',
+    '황호용', '김영철', '남승훈', '남수현', '김민서',
+    '신진관', '임선미', '여재환', '정주현', '김기현',
+    '김범준', '이윤석', '양혜진', '김민우', '김혜성',
+    '김기헌', '조대영', '정승덕', '임상완', '김우진',
 ]
+
+TEAM_ORDER = ["소닉팀", "달서팀"]
 
 AREA_CONFIG = {
     "달서A": {
@@ -100,14 +102,38 @@ def spare_rejects(complete, reject):
 
 
 def team_of(name):
-    return "달서팀" if name in DALSEO_T_RIDERS else "소닉팀"
+    return "달서팀" if name in DALSEO_TEAM_RIDERS else "소닉팀"
 
 
 def to_int(value):
     try:
         return int(str(value).replace(",", "").strip())
-    except:
+    except Exception:
         return 0
+
+
+def norm(value):
+    return str(value).replace("\u200b", "").replace("\ufeff", "").strip()
+
+
+def status_online(status):
+    return str(status).replace(" ", "").strip() == "운행중"
+
+
+def is_phone(value):
+    v = norm(value)
+    return "010-" in v or "010" in v
+
+
+def is_bad_name(value):
+    v = norm(value)
+    bad = {
+        "", "-", "이름", "운행상태", "휴대폰번호", "완료", "거절",
+        "배차취소", "배달취소(라이더귀책)", "아이디", "합계",
+        "아침점심피크", "오후논피크", "저녁피크", "심야논피크",
+        "운행중", "운행 중", "운행 종료", "운행종료",
+    }
+    return v in bad or is_phone(v) or v.isdigit() or v.endswith("시")
 
 
 def set_page_number(url, page_no):
@@ -115,89 +141,151 @@ def set_page_number(url, page_no):
     qs = parse_qs(parsed.query)
     qs["page"] = [str(page_no)]
     qs["size"] = ["100"]
+    qs.setdefault("orderName", ["name"])
+    qs.setdefault("orderBy", ["asc"])
+    qs.setdefault("name", [""])
+    qs.setdefault("userId", [""])
+    qs.setdefault("phoneNumber", [""])
+    qs.setdefault("riderStatus", [""])
     new_query = urlencode(qs, doseq=True)
     return urlunparse(parsed._replace(query=new_query))
 
 
-def parse_clipboard_text(text):
-    lines = [x.strip() for x in text.splitlines() if x.strip()]
+def read_dom_rows(page):
+    """
+    Ctrl+C로 빠지는 운행상태를 잡기 위해 브라우저 DOM에서
+    전화번호가 들어있는 행의 부모 박스를 직접 읽습니다.
+    """
+    return page.evaluate(r"""
+    () => {
+      const phoneRe = /010[-\s]?\d{3,4}[-\s]?\d{4}/;
+      const out = [];
+      const seen = new Set();
+
+      function visible(el){
+        const r = el.getBoundingClientRect();
+        const s = window.getComputedStyle(el);
+        return r.width > 0 && r.height > 0 && s.display !== 'none' && s.visibility !== 'hidden';
+      }
+
+      const elements = Array.from(document.querySelectorAll('body *'))
+        .filter(el => visible(el) && phoneRe.test(el.innerText || ''));
+
+      for (const el of elements) {
+        let best = null;
+        let cur = el;
+
+        for (let depth = 0; depth < 12 && cur && cur !== document.body; depth++, cur = cur.parentElement) {
+          const txt = (cur.innerText || '').trim();
+          if (!phoneRe.test(txt)) continue;
+
+          const r = cur.getBoundingClientRect();
+          const lines = txt.split(/\n+/).map(x => x.trim()).filter(Boolean);
+
+          if (r.width >= 650 && r.height >= 20 && r.height <= 180 && lines.length >= 8 && lines.length <= 60) {
+            best = cur;
+            break;
+          }
+        }
+
+        if (!best) continue;
+
+        const txt = (best.innerText || '').trim();
+        const m = txt.match(phoneRe);
+        if (!m) continue;
+
+        const key = m[0].replace(/\s/g,'');
+        if (seen.has(key)) continue;
+        seen.add(key);
+
+        out.push(txt.split(/\n+/).map(x => x.trim()).filter(Boolean));
+      }
+
+      return out;
+    }
+    """)
+
+
+def parse_row_lines(row_lines):
+    lines = [norm(x) for x in row_lines if norm(x)]
+    phone_idx = None
+
+    for idx, line in enumerate(lines):
+        if is_phone(line):
+            phone_idx = idx
+            break
+
+    if phone_idx is None:
+        return None
+
+    phone = lines[phone_idx]
+
+    status = "운행 종료"
+    for item in lines[:phone_idx + 1]:
+        if item.replace(" ", "") == "운행중":
+            status = "운행중"
+            break
+
+    name = ""
+    for item in reversed(lines[:phone_idx]):
+        if not is_bad_name(item):
+            name = item
+            break
+
+    if not name:
+        return None
+
+    if phone_idx + 33 >= len(lines):
+        return None
+
+    complete = to_int(lines[phone_idx + 1])
+    reject = to_int(lines[phone_idx + 2])
+    cancel = to_int(lines[phone_idx + 3])
+    rider_fault = to_int(lines[phone_idx + 4])
+
+    morning = to_int(lines[phone_idx + 5])
+    afternoon = to_int(lines[phone_idx + 6])
+    evening = to_int(lines[phone_idx + 7])
+    midnight = to_int(lines[phone_idx + 8])
+
+    hourly = []
+    for h in range(24):
+        hourly.append(to_int(lines[phone_idx + 9 + h]))
+
+    user_id = lines[phone_idx + 33]
+    is_online = status_online(status)
+
+    return {
+        "name": name,
+        "phone": phone,
+        "userId": user_id,
+        "team": team_of(name),
+        "status": "운행중" if is_online else "운행 종료",
+        "isOnline": is_online,
+        "complete": complete,
+        "reject": reject,
+        "cancel": cancel,
+        "riderFault": rider_fault,
+        "morning": morning,
+        "afternoon": afternoon,
+        "evening": evening,
+        "midnight": midnight,
+        "hourly": hourly,
+        "acceptRate": calc_accept_rate(complete, reject),
+        "warning": calc_accept_rate(complete, reject) < 80,
+    }
+
+
+def parse_dom_rows(row_groups):
     riders = []
-
-    i = 0
-    while i < len(lines):
-        name = lines[i]
-
-        if i + 35 >= len(lines):
-            i += 1
-            continue
-
-        status = "미접속"
-
-        if lines[i + 1].startswith("010-"):
-            phone_idx = i + 1
-        else:
-            status = lines[i + 1]
-            phone_idx = i + 2
-
-        phone = lines[phone_idx]
-
-        if not phone.startswith("010-"):
-            i += 1
-            continue
-
-        complete = to_int(lines[phone_idx + 1])
-        reject = to_int(lines[phone_idx + 2])
-        cancel = to_int(lines[phone_idx + 3])
-        rider_fault = to_int(lines[phone_idx + 4])
-
-        morning = to_int(lines[phone_idx + 5])
-        afternoon = to_int(lines[phone_idx + 6])
-        evening = to_int(lines[phone_idx + 7])
-        midnight = to_int(lines[phone_idx + 8])
-
-        hourly = []
-        for h in range(24):
-            hourly.append(to_int(lines[phone_idx + 9 + h]))
-
-        user_id = lines[phone_idx + 33]
-
-        is_online = status in ["운행중", "운행 중", "온라인", "접속중"]
-
-        riders.append({
-            "name": name,
-            "phone": phone,
-            "userId": user_id,
-            "team": team_of(name),
-            "status": status,
-            "isOnline": is_online,
-            "complete": complete,
-            "reject": reject,
-            "cancel": cancel,
-            "riderFault": rider_fault,
-            "morning": morning,
-            "afternoon": afternoon,
-            "evening": evening,
-            "midnight": midnight,
-            "hourly": hourly,
-            "acceptRate": calc_accept_rate(complete, reject),
-            "warning": calc_accept_rate(complete, reject) < 80,
-        })
-
-        i = phone_idx + 34
-
+    for group in row_groups:
+        rider = parse_row_lines(group)
+        if rider:
+            riders.append(rider)
     return riders
 
 
-def copy_current_page_text(page):
-    page.click("body")
-    page.keyboard.press("Control+A")
-    time.sleep(0.2)
-    page.keyboard.press("Control+C")
-    time.sleep(0.5)
-    return pyperclip.paste()
-
-
-def collect_all_pages_by_copy(page):
+def collect_all_pages_by_dom(page):
     base_url = page.url
     all_riders = []
     seen = set()
@@ -210,10 +298,23 @@ def collect_all_pages_by_copy(page):
         page.wait_for_load_state("networkidle")
         time.sleep(1.5)
 
-        text = copy_current_page_text(page)
-        riders = parse_clipboard_text(text)
+        if "size=100" not in page.url:
+            fixed_url = set_page_number(page.url, page_no)
+            print("100개 보기 강제 적용:", fixed_url)
+            page.goto(fixed_url)
+            page.wait_for_load_state("networkidle")
+            time.sleep(1.5)
 
+        row_groups = read_dom_rows(page)
+        riders = parse_dom_rows(row_groups)
+
+        print(f"{page_no + 1}페이지 DOM 행 수: {len(row_groups)}")
         print(f"{page_no + 1}페이지 읽은 기사 수: {len(riders)}")
+
+        if page_no == 0 and len(riders) == 0:
+            print("DOM 샘플:")
+            for idx, row in enumerate(row_groups[:3]):
+                print(idx, row[:20])
 
         if len(riders) == 0:
             print("빈 페이지라서 수집 종료")
@@ -312,7 +413,7 @@ def make_data(riders):
     targets = team_targets(now)
     teams = {}
 
-    for team in AREA_CONFIG[AREA_NAME].keys():
+    for team in TEAM_ORDER:
         rows = [r for r in riders if r["team"] == team]
         teams[team] = {
             "summary": summary(rows),
@@ -322,7 +423,8 @@ def make_data(riders):
 
     return {
         "area": AREA_NAME,
-        "areas": ["달서A", "달서B", "중구A"],
+        "areas": ["달서A", "달서B", "달서A"],
+        "teamOrder": TEAM_ORDER,
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
         "currentPeriod": current_period(now),
@@ -348,16 +450,10 @@ def git_push():
     if not AUTO_GIT_PUSH:
         return
 
-    subprocess.run(
-        ["git", "add", "data_dalseoa.json", "index.html", "d_a.py", "logo.png"],
-        cwd=BASE_DIR
-    )
+    subprocess.run(["git", "add", "data_dalseoa.json", "index.html", "d_a.py", "logo.png"], cwd=BASE_DIR)
 
     if WEEKLY_FILE.exists():
-        subprocess.run(
-            ["git", "add", "weekly.json"],
-            cwd=BASE_DIR
-        )
+        subprocess.run(["git", "add", "weekly_dalseoa.json"], cwd=BASE_DIR)
 
     commit = subprocess.run(
         ["git", "commit", "-m", "auto update"],
@@ -382,32 +478,31 @@ def git_push():
 
 
 def run_update(page):
-    riders = collect_all_pages_by_copy(page)
+    riders = collect_all_pages_by_dom(page)
 
     if len(riders) == 0:
         print("기사 데이터를 못 읽었습니다.")
         return
 
     data = make_data(riders)
-
     save_weekly_if_close(data)
     data["weekly"] = load_weekly()
 
     save_json(data)
-
-    # save_html()
-
+    save_html()
     git_push()
 
     print(f"업로드 완료: {data['updatedAt']}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
+    print(f"소닉팀 접속중: {data['teams']['소닉팀']['summary']['onlineCount']}")
+    print(f"달서팀 접속중: {data['teams']['달서팀']['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"수락률: {data['total']['acceptRate']}%")
 
 
 def main():
-    print("SUPERSONIC 달서A 자동 수집기")
+    print("SUPERSONIC 달서A DOM 자동 수집기")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
@@ -437,7 +532,6 @@ def main():
 
             try:
                 run_update(page)
-
             except Exception as e:
                 print("오류 발생:")
                 print(e)
