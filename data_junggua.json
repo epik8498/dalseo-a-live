@@ -9,20 +9,20 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 22:50:45",
+  "updatedAt": "2026-05-24 22:51:53",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 841,
+    "complete": 842,
     "reject": 74,
     "cancel": 37,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 174,
     "evening": 267,
-    "midnight": 161,
+    "midnight": 162,
     "count": 73,
     "onlineCount": 11,
     "acceptRate": 91.9,
@@ -31,14 +31,14 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 527,
+        "complete": 528,
         "reject": 56,
         "cancel": 33,
         "riderFault": 0,
         "morning": 141,
         "afternoon": 106,
         "evening": 173,
-        "midnight": 107,
+        "midnight": 108,
         "count": 49,
         "onlineCount": 8,
         "acceptRate": 90.4,
@@ -764,14 +764,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 11,
+          "complete": 12,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 0,
-          "midnight": 11,
+          "midnight": 12,
           "hourly": [
             0,
             0,
@@ -789,7 +789,7 @@
             0,
             5,
             4,
-            2,
+            3,
             0,
             0,
             0,
@@ -798,8 +798,8 @@
             0,
             0
           ],
-          "acceptRate": 78.6,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "김용상",
@@ -4402,14 +4402,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 11,
+      "complete": 12,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 0,
-      "midnight": 11,
+      "midnight": 12,
       "hourly": [
         0,
         0,
@@ -4427,7 +4427,7 @@
         0,
         5,
         4,
-        2,
+        3,
         0,
         0,
         0,
@@ -4436,8 +4436,8 @@
         0,
         0
       ],
-      "acceptRate": 78.6,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "김용상",
