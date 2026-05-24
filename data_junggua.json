@@ -9,20 +9,20 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 23:40:25",
+  "updatedAt": "2026-05-24 23:41:33",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 875,
+    "complete": 876,
     "reject": 79,
     "cancel": 37,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 174,
     "evening": 267,
-    "midnight": 195,
+    "midnight": 196,
     "count": 73,
     "onlineCount": 9,
     "acceptRate": 91.7,
@@ -31,14 +31,14 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 555,
+        "complete": 556,
         "reject": 61,
         "cancel": 33,
         "riderFault": 0,
         "morning": 141,
         "afternoon": 106,
         "evening": 173,
-        "midnight": 135,
+        "midnight": 136,
         "count": 49,
         "onlineCount": 8,
         "acceptRate": 90.1,
@@ -588,14 +588,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 19,
+          "complete": 20,
           "reject": 5,
           "cancel": 1,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 6,
-          "midnight": 13,
+          "midnight": 14,
           "hourly": [
             0,
             0,
@@ -614,7 +614,7 @@
             4,
             4,
             4,
-            1,
+            2,
             0,
             0,
             0,
@@ -622,8 +622,8 @@
             0,
             0
           ],
-          "acceptRate": 79.2,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "정창규",
@@ -4138,14 +4138,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 19,
+      "complete": 20,
       "reject": 5,
       "cancel": 1,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 6,
-      "midnight": 13,
+      "midnight": 14,
       "hourly": [
         0,
         0,
@@ -4164,7 +4164,7 @@
         4,
         4,
         4,
-        1,
+        2,
         0,
         0,
         0,
@@ -4172,8 +4172,8 @@
         0,
         0
       ],
-      "acceptRate": 79.2,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "정창규",
