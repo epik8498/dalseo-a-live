@@ -10,24 +10,24 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-24 23:44:29",
+  "updatedAt": "2026-05-24 23:45:40",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 2323,
-    "reject": 259,
+    "complete": 2324,
+    "reject": 260,
     "cancel": 82,
     "riderFault": 1,
     "morning": 622,
     "afternoon": 367,
     "evening": 716,
-    "midnight": 618,
+    "midnight": 619,
     "count": 177,
     "onlineCount": 28,
-    "acceptRate": 90.0,
-    "spareRejects": -212
+    "acceptRate": 89.9,
+    "spareRejects": -213
   },
   "teams": {
     "소닉팀": {
@@ -2126,14 +2126,14 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 677,
+        "complete": 678,
         "reject": 55,
         "cancel": 18,
         "riderFault": 0,
         "morning": 188,
         "afternoon": 99,
         "evening": 228,
-        "midnight": 162,
+        "midnight": 163,
         "count": 43,
         "onlineCount": 4,
         "acceptRate": 92.5,
@@ -2683,14 +2683,14 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 32,
+          "complete": 33,
           "reject": 4,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 5,
           "evening": 12,
-          "midnight": 15,
+          "midnight": 16,
           "hourly": [
             0,
             0,
@@ -2709,7 +2709,7 @@
             4,
             4,
             5,
-            2,
+            3,
             0,
             0,
             0,
@@ -2717,7 +2717,7 @@
             0,
             0
           ],
-          "acceptRate": 88.9,
+          "acceptRate": 89.2,
           "warning": false
         },
         {
@@ -4045,7 +4045,7 @@
     "마음팀": {
       "summary": {
         "complete": 1073,
-        "reject": 101,
+        "reject": 102,
         "cancel": 33,
         "riderFault": 1,
         "morning": 267,
@@ -4054,8 +4054,8 @@
         "midnight": 315,
         "count": 87,
         "onlineCount": 19,
-        "acceptRate": 91.4,
-        "spareRejects": -80
+        "acceptRate": 91.3,
+        "spareRejects": -81
       },
       "targets": {
         "morning": 182,
@@ -5482,7 +5482,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 14,
-          "reject": 2,
+          "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -5515,7 +5515,7 @@
             0,
             0
           ],
-          "acceptRate": 87.5,
+          "acceptRate": 82.4,
           "warning": false
         },
         {
@@ -9351,6 +9351,50 @@
       "warning": false
     },
     {
+      "name": "김태하",
+      "phone": "010-5427-3601",
+      "userId": "kth1234",
+      "team": "넘버팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 33,
+      "reject": 4,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 0,
+      "afternoon": 5,
+      "evening": 12,
+      "midnight": 16,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        0,
+        2,
+        5,
+        5,
+        4,
+        4,
+        5,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 89.2,
+      "warning": false
+    },
+    {
       "name": "장민규",
       "phone": "010-2155-8386",
       "userId": "wkd123455",
@@ -9392,50 +9436,6 @@
         0
       ],
       "acceptRate": 100.0,
-      "warning": false
-    },
-    {
-      "name": "김태하",
-      "phone": "010-5427-3601",
-      "userId": "kth1234",
-      "team": "넘버팀",
-      "status": "운행중",
-      "isOnline": true,
-      "complete": 32,
-      "reject": 4,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 0,
-      "afternoon": 5,
-      "evening": 12,
-      "midnight": 15,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        5,
-        0,
-        2,
-        5,
-        5,
-        4,
-        4,
-        5,
-        2,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 88.9,
       "warning": false
     },
     {
@@ -10678,7 +10678,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 14,
-      "reject": 2,
+      "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -10711,7 +10711,7 @@
         0,
         0
       ],
-      "acceptRate": 87.5,
+      "acceptRate": 82.4,
       "warning": false
     },
     {
