@@ -9,40 +9,40 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 21:56:27",
+  "updatedAt": "2026-05-24 21:57:37",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1388,
-    "reject": 150,
+    "complete": 1390,
+    "reject": 151,
     "cancel": 39,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
     "evening": 408,
-    "midnight": 164,
+    "midnight": 166,
     "count": 173,
     "onlineCount": 20,
     "acceptRate": 90.2,
-    "spareRejects": -122
+    "spareRejects": -123
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1148,
-        "reject": 130,
+        "complete": 1150,
+        "reject": 131,
         "cancel": 26,
         "riderFault": 1,
         "morning": 437,
         "afternoon": 262,
         "evening": 328,
-        "midnight": 121,
+        "midnight": 123,
         "count": 141,
         "onlineCount": 16,
         "acceptRate": 89.8,
-        "spareRejects": -107
+        "spareRejects": -108
       },
       "targets": {
         "morning": 231,
@@ -765,7 +765,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 33,
-          "reject": 8,
+          "reject": 9,
           "cancel": 6,
           "riderFault": 0,
           "morning": 15,
@@ -798,8 +798,8 @@
             0,
             0
           ],
-          "acceptRate": 80.5,
-          "warning": false
+          "acceptRate": 78.6,
+          "warning": true
         },
         {
           "name": "지명환",
@@ -1600,14 +1600,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 10,
+          "complete": 11,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 4,
-          "midnight": 6,
+          "midnight": 7,
           "hourly": [
             0,
             0,
@@ -1624,7 +1624,7 @@
             0,
             4,
             4,
-            2,
+            3,
             0,
             0,
             0,
@@ -1634,7 +1634,7 @@
             0,
             0
           ],
-          "acceptRate": 76.9,
+          "acceptRate": 78.6,
           "warning": true
         },
         {
@@ -2172,14 +2172,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 1,
+          "complete": 2,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 0,
-          "midnight": 1,
+          "midnight": 2,
           "hourly": [
             0,
             0,
@@ -2196,7 +2196,7 @@
             0,
             0,
             0,
-            1,
+            2,
             0,
             0,
             0,
@@ -8627,7 +8627,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 33,
-      "reject": 8,
+      "reject": 9,
       "cancel": 6,
       "riderFault": 0,
       "morning": 15,
@@ -8660,8 +8660,8 @@
         0,
         0
       ],
-      "acceptRate": 80.5,
-      "warning": false
+      "acceptRate": 78.6,
+      "warning": true
     },
     {
       "name": "지명환",
@@ -9506,14 +9506,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 10,
+      "complete": 11,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 4,
-      "midnight": 6,
+      "midnight": 7,
       "hourly": [
         0,
         0,
@@ -9530,7 +9530,7 @@
         0,
         4,
         4,
-        2,
+        3,
         0,
         0,
         0,
@@ -9540,7 +9540,7 @@
         0,
         0
       ],
-      "acceptRate": 76.9,
+      "acceptRate": 78.6,
       "warning": true
     },
     {
@@ -10210,14 +10210,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 1,
+      "complete": 2,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 0,
-      "midnight": 1,
+      "midnight": 2,
       "hourly": [
         0,
         0,
@@ -10234,7 +10234,7 @@
         0,
         0,
         0,
-        1,
+        2,
         0,
         0,
         0,
