@@ -9,14 +9,14 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 21:20:32",
+  "updatedAt": "2026-05-24 21:21:40",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 762,
-    "reject": 64,
+    "reject": 66,
     "cancel": 32,
     "riderFault": 0,
     "morning": 239,
@@ -25,14 +25,14 @@
     "midnight": 82,
     "count": 73,
     "onlineCount": 16,
-    "acceptRate": 92.3,
-    "spareRejects": -49
+    "acceptRate": 92.0,
+    "spareRejects": -51
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 475,
-        "reject": 46,
+        "reject": 48,
         "cancel": 28,
         "riderFault": 0,
         "morning": 141,
@@ -41,8 +41,8 @@
         "midnight": 55,
         "count": 49,
         "onlineCount": 11,
-        "acceptRate": 91.2,
-        "spareRejects": -37
+        "acceptRate": 90.8,
+        "spareRejects": -39
       },
       "targets": {
         "morning": 132,
@@ -633,7 +633,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 18,
-          "reject": 3,
+          "reject": 5,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -666,8 +666,8 @@
             0,
             0
           ],
-          "acceptRate": 85.7,
-          "warning": false
+          "acceptRate": 78.3,
+          "warning": true
         },
         {
           "name": "김용상",
@@ -4227,7 +4227,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 18,
-      "reject": 3,
+      "reject": 5,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -4260,8 +4260,8 @@
         0,
         0
       ],
-      "acceptRate": 85.7,
-      "warning": false
+      "acceptRate": 78.3,
+      "warning": true
     },
     {
       "name": "이경림",
