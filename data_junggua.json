@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 19:13:08",
+  "updatedAt": "2026-05-24 19:14:16",
   "businessDate": "2026-05-24",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 586,
-    "reject": 50,
+    "complete": 587,
+    "reject": 51,
     "cancel": 22,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 174,
-    "evening": 173,
+    "evening": 174,
     "midnight": 0,
     "count": 73,
     "onlineCount": 22,
-    "acceptRate": 92.1,
-    "spareRejects": -39
+    "acceptRate": 92.0,
+    "spareRejects": -40
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 353,
-        "reject": 34,
+        "complete": 354,
+        "reject": 35,
         "cancel": 20,
         "riderFault": 0,
         "morning": 141,
         "afternoon": 106,
-        "evening": 106,
+        "evening": 107,
         "midnight": 0,
         "count": 49,
         "onlineCount": 16,
-        "acceptRate": 91.2,
-        "spareRejects": -27
+        "acceptRate": 91.0,
+        "spareRejects": -28
       },
       "targets": {
         "morning": 132,
@@ -149,7 +149,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 34,
-          "reject": 1,
+          "reject": 2,
           "cancel": 3,
           "riderFault": 0,
           "morning": 12,
@@ -182,7 +182,7 @@
             0,
             0
           ],
-          "acceptRate": 97.1,
+          "acceptRate": 94.4,
           "warning": false
         },
         {
@@ -720,13 +720,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 4,
+          "complete": 5,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 4,
+          "evening": 5,
           "midnight": 0,
           "hourly": [
             0,
@@ -741,7 +741,7 @@
             0,
             0,
             0,
-            4,
+            5,
             0,
             0,
             0,
@@ -754,7 +754,7 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -3479,7 +3479,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 34,
-      "reject": 1,
+      "reject": 2,
       "cancel": 3,
       "riderFault": 0,
       "morning": 12,
@@ -3512,7 +3512,7 @@
         0,
         0
       ],
-      "acceptRate": 97.1,
+      "acceptRate": 94.4,
       "warning": false
     },
     {
@@ -4358,13 +4358,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 4,
+      "complete": 5,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 4,
+      "evening": 5,
       "midnight": 0,
       "hourly": [
         0,
@@ -4379,7 +4379,7 @@
         0,
         0,
         0,
-        4,
+        5,
         0,
         0,
         0,
@@ -4392,7 +4392,7 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
