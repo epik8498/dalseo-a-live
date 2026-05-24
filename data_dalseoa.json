@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 21:49:21",
+  "updatedAt": "2026-05-24 21:50:32",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 1374,
-    "reject": 145,
+    "reject": 147,
     "cancel": 39,
     "riderFault": 1,
     "morning": 504,
@@ -25,14 +25,14 @@
     "midnight": 150,
     "count": 173,
     "onlineCount": 21,
-    "acceptRate": 90.5,
-    "spareRejects": -117
+    "acceptRate": 90.3,
+    "spareRejects": -119
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 1136,
-        "reject": 126,
+        "reject": 127,
         "cancel": 26,
         "riderFault": 1,
         "morning": 437,
@@ -41,8 +41,8 @@
         "midnight": 109,
         "count": 141,
         "onlineCount": 17,
-        "acceptRate": 90.0,
-        "spareRejects": -103
+        "acceptRate": 89.9,
+        "spareRejects": -104
       },
       "targets": {
         "morning": 231,
@@ -1557,7 +1557,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 12,
-          "reject": 6,
+          "reject": 7,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -1590,7 +1590,7 @@
             0,
             0
           ],
-          "acceptRate": 66.7,
+          "acceptRate": 63.2,
           "warning": true
         },
         {
@@ -6262,7 +6262,7 @@
     "달서팀": {
       "summary": {
         "complete": 238,
-        "reject": 19,
+        "reject": 20,
         "cancel": 13,
         "riderFault": 0,
         "morning": 67,
@@ -6271,8 +6271,8 @@
         "midnight": 41,
         "count": 32,
         "onlineCount": 4,
-        "acceptRate": 92.6,
-        "spareRejects": -15
+        "acceptRate": 92.2,
+        "spareRejects": -16
       },
       "targets": {
         "morning": 33,
@@ -6335,7 +6335,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 40,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 7,
@@ -6368,7 +6368,7 @@
             0,
             0
           ],
-          "acceptRate": 97.6,
+          "acceptRate": 95.2,
           "warning": false
         },
         {
@@ -8143,7 +8143,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 40,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 7,
@@ -8176,7 +8176,7 @@
         0,
         0
       ],
-      "acceptRate": 97.6,
+      "acceptRate": 95.2,
       "warning": false
     },
     {
@@ -9463,7 +9463,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 12,
-      "reject": 6,
+      "reject": 7,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -9496,7 +9496,7 @@
         0,
         0
       ],
-      "acceptRate": 66.7,
+      "acceptRate": 63.2,
       "warning": true
     },
     {
