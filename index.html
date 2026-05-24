@@ -109,10 +109,10 @@ body.dark .error{background:#220000}
     <div class="filters" id="filters"></div>
     <div class="sort">
       정렬:
-      <select id="sortSelect" onchange="render()">
-        <option value="complete">완료순</option>
-        <option value="name">가나다순</option>
-      </select>
+     <select id="sortSelect" onchange="render()">
+      <option value="name" selected>가나다순</option>
+      <option value="complete">완료순</option>
+     </select>
     </div>
   </div>
 
@@ -217,8 +217,36 @@ function render(){
   if(FILTER!=="전체") riders=riders.filter(r=>r.team===FILTER);
 
   const sort=document.getElementById("sortSelect").value;
-  if(sort==="name") riders.sort((a,b)=>a.name.localeCompare(b.name,"ko"));
-  else riders.sort((a,b)=>b.complete-a.complete);
+
+if(sort==="name"){
+
+  riders.sort((a,b)=>{
+
+    // 접속중 기사 우선
+    if(a.isOnline !== b.isOnline){
+      return a.isOnline ? -1 : 1;
+    }
+
+    // 같은 상태면 가나다순
+    return a.name.localeCompare(b.name,"ko");
+
+  });
+
+}else{
+
+  riders.sort((a,b)=>{
+
+    // 접속중 기사 우선
+    if(a.isOnline !== b.isOnline){
+      return a.isOnline ? -1 : 1;
+    }
+
+    // 같은 상태면 완료순
+    return b.complete-a.complete;
+
+  });
+
+}
 
   document.getElementById("riderGrid").innerHTML=riders.map(r=>`<div class="rider ${r.isOnline?'active':''}">
     <div class="rider-top">
