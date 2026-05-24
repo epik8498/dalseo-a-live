@@ -49,8 +49,16 @@ body.dark .period-card{box-shadow:none;background:rgba(20,20,20,.9)}
 .sort{display:flex;align-items:center;gap:8px;font-weight:900}.sort select{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:8px;padding:11px 16px;font-weight:900}
 .riders{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .rider{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
-.rider.active{border:2px solid var(--green)}body.dark .rider{background:rgba(18,18,18,.92);box-shadow:none}
-.rider-top{display:flex;justify-content:space-between;align-items:center}.rider-name{font-size:22px;font-weight:1000}
+.rider.active{
+  background:#eafff1;
+  border:3px solid var(--green);
+  color:#111;
+}
+body.dark .rider.active{
+  background:#063b1d;
+  border:3px solid var(--green);
+  color:#fff;
+}.rider-top{display:flex;justify-content:space-between;align-items:center}.rider-name{font-size:22px;font-weight:1000}
 .dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#bbb;margin-right:8px}.rider.active .dot{background:var(--green)}
 .status{font-size:11px;font-weight:900;padding:4px 7px;border-radius:999px;background:#eee;color:#555}.rider.active .status{background:#d9ffe8;color:#006b2c}
 .warn{color:#ff9f00;font-size:12px;font-weight:900;margin-left:4px}
