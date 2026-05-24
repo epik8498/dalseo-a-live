@@ -9,39 +9,39 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 19:59:22",
+  "updatedAt": "2026-05-24 20:00:30",
   "businessDate": "2026-05-24",
-  "currentPeriod": "evening",
-  "currentPeriodLabel": "저녁피크",
+  "currentPeriod": "midnight",
+  "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 651,
+    "complete": 652,
     "reject": 54,
     "cancel": 25,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 174,
-    "evening": 238,
+    "evening": 239,
     "midnight": 0,
     "count": 73,
     "onlineCount": 21,
-    "acceptRate": 92.3,
+    "acceptRate": 92.4,
     "spareRejects": -41
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 400,
+        "complete": 401,
         "reject": 37,
         "cancel": 22,
         "riderFault": 0,
         "morning": 141,
         "afternoon": 106,
-        "evening": 153,
+        "evening": 154,
         "midnight": 0,
         "count": 49,
         "onlineCount": 15,
-        "acceptRate": 91.5,
+        "acceptRate": 91.6,
         "spareRejects": -29
       },
       "targets": {
@@ -456,13 +456,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 23,
+          "complete": 24,
           "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 12,
           "afternoon": 1,
-          "evening": 10,
+          "evening": 11,
           "midnight": 0,
           "hourly": [
             0,
@@ -478,7 +478,7 @@
             0,
             3,
             3,
-            4,
+            5,
             0,
             0,
             0,
@@ -490,7 +490,7 @@
             0,
             0
           ],
-          "acceptRate": 92.0,
+          "acceptRate": 92.3,
           "warning": false
         },
         {
@@ -3918,13 +3918,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 23,
+      "complete": 24,
       "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 12,
       "afternoon": 1,
-      "evening": 10,
+      "evening": 11,
       "midnight": 0,
       "hourly": [
         0,
@@ -3940,7 +3940,7 @@
         0,
         3,
         3,
-        4,
+        5,
         0,
         0,
         0,
@@ -3952,7 +3952,7 @@
         0,
         0
       ],
-      "acceptRate": 92.0,
+      "acceptRate": 92.3,
       "warning": false
     },
     {
