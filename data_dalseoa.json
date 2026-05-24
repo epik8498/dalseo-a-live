@@ -9,36 +9,36 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 22:11:50",
+  "updatedAt": "2026-05-24 22:13:01",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1413,
-    "reject": 154,
+    "complete": 1415,
+    "reject": 155,
     "cancel": 41,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
     "evening": 408,
-    "midnight": 189,
+    "midnight": 191,
     "count": 173,
     "onlineCount": 20,
-    "acceptRate": 90.2,
-    "spareRejects": -126
+    "acceptRate": 90.1,
+    "spareRejects": -127
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1166,
+        "complete": 1168,
         "reject": 134,
         "cancel": 28,
         "riderFault": 1,
         "morning": 437,
         "afternoon": 262,
         "evening": 328,
-        "midnight": 139,
+        "midnight": 141,
         "count": 141,
         "onlineCount": 16,
         "acceptRate": 89.7,
@@ -280,14 +280,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 43,
+          "complete": 44,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 18,
           "afternoon": 9,
           "evening": 11,
-          "midnight": 5,
+          "midnight": 6,
           "hourly": [
             0,
             0,
@@ -304,7 +304,7 @@
             4,
             3,
             3,
-            2,
+            3,
             0,
             0,
             0,
@@ -314,7 +314,7 @@
             0,
             0
           ],
-          "acceptRate": 97.7,
+          "acceptRate": 97.8,
           "warning": false
         },
         {
@@ -1600,14 +1600,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 11,
+          "complete": 12,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 4,
-          "midnight": 7,
+          "midnight": 8,
           "hourly": [
             0,
             0,
@@ -1625,7 +1625,7 @@
             4,
             4,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -1634,8 +1634,8 @@
             0,
             0
           ],
-          "acceptRate": 78.6,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "석정인",
@@ -6262,7 +6262,7 @@
     "달서팀": {
       "summary": {
         "complete": 247,
-        "reject": 20,
+        "reject": 21,
         "cancel": 13,
         "riderFault": 0,
         "morning": 67,
@@ -6271,8 +6271,8 @@
         "midnight": 50,
         "count": 32,
         "onlineCount": 4,
-        "acceptRate": 92.5,
-        "spareRejects": -15
+        "acceptRate": 92.2,
+        "spareRejects": -16
       },
       "targets": {
         "morning": 33,
@@ -6599,7 +6599,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 7,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 1,
@@ -6632,8 +6632,8 @@
             0,
             0
           ],
-          "acceptRate": 87.5,
-          "warning": false
+          "acceptRate": 77.8,
+          "warning": true
         },
         {
           "name": "김형민",
@@ -7966,14 +7966,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 43,
+      "complete": 44,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 18,
       "afternoon": 9,
       "evening": 11,
-      "midnight": 5,
+      "midnight": 6,
       "hourly": [
         0,
         0,
@@ -7990,7 +7990,7 @@
         4,
         3,
         3,
-        2,
+        3,
         0,
         0,
         0,
@@ -8000,7 +8000,7 @@
         0,
         0
       ],
-      "acceptRate": 97.7,
+      "acceptRate": 97.8,
       "warning": false
     },
     {
@@ -9506,14 +9506,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 11,
+      "complete": 12,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 4,
-      "midnight": 7,
+      "midnight": 8,
       "hourly": [
         0,
         0,
@@ -9531,7 +9531,7 @@
         4,
         4,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -9540,8 +9540,8 @@
         0,
         0
       ],
-      "acceptRate": 78.6,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "석정인",
@@ -9815,7 +9815,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 7,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 1,
@@ -9848,8 +9848,8 @@
         0,
         0
       ],
-      "acceptRate": 87.5,
-      "warning": false
+      "acceptRate": 77.8,
+      "warning": true
     },
     {
       "name": "김덕근",
