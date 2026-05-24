@@ -10,14 +10,14 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-24 15:45:13",
+  "updatedAt": "2026-05-24 15:46:23",
   "businessDate": "2026-05-24",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 824,
-    "reject": 90,
+    "reject": 91,
     "cancel": 29,
     "riderFault": 1,
     "morning": 622,
@@ -26,14 +26,14 @@
     "midnight": 0,
     "count": 177,
     "onlineCount": 30,
-    "acceptRate": 90.2,
-    "spareRejects": -74
+    "acceptRate": 90.1,
+    "spareRejects": -75
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 218,
-        "reject": 32,
+        "reject": 33,
         "cancel": 9,
         "riderFault": 0,
         "morning": 167,
@@ -42,8 +42,8 @@
         "midnight": 0,
         "count": 47,
         "onlineCount": 9,
-        "acceptRate": 87.2,
-        "spareRejects": -28
+        "acceptRate": 86.9,
+        "spareRejects": -29
       },
       "targets": {
         "morning": 66,
@@ -634,7 +634,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 4,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 2,
@@ -667,8 +667,8 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
-          "warning": false
+          "acceptRate": 66.7,
+          "warning": true
         },
         {
           "name": "정규태",
@@ -10326,7 +10326,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 4,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 2,
@@ -10359,8 +10359,8 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
-      "warning": false
+      "acceptRate": 66.7,
+      "warning": true
     },
     {
       "name": "김종희",
