@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 23:09:49",
+  "updatedAt": "2026-05-24 23:11:00",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 1471,
-    "reject": 179,
+    "reject": 180,
     "cancel": 41,
     "riderFault": 1,
     "morning": 504,
@@ -24,15 +24,15 @@
     "evening": 408,
     "midnight": 247,
     "count": 173,
-    "onlineCount": 11,
-    "acceptRate": 89.2,
-    "spareRejects": -149
+    "onlineCount": 10,
+    "acceptRate": 89.1,
+    "spareRejects": -150
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 1219,
-        "reject": 155,
+        "reject": 156,
         "cancel": 28,
         "riderFault": 1,
         "morning": 437,
@@ -40,9 +40,9 @@
         "evening": 328,
         "midnight": 192,
         "count": 141,
-        "onlineCount": 11,
+        "onlineCount": 10,
         "acceptRate": 88.7,
-        "spareRejects": -131
+        "spareRejects": -132
       },
       "targets": {
         "morning": 231,
@@ -58,10 +58,10 @@
           "phone": "010-9375-4288",
           "userId": "qqqq155",
           "team": "소닉팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 59,
-          "reject": 16,
+          "reject": 17,
           "cancel": 0,
           "riderFault": 0,
           "morning": 12,
@@ -94,7 +94,7 @@
             0,
             0
           ],
-          "acceptRate": 78.7,
+          "acceptRate": 77.6,
           "warning": true
         },
         {
@@ -7700,10 +7700,10 @@
       "phone": "010-9375-4288",
       "userId": "qqqq155",
       "team": "소닉팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 59,
-      "reject": 16,
+      "reject": 17,
       "cancel": 0,
       "riderFault": 0,
       "morning": 12,
@@ -7736,7 +7736,7 @@
         0,
         0
       ],
-      "acceptRate": 78.7,
+      "acceptRate": 77.6,
       "warning": true
     },
     {
