@@ -10,14 +10,14 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-24 23:23:08",
+  "updatedAt": "2026-05-24 23:24:19",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 2292,
-    "reject": 257,
+    "reject": 258,
     "cancel": 82,
     "riderFault": 1,
     "morning": 622,
@@ -25,9 +25,9 @@
     "evening": 716,
     "midnight": 587,
     "count": 177,
-    "onlineCount": 33,
+    "onlineCount": 32,
     "acceptRate": 89.9,
-    "spareRejects": -211
+    "spareRejects": -212
   },
   "teams": {
     "소닉팀": {
@@ -2135,7 +2135,7 @@
         "evening": 228,
         "midnight": 152,
         "count": 43,
-        "onlineCount": 8,
+        "onlineCount": 7,
         "acceptRate": 92.4,
         "spareRejects": -42
       },
@@ -3605,8 +3605,8 @@
           "phone": "010-8392-6818",
           "userId": "xkxk1121",
           "team": "넘버팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 0,
           "reject": 0,
           "cancel": 0,
@@ -4045,7 +4045,7 @@
     "마음팀": {
       "summary": {
         "complete": 1060,
-        "reject": 99,
+        "reject": 100,
         "cancel": 33,
         "riderFault": 1,
         "morning": 267,
@@ -4054,8 +4054,8 @@
         "midnight": 302,
         "count": 87,
         "onlineCount": 20,
-        "acceptRate": 91.5,
-        "spareRejects": -78
+        "acceptRate": 91.4,
+        "spareRejects": -79
       },
       "targets": {
         "morning": 182,
@@ -5394,7 +5394,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 18,
-          "reject": 4,
+          "reject": 5,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -5427,8 +5427,8 @@
             0,
             0
           ],
-          "acceptRate": 81.8,
-          "warning": false
+          "acceptRate": 78.3,
+          "warning": true
         },
         {
           "name": "위석훈",
@@ -10502,7 +10502,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 18,
-      "reject": 4,
+      "reject": 5,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -10535,8 +10535,8 @@
         0,
         0
       ],
-      "acceptRate": 81.8,
-      "warning": false
+      "acceptRate": 78.3,
+      "warning": true
     },
     {
       "name": "이종필",
@@ -13051,8 +13051,8 @@
       "phone": "010-8392-6818",
       "userId": "xkxk1121",
       "team": "넘버팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 0,
       "reject": 0,
       "cancel": 0,
