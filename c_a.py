@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import subprocess
 import time
 from datetime import datetime, timedelta
@@ -17,23 +18,16 @@ TARGET_ACCEPT_RATE = 98
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_junggua.json"
 HTML_FILE = BASE_DIR / "index.html"
-WEEKLY_FILE = BASE_DIR / "weekly.json"
+WEEKLY_FILE = BASE_DIR / "weekly_junggua.json"
 
 AREA_NAME = "중구A"
 
-NUMBER_TEAM_RIDERS = [
-    "한창목", "구민성", "석윤미", "조영웅", "류창우",
-    "이경은", "이경림", "김광미", "정용운", "지덕곤",
-    "김우중", "김시곤", "천재원", "조정래", "이금형",
-    "최종용", "최문호", "이정미", "염용범", "김성주",
-    "이창원", "채기후", "손성기", "박진수", "김병찬",
-]
+NUMBER_TEAM_RIDERS = ["한창목", "구민성", "석윤미", "조영웅", "류창우", "이경은", "이경림", "김광미", "정용운", "지덕곤", "김우중", "김시곤", "천재원", "조정래", "이금형", "최종용", "최문호", "이정미", "염용범", "김성주", "이창원", "채기후", "손성기", "박진수", "김병찬"]
+
+TEAM_ORDER = ['소닉팀', '넘버팀']
 
 AREA_CONFIG = {
-    "중구A": {
-        "소닉팀": 4,
-        "넘버팀": 1,
-    }
+    "중구A": {'소닉팀': 4, '넘버팀': 1}
 }
 
 DAY_TARGETS = {
@@ -53,6 +47,9 @@ PERIOD_LABELS = {
     "evening": "저녁피크",
     "midnight": "심야논피크",
 }
+
+PHONE_RE = re.compile(r"^010-\\d{3,4}-\\d{4}$")
+STATUS_WORDS = ["운행중", "운행 중", "운행 종료", "운행종료"]
 
 
 def business_date(now):
@@ -107,6 +104,51 @@ def to_int(value):
         return 0
 
 
+def normalize_status(value):
+    # UI 비교가 실패하지 않도록 공백/특수공백을 제거하고 표기를 통일
+    return (
+        str(value)
+        .replace("\u00a0", "")
+        .replace(" ", "")
+        .strip()
+    )
+
+
+def detect_online(status):
+    return normalize_status(status) == "운행중"
+
+
+def status_text(status):
+    return "운행중" if detect_online(status) else "운행종료"
+
+
+def status_class(status):
+    return "online" if detect_online(status) else "offline"
+
+
+def is_status(value):
+    return normalize_status(value) in ["운행중", "운행종료"]
+
+
+def is_phone(value):
+    return "010-" in str(value)
+
+
+def is_bad_name(value):
+    value = str(value).strip()
+    return (
+        value == ""
+        or value == "-"
+        or value.startswith("010-")
+        or value in ["이름", "운행상태", "휴대폰번호", "완료", "거절", "배차취소", "배달취소(라이더귀책)", "아이디", "합계"]
+        or value.isdigit()
+    )
+
+
+def detect_online(status):
+    status = str(status).replace(" ", "").strip()
+    return status == "운행중"
+
 def set_page_number(url, page_no):
     parsed = urlparse(url)
     qs = parse_qs(parsed.query)
@@ -122,26 +164,6 @@ def set_page_number(url, page_no):
     return urlunparse(parsed._replace(query=new_query))
 
 
-def is_bad_name(value):
-    bad_values = {
-        "-", "상태", "이름", "기사명", "라이더명", "전화번호",
-        "완료", "거절", "취소", "배달취소", "배차취소"
-    }
-    return value in bad_values or value.startswith("010-")
-
-
-def detect_online(status):
-    status = str(status).replace(" ", "").strip()
-
-    if status == "운행중":
-        return True
-
-    if status == "운행종료":
-        return False
-
-    return False
-
-
 def parse_clipboard_text(text):
     lines = [x.strip() for x in text.splitlines() if x.strip()]
     riders = []
@@ -154,31 +176,25 @@ def parse_clipboard_text(text):
             i += 1
             continue
 
-        if i + 35 >= len(lines):
-            i += 1
-            continue
-
-        status = "미접속"
-
-        if lines[i + 1].startswith("010-"):
-            phone_idx = i + 1
-        else:
-            status = lines[i + 1]
+        # 형태 1: 이름 / 운행중 / 전화번호
+        if i + 2 < len(lines) and lines[i + 1].replace(" ", "") == "운행중" and is_phone(lines[i + 2]):
+            status = "운행중"
             phone_idx = i + 2
 
-        if phone_idx >= len(lines):
-            i += 1
-            continue
+        # 형태 2: 이름 / 전화번호 = 운행종료
+        elif i + 1 < len(lines) and is_phone(lines[i + 1]):
+            status = "운행 종료"
+            phone_idx = i + 1
 
-        phone = lines[phone_idx]
-
-        if not phone.startswith("010-"):
+        else:
             i += 1
             continue
 
         if phone_idx + 33 >= len(lines):
             i += 1
             continue
+
+        phone = lines[phone_idx]
 
         complete = to_int(lines[phone_idx + 1])
         reject = to_int(lines[phone_idx + 2])
@@ -195,6 +211,7 @@ def parse_clipboard_text(text):
             hourly.append(to_int(lines[phone_idx + 9 + h]))
 
         user_id = lines[phone_idx + 33]
+        is_online = detect_online(status)
 
         riders.append({
             "name": name,
@@ -202,7 +219,7 @@ def parse_clipboard_text(text):
             "userId": user_id,
             "team": team_of(name),
             "status": status,
-            "isOnline": detect_online(status),
+            "isOnline": is_online,
             "complete": complete,
             "reject": reject,
             "cancel": cancel,
@@ -214,7 +231,6 @@ def parse_clipboard_text(text):
             "hourly": hourly,
             "acceptRate": calc_accept_rate(complete, reject),
             "warning": calc_accept_rate(complete, reject) < 80,
-            "isOnline": detect_online(status),
         })
 
         i = phone_idx + 34
@@ -246,6 +262,11 @@ def collect_all_pages_by_copy(page):
 
         text = copy_current_page_text(page)
         riders = parse_clipboard_text(text)
+
+        print("===== 복사된 80~180줄 확인 =====")
+        for idx, line in enumerate(text.splitlines()[80:180], start=80):
+            print(idx, repr(line))
+        print("===== 확인 끝 =====")
 
         print(f"{page_no + 1}페이지 읽은 기사 수: {len(riders)}")
 
@@ -287,6 +308,7 @@ def summary(rows):
         "midnight": sum(r["midnight"] for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
+        "offlineCount": sum(1 for r in rows if not r.get("isOnline")),
         "acceptRate": calc_accept_rate(complete, reject),
         "spareRejects": spare_rejects(complete, reject),
     }
@@ -346,7 +368,7 @@ def make_data(riders):
     targets = team_targets(now)
     teams = {}
 
-    for team in AREA_CONFIG[AREA_NAME].keys():
+    for team in TEAM_ORDER:
         rows = [r for r in riders if r["team"] == team]
         teams[team] = {
             "summary": summary(rows),
@@ -357,6 +379,7 @@ def make_data(riders):
     return {
         "area": AREA_NAME,
         "areas": ["달서A", "달서B", "중구A"],
+        "teamOrder": TEAM_ORDER,
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
         "currentPeriod": current_period(now),
@@ -382,13 +405,10 @@ def git_push():
     if not AUTO_GIT_PUSH:
         return
 
-    subprocess.run(
-        ["git", "add", "data_junggua.json", "index.html", "c_a.py", "logo.png"],
-        cwd=BASE_DIR
-    )
+    subprocess.run(["git", "add", "data_junggua.json", "index.html", "c_a.py", "logo.png"], cwd=BASE_DIR)
 
     if WEEKLY_FILE.exists():
-        subprocess.run(["git", "add", "weekly.json"], cwd=BASE_DIR)
+        subprocess.run(["git", "add", "weekly_junggua.json"], cwd=BASE_DIR)
 
     commit = subprocess.run(
         ["git", "commit", "-m", "auto update"],
@@ -429,7 +449,11 @@ def run_update(page):
 
     print(f"업로드 완료: {data['updatedAt']}")
     print(f"전체 기사 수: {data['total']['count']}")
-    print(f"접속중 기사 수: {data['total']['onlineCount']}")
+    print(f"운행중 기사 수: {data['total']['onlineCount']}")
+    print(f"운행종료 기사 수: {data['total']['offlineCount']}")
+    for team in TEAM_ORDER:
+        print(f"{team} 운행중: {data['teams'][team]['summary']['onlineCount']}")
+        print(f"{team} 운행종료: {data['teams'][team]['summary']['offlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"수락률: {data['total']['acceptRate']}%")
 
