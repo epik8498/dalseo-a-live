@@ -9,14 +9,14 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 18:38:12",
+  "updatedAt": "2026-05-24 18:39:20",
   "businessDate": "2026-05-24",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 535,
-    "reject": 41,
+    "reject": 43,
     "cancel": 21,
     "riderFault": 0,
     "morning": 239,
@@ -25,14 +25,14 @@
     "midnight": 0,
     "count": 73,
     "onlineCount": 20,
-    "acceptRate": 92.9,
-    "spareRejects": -31
+    "acceptRate": 92.6,
+    "spareRejects": -33
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 323,
-        "reject": 26,
+        "reject": 28,
         "cancel": 19,
         "riderFault": 0,
         "morning": 141,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 49,
         "onlineCount": 13,
-        "acceptRate": 92.6,
-        "spareRejects": -20
+        "acceptRate": 92.0,
+        "spareRejects": -22
       },
       "targets": {
         "morning": 132,
@@ -193,7 +193,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 26,
-          "reject": 1,
+          "reject": 2,
           "cancel": 1,
           "riderFault": 0,
           "morning": 6,
@@ -226,7 +226,7 @@
             0,
             0
           ],
-          "acceptRate": 96.3,
+          "acceptRate": 92.9,
           "warning": false
         },
         {
@@ -281,7 +281,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 23,
-          "reject": 3,
+          "reject": 4,
           "cancel": 0,
           "riderFault": 0,
           "morning": 16,
@@ -314,7 +314,7 @@
             0,
             0
           ],
-          "acceptRate": 88.5,
+          "acceptRate": 85.2,
           "warning": false
         },
         {
@@ -3611,7 +3611,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 26,
-      "reject": 1,
+      "reject": 2,
       "cancel": 1,
       "riderFault": 0,
       "morning": 6,
@@ -3644,7 +3644,7 @@
         0,
         0
       ],
-      "acceptRate": 96.3,
+      "acceptRate": 92.9,
       "warning": false
     },
     {
@@ -3699,7 +3699,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 23,
-      "reject": 3,
+      "reject": 4,
       "cancel": 0,
       "riderFault": 0,
       "morning": 16,
@@ -3732,7 +3732,7 @@
         0,
         0
       ],
-      "acceptRate": 88.5,
+      "acceptRate": 85.2,
       "warning": false
     },
     {
