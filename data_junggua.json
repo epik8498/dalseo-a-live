@@ -9,14 +9,14 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-24 23:59:38",
+  "updatedAt": "2026-05-25 00:00:45",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 892,
-    "reject": 81,
+    "reject": 82,
     "cancel": 37,
     "riderFault": 0,
     "morning": 239,
@@ -24,15 +24,15 @@
     "evening": 267,
     "midnight": 212,
     "count": 73,
-    "onlineCount": 9,
-    "acceptRate": 91.7,
-    "spareRejects": -63
+    "onlineCount": 8,
+    "acceptRate": 91.6,
+    "spareRejects": -64
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 571,
-        "reject": 63,
+        "reject": 64,
         "cancel": 33,
         "riderFault": 0,
         "morning": 141,
@@ -40,16 +40,16 @@
         "evening": 173,
         "midnight": 151,
         "count": 49,
-        "onlineCount": 8,
-        "acceptRate": 90.1,
-        "spareRejects": -52
+        "onlineCount": 7,
+        "acceptRate": 89.9,
+        "spareRejects": -53
       },
       "targets": {
-        "morning": 132,
-        "afternoon": 88,
-        "evening": 140,
-        "midnight": 120,
-        "total": 480,
+        "morning": 84,
+        "afternoon": 80,
+        "evening": 120,
+        "midnight": 116,
+        "total": 400,
         "sets": 4
       },
       "riders": [
@@ -630,10 +630,10 @@
           "phone": "010-5745-6300",
           "userId": "aa57456300",
           "team": "소닉팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 19,
-          "reject": 7,
+          "reject": 8,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -666,7 +666,7 @@
             0,
             0
           ],
-          "acceptRate": 73.1,
+          "acceptRate": 70.4,
           "warning": true
         },
         {
@@ -2227,11 +2227,11 @@
         "spareRejects": -12
       },
       "targets": {
-        "morning": 33,
-        "afternoon": 22,
-        "evening": 35,
-        "midnight": 30,
-        "total": 120,
+        "morning": 21,
+        "afternoon": 20,
+        "evening": 30,
+        "midnight": 29,
+        "total": 100,
         "sets": 1
       },
       "riders": [
@@ -4180,10 +4180,10 @@
       "phone": "010-5745-6300",
       "userId": "aa57456300",
       "team": "소닉팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 19,
-      "reject": 7,
+      "reject": 8,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -4216,7 +4216,7 @@
         0,
         0
       ],
-      "acceptRate": 73.1,
+      "acceptRate": 70.4,
       "warning": true
     },
     {
