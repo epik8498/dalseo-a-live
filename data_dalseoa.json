@@ -9,30 +9,30 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 17:49:46",
+  "updatedAt": "2026-05-24 17:50:57",
   "businessDate": "2026-05-24",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 875,
-    "reject": 65,
+    "complete": 876,
+    "reject": 66,
     "cancel": 19,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
-    "evening": 59,
+    "evening": 60,
     "midnight": 0,
     "count": 173,
     "onlineCount": 32,
-    "acceptRate": 93.1,
-    "spareRejects": -48
+    "acceptRate": 93.0,
+    "spareRejects": -49
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 748,
-        "reject": 56,
+        "reject": 57,
         "cancel": 11,
         "riderFault": 1,
         "morning": 437,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 141,
         "onlineCount": 27,
-        "acceptRate": 93.0,
-        "spareRejects": -41
+        "acceptRate": 92.9,
+        "spareRejects": -42
       },
       "targets": {
         "morning": 231,
@@ -1909,7 +1909,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 1,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -1942,8 +1942,8 @@
             0,
             0
           ],
-          "acceptRate": 100.0,
-          "warning": false
+          "acceptRate": 50.0,
+          "warning": true
         },
         {
           "name": "권주연",
@@ -6261,13 +6261,13 @@
     },
     "달서팀": {
       "summary": {
-        "complete": 127,
+        "complete": 128,
         "reject": 9,
         "cancel": 8,
         "riderFault": 0,
         "morning": 67,
         "afternoon": 50,
-        "evening": 10,
+        "evening": 11,
         "midnight": 0,
         "count": 32,
         "onlineCount": 5,
@@ -6290,13 +6290,13 @@
           "team": "달서팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 24,
+          "complete": 25,
           "reject": 1,
           "cancel": 3,
           "riderFault": 0,
           "morning": 13,
           "afternoon": 10,
-          "evening": 1,
+          "evening": 2,
           "midnight": 0,
           "hourly": [
             0,
@@ -6310,7 +6310,7 @@
             4,
             3,
             3,
-            1,
+            2,
             0,
             0,
             0,
@@ -6324,7 +6324,7 @@
             0,
             0
           ],
-          "acceptRate": 96.0,
+          "acceptRate": 96.2,
           "warning": false
         },
         {
@@ -8268,6 +8268,50 @@
       "warning": false
     },
     {
+      "name": "정성훈",
+      "phone": "010-9095-1635",
+      "userId": "know1456",
+      "team": "달서팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 25,
+      "reject": 1,
+      "cancel": 3,
+      "riderFault": 0,
+      "morning": 13,
+      "afternoon": 10,
+      "evening": 2,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        4,
+        4,
+        4,
+        4,
+        3,
+        3,
+        2,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 96.2,
+      "warning": false
+    },
+    {
       "name": "김경오",
       "phone": "010-4540-7306",
       "userId": "Lovekill2038",
@@ -8353,50 +8397,6 @@
         0
       ],
       "acceptRate": 92.3,
-      "warning": false
-    },
-    {
-      "name": "정성훈",
-      "phone": "010-9095-1635",
-      "userId": "know1456",
-      "team": "달서팀",
-      "status": "운행중",
-      "isOnline": true,
-      "complete": 24,
-      "reject": 1,
-      "cancel": 3,
-      "riderFault": 0,
-      "morning": 13,
-      "afternoon": 10,
-      "evening": 1,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        4,
-        4,
-        4,
-        4,
-        3,
-        3,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 96.0,
       "warning": false
     },
     {
@@ -9859,7 +9859,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 1,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -9892,8 +9892,8 @@
         0,
         0
       ],
-      "acceptRate": 100.0,
-      "warning": false
+      "acceptRate": 50.0,
+      "warning": true
     },
     {
       "name": "정성훈",
