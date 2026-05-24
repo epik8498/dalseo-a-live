@@ -405,7 +405,12 @@ def save_weekly_if_close(data):
 
 def make_data(riders):
     now = datetime.now()
-    riders.sort(key=lambda x: x["complete"], reverse=True)
+    riders.sort(
+    key=lambda x: (
+        not x["isOnline"],
+        x["name"]
+    )
+)
 
     targets = team_targets(now)
     teams = {}
