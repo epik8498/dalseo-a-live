@@ -9,40 +9,40 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 22:59:10",
+  "updatedAt": "2026-05-24 23:00:21",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1459,
-    "reject": 175,
+    "complete": 1460,
+    "reject": 176,
     "cancel": 41,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
     "evening": 408,
-    "midnight": 235,
+    "midnight": 236,
     "count": 173,
     "onlineCount": 13,
-    "acceptRate": 89.3,
-    "spareRejects": -146
+    "acceptRate": 89.2,
+    "spareRejects": -147
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1207,
-        "reject": 151,
+        "complete": 1208,
+        "reject": 152,
         "cancel": 28,
         "riderFault": 1,
         "morning": 437,
         "afternoon": 262,
         "evening": 328,
-        "midnight": 180,
+        "midnight": 181,
         "count": 141,
         "onlineCount": 12,
-        "acceptRate": 88.9,
-        "spareRejects": -127
+        "acceptRate": 88.8,
+        "spareRejects": -128
       },
       "targets": {
         "morning": 231,
@@ -1469,7 +1469,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 15,
-          "reject": 3,
+          "reject": 4,
           "cancel": 2,
           "riderFault": 0,
           "morning": 0,
@@ -1502,8 +1502,8 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
-          "warning": false
+          "acceptRate": 78.9,
+          "warning": true
         },
         {
           "name": "최용대",
@@ -1732,14 +1732,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 11,
+          "complete": 12,
           "reject": 6,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 1,
           "evening": 7,
-          "midnight": 3,
+          "midnight": 4,
           "hourly": [
             0,
             0,
@@ -1757,7 +1757,7 @@
             3,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -1766,7 +1766,7 @@
             0,
             0
           ],
-          "acceptRate": 64.7,
+          "acceptRate": 66.7,
           "warning": true
         },
         {
@@ -9375,7 +9375,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 15,
-      "reject": 3,
+      "reject": 4,
       "cancel": 2,
       "riderFault": 0,
       "morning": 0,
@@ -9408,8 +9408,8 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
-      "warning": false
+      "acceptRate": 78.9,
+      "warning": true
     },
     {
       "name": "최용대",
@@ -9638,14 +9638,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 11,
+      "complete": 12,
       "reject": 6,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 1,
       "evening": 7,
-      "midnight": 3,
+      "midnight": 4,
       "hourly": [
         0,
         0,
@@ -9663,7 +9663,7 @@
         3,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -9672,7 +9672,7 @@
         0,
         0
       ],
-      "acceptRate": 64.7,
+      "acceptRate": 66.7,
       "warning": true
     },
     {
