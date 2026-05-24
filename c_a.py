@@ -115,8 +115,8 @@ def normalize_status(value):
 
 
 def detect_online(status):
-    return normalize_status(status) == "운행중"
-
+    status = str(status).replace(" ", "").strip()
+    return "운행중" in status
 
 def status_text(status):
     return "운행중" if detect_online(status) else "운행종료"
