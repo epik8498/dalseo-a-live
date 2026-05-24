@@ -9,40 +9,40 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-24 23:08:37",
+  "updatedAt": "2026-05-24 23:09:49",
   "businessDate": "2026-05-24",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1469,
-    "reject": 177,
+    "complete": 1471,
+    "reject": 179,
     "cancel": 41,
     "riderFault": 1,
     "morning": 504,
     "afternoon": 312,
     "evening": 408,
-    "midnight": 245,
+    "midnight": 247,
     "count": 173,
     "onlineCount": 11,
     "acceptRate": 89.2,
-    "spareRejects": -148
+    "spareRejects": -149
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 1217,
-        "reject": 153,
+        "complete": 1219,
+        "reject": 155,
         "cancel": 28,
         "riderFault": 1,
         "morning": 437,
         "afternoon": 262,
         "evening": 328,
-        "midnight": 190,
+        "midnight": 192,
         "count": 141,
         "onlineCount": 11,
-        "acceptRate": 88.8,
-        "spareRejects": -129
+        "acceptRate": 88.7,
+        "spareRejects": -131
       },
       "targets": {
         "morning": 231,
@@ -60,14 +60,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 58,
-          "reject": 14,
+          "complete": 59,
+          "reject": 16,
           "cancel": 0,
           "riderFault": 0,
           "morning": 12,
           "afternoon": 14,
           "evening": 17,
-          "midnight": 15,
+          "midnight": 16,
           "hourly": [
             0,
             0,
@@ -85,7 +85,7 @@
             5,
             4,
             6,
-            5,
+            6,
             0,
             0,
             0,
@@ -94,8 +94,8 @@
             0,
             0
           ],
-          "acceptRate": 80.6,
-          "warning": false
+          "acceptRate": 78.7,
+          "warning": true
         },
         {
           "name": "이재용",
@@ -588,14 +588,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 37,
+          "complete": 38,
           "reject": 14,
           "cancel": 6,
           "riderFault": 0,
           "morning": 15,
           "afternoon": 0,
           "evening": 11,
-          "midnight": 11,
+          "midnight": 12,
           "hourly": [
             0,
             0,
@@ -613,7 +613,7 @@
             5,
             2,
             7,
-            2,
+            3,
             0,
             0,
             0,
@@ -622,7 +622,7 @@
             0,
             0
           ],
-          "acceptRate": 72.5,
+          "acceptRate": 73.1,
           "warning": true
         },
         {
@@ -7702,14 +7702,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 58,
-      "reject": 14,
+      "complete": 59,
+      "reject": 16,
       "cancel": 0,
       "riderFault": 0,
       "morning": 12,
       "afternoon": 14,
       "evening": 17,
-      "midnight": 15,
+      "midnight": 16,
       "hourly": [
         0,
         0,
@@ -7727,7 +7727,7 @@
         5,
         4,
         6,
-        5,
+        6,
         0,
         0,
         0,
@@ -7736,8 +7736,8 @@
         0,
         0
       ],
-      "acceptRate": 80.6,
-      "warning": false
+      "acceptRate": 78.7,
+      "warning": true
     },
     {
       "name": "이재용",
@@ -8450,14 +8450,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 37,
+      "complete": 38,
       "reject": 14,
       "cancel": 6,
       "riderFault": 0,
       "morning": 15,
       "afternoon": 0,
       "evening": 11,
-      "midnight": 11,
+      "midnight": 12,
       "hourly": [
         0,
         0,
@@ -8475,7 +8475,7 @@
         5,
         2,
         7,
-        2,
+        3,
         0,
         0,
         0,
@@ -8484,7 +8484,7 @@
         0,
         0
       ],
-      "acceptRate": 72.5,
+      "acceptRate": 73.1,
       "warning": true
     },
     {
