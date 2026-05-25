@@ -9,20 +9,20 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 21:03:07",
+  "updatedAt": "2026-05-25 21:04:15",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 662,
+    "complete": 663,
     "reject": 77,
     "cancel": 45,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
     "evening": 217,
-    "midnight": 57,
+    "midnight": 58,
     "count": 73,
     "onlineCount": 16,
     "acceptRate": 89.6,
@@ -31,14 +31,14 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 459,
+        "complete": 460,
         "reject": 58,
         "cancel": 41,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
         "evening": 135,
-        "midnight": 37,
+        "midnight": 38,
         "count": 49,
         "onlineCount": 11,
         "acceptRate": 88.8,
@@ -500,14 +500,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 0,
-          "midnight": 3,
+          "midnight": 4,
           "hourly": [
             0,
             0,
@@ -523,7 +523,7 @@
             0,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -534,8 +534,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "강준호",
@@ -3874,14 +3874,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 0,
-      "midnight": 3,
+      "midnight": 4,
       "hourly": [
         0,
         0,
@@ -3897,7 +3897,7 @@
         0,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -3908,8 +3908,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "최중용",
