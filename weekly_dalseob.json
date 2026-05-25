@@ -1,22 +1,92 @@
 [
   {
+    "businessDate": "2026-05-20",
+    "closedAt": "2026-05-21 05:59:00",
+    "totalComplete": 1858,
+    "totalReject": 477,
+    "totalCancel": 122,
+    "riderFault": 0,
+    "morning": 372,
+    "afternoon": 375,
+    "evening": 489,
+    "midnight": 622,
+    "acceptRate": 79.6,
+    "spareRejects": -440
+  },
+  {
+    "businessDate": "2026-05-21",
+    "closedAt": "2026-05-22 05:59:00",
+    "totalComplete": 1722,
+    "totalReject": 367,
+    "totalCancel": 77,
+    "riderFault": 0,
+    "morning": 280,
+    "afternoon": 211,
+    "evening": 663,
+    "midnight": 568,
+    "acceptRate": 82.4,
+    "spareRejects": -332
+  },
+  {
+    "businessDate": "2026-05-22",
+    "closedAt": "2026-05-23 05:59:00",
+    "totalComplete": 2245,
+    "totalReject": 340,
+    "totalCancel": 70,
+    "riderFault": 1,
+    "morning": 360,
+    "afternoon": 305,
+    "evening": 733,
+    "midnight": 847,
+    "acceptRate": 86.8,
+    "spareRejects": -295
+  },
+  {
+    "businessDate": "2026-05-23",
+    "closedAt": "2026-05-24 05:59:00",
+    "totalComplete": 2543,
+    "totalReject": 433,
+    "totalCancel": 117,
+    "riderFault": 1,
+    "morning": 639,
+    "afternoon": 348,
+    "evening": 700,
+    "midnight": 856,
+    "acceptRate": 85.4,
+    "spareRejects": -382
+  },
+  {
+    "businessDate": "2026-05-24",
+    "closedAt": "2026-05-25 05:59:00",
+    "totalComplete": 2527,
+    "totalReject": 274,
+    "totalCancel": 85,
+    "riderFault": 1,
+    "morning": 622,
+    "afternoon": 367,
+    "evening": 716,
+    "midnight": 822,
+    "acceptRate": 90.2,
+    "spareRejects": -223
+  },
+  {
     "businessDate": "2026-05-25",
-    "closedAt": "2026-05-26 02:07:19",
-    "totalComplete": 2562,
-    "totalReject": 298,
+    "closedAt": "2026-05-26 02:19:02",
+    "totalComplete": 2567,
+    "totalReject": 300,
     "totalCancel": 95,
     "riderFault": 1,
     "morning": 716,
     "afternoon": 403,
     "evening": 696,
-    "midnight": 747,
+    "midnight": 752,
     "periodTargets": {
       "morning": 274,
       "afternoon": 260,
       "evening": 390,
       "midnight": 378
     },
-    "acceptRate": 89.6,
-    "spareRejects": -246
+    "acceptRate": 89.5,
+    "spareRejects": -248
   }
 ]
