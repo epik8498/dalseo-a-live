@@ -9,39 +9,39 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 15:11:56",
+  "updatedAt": "2026-05-25 15:13:04",
   "businessDate": "2026-05-25",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 275,
+    "complete": 278,
     "reject": 39,
     "cancel": 15,
     "riderFault": 0,
     "morning": 239,
-    "afternoon": 36,
+    "afternoon": 39,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 12,
-    "acceptRate": 87.6,
+    "acceptRate": 87.7,
     "spareRejects": -34
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 211,
+        "complete": 212,
         "reject": 34,
         "cancel": 14,
         "riderFault": 0,
         "morning": 183,
-        "afternoon": 28,
+        "afternoon": 29,
         "evening": 0,
         "midnight": 0,
         "count": 49,
         "onlineCount": 7,
-        "acceptRate": 86.1,
+        "acceptRate": 86.2,
         "spareRejects": -30
       },
       "targets": {
@@ -236,12 +236,12 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 15,
+          "complete": 16,
           "reject": 2,
           "cancel": 1,
           "riderFault": 0,
           "morning": 15,
-          "afternoon": 0,
+          "afternoon": 1,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -253,7 +253,7 @@
             6,
             4,
             0,
-            0,
+            1,
             0,
             0,
             0,
@@ -270,7 +270,7 @@
             0,
             0
           ],
-          "acceptRate": 88.2,
+          "acceptRate": 88.9,
           "warning": false
         },
         {
@@ -2213,17 +2213,17 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 64,
+        "complete": 66,
         "reject": 5,
         "cancel": 1,
         "riderFault": 0,
         "morning": 56,
-        "afternoon": 8,
+        "afternoon": 10,
         "evening": 0,
         "midnight": 0,
         "count": 24,
         "onlineCount": 5,
-        "acceptRate": 92.8,
+        "acceptRate": 93.0,
         "spareRejects": -4
       },
       "targets": {
@@ -2330,12 +2330,12 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 5,
+          "complete": 6,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
-          "afternoon": 5,
+          "afternoon": 6,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -2347,7 +2347,7 @@
             0,
             0,
             0,
-            5,
+            6,
             0,
             0,
             0,
@@ -2418,12 +2418,12 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
-          "afternoon": 3,
+          "afternoon": 4,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -2435,7 +2435,7 @@
             0,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -2452,8 +2452,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "김광미",
@@ -3522,12 +3522,12 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 5,
+      "complete": 6,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
-      "afternoon": 5,
+      "afternoon": 6,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -3539,7 +3539,7 @@
         0,
         0,
         0,
-        5,
+        6,
         0,
         0,
         0,
@@ -3610,12 +3610,12 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 15,
+      "complete": 16,
       "reject": 2,
       "cancel": 1,
       "riderFault": 0,
       "morning": 15,
-      "afternoon": 0,
+      "afternoon": 1,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -3627,7 +3627,7 @@
         6,
         4,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -3644,7 +3644,7 @@
         0,
         0
       ],
-      "acceptRate": 88.2,
+      "acceptRate": 88.9,
       "warning": false
     },
     {
@@ -3786,12 +3786,12 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
-      "afternoon": 3,
+      "afternoon": 4,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -3803,7 +3803,7 @@
         0,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -3820,8 +3820,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "강우기",
