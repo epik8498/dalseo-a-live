@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-25 12:53:47",
+  "updatedAt": "2026-05-25 12:54:58",
   "businessDate": "2026-05-25",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 302,
-    "reject": 29,
+    "reject": 30,
     "cancel": 22,
     "riderFault": 0,
     "morning": 302,
@@ -24,15 +24,15 @@
     "evening": 0,
     "midnight": 0,
     "count": 174,
-    "onlineCount": 33,
-    "acceptRate": 91.2,
-    "spareRejects": -23
+    "onlineCount": 31,
+    "acceptRate": 91.0,
+    "spareRejects": -24
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 227,
-        "reject": 15,
+        "reject": 16,
         "cancel": 12,
         "riderFault": 0,
         "morning": 227,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 141,
         "onlineCount": 25,
-        "acceptRate": 93.8,
-        "spareRejects": -11
+        "acceptRate": 93.4,
+        "spareRejects": -12
       },
       "targets": {
         "morning": 231,
@@ -809,7 +809,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 5,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 5,
@@ -842,7 +842,7 @@
             0,
             0
           ],
-          "acceptRate": 100.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -6270,7 +6270,7 @@
         "evening": 0,
         "midnight": 0,
         "count": 33,
-        "onlineCount": 8,
+        "onlineCount": 6,
         "acceptRate": 84.3,
         "spareRejects": -13
       },
@@ -6288,8 +6288,8 @@
           "phone": "010-4077-9506",
           "userId": "rotorl9506",
           "team": "달서팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 13,
           "reject": 5,
           "cancel": 1,
@@ -6552,8 +6552,8 @@
           "phone": "010-5969-2966",
           "userId": "rlagudals1",
           "team": "달서팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 6,
           "reject": 1,
           "cancel": 2,
@@ -8008,8 +8008,8 @@
       "phone": "010-4077-9506",
       "userId": "rotorl9506",
       "team": "달서팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 13,
       "reject": 5,
       "cancel": 1,
@@ -8712,8 +8712,8 @@
       "phone": "010-5969-2966",
       "userId": "rlagudals1",
       "team": "달서팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 6,
       "reject": 1,
       "cancel": 2,
@@ -8847,7 +8847,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 5,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 5,
@@ -8880,7 +8880,7 @@
         0,
         0
       ],
-      "acceptRate": 100.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
