@@ -9,14 +9,14 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 21:32:29",
+  "updatedAt": "2026-05-25 21:33:36",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 693,
-    "reject": 79,
+    "reject": 80,
     "cancel": 46,
     "riderFault": 0,
     "morning": 239,
@@ -25,14 +25,14 @@
     "midnight": 88,
     "count": 73,
     "onlineCount": 11,
-    "acceptRate": 89.8,
-    "spareRejects": -65
+    "acceptRate": 89.7,
+    "spareRejects": -66
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 486,
-        "reject": 60,
+        "reject": 61,
         "cancel": 42,
         "riderFault": 0,
         "morning": 183,
@@ -41,8 +41,8 @@
         "midnight": 64,
         "count": 49,
         "onlineCount": 10,
-        "acceptRate": 89.0,
-        "spareRejects": -51
+        "acceptRate": 88.8,
+        "spareRejects": -52
       },
       "targets": {
         "morning": 132,
@@ -369,7 +369,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 33,
-          "reject": 8,
+          "reject": 9,
           "cancel": 5,
           "riderFault": 0,
           "morning": 8,
@@ -402,8 +402,8 @@
             0,
             0
           ],
-          "acceptRate": 80.5,
-          "warning": false
+          "acceptRate": 78.6,
+          "warning": true
         },
         {
           "name": "최순",
@@ -3655,7 +3655,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 33,
-      "reject": 8,
+      "reject": 9,
       "cancel": 5,
       "riderFault": 0,
       "morning": 8,
@@ -3688,8 +3688,8 @@
         0,
         0
       ],
-      "acceptRate": 80.5,
-      "warning": false
+      "acceptRate": 78.6,
+      "warning": true
     },
     {
       "name": "최순",
