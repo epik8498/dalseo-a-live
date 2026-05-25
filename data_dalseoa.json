@@ -9,33 +9,33 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-25 11:32:35",
+  "updatedAt": "2026-05-25 11:33:45",
   "businessDate": "2026-05-25",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 134,
-    "reject": 7,
+    "complete": 135,
+    "reject": 9,
     "cancel": 8,
     "riderFault": 0,
-    "morning": 134,
+    "morning": 135,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 174,
     "onlineCount": 28,
-    "acceptRate": 95.0,
-    "spareRejects": -5
+    "acceptRate": 93.8,
+    "spareRejects": -7
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 94,
+        "complete": 95,
         "reject": 3,
         "cancel": 4,
         "riderFault": 0,
-        "morning": 94,
+        "morning": 95,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
@@ -60,11 +60,11 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 19,
+          "complete": 20,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 19,
+          "morning": 20,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -74,7 +74,7 @@
             5,
             3,
             5,
-            0,
+            1,
             0,
             0,
             0,
@@ -6262,7 +6262,7 @@
     "달서팀": {
       "summary": {
         "complete": 40,
-        "reject": 4,
+        "reject": 6,
         "cancel": 4,
         "riderFault": 0,
         "morning": 40,
@@ -6271,8 +6271,8 @@
         "midnight": 0,
         "count": 33,
         "onlineCount": 9,
-        "acceptRate": 90.9,
-        "spareRejects": -4
+        "acceptRate": 87.0,
+        "spareRejects": -6
       },
       "targets": {
         "morning": 33,
@@ -6467,7 +6467,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 5,
-          "reject": 1,
+          "reject": 3,
           "cancel": 1,
           "riderFault": 0,
           "morning": 5,
@@ -6500,8 +6500,8 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
-          "warning": false
+          "acceptRate": 62.5,
+          "warning": true
         },
         {
           "name": "정성훈",
@@ -7746,11 +7746,11 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 19,
+      "complete": 20,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 19,
+      "morning": 20,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -7760,7 +7760,7 @@
         5,
         3,
         5,
-        0,
+        1,
         0,
         0,
         0,
@@ -8275,7 +8275,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 5,
-      "reject": 1,
+      "reject": 3,
       "cancel": 1,
       "riderFault": 0,
       "morning": 5,
@@ -8308,8 +8308,8 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
-      "warning": false
+      "acceptRate": 62.5,
+      "warning": true
     },
     {
       "name": "황인호",
