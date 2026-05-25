@@ -9,19 +9,19 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 18:47:48",
+  "updatedAt": "2026-05-25 18:48:55",
   "businessDate": "2026-05-25",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 480,
+    "complete": 481,
     "reject": 54,
     "cancel": 33,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
-    "evening": 92,
+    "evening": 93,
     "midnight": 0,
     "count": 73,
     "onlineCount": 18,
@@ -31,17 +31,17 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 346,
+        "complete": 347,
         "reject": 47,
         "cancel": 31,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
-        "evening": 59,
+        "evening": 60,
         "midnight": 0,
         "count": 49,
         "onlineCount": 12,
-        "acceptRate": 88.0,
+        "acceptRate": 88.1,
         "spareRejects": -40
       },
       "targets": {
@@ -412,13 +412,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 24,
+          "complete": 25,
           "reject": 1,
           "cancel": 3,
           "riderFault": 0,
           "morning": 18,
           "afternoon": 1,
-          "evening": 5,
+          "evening": 6,
           "midnight": 0,
           "hourly": [
             0,
@@ -433,7 +433,7 @@
             0,
             0,
             2,
-            3,
+            4,
             0,
             0,
             0,
@@ -446,7 +446,7 @@
             0,
             0
           ],
-          "acceptRate": 96.0,
+          "acceptRate": 96.2,
           "warning": false
         },
         {
@@ -3786,13 +3786,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 24,
+      "complete": 25,
       "reject": 1,
       "cancel": 3,
       "riderFault": 0,
       "morning": 18,
       "afternoon": 1,
-      "evening": 5,
+      "evening": 6,
       "midnight": 0,
       "hourly": [
         0,
@@ -3807,7 +3807,7 @@
         0,
         0,
         2,
-        3,
+        4,
         0,
         0,
         0,
@@ -3820,7 +3820,7 @@
         0,
         0
       ],
-      "acceptRate": 96.0,
+      "acceptRate": 96.2,
       "warning": false
     },
     {
