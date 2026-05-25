@@ -9,20 +9,20 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 00:03:45",
+  "updatedAt": "2026-05-26 00:04:53",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 774,
+    "complete": 775,
     "reject": 84,
     "cancel": 50,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
     "evening": 217,
-    "midnight": 169,
+    "midnight": 170,
     "count": 73,
     "onlineCount": 6,
     "acceptRate": 90.2,
@@ -31,14 +31,14 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 543,
+        "complete": 544,
         "reject": 65,
         "cancel": 44,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
         "evening": 135,
-        "midnight": 121,
+        "midnight": 122,
         "count": 49,
         "onlineCount": 4,
         "acceptRate": 89.3,
@@ -148,14 +148,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 19,
+          "complete": 20,
           "reject": 5,
           "cancel": 2,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 0,
-          "midnight": 19,
+          "midnight": 20,
           "hourly": [
             0,
             0,
@@ -174,7 +174,7 @@
             6,
             4,
             6,
-            3,
+            4,
             0,
             0,
             0,
@@ -182,8 +182,8 @@
             0,
             0
           ],
-          "acceptRate": 79.2,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "황주호",
@@ -3478,14 +3478,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 19,
+      "complete": 20,
       "reject": 5,
       "cancel": 2,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 0,
-      "midnight": 19,
+      "midnight": 20,
       "hourly": [
         0,
         0,
@@ -3504,7 +3504,7 @@
         6,
         4,
         6,
-        3,
+        4,
         0,
         0,
         0,
@@ -3512,8 +3512,8 @@
         0,
         0
       ],
-      "acceptRate": 79.2,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "황주호",
