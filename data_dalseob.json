@@ -10,34 +10,34 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-25 16:54:42",
+  "updatedAt": "2026-05-25 16:55:53",
   "businessDate": "2026-05-25",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 1061,
-    "reject": 141,
+    "complete": 1062,
+    "reject": 142,
     "cancel": 45,
     "riderFault": 0,
     "morning": 716,
-    "afternoon": 345,
+    "afternoon": 346,
     "evening": 0,
     "midnight": 0,
     "count": 177,
     "onlineCount": 34,
-    "acceptRate": 88.3,
-    "spareRejects": -120
+    "acceptRate": 88.2,
+    "spareRejects": -121
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 313,
+        "complete": 314,
         "reject": 38,
         "cancel": 14,
         "riderFault": 0,
         "morning": 188,
-        "afternoon": 125,
+        "afternoon": 126,
         "evening": 0,
         "midnight": 0,
         "count": 47,
@@ -105,12 +105,12 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 38,
+          "complete": 39,
           "reject": 1,
           "cancel": 1,
           "riderFault": 0,
           "morning": 23,
-          "afternoon": 15,
+          "afternoon": 16,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -124,7 +124,7 @@
             5,
             7,
             6,
-            2,
+            3,
             0,
             0,
             0,
@@ -139,7 +139,7 @@
             0,
             0
           ],
-          "acceptRate": 97.4,
+          "acceptRate": 97.5,
           "warning": false
         },
         {
@@ -2135,7 +2135,7 @@
         "evening": 0,
         "midnight": 0,
         "count": 43,
-        "onlineCount": 12,
+        "onlineCount": 11,
         "acceptRate": 93.2,
         "spareRejects": -18
       },
@@ -2549,8 +2549,8 @@
           "phone": "010-3353-7644",
           "userId": "kim701208",
           "team": "넘버팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 17,
           "reject": 0,
           "cancel": 0,
@@ -4045,7 +4045,7 @@
     "마음팀": {
       "summary": {
         "complete": 419,
-        "reject": 79,
+        "reject": 80,
         "cancel": 24,
         "riderFault": 0,
         "morning": 303,
@@ -4053,9 +4053,9 @@
         "evening": 0,
         "midnight": 0,
         "count": 87,
-        "onlineCount": 10,
-        "acceptRate": 84.1,
-        "spareRejects": -71
+        "onlineCount": 11,
+        "acceptRate": 84.0,
+        "spareRejects": -72
       },
       "targets": {
         "morning": 182,
@@ -4467,8 +4467,8 @@
           "phone": "010-4588-9854",
           "userId": "sign222",
           "team": "마음팀",
-          "status": "운행 종료",
-          "isOnline": false,
+          "status": "운행중",
+          "isOnline": true,
           "complete": 16,
           "reject": 1,
           "cancel": 0,
@@ -4558,7 +4558,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 16,
-          "reject": 33,
+          "reject": 34,
           "cancel": 9,
           "riderFault": 0,
           "morning": 11,
@@ -4591,7 +4591,7 @@
             0,
             0
           ],
-          "acceptRate": 32.7,
+          "acceptRate": 32.0,
           "warning": true
         },
         {
@@ -7949,12 +7949,12 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 38,
+      "complete": 39,
       "reject": 1,
       "cancel": 1,
       "riderFault": 0,
       "morning": 23,
-      "afternoon": 15,
+      "afternoon": 16,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -7968,7 +7968,7 @@
         5,
         7,
         6,
-        2,
+        3,
         0,
         0,
         0,
@@ -7983,7 +7983,7 @@
         0,
         0
       ],
-      "acceptRate": 97.4,
+      "acceptRate": 97.5,
       "warning": false
     },
     {
@@ -9135,8 +9135,8 @@
       "phone": "010-3353-7644",
       "userId": "kim701208",
       "team": "넘버팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 17,
       "reject": 0,
       "cancel": 0,
@@ -9267,8 +9267,8 @@
       "phone": "010-4588-9854",
       "userId": "sign222",
       "team": "마음팀",
-      "status": "운행 종료",
-      "isOnline": false,
+      "status": "운행중",
+      "isOnline": true,
       "complete": 16,
       "reject": 1,
       "cancel": 0,
@@ -9402,7 +9402,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 16,
-      "reject": 33,
+      "reject": 34,
       "cancel": 9,
       "riderFault": 0,
       "morning": 11,
@@ -9435,7 +9435,7 @@
         0,
         0
       ],
-      "acceptRate": 32.7,
+      "acceptRate": 32.0,
       "warning": true
     },
     {
