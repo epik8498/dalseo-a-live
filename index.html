@@ -284,12 +284,11 @@ function render(){
   const totalOrder=teams.reduce((s,t)=>s+(teamObj(t).targets.total||0),0);
 
   document.getElementById("modeBtn").innerText=document.body.classList.contains("dark")?"☀ 라이트 모드":"🌙 다크 모드";
-  document.getElementById("areaText").innerText=d.area || CURRENT;
   document.getElementById("totalVolume").innerText=n(totalOrder);
-  document.getElementById("totalOrder").innerText=n(totalOrder);
-  document.getElementById("totalComplete").innerText=n(d.total.complete);
-  document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
-  document.getElementById("totalSpare").innerText=n(d.total.spareRejects);
+document.getElementById("totalOrder").innerText=n(totalOrder);
+document.getElementById("totalComplete").innerText=n(d.total.complete);
+document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
+document.getElementById("totalSpare").innerText=n(Math.abs(d.total.spareRejects));
   document.getElementById("dayComplete").innerText=n(d.total.complete);
   document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("onlineCount").innerText=n(d.total.onlineCount)+"명";
