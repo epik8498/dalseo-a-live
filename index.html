@@ -11,6 +11,14 @@
 <title>SUPERSONIC 통합 관제판</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
+.top-update{
+  margin-top:-8px;
+  margin-bottom:16px;
+  font-size:13px;
+  font-weight:900;
+  color:var(--muted);
+  text-align:center;
+}
 :root{
   --red:#e60012; --blue:#006fd6; --green:#00c853; --purple:#7c3aed;
   --text:#111; --muted:#777; --line:#e6e6e6; --card:#fff; --bg:#fff;
@@ -72,7 +80,7 @@ body.dark .rider.active{
 .stat small{display:block;font-size:12px;font-weight:900}.stat b{display:block;margin-top:4px;font-size:18px}.stat b.red{color:var(--red)}
 .times{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:12px;padding-top:10px;text-align:center}
 .times div{border-right:1px solid var(--line);font-size:12px;font-weight:900}.times div:last-child{border-right:0}.times b{display:block;color:var(--red);font-size:16px;margin-top:3px}
-.footer{text-align:center;color:var(--muted);font-weight:900;padding:24px 0 4px}
+.footer{display:none}
 .error{border:2px solid var(--red);border-radius:16px;padding:18px;text-align:center;font-weight:900;color:var(--red);background:#fff3f3}
 body.dark .error{background:#220000}
 @media(max-width:760px){.summary-grid{grid-template-columns:repeat(3,1fr)}.sum:nth-child(5n){border-right:1px solid var(--line)}.sum:nth-child(3n){border-right:0}.period-grid{grid-template-columns:1fr 1fr}}
@@ -89,6 +97,7 @@ body.dark .error{background:#220000}
     <div class="brand">SUPERSONIC</div>
     <div class="sub">배민 | 쿠팡협력사</div>
     <div class="area">현재 권역 : <b id="areaText">-</b></div>
+    <div class="top-update" id="topUpdateTime">↻ 마지막 업데이트 : -</div>
   </div>
 
   <div id="errorBox"></div>
@@ -142,6 +151,7 @@ function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}
 function areaCfg(){return AREAS[CURRENT]}
 
 function toggleAreaMenu(){document.getElementById("areaMenu").classList.toggle("show")}
+document.getElementById("topUpdateTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 function selectArea(area){CURRENT=area;FILTER="전체";localStorage.setItem("selectedArea",area);document.getElementById("areaMenu").classList.remove("show");loadData()}
 function setFilter(v){FILTER=v;render()}
 
