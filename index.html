@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<head>
 <meta charset="UTF-8">
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -151,7 +150,6 @@ function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}
 function areaCfg(){return AREAS[CURRENT]}
 
 function toggleAreaMenu(){document.getElementById("areaMenu").classList.toggle("show")}
-document.getElementById("topUpdateTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 function selectArea(area){CURRENT=area;FILTER="전체";localStorage.setItem("selectedArea",area);document.getElementById("areaMenu").classList.remove("show");loadData()}
 function setFilter(v){FILTER=v;render()}
 
@@ -203,6 +201,7 @@ function render(){
   document.getElementById("teamCountTitle").innerText="접속중("+teams.map(t=>cfg.labels[t]).join("/")+")";
   document.getElementById("teamCount").innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join("/");
   document.getElementById("footerTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
+  document.getElementById("topUpdateTime").innerText="↻ 마지막 업데이트 : "+d.updatedAt;
 
   const periods=[["morning","☀","오전 피크"],["afternoon","☀","오후 논피크"],["evening","🌇","저녁 피크"],["midnight","🌙","심야 논피크"]];
 
