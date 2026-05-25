@@ -806,7 +806,7 @@ function renderWeekly(d){
     <div>수락률<b>${w.acceptRate}%</b></div>
   `;
 
-  const labels=[
+  const labelFallback=[
     ["morning","오전피크"],
     ["afternoon","오후논피크"],
     ["evening","저녁피크"],
@@ -814,7 +814,29 @@ function renderWeekly(d){
   ];
 
   document.getElementById("weeklyDays").innerHTML=(w.days||[]).map(day=>{
-    const badTotal = Number(day.reject||0) + Number(day.cancel||0) + Number(day.riderFault||0);
+    const badTotal = Number(day.badTotal ?? (Number(day.reject||0) + Number(day.cancel||0) + Number(day.riderFault||0)));
+
+    let periodRows = [];
+
+    if(Array.isArray(day.periods) && day.periods.length){
+      periodRows = day.periods.map(p=>({
+        label: p.label || "",
+        done: Number(p.done || 0),
+        goal: Number(p.goal || 0),
+        failed: !!p.failed
+      }));
+    }else{
+      periodRows = labelFallback.map(([key,label])=>{
+        const done=Number(day[key]||0);
+        const goal=periodGoalForDay(day,key);
+        return {
+          label,
+          done,
+          goal,
+          failed: goal > 0 && done < goal
+        };
+      });
+    }
 
     return `
       <div class="day-card ${day.hasData?'':'empty'}">
@@ -822,17 +844,12 @@ function renderWeekly(d){
         <div class="day-date">${day.businessDate}</div>
 
         <div class="period-mini">
-          ${labels.map(([key,label])=>{
-            const done=Number(day[key]||0);
-            const goal=periodGoalForDay(day,key);
-            const failed = goal > 0 && done < goal;
-            return `
-              <div class="period-mini-row ${failed?'fail':''}">
-                <span>${label}</span>
-                <b>${n(done)}${goal ? " / "+n(goal) : ""}</b>
-              </div>
-            `;
-          }).join("")}
+          ${periodRows.map(p=>`
+            <div class="period-mini-row ${p.failed?'fail':''}">
+              <span>${p.label}</span>
+              <b>${n(p.done)}${p.goal ? " / "+n(p.goal) : ""}</b>
+            </div>
+          `).join("")}
         </div>
 
         <div class="day-rate">
