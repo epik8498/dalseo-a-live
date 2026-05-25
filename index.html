@@ -124,27 +124,27 @@ body.dark .error{background:#220000}
 
   <div class="summary">
     <div class="summary-grid">
-      <div class="sum topline"><div class="sum-title">총 물량</div><div class="sum-val" id="totalVolume">0</div></div>
-      <div class="sum topline"><div class="sum-title">총 발주량</div><div class="sum-val" id="totalOrder">0</div></div>
-      <div class="sum topline"><div class="sum-title">총 완료량</div><div class="sum-val" id="totalComplete">0</div></div>
-      <div class="sum topline"><div class="sum-title">총 수락률</div><div class="sum-val" id="totalRate">0%</div></div>
-      <div class="sum topline"><div class="sum-title">총 여유거절</div><div class="sum-val red" id="totalSpare">0</div></div>
-      <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
-      <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
-      <div class="sum"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weeklyRate">-</div></div>
-      <div class="sum"><div class="sum-title">주간 여유거절</div><div class="sum-val red" id="weeklySpare">-</div></div>
+      <div class="sum topline"><div class="sum-title">주간 완료</div><div class="sum-val red" id="weeklyCompleteTop">0</div></div>
+      <div class="sum topline"><div class="sum-title">주간 거절합계</div><div class="sum-val" id="weeklyBadTop">0</div></div>
+      <div class="sum topline"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weeklyRate">-</div></div>
+      <div class="sum topline"><div class="sum-title">주간 여유거절</div><div class="sum-val red" id="weeklySpare">-</div></div>
+      <div class="sum topline"><div class="sum-title">전체 접속</div><div class="sum-val green" id="onlineCount">0명</div></div>
+      <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="totalOrder">0</div></div>
+      <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="totalComplete">0</div></div>
+      <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="totalRate">0%</div></div>
+      <div class="sum"><div class="sum-title">당일 여유거절</div><div class="sum-val red" id="totalSpare">0</div></div>
       <div class="sum"><div class="sum-title" id="teamCountTitle">접속중</div><div class="sum-val red" id="teamCount">0</div></div>
     </div>
   </div>
 
   <div class="weekly-bar">
     <div class="weekly-kpi">
-      <div class="label">이번 주 완료 / 거절</div>
+      <div class="label">이번 주 완료 / 거절합계</div>
       <div class="value" id="weeklyCompleteReject">-</div>
     </div>
     <div class="weekly-kpi">
-      <div class="label">전체 접속</div>
-      <div class="value green" id="onlineCount">0명</div>
+      <div class="label">이번 주 기간</div>
+      <div class="value" id="weeklyRangeCard" style="font-size:20px">-</div>
     </div>
   </div>
 
@@ -228,22 +228,30 @@ function renderWeekly(d){
   const w=d.weeklySummary || null;
 
   if(!w){
+    document.getElementById("weeklyCompleteTop").innerText="0";
+    document.getElementById("weeklyBadTop").innerText="0";
     document.getElementById("weeklyRate").innerText="-";
     document.getElementById("weeklySpare").innerText="-";
     document.getElementById("weeklyCompleteReject").innerText="-";
     document.getElementById("weeklyRange").innerText="데이터 없음";
+    document.getElementById("weeklyRangeCard").innerText="-";
     document.getElementById("weeklyTotal").innerHTML=`<div>주간 데이터가 아직 없습니다.</div>`;
     document.getElementById("weeklyDays").innerHTML="";
     return;
   }
 
   const spareEl=document.getElementById("weeklySpare");
+  const weeklyBadTotal = Number(w.reject||0) + Number(w.cancel||0) + Number(w.riderFault||0);
+
+  document.getElementById("weeklyCompleteTop").innerText=n(w.complete);
+  document.getElementById("weeklyBadTop").innerText=n(weeklyBadTotal);
   document.getElementById("weeklyRate").innerText=w.acceptRate+"%";
   spareEl.innerText=n(Math.abs(w.spareRejects));
   spareEl.className="sum-val "+valClass(w.spareRejects);
 
-  document.getElementById("weeklyCompleteReject").innerText=`${n(w.complete)} / ${n(w.reject)}`;
+  document.getElementById("weeklyCompleteReject").innerText=`${n(w.complete)} / ${n(weeklyBadTotal)}`;
   document.getElementById("weeklyRange").innerText=`${w.startDate} ~ ${w.endDate}`;
+  document.getElementById("weeklyRangeCard").innerText=`${w.startDate} ~ ${w.endDate}`;
 
   document.getElementById("weeklyTotal").innerHTML=`
     <div>완료<b>${n(w.complete)}</b></div>
@@ -285,13 +293,10 @@ function render(){
 
   document.getElementById("modeBtn").innerText=document.body.classList.contains("dark")?"☀ 라이트 모드":"🌙 다크 모드";
   document.getElementById("areaText").innerText=d.area || CURRENT;
-  document.getElementById("totalVolume").innerText=n(totalOrder);
   document.getElementById("totalOrder").innerText=n(totalOrder);
   document.getElementById("totalComplete").innerText=n(d.total.complete);
   document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
   document.getElementById("totalSpare").innerText=n(Math.abs(d.total.spareRejects));
-  document.getElementById("dayComplete").innerText=n(d.total.complete);
-  document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("onlineCount").innerText=n(d.total.onlineCount)+"명";
   document.getElementById("teamCountTitle").innerText="접속중("+teams.map(t=>cfg.labels[t]).join("/")+")";
   document.getElementById("teamCount").innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join("/");
