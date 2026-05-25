@@ -239,7 +239,7 @@ function renderWeekly(d){
 
   const spareEl=document.getElementById("weeklySpare");
   document.getElementById("weeklyRate").innerText=w.acceptRate+"%";
-  spareEl.innerText=n(w.spareRejects);
+  spareEl.innerText=n(Math.abs(w.spareRejects));
   spareEl.className="sum-val "+valClass(w.spareRejects);
 
   document.getElementById("weeklyCompleteReject").innerText=`${n(w.complete)} / ${n(w.reject)}`;
@@ -249,7 +249,7 @@ function renderWeekly(d){
     <div>완료<b>${n(w.complete)}</b></div>
     <div>거절<b>${n(w.reject)}</b></div>
     <div>거절합계<b>${n(w.badTotal ?? (w.reject+w.cancel+w.riderFault))}</b></div>
-    <div>여유거절<b>${n(w.spareRejects)}</b></div>
+    <div>여유거절<b>${n(Math.abs(w.spareRejects))}</b></div>
     <div>수락률<b>${w.acceptRate}%</b></div>
   `;
 
@@ -284,11 +284,12 @@ function render(){
   const totalOrder=teams.reduce((s,t)=>s+(teamObj(t).targets.total||0),0);
 
   document.getElementById("modeBtn").innerText=document.body.classList.contains("dark")?"☀ 라이트 모드":"🌙 다크 모드";
+  document.getElementById("areaText").innerText=d.area || CURRENT;
   document.getElementById("totalVolume").innerText=n(totalOrder);
-document.getElementById("totalOrder").innerText=n(totalOrder);
-document.getElementById("totalComplete").innerText=n(d.total.complete);
-document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
-document.getElementById("totalSpare").innerText=n(Math.abs(d.total.spareRejects));
+  document.getElementById("totalOrder").innerText=n(totalOrder);
+  document.getElementById("totalComplete").innerText=n(d.total.complete);
+  document.getElementById("totalRate").innerText=d.total.acceptRate+"%";
+  document.getElementById("totalSpare").innerText=n(Math.abs(d.total.spareRejects));
   document.getElementById("dayComplete").innerText=n(d.total.complete);
   document.getElementById("dayOrder").innerText=n(totalOrder);
   document.getElementById("onlineCount").innerText=n(d.total.onlineCount)+"명";
