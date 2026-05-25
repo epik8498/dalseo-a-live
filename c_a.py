@@ -9,7 +9,7 @@ from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 from playwright.sync_api import sync_playwright
 
-AUTO_GIT_PUSH = True
+AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
