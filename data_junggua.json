@@ -9,20 +9,20 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 21:16:40",
+  "updatedAt": "2026-05-25 21:17:48",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 677,
+    "complete": 678,
     "reject": 77,
     "cancel": 45,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
     "evening": 217,
-    "midnight": 72,
+    "midnight": 73,
     "count": 73,
     "onlineCount": 14,
     "acceptRate": 89.8,
@@ -31,17 +31,17 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 471,
+        "complete": 472,
         "reject": 58,
         "cancel": 41,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
         "evening": 135,
-        "midnight": 49,
+        "midnight": 50,
         "count": 49,
         "onlineCount": 11,
-        "acceptRate": 89.0,
+        "acceptRate": 89.1,
         "spareRejects": -49
       },
       "targets": {
@@ -104,14 +104,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 4,
+          "complete": 5,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 2,
-          "midnight": 2,
+          "midnight": 3,
           "hourly": [
             0,
             0,
@@ -127,7 +127,7 @@
             0,
             0,
             2,
-            2,
+            3,
             0,
             0,
             0,
@@ -138,7 +138,7 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -3434,14 +3434,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 4,
+      "complete": 5,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 2,
-      "midnight": 2,
+      "midnight": 3,
       "hourly": [
         0,
         0,
@@ -3457,7 +3457,7 @@
         0,
         0,
         2,
-        2,
+        3,
         0,
         0,
         0,
@@ -3468,7 +3468,7 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
