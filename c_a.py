@@ -88,8 +88,8 @@ def current_period(now):
     return "midnight"
 
 
-def calc_accept_rate(complete, reject):
-    total = complete + reject
+def calc_accept_rate(complete, reject, cancel=0, rider_fault=0):
+    total = complete + reject + cancel + rider_fault
     if total == 0:
         return 100
     return round((complete / total) * 100, 1)
