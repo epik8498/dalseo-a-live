@@ -9,18 +9,18 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 15:30:01",
+  "updatedAt": "2026-05-25 15:31:09",
   "businessDate": "2026-05-25",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 291,
+    "complete": 292,
     "reject": 39,
     "cancel": 17,
     "riderFault": 0,
     "morning": 239,
-    "afternoon": 52,
+    "afternoon": 53,
     "evening": 0,
     "midnight": 0,
     "count": 73,
@@ -2213,17 +2213,17 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 70,
+        "complete": 71,
         "reject": 5,
         "cancel": 1,
         "riderFault": 0,
         "morning": 56,
-        "afternoon": 14,
+        "afternoon": 15,
         "evening": 0,
         "midnight": 0,
         "count": 24,
         "onlineCount": 5,
-        "acceptRate": 93.3,
+        "acceptRate": 93.4,
         "spareRejects": -4
       },
       "targets": {
@@ -2418,12 +2418,12 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 4,
+          "complete": 5,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
-          "afternoon": 4,
+          "afternoon": 5,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -2436,7 +2436,7 @@
             0,
             0,
             4,
-            0,
+            1,
             0,
             0,
             0,
@@ -2452,7 +2452,7 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -3786,12 +3786,12 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 4,
+      "complete": 5,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
-      "afternoon": 4,
+      "afternoon": 5,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -3804,7 +3804,7 @@
         0,
         0,
         4,
-        0,
+        1,
         0,
         0,
         0,
@@ -3820,7 +3820,7 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
