@@ -384,29 +384,153 @@ def load_weekly():
     return []
 
 
+def week_start_wednesday(date_value):
+    """수요일~화요일 주차 기준의 시작일을 반환합니다."""
+    days_since_wed = (date_value.weekday() - 2) % 7
+    return date_value - timedelta(days=days_since_wed)
+
+
+def current_week_dates(now):
+    start = week_start_wednesday(business_date(now))
+    return [start + timedelta(days=i) for i in range(7)]
+
+
+def target_total_by_period_for_date(date_value):
+    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+    base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
+    total_sets = sum(AREA_CONFIG[AREA_NAME].values())
+    return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
+
+
+def weekly_summary(weekly_rows, now):
+    week_dates = current_week_dates(now)
+    date_keys = [str(d) for d in week_dates]
+    by_date = {x.get("businessDate"): x for x in weekly_rows}
+
+    days = []
+    total_complete = 0
+    total_reject = 0
+    total_cancel = 0
+    total_rider_fault = 0
+    total_periods = {p: 0 for p in PERIODS}
+    total_period_targets = {p: 0 for p in PERIODS}
+
+    labels = ["수", "목", "금", "토", "일", "월", "화"]
+    period_names = {
+        "morning": "오전피크",
+        "afternoon": "오후논피크",
+        "evening": "저녁피크",
+        "midnight": "심야논피크",
+    }
+
+    for label, date_value, date_key in zip(labels, week_dates, date_keys):
+        row = by_date.get(date_key, {})
+        complete = to_int(row.get("totalComplete", 0))
+        reject = to_int(row.get("totalReject", 0))
+        cancel = to_int(row.get("totalCancel", 0))
+        rider_fault = to_int(row.get("riderFault", 0))
+        bad_total = reject + cancel + rider_fault
+        period_targets = row.get("periodTargets") or target_total_by_period_for_date(date_value)
+
+        period_rows = []
+        for p in PERIODS:
+            done = to_int(row.get(p, 0))
+            goal = to_int(period_targets.get(p, 0))
+            failed = bool(row) and goal > 0 and done < goal
+            total_periods[p] += done
+            total_period_targets[p] += goal
+            period_rows.append({
+                "key": p,
+                "label": period_names[p],
+                "done": done,
+                "goal": goal,
+                "failed": failed,
+            })
+
+        total_complete += complete
+        total_reject += reject
+        total_cancel += cancel
+        total_rider_fault += rider_fault
+
+        days.append({
+            "label": label,
+            "businessDate": date_key,
+            "complete": complete,
+            "reject": reject,
+            "cancel": cancel,
+            "riderFault": rider_fault,
+            "badTotal": bad_total,
+            "acceptRate": calc_accept_rate(complete, reject),
+            "spareRejects": spare_rejects(complete, reject),
+            "periods": period_rows,
+            "closedAt": row.get("closedAt", ""),
+            "hasData": bool(row),
+        })
+
+    return {
+        "startDate": date_keys[0],
+        "endDate": date_keys[-1],
+        "complete": total_complete,
+        "reject": total_reject,
+        "cancel": total_cancel,
+        "riderFault": total_rider_fault,
+        "badTotal": total_reject + total_cancel + total_rider_fault,
+        "acceptRate": calc_accept_rate(total_complete, total_reject),
+        "spareRejects": spare_rejects(total_complete, total_reject),
+        "periodTotals": total_periods,
+        "periodTargets": total_period_targets,
+        "days": days,
+    }
+
+
 def save_weekly_if_close(data):
-    now = datetime.now()
-
-    if not (now.hour == 3 and now.minute >= 30):
-        return
-
+    """
+    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
+    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
+    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    if any(x.get("businessDate") == today_key for x in weekly):
-        return
+    period_targets = {
+        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
+        for p in PERIODS
+    }
 
-    weekly.append({
+    row = {
         "businessDate": today_key,
-        "closedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
+        "closedAt": data["updatedAt"],
         "totalComplete": data["total"]["complete"],
         "totalReject": data["total"]["reject"],
         "totalCancel": data["total"]["cancel"],
+        "riderFault": data["total"]["riderFault"],
+        "morning": data["total"]["morning"],
+        "afternoon": data["total"]["afternoon"],
+        "evening": data["total"]["evening"],
+        "midnight": data["total"]["midnight"],
+        "periodTargets": period_targets,
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
-    })
+    }
 
-    weekly = weekly[-14:]
+    found = False
+
+    for i, x in enumerate(weekly):
+        if x.get("businessDate") == today_key:
+            old_complete = to_int(x.get("totalComplete", 0))
+            old_reject = to_int(x.get("totalReject", 0))
+            old_cancel = to_int(x.get("totalCancel", 0))
+            old_total = old_complete + old_reject + old_cancel
+            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
+
+            if new_total >= old_total:
+                weekly[i] = row
+            found = True
+            break
+
+    if not found:
+        weekly.append(row)
+
+    weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
@@ -414,7 +538,7 @@ def save_weekly_if_close(data):
 
 def make_data(riders):
     now = datetime.now()
-    riders.sort(key=lambda x: x["complete"], reverse=True)
+    riders.sort(key=lambda x: (not x["isOnline"], x["name"]))
 
     targets = team_targets(now)
     teams = {}
@@ -427,9 +551,11 @@ def make_data(riders):
             "riders": rows,
         }
 
+    weekly = load_weekly()
+
     return {
         "area": AREA_NAME,
-        "areas": ["달서A", "달서B", "달서A"],
+        "areas": ["달서A", "달서B", "중구A"],
         "teamOrder": TEAM_ORDER,
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
@@ -439,9 +565,9 @@ def make_data(riders):
         "total": summary(riders),
         "teams": teams,
         "riders": riders,
-        "weekly": load_weekly(),
+        "weekly": weekly,
+        "weeklySummary": weekly_summary(weekly, now),
     }
-
 
 def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -492,7 +618,9 @@ def run_update(page):
 
     data = make_data(riders)
     save_weekly_if_close(data)
-    data["weekly"] = load_weekly()
+    weekly = load_weekly()
+    data["weekly"] = weekly
+    data["weeklySummary"] = weekly_summary(weekly, datetime.now())
 
     save_json(data)
     save_html()
