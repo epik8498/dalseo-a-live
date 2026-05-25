@@ -12,7 +12,7 @@ from playwright.sync_api import sync_playwright
 AUTO_GIT_PUSH = True
 REFRESH_SECONDS = 60
 MAX_PAGES = 20
-TARGET_ACCEPT_RATE = 98
+TARGET_ACCEPT_RATE = 80
 
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_dalseob.json"
@@ -129,18 +129,20 @@ def current_period(now):
     return "midnight"
 
 
-def calc_accept_rate(complete, reject):
-    total = complete + reject
+def calc_accept_rate(complete, reject, cancel=0, rider_fault=0):
+    total = complete + reject + cancel + rider_fault
     if total == 0:
         return 100
     return round((complete / total) * 100, 1)
 
 
-def spare_rejects(complete, reject):
+def spare_rejects(complete, reject, cancel=0, rider_fault=0):
+    bad_total = reject + cancel + rider_fault
     if complete <= 0:
-        return -reject
-    max_reject = math.floor(complete * (100 - TARGET_ACCEPT_RATE) / TARGET_ACCEPT_RATE)
-    return max_reject - reject
+        return 0
+    # 80% 기준: 완료 4건당 실패 1건까지 허용
+    max_bad_total = math.floor(complete * 0.25)
+    return max_bad_total - bad_total
 
 
 def team_of(name):
@@ -317,8 +319,8 @@ def parse_row_lines(row_lines):
         "evening": evening,
         "midnight": midnight,
         "hourly": hourly,
-        "acceptRate": calc_accept_rate(complete, reject),
-        "warning": calc_accept_rate(complete, reject) < 80,
+        "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+        "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
     }
 
 
@@ -388,20 +390,21 @@ def summary(rows):
     complete = sum(r["complete"] for r in rows)
     reject = sum(r["reject"] for r in rows)
     cancel = sum(r["cancel"] for r in rows)
+    rider_fault = sum(r["riderFault"] for r in rows)
 
     return {
         "complete": complete,
         "reject": reject,
         "cancel": cancel,
-        "riderFault": sum(r["riderFault"] for r in rows),
+        "riderFault": rider_fault,
         "morning": sum(r["morning"] for r in rows),
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
-        "acceptRate": calc_accept_rate(complete, reject),
-        "spareRejects": spare_rejects(complete, reject),
+        "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+        "spareRejects": spare_rejects(complete, reject, cancel, rider_fault),
     }
 
 
@@ -501,8 +504,8 @@ def weekly_summary(weekly_rows, now):
             "cancel": cancel,
             "riderFault": rider_fault,
             "badTotal": bad_total,
-            "acceptRate": calc_accept_rate(complete, reject),
-            "spareRejects": spare_rejects(complete, reject),
+            "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+            "spareRejects": spare_rejects(complete, reject, cancel, rider_fault),
             "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
             "hasData": bool(row),
@@ -516,8 +519,8 @@ def weekly_summary(weekly_rows, now):
         "cancel": total_cancel,
         "riderFault": total_rider_fault,
         "badTotal": total_reject + total_cancel + total_rider_fault,
-        "acceptRate": calc_accept_rate(total_complete, total_reject),
-        "spareRejects": spare_rejects(total_complete, total_reject),
+        "acceptRate": calc_accept_rate(total_complete, total_reject, total_cancel, total_rider_fault),
+        "spareRejects": spare_rejects(total_complete, total_reject, total_cancel, total_rider_fault),
         "periodTotals": total_periods,
         "periodTargets": total_period_targets,
         "days": days,
