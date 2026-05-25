@@ -591,6 +591,155 @@ body.dark .rider.active{
 
 body.dark .error{background:#220000}
 
+
+.mission-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:18px 0 12px;
+}
+
+.mission-title{
+  font-size:20px;
+  font-weight:1000;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.mission-title .icon{color:var(--red)}
+
+.mission-toggle{
+  border:0;
+  background:var(--red);
+  color:#fff;
+  border-radius:12px;
+  padding:12px 16px;
+  font-weight:1000;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(230,0,18,.18);
+}
+
+.mission-panel{
+  display:none;
+  margin-bottom:20px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.05);
+}
+
+body.dark .mission-panel{
+  background:rgba(20,20,20,.9);
+  box-shadow:none;
+}
+
+.mission-panel.show{display:block}
+
+.mission-form{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr auto;
+  gap:10px;
+  align-items:end;
+}
+
+.mission-field label{
+  display:block;
+  font-size:12px;
+  font-weight:900;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+
+.mission-field select,
+.mission-field input{
+  width:100%;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  border-radius:10px;
+  padding:11px 12px;
+  font-weight:900;
+}
+
+.mission-run{
+  border:0;
+  background:var(--red);
+  color:#fff;
+  border-radius:10px;
+  padding:12px 16px;
+  font-weight:1000;
+  cursor:pointer;
+}
+
+.mission-result{
+  margin-top:14px;
+}
+
+.mission-summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.mission-summary div{
+  background:var(--soft);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 8px;
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  color:var(--muted);
+}
+
+.mission-summary b{
+  display:block;
+  margin-top:5px;
+  color:var(--text);
+  font-size:19px;
+}
+
+.mission-list{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.mission-rider{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px 12px;
+  background:var(--soft);
+  font-weight:900;
+}
+
+.mission-rider .name{
+  font-size:16px;
+}
+
+.mission-rider .count{
+  color:var(--red);
+  font-size:18px;
+  font-weight:1000;
+}
+
+.mission-empty{
+  border:1px dashed var(--line);
+  border-radius:12px;
+  padding:16px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:900;
+}
+
 @media(max-width:760px){
   .summary-grid{grid-template-columns:repeat(3,1fr)}
   .sum:nth-child(5n){border-right:1px solid var(--line)}
@@ -598,6 +747,9 @@ body.dark .error{background:#220000}
   .period-grid{grid-template-columns:1fr 1fr}
   .weekly-days{grid-template-columns:repeat(2,1fr)}
   .weekly-total{grid-template-columns:repeat(2,1fr)}
+  .mission-form{grid-template-columns:1fr 1fr}
+  .mission-summary{grid-template-columns:repeat(2,1fr)}
+  .mission-list{grid-template-columns:1fr}
 }
 
 @media(max-width:540px){
@@ -613,6 +765,7 @@ body.dark .error{background:#220000}
   .weekly-actions{flex-direction:column;align-items:stretch}
   .weekly-toggle{width:100%}
   .weekly-days{grid-template-columns:1fr 1fr}
+  .mission-form{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -659,6 +812,38 @@ body.dark .error{background:#220000}
   <div class="weekly-panel" id="weeklyPanel">
     <div class="weekly-total" id="weeklyTotal"></div>
     <div class="weekly-days" id="weeklyDays"></div>
+  </div>
+
+
+  <div class="mission-actions">
+    <div class="mission-title"><span class="icon">▮</span> 미션집계</div>
+    <button class="mission-toggle" onclick="toggleMission()">미션집계 열기 ▾</button>
+  </div>
+
+  <div class="mission-panel" id="missionPanel">
+    <div class="mission-form">
+      <div class="mission-field">
+        <label>구간 선택</label>
+        <select id="missionPeriod">
+          <option value="morning">오전피크</option>
+          <option value="afternoon">오후논피크</option>
+          <option value="evening">저녁피크</option>
+          <option value="midnight">심야논피크</option>
+        </select>
+      </div>
+      <div class="mission-field">
+        <label>기준 건수</label>
+        <input id="missionTarget" type="number" min="0" value="13">
+      </div>
+      <div class="mission-field">
+        <label>1인 지급액</label>
+        <input id="missionPay" type="number" min="0" value="10000">
+      </div>
+      <button class="mission-run" onclick="runMission()">집계하기</button>
+    </div>
+    <div class="mission-result" id="missionResult">
+      <div class="mission-empty">구간과 기준 건수를 입력한 뒤 집계하기를 누르세요.</div>
+    </div>
   </div>
 
   <div class="section-title"><span class="icon">▮</span> 구간별 실적 <span style="font-size:14px;font-weight:900">(완료 / 발주량)</span></div>
@@ -720,6 +905,79 @@ function setFilter(v){
 function toggleWeekly(){
   document.getElementById("weeklyPanel").classList.toggle("show");
 }
+
+
+function toggleMission(){
+  document.getElementById("missionPanel").classList.toggle("show");
+}
+
+function periodLabel(key){
+  const labels={
+    morning:"오전피크",
+    afternoon:"오후논피크",
+    evening:"저녁피크",
+    midnight:"심야논피크"
+  };
+  return labels[key] || key;
+}
+
+function runMission(){
+  if(!DATA) return;
+
+  const period=document.getElementById("missionPeriod").value;
+  const target=Number(document.getElementById("missionTarget").value || 0);
+  const pay=Number(document.getElementById("missionPay").value || 0);
+
+  const riders=[...(DATA.riders||[])]
+    .map(r=>({
+      name:r.name,
+      team:r.team,
+      isOnline:r.isOnline,
+      count:Number(r[period]||0),
+      complete:Number(r.complete||0),
+      acceptRate:r.acceptRate
+    }))
+    .filter(r=>r.count >= target)
+    .sort((a,b)=>b.count-a.count || String(a.name).localeCompare(String(b.name),"ko"));
+
+  const totalPay=riders.length * pay;
+
+  const result=document.getElementById("missionResult");
+
+  if(riders.length === 0){
+    result.innerHTML=`
+      <div class="mission-summary">
+        <div>구간<b>${periodLabel(period)}</b></div>
+        <div>기준<b>${n(target)}건</b></div>
+        <div>달성 인원<b>0명</b></div>
+        <div>총 지급액<b>0원</b></div>
+      </div>
+      <div class="mission-empty">달성한 기사가 없습니다.</div>
+    `;
+    return;
+  }
+
+  result.innerHTML=`
+    <div class="mission-summary">
+      <div>구간<b>${periodLabel(period)}</b></div>
+      <div>기준<b>${n(target)}건</b></div>
+      <div>달성 인원<b>${n(riders.length)}명</b></div>
+      <div>총 지급액<b>${n(totalPay)}원</b></div>
+    </div>
+    <div class="mission-list">
+      ${riders.map(r=>`
+        <div class="mission-rider">
+          <div>
+            <div class="name">${r.name}</div>
+            <div style="font-size:11px;color:var(--muted);margin-top:3px">${r.team}${r.isOnline ? " · 접속중" : ""}</div>
+          </div>
+          <div class="count">${n(r.count)}건</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
 
 function toggleMode(){
   document.body.classList.toggle("dark");
