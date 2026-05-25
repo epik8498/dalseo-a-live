@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 21:36:59",
+  "updatedAt": "2026-05-25 21:38:07",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 698,
-    "reject": 80,
+    "complete": 699,
+    "reject": 81,
     "cancel": 46,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
     "evening": 217,
-    "midnight": 93,
+    "midnight": 94,
     "count": 73,
     "onlineCount": 11,
-    "acceptRate": 89.7,
-    "spareRejects": -66
+    "acceptRate": 89.6,
+    "spareRejects": -67
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 490,
-        "reject": 61,
+        "complete": 491,
+        "reject": 62,
         "cancel": 42,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
         "evening": 135,
-        "midnight": 68,
+        "midnight": 69,
         "count": 49,
         "onlineCount": 10,
-        "acceptRate": 88.9,
-        "spareRejects": -51
+        "acceptRate": 88.8,
+        "spareRejects": -52
       },
       "targets": {
         "morning": 132,
@@ -104,14 +104,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 6,
-          "reject": 1,
+          "complete": 7,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 2,
-          "midnight": 4,
+          "midnight": 5,
           "hourly": [
             0,
             0,
@@ -128,7 +128,7 @@
             0,
             2,
             3,
-            1,
+            2,
             0,
             0,
             0,
@@ -138,8 +138,8 @@
             0,
             0
           ],
-          "acceptRate": 85.7,
-          "warning": false
+          "acceptRate": 77.8,
+          "warning": true
         },
         {
           "name": "김지원",
@@ -3390,14 +3390,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 6,
-      "reject": 1,
+      "complete": 7,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 2,
-      "midnight": 4,
+      "midnight": 5,
       "hourly": [
         0,
         0,
@@ -3414,7 +3414,7 @@
         0,
         2,
         3,
-        1,
+        2,
         0,
         0,
         0,
@@ -3424,8 +3424,8 @@
         0,
         0
       ],
-      "acceptRate": 85.7,
-      "warning": false
+      "acceptRate": 77.8,
+      "warning": true
     },
     {
       "name": "김지원",
