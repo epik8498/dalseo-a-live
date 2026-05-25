@@ -9,19 +9,19 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 17:33:07",
+  "updatedAt": "2026-05-25 17:34:15",
   "businessDate": "2026-05-25",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 395,
+    "complete": 396,
     "reject": 46,
     "cancel": 25,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
-    "evening": 7,
+    "evening": 8,
     "midnight": 0,
     "count": 73,
     "onlineCount": 14,
@@ -31,17 +31,17 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 289,
+        "complete": 290,
         "reject": 40,
         "cancel": 23,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
-        "evening": 2,
+        "evening": 3,
         "midnight": 0,
         "count": 49,
         "onlineCount": 9,
-        "acceptRate": 87.8,
+        "acceptRate": 87.9,
         "spareRejects": -35
       },
       "targets": {
@@ -104,13 +104,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 24,
+          "complete": 25,
           "reject": 21,
           "cancel": 10,
           "riderFault": 0,
           "morning": 21,
           "afternoon": 3,
-          "evening": 0,
+          "evening": 1,
           "midnight": 0,
           "hourly": [
             0,
@@ -124,7 +124,7 @@
             0,
             0,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -138,7 +138,7 @@
             0,
             0
           ],
-          "acceptRate": 53.3,
+          "acceptRate": 54.3,
           "warning": true
         },
         {
@@ -3390,13 +3390,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 24,
+      "complete": 25,
       "reject": 21,
       "cancel": 10,
       "riderFault": 0,
       "morning": 21,
       "afternoon": 3,
-      "evening": 0,
+      "evening": 1,
       "midnight": 0,
       "hourly": [
         0,
@@ -3410,7 +3410,7 @@
         0,
         0,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -3424,7 +3424,7 @@
         0,
         0
       ],
-      "acceptRate": 53.3,
+      "acceptRate": 54.3,
       "warning": true
     },
     {
