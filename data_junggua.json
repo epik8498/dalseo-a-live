@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 19:43:04",
+  "updatedAt": "2026-05-25 19:44:11",
   "businessDate": "2026-05-25",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 550,
+    "complete": 554,
     "reject": 63,
     "cancel": 40,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
-    "evening": 162,
+    "evening": 166,
     "midnight": 0,
     "count": 73,
     "onlineCount": 18,
-    "acceptRate": 89.7,
+    "acceptRate": 89.8,
     "spareRejects": -52
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 390,
+        "complete": 392,
         "reject": 50,
         "cancel": 36,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
-        "evening": 103,
+        "evening": 105,
         "midnight": 0,
         "count": 49,
         "onlineCount": 12,
-        "acceptRate": 88.6,
-        "spareRejects": -43
+        "acceptRate": 88.7,
+        "spareRejects": -42
       },
       "targets": {
         "morning": 132,
@@ -60,13 +60,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 20,
+          "complete": 21,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 11,
           "afternoon": 0,
-          "evening": 9,
+          "evening": 10,
           "midnight": 0,
           "hourly": [
             0,
@@ -82,7 +82,7 @@
             0,
             3,
             5,
-            1,
+            2,
             0,
             0,
             0,
@@ -94,7 +94,7 @@
             0,
             0
           ],
-          "acceptRate": 87.0,
+          "acceptRate": 87.5,
           "warning": false
         },
         {
@@ -192,13 +192,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 26,
+          "complete": 27,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 16,
           "afternoon": 2,
-          "evening": 8,
+          "evening": 9,
           "midnight": 0,
           "hourly": [
             0,
@@ -214,7 +214,7 @@
             0,
             0,
             3,
-            5,
+            6,
             0,
             0,
             0,
@@ -226,7 +226,7 @@
             0,
             0
           ],
-          "acceptRate": 89.7,
+          "acceptRate": 90.0,
           "warning": false
         },
         {
@@ -2213,17 +2213,17 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 160,
+        "complete": 162,
         "reject": 13,
         "cancel": 4,
         "riderFault": 0,
         "morning": 56,
         "afternoon": 45,
-        "evening": 59,
+        "evening": 61,
         "midnight": 0,
         "count": 24,
         "onlineCount": 6,
-        "acceptRate": 92.5,
+        "acceptRate": 92.6,
         "spareRejects": -10
       },
       "targets": {
@@ -2286,13 +2286,13 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 3,
+          "evening": 4,
           "midnight": 0,
           "hourly": [
             0,
@@ -2308,7 +2308,7 @@
             0,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -2320,8 +2320,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "이경은",
@@ -2374,13 +2374,13 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 28,
+          "complete": 29,
           "reject": 4,
           "cancel": 3,
           "riderFault": 0,
           "morning": 16,
           "afternoon": 5,
-          "evening": 7,
+          "evening": 8,
           "midnight": 0,
           "hourly": [
             0,
@@ -2396,7 +2396,7 @@
             5,
             1,
             5,
-            1,
+            2,
             0,
             0,
             0,
@@ -2408,7 +2408,7 @@
             0,
             0
           ],
-          "acceptRate": 87.5,
+          "acceptRate": 87.9,
           "warning": false
         },
         {
@@ -3302,13 +3302,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 20,
+      "complete": 21,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 11,
       "afternoon": 0,
-      "evening": 9,
+      "evening": 10,
       "midnight": 0,
       "hourly": [
         0,
@@ -3324,7 +3324,7 @@
         0,
         3,
         5,
-        1,
+        2,
         0,
         0,
         0,
@@ -3336,7 +3336,7 @@
         0,
         0
       ],
-      "acceptRate": 87.0,
+      "acceptRate": 87.5,
       "warning": false
     },
     {
@@ -3478,13 +3478,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 26,
+      "complete": 27,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 16,
       "afternoon": 2,
-      "evening": 8,
+      "evening": 9,
       "midnight": 0,
       "hourly": [
         0,
@@ -3500,7 +3500,7 @@
         0,
         0,
         3,
-        5,
+        6,
         0,
         0,
         0,
@@ -3512,7 +3512,7 @@
         0,
         0
       ],
-      "acceptRate": 89.7,
+      "acceptRate": 90.0,
       "warning": false
     },
     {
@@ -3654,13 +3654,13 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 3,
+      "evening": 4,
       "midnight": 0,
       "hourly": [
         0,
@@ -3676,7 +3676,7 @@
         0,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -3688,8 +3688,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "이경은",
@@ -3874,13 +3874,13 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 28,
+      "complete": 29,
       "reject": 4,
       "cancel": 3,
       "riderFault": 0,
       "morning": 16,
       "afternoon": 5,
-      "evening": 7,
+      "evening": 8,
       "midnight": 0,
       "hourly": [
         0,
@@ -3896,7 +3896,7 @@
         5,
         1,
         5,
-        1,
+        2,
         0,
         0,
         0,
@@ -3908,7 +3908,7 @@
         0,
         0
       ],
-      "acceptRate": 87.5,
+      "acceptRate": 87.9,
       "warning": false
     },
     {
