@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-25 17:28:30",
+  "updatedAt": "2026-05-25 17:29:41",
   "businessDate": "2026-05-25",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 695,
-    "reject": 76,
+    "reject": 77,
     "cancel": 39,
     "riderFault": 1,
     "morning": 455,
@@ -24,9 +24,9 @@
     "evening": 16,
     "midnight": 0,
     "count": 174,
-    "onlineCount": 29,
-    "acceptRate": 90.1,
-    "spareRejects": -62
+    "onlineCount": 30,
+    "acceptRate": 90.0,
+    "spareRejects": -63
   },
   "teams": {
     "소닉팀": {
@@ -6262,7 +6262,7 @@
     "달서팀": {
       "summary": {
         "complete": 134,
-        "reject": 22,
+        "reject": 23,
         "cancel": 18,
         "riderFault": 0,
         "morning": 98,
@@ -6270,9 +6270,9 @@
         "evening": 3,
         "midnight": 0,
         "count": 33,
-        "onlineCount": 6,
-        "acceptRate": 85.9,
-        "spareRejects": -20
+        "onlineCount": 7,
+        "acceptRate": 85.4,
+        "spareRejects": -21
       },
       "targets": {
         "morning": 33,
@@ -6423,7 +6423,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 19,
-          "reject": 7,
+          "reject": 8,
           "cancel": 5,
           "riderFault": 0,
           "morning": 14,
@@ -6456,7 +6456,7 @@
             0,
             0
           ],
-          "acceptRate": 73.1,
+          "acceptRate": 70.4,
           "warning": true
         },
         {
@@ -6464,8 +6464,8 @@
           "phone": "010-4781-5713",
           "userId": "kkkwww6838",
           "team": "달서팀",
-          "status": "운행 종료",
-          "isOnline": false,
+          "status": "운행중",
+          "isOnline": true,
           "complete": 15,
           "reject": 1,
           "cancel": 2,
@@ -8583,7 +8583,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 19,
-      "reject": 7,
+      "reject": 8,
       "cancel": 5,
       "riderFault": 0,
       "morning": 14,
@@ -8616,7 +8616,7 @@
         0,
         0
       ],
-      "acceptRate": 73.1,
+      "acceptRate": 70.4,
       "warning": true
     },
     {
@@ -8624,8 +8624,8 @@
       "phone": "010-4781-5713",
       "userId": "kkkwww6838",
       "team": "달서팀",
-      "status": "운행 종료",
-      "isOnline": false,
+      "status": "운행중",
+      "isOnline": true,
       "complete": 15,
       "reject": 1,
       "cancel": 2,
