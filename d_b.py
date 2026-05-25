@@ -434,6 +434,13 @@ def current_week_dates(now):
     return [start + timedelta(days=i) for i in range(7)]
 
 
+def target_total_by_period_for_date(date_value):
+    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+    base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
+    total_sets = sum(AREA_CONFIG[AREA_NAME].values())
+    return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
+
+
 def weekly_summary(weekly_rows, now):
     week_dates = current_week_dates(now)
     date_keys = [str(d) for d in week_dates]
@@ -444,15 +451,40 @@ def weekly_summary(weekly_rows, now):
     total_reject = 0
     total_cancel = 0
     total_rider_fault = 0
+    total_periods = {p: 0 for p in PERIODS}
+    total_period_targets = {p: 0 for p in PERIODS}
 
     labels = ["수", "목", "금", "토", "일", "월", "화"]
+    period_names = {
+        "morning": "오전피크",
+        "afternoon": "오후논피크",
+        "evening": "저녁피크",
+        "midnight": "심야논피크",
+    }
 
-    for label, date_key in zip(labels, date_keys):
+    for label, date_value, date_key in zip(labels, week_dates, date_keys):
         row = by_date.get(date_key, {})
         complete = to_int(row.get("totalComplete", 0))
         reject = to_int(row.get("totalReject", 0))
         cancel = to_int(row.get("totalCancel", 0))
         rider_fault = to_int(row.get("riderFault", 0))
+        bad_total = reject + cancel + rider_fault
+        period_targets = row.get("periodTargets") or target_total_by_period_for_date(date_value)
+
+        period_rows = []
+        for p in PERIODS:
+            done = to_int(row.get(p, 0))
+            goal = to_int(period_targets.get(p, 0))
+            failed = bool(row) and goal > 0 and done < goal
+            total_periods[p] += done
+            total_period_targets[p] += goal
+            period_rows.append({
+                "key": p,
+                "label": period_names[p],
+                "done": done,
+                "goal": goal,
+                "failed": failed,
+            })
 
         total_complete += complete
         total_reject += reject
@@ -466,8 +498,10 @@ def weekly_summary(weekly_rows, now):
             "reject": reject,
             "cancel": cancel,
             "riderFault": rider_fault,
+            "badTotal": bad_total,
             "acceptRate": calc_accept_rate(complete, reject),
             "spareRejects": spare_rejects(complete, reject),
+            "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
             "hasData": bool(row),
         })
@@ -479,8 +513,11 @@ def weekly_summary(weekly_rows, now):
         "reject": total_reject,
         "cancel": total_cancel,
         "riderFault": total_rider_fault,
+        "badTotal": total_reject + total_cancel + total_rider_fault,
         "acceptRate": calc_accept_rate(total_complete, total_reject),
         "spareRejects": spare_rejects(total_complete, total_reject),
+        "periodTotals": total_periods,
+        "periodTargets": total_period_targets,
         "days": days,
     }
 
@@ -493,6 +530,11 @@ def save_weekly_if_close(data):
     weekly = load_weekly()
     today_key = data["businessDate"]
 
+    period_targets = {
+        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
+        for p in PERIODS
+    }
+
     row = {
         "businessDate": today_key,
         "closedAt": data["updatedAt"],
@@ -500,6 +542,11 @@ def save_weekly_if_close(data):
         "totalReject": data["total"]["reject"],
         "totalCancel": data["total"]["cancel"],
         "riderFault": data["total"]["riderFault"],
+        "morning": data["total"]["morning"],
+        "afternoon": data["total"]["afternoon"],
+        "evening": data["total"]["evening"],
+        "midnight": data["total"]["midnight"],
+        "periodTargets": period_targets,
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
     }

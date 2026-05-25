@@ -1,11 +1,21 @@
 [
   {
     "businessDate": "2026-05-25",
-    "closedAt": "2026-05-26 02:02:45",
-    "totalComplete": 2560,
+    "closedAt": "2026-05-26 02:04:56",
+    "totalComplete": 2562,
     "totalReject": 298,
     "totalCancel": 95,
     "riderFault": 1,
+    "morning": 716,
+    "afternoon": 403,
+    "evening": 696,
+    "midnight": 747,
+    "periodTargets": {
+      "morning": 274,
+      "afternoon": 260,
+      "evening": 390,
+      "midnight": 378
+    },
     "acceptRate": 89.6,
     "spareRejects": -246
   }

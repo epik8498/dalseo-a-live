@@ -53,13 +53,17 @@ body.dark .weekly-kpi{box-shadow:none;background:rgba(20,20,20,.9)}
 .weekly-total div{text-align:center;font-weight:900;font-size:12px;color:var(--muted)}
 .weekly-total b{display:block;margin-top:4px;color:var(--text);font-size:17px}
 .weekly-days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-.day-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;min-height:126px}
+.day-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;min-height:190px}
 .day-card.empty{opacity:.45}
 .day-label{font-size:18px;font-weight:1000;color:var(--red)}
 .day-date{font-size:11px;color:var(--muted);font-weight:900;margin:3px 0 8px}
+.period-mini{border-top:1px solid var(--line);padding-top:7px;margin-top:7px}
+.period-row{display:flex;justify-content:space-between;gap:5px;font-size:10px;font-weight:900;margin:4px 0;color:var(--muted)}
+.period-row b{color:var(--text);white-space:nowrap}.period-row b.fail{color:var(--red)}
+.day-bottom{margin-top:8px;border-top:1px solid var(--line);padding-top:7px}
 .day-row{display:flex;justify-content:space-between;font-size:11px;font-weight:900;margin:4px 0;color:var(--muted)}
 .day-row b{color:var(--text)}
-.day-rate{margin-top:7px;border-top:1px solid var(--line);padding-top:7px;font-size:13px;font-weight:1000}
+.day-rate{margin-top:5px;font-size:13px;font-weight:1000}
 .section-title{margin:22px 0 12px;display:flex;align-items:center;gap:8px;font-size:21px;font-weight:1000}.section-title .icon{color:var(--red)}
 .period-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
 .period-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
@@ -244,22 +248,33 @@ function renderWeekly(d){
   document.getElementById("weeklyTotal").innerHTML=`
     <div>완료<b>${n(w.complete)}</b></div>
     <div>거절<b>${n(w.reject)}</b></div>
-    <div>취소<b>${n(w.cancel)}</b></div>
-    <div>배달취소<b>${n(w.riderFault)}</b></div>
+    <div>거절합계<b>${n(w.badTotal ?? (w.reject+w.cancel+w.riderFault))}</b></div>
+    <div>여유거절<b>${n(w.spareRejects)}</b></div>
     <div>수락률<b>${w.acceptRate}%</b></div>
   `;
 
-  document.getElementById("weeklyDays").innerHTML=(w.days||[]).map(day=>`
+  document.getElementById("weeklyDays").innerHTML=(w.days||[]).map(day=>{
+    const badTotal = day.badTotal ?? ((day.reject||0)+(day.cancel||0)+(day.riderFault||0));
+    const periods = day.periods || [];
+    return `
     <div class="day-card ${day.hasData?'':'empty'}">
       <div class="day-label">${day.label}</div>
       <div class="day-date">${day.businessDate}</div>
-      <div class="day-row"><span>완료</span><b>${n(day.complete)}</b></div>
-      <div class="day-row"><span>거절</span><b>${n(day.reject)}</b></div>
-      <div class="day-row"><span>취소</span><b>${n(day.cancel)}</b></div>
-      <div class="day-row"><span>배달취소</span><b>${n(day.riderFault)}</b></div>
-      <div class="day-rate">${day.acceptRate}%</div>
-    </div>
-  `).join("");
+      <div class="period-mini">
+        ${periods.map(p=>`
+          <div class="period-row">
+            <span>${p.label}</span>
+            <b class="${p.failed?'fail':''}">${n(p.done)} / ${n(p.goal)}</b>
+          </div>
+        `).join("")}
+      </div>
+      <div class="day-bottom">
+        <div class="day-row"><span>완료</span><b>${n(day.complete)}</b></div>
+        <div class="day-row"><span>거절합계</span><b>${n(badTotal)}</b></div>
+        <div class="day-rate">수락률 ${day.acceptRate}%</div>
+      </div>
+    </div>`;
+  }).join("");
 }
 
 function render(){
