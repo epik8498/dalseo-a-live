@@ -272,7 +272,7 @@ def parse_row_lines(row_lines):
         "evening": evening,
         "midnight": midnight,
         "hourly": hourly,
-        "acceptRate": calc_accept_rate(complete, reject),
+        "acceptRate": calc_accept_rate(complete, reject, cancel, sum(r["riderFault"] for r in rows)),
         "warning": calc_accept_rate(complete, reject) < 80,
     }
 
