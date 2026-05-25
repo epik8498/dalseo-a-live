@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-25 22:42:05",
+  "updatedAt": "2026-05-25 22:43:16",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 1282,
-    "reject": 173,
+    "reject": 174,
     "cancel": 64,
     "riderFault": 1,
     "morning": 455,
@@ -24,9 +24,9 @@
     "evening": 412,
     "midnight": 191,
     "count": 174,
-    "onlineCount": 18,
-    "acceptRate": 88.1,
-    "spareRejects": -147
+    "onlineCount": 17,
+    "acceptRate": 88.0,
+    "spareRejects": -148
   },
   "teams": {
     "소닉팀": {
@@ -6262,7 +6262,7 @@
     "달서팀": {
       "summary": {
         "complete": 269,
-        "reject": 46,
+        "reject": 47,
         "cancel": 25,
         "riderFault": 0,
         "morning": 98,
@@ -6270,9 +6270,9 @@
         "evening": 86,
         "midnight": 52,
         "count": 33,
-        "onlineCount": 4,
-        "acceptRate": 85.4,
-        "spareRejects": -41
+        "onlineCount": 3,
+        "acceptRate": 85.1,
+        "spareRejects": -42
       },
       "targets": {
         "morning": 33,
@@ -6291,7 +6291,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 43,
-          "reject": 3,
+          "reject": 4,
           "cancel": 4,
           "riderFault": 0,
           "morning": 11,
@@ -6324,7 +6324,7 @@
             0,
             0
           ],
-          "acceptRate": 93.5,
+          "acceptRate": 91.5,
           "warning": false
         },
         {
@@ -6420,8 +6420,8 @@
           "phone": "010-7799-2317",
           "userId": "taegwang92",
           "team": "달서팀",
-          "status": "운행중",
-          "isOnline": true,
+          "status": "운행 종료",
+          "isOnline": false,
           "complete": 37,
           "reject": 4,
           "cancel": 2,
@@ -7967,7 +7967,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 43,
-      "reject": 3,
+      "reject": 4,
       "cancel": 4,
       "riderFault": 0,
       "morning": 11,
@@ -8000,7 +8000,7 @@
         0,
         0
       ],
-      "acceptRate": 93.5,
+      "acceptRate": 91.5,
       "warning": false
     },
     {
@@ -8272,8 +8272,8 @@
       "phone": "010-7799-2317",
       "userId": "taegwang92",
       "team": "달서팀",
-      "status": "운행중",
-      "isOnline": true,
+      "status": "운행 종료",
+      "isOnline": false,
       "complete": 37,
       "reject": 4,
       "cancel": 2,
