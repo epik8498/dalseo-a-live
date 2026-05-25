@@ -423,7 +423,73 @@ def load_weekly():
     return []
 
 
+def week_start_wednesday(date_value):
+    """수요일~화요일 주차 기준의 시작일을 반환합니다."""
+    days_since_wed = (date_value.weekday() - 2) % 7
+    return date_value - timedelta(days=days_since_wed)
+
+
+def current_week_dates(now):
+    start = week_start_wednesday(business_date(now))
+    return [start + timedelta(days=i) for i in range(7)]
+
+
+def weekly_summary(weekly_rows, now):
+    week_dates = current_week_dates(now)
+    date_keys = [str(d) for d in week_dates]
+    by_date = {x.get("businessDate"): x for x in weekly_rows}
+
+    days = []
+    total_complete = 0
+    total_reject = 0
+    total_cancel = 0
+    total_rider_fault = 0
+
+    labels = ["수", "목", "금", "토", "일", "월", "화"]
+
+    for label, date_key in zip(labels, date_keys):
+        row = by_date.get(date_key, {})
+        complete = to_int(row.get("totalComplete", 0))
+        reject = to_int(row.get("totalReject", 0))
+        cancel = to_int(row.get("totalCancel", 0))
+        rider_fault = to_int(row.get("riderFault", 0))
+
+        total_complete += complete
+        total_reject += reject
+        total_cancel += cancel
+        total_rider_fault += rider_fault
+
+        days.append({
+            "label": label,
+            "businessDate": date_key,
+            "complete": complete,
+            "reject": reject,
+            "cancel": cancel,
+            "riderFault": rider_fault,
+            "acceptRate": calc_accept_rate(complete, reject),
+            "spareRejects": spare_rejects(complete, reject),
+            "closedAt": row.get("closedAt", ""),
+            "hasData": bool(row),
+        })
+
+    return {
+        "startDate": date_keys[0],
+        "endDate": date_keys[-1],
+        "complete": total_complete,
+        "reject": total_reject,
+        "cancel": total_cancel,
+        "riderFault": total_rider_fault,
+        "acceptRate": calc_accept_rate(total_complete, total_reject),
+        "spareRejects": spare_rejects(total_complete, total_reject),
+        "days": days,
+    }
+
+
 def save_weekly_if_close(data):
+    """
+    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
+    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
+    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
@@ -442,7 +508,13 @@ def save_weekly_if_close(data):
 
     for i, x in enumerate(weekly):
         if x.get("businessDate") == today_key:
-            if row["totalComplete"] >= x.get("totalComplete", 0):
+            old_complete = to_int(x.get("totalComplete", 0))
+            old_reject = to_int(x.get("totalReject", 0))
+            old_cancel = to_int(x.get("totalCancel", 0))
+            old_total = old_complete + old_reject + old_cancel
+            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
+
+            if new_total >= old_total:
                 weekly[i] = row
             found = True
             break
@@ -450,12 +522,7 @@ def save_weekly_if_close(data):
     if not found:
         weekly.append(row)
 
-    weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-14:]
-
-    with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
-        json.dump(weekly, f, ensure_ascii=False, indent=2)
-
-    weekly = weekly[-14:]
+    weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
@@ -463,7 +530,7 @@ def save_weekly_if_close(data):
 
 def make_data(riders):
     now = datetime.now()
-    riders.sort(key=lambda x: x["complete"], reverse=True)
+    riders.sort(key=lambda x: (not x["isOnline"], x["name"]))
 
     targets = team_targets(now)
     teams = {}
@@ -478,7 +545,7 @@ def make_data(riders):
 
     return {
         "area": AREA_NAME,
-        "areas": ["달서A", "달서B", "달서B"],
+        "areas": ["달서A", "달서B", "중구A"],
         "teamOrder": TEAM_ORDER,
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
@@ -489,6 +556,7 @@ def make_data(riders):
         "teams": teams,
         "riders": riders,
         "weekly": load_weekly(),
+        "weeklySummary": weekly_summary(load_weekly(), now),
     }
 
 
@@ -541,7 +609,9 @@ def run_update(page):
 
     data = make_data(riders)
     save_weekly_if_close(data)
-    data["weekly"] = load_weekly()
+    weekly = load_weekly()
+    data["weekly"] = weekly
+    data["weeklySummary"] = weekly_summary(weekly, datetime.now())
 
     save_json(data)
     save_html()
