@@ -9,19 +9,19 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 19:00:12",
+  "updatedAt": "2026-05-25 19:01:20",
   "businessDate": "2026-05-25",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 495,
+    "complete": 496,
     "reject": 55,
     "cancel": 35,
     "riderFault": 0,
     "morning": 239,
     "afternoon": 149,
-    "evening": 107,
+    "evening": 108,
     "midnight": 0,
     "count": 73,
     "onlineCount": 17,
@@ -31,17 +31,17 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 356,
+        "complete": 357,
         "reject": 47,
         "cancel": 32,
         "riderFault": 0,
         "morning": 183,
         "afternoon": 104,
-        "evening": 69,
+        "evening": 70,
         "midnight": 0,
         "count": 49,
         "onlineCount": 12,
-        "acceptRate": 88.3,
+        "acceptRate": 88.4,
         "spareRejects": -40
       },
       "targets": {
@@ -500,13 +500,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 24,
+          "complete": 25,
           "reject": 6,
           "cancel": 3,
           "riderFault": 0,
           "morning": 8,
           "afternoon": 12,
-          "evening": 4,
+          "evening": 5,
           "midnight": 0,
           "hourly": [
             0,
@@ -521,7 +521,7 @@
             5,
             4,
             1,
-            3,
+            4,
             0,
             0,
             0,
@@ -534,7 +534,7 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
+          "acceptRate": 80.6,
           "warning": false
         },
         {
@@ -3874,13 +3874,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 24,
+      "complete": 25,
       "reject": 6,
       "cancel": 3,
       "riderFault": 0,
       "morning": 8,
       "afternoon": 12,
-      "evening": 4,
+      "evening": 5,
       "midnight": 0,
       "hourly": [
         0,
@@ -3895,7 +3895,7 @@
         5,
         4,
         1,
-        3,
+        4,
         0,
         0,
         0,
@@ -3908,7 +3908,7 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
+      "acceptRate": 80.6,
       "warning": false
     },
     {
