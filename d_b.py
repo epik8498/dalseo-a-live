@@ -424,26 +424,36 @@ def load_weekly():
 
 
 def save_weekly_if_close(data):
-    now = datetime.now()
-
-    if not (now.hour == 3 and now.minute >= 30):
-        return
-
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    if any(x.get("businessDate") == today_key for x in weekly):
-        return
-
-    weekly.append({
+    row = {
         "businessDate": today_key,
-        "closedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
+        "closedAt": data["updatedAt"],
         "totalComplete": data["total"]["complete"],
         "totalReject": data["total"]["reject"],
         "totalCancel": data["total"]["cancel"],
+        "riderFault": data["total"]["riderFault"],
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
-    })
+    }
+
+    found = False
+
+    for i, x in enumerate(weekly):
+        if x.get("businessDate") == today_key:
+            if row["totalComplete"] >= x.get("totalComplete", 0):
+                weekly[i] = row
+            found = True
+            break
+
+    if not found:
+        weekly.append(row)
+
+    weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-14:]
+
+    with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
+        json.dump(weekly, f, ensure_ascii=False, indent=2)
 
     weekly = weekly[-14:]
 
