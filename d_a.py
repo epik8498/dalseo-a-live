@@ -93,7 +93,8 @@ def current_period(now):
 
 
 def calc_accept_rate(complete, reject, cancel=0, rider_fault=0):
-    total = complete + reject + cancel + rider_fault
+    bad_total = reject + cancel + rider_fault
+    total = complete + bad_total
     if total == 0:
         return 100
     return round((complete / total) * 100, 1)
@@ -276,8 +277,8 @@ def parse_row_lines(row_lines):
         "evening": evening,
         "midnight": midnight,
         "hourly": hourly,
-        "acceptRate": calc_accept_rate(complete, reject, cancel, sum(r["riderFault"] for r in rows)),
-        "warning": calc_accept_rate(complete, reject) < 80,
+        "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+        "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
     }
 
 
@@ -347,20 +348,21 @@ def summary(rows):
     complete = sum(r["complete"] for r in rows)
     reject = sum(r["reject"] for r in rows)
     cancel = sum(r["cancel"] for r in rows)
+    rider_fault = sum(r["riderFault"] for r in rows)
 
     return {
         "complete": complete,
         "reject": reject,
         "cancel": cancel,
-        "riderFault": sum(r["riderFault"] for r in rows),
+        "riderFault": rider_fault,
         "morning": sum(r["morning"] for r in rows),
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
-        "acceptRate": calc_accept_rate(complete, reject),
-        "spareRejects": spare_rejects(complete, reject),
+        "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+        "spareRejects": spare_rejects(complete, reject + cancel + rider_fault),
     }
 
 
@@ -460,8 +462,8 @@ def weekly_summary(weekly_rows, now):
             "cancel": cancel,
             "riderFault": rider_fault,
             "badTotal": bad_total,
-            "acceptRate": calc_accept_rate(complete, reject),
-            "spareRejects": spare_rejects(complete, reject),
+            "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+            "spareRejects": spare_rejects(complete, bad_total),
             "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
             "hasData": bool(row),
@@ -475,8 +477,8 @@ def weekly_summary(weekly_rows, now):
         "cancel": total_cancel,
         "riderFault": total_rider_fault,
         "badTotal": total_reject + total_cancel + total_rider_fault,
-        "acceptRate": calc_accept_rate(total_complete, total_reject),
-        "spareRejects": spare_rejects(total_complete, total_reject),
+        "acceptRate": calc_accept_rate(total_complete, total_reject, total_cancel, total_rider_fault),
+        "spareRejects": spare_rejects(total_complete, total_reject + total_cancel + total_rider_fault),
         "periodTotals": total_periods,
         "periodTargets": total_period_targets,
         "days": days,
