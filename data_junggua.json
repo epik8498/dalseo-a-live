@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 12:20:33",
+  "updatedAt": "2026-05-25 12:21:40",
   "businessDate": "2026-05-25",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 98,
   "total": {
-    "complete": 119,
-    "reject": 16,
+    "complete": 120,
+    "reject": 17,
     "cancel": 7,
     "riderFault": 0,
-    "morning": 119,
+    "morning": 120,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 18,
-    "acceptRate": 88.1,
-    "spareRejects": -14
+    "acceptRate": 87.6,
+    "spareRejects": -15
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 86,
-        "reject": 14,
+        "complete": 87,
+        "reject": 15,
         "cancel": 6,
         "riderFault": 0,
-        "morning": 86,
+        "morning": 87,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 49,
         "onlineCount": 13,
-        "acceptRate": 86.0,
-        "spareRejects": -13
+        "acceptRate": 85.3,
+        "spareRejects": -14
       },
       "targets": {
         "morning": 132,
@@ -193,7 +193,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 6,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 6,
@@ -226,8 +226,8 @@
             0,
             0
           ],
-          "acceptRate": 85.7,
-          "warning": false
+          "acceptRate": 75.0,
+          "warning": true
         },
         {
           "name": "박경보",
@@ -280,11 +280,11 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 0,
+          "complete": 1,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 0,
+          "morning": 1,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -295,7 +295,7 @@
             0,
             0,
             0,
-            0,
+            1,
             0,
             0,
             0,
@@ -314,7 +314,7 @@
             0,
             0
           ],
-          "acceptRate": 100,
+          "acceptRate": 100.0,
           "warning": false
         },
         {
@@ -3479,7 +3479,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 6,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 6,
@@ -3512,8 +3512,8 @@
         0,
         0
       ],
-      "acceptRate": 85.7,
-      "warning": false
+      "acceptRate": 75.0,
+      "warning": true
     },
     {
       "name": "박경보",
@@ -3566,11 +3566,11 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 0,
+      "complete": 1,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 0,
+      "morning": 1,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3581,7 +3581,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -3600,7 +3600,7 @@
         0,
         0
       ],
-      "acceptRate": 100,
+      "acceptRate": 100.0,
       "warning": false
     },
     {
