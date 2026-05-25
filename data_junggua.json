@@ -9,14 +9,14 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-25 23:11:46",
+  "updatedAt": "2026-05-25 23:12:54",
   "businessDate": "2026-05-25",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 752,
-    "reject": 82,
+    "reject": 83,
     "cancel": 48,
     "riderFault": 0,
     "morning": 239,
@@ -25,14 +25,14 @@
     "midnight": 147,
     "count": 73,
     "onlineCount": 6,
-    "acceptRate": 90.2,
-    "spareRejects": -67
+    "acceptRate": 90.1,
+    "spareRejects": -68
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 529,
-        "reject": 63,
+        "reject": 64,
         "cancel": 43,
         "riderFault": 0,
         "morning": 183,
@@ -41,8 +41,8 @@
         "midnight": 107,
         "count": 49,
         "onlineCount": 4,
-        "acceptRate": 89.4,
-        "spareRejects": -53
+        "acceptRate": 89.2,
+        "spareRejects": -54
       },
       "targets": {
         "morning": 132,
@@ -193,7 +193,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 15,
-          "reject": 3,
+          "reject": 4,
           "cancel": 1,
           "riderFault": 0,
           "morning": 0,
@@ -226,8 +226,8 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
-          "warning": false
+          "acceptRate": 78.9,
+          "warning": true
         },
         {
           "name": "강준호",
@@ -3523,7 +3523,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 15,
-      "reject": 3,
+      "reject": 4,
       "cancel": 1,
       "riderFault": 0,
       "morning": 0,
@@ -3556,8 +3556,8 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
-      "warning": false
+      "acceptRate": 78.9,
+      "warning": true
     },
     {
       "name": "강준호",
