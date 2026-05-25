@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-25 13:06:44",
+  "updatedAt": "2026-05-25 13:07:55",
   "businessDate": "2026-05-25",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 98,
   "total": {
     "complete": 324,
-    "reject": 34,
+    "reject": 35,
     "cancel": 23,
     "riderFault": 0,
     "morning": 324,
@@ -25,14 +25,14 @@
     "midnight": 0,
     "count": 174,
     "onlineCount": 32,
-    "acceptRate": 90.5,
-    "spareRejects": -28
+    "acceptRate": 90.3,
+    "spareRejects": -29
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 247,
-        "reject": 19,
+        "reject": 20,
         "cancel": 13,
         "riderFault": 0,
         "morning": 247,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 141,
         "onlineCount": 26,
-        "acceptRate": 92.9,
-        "spareRejects": -14
+        "acceptRate": 92.5,
+        "spareRejects": -15
       },
       "targets": {
         "morning": 231,
@@ -589,7 +589,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 10,
-          "reject": 2,
+          "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 10,
@@ -622,8 +622,8 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
-          "warning": false
+          "acceptRate": 76.9,
+          "warning": true
         },
         {
           "name": "안도영",
@@ -8363,7 +8363,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 10,
-      "reject": 2,
+      "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 10,
@@ -8396,8 +8396,8 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
-      "warning": false
+      "acceptRate": 76.9,
+      "warning": true
     },
     {
       "name": "정성훈",
