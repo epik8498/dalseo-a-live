@@ -9,35 +9,35 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 18:07:53",
+  "updatedAt": "2026-05-26 18:09:01",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 596,
-    "reject": 55,
+    "complete": 599,
+    "reject": 56,
     "cancel": 14,
     "riderFault": 0,
     "morning": 270,
     "afternoon": 229,
-    "evening": 97,
+    "evening": 100,
     "midnight": 0,
     "count": 172,
     "onlineCount": 39,
-    "acceptRate": 89.6,
-    "spareRejects": 80
+    "acceptRate": 89.5,
+    "spareRejects": 79
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 510,
+        "complete": 511,
         "reject": 44,
         "cancel": 14,
         "riderFault": 0,
         "morning": 231,
         "afternoon": 201,
-        "evening": 78,
+        "evening": 79,
         "midnight": 0,
         "count": 139,
         "onlineCount": 31,
@@ -1380,13 +1380,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 1,
+          "complete": 2,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 1,
+          "evening": 2,
           "midnight": 0,
           "hourly": [
             0,
@@ -1401,7 +1401,7 @@
             0,
             0,
             1,
-            0,
+            1,
             0,
             0,
             0,
@@ -6173,17 +6173,17 @@
     },
     "달서팀": {
       "summary": {
-        "complete": 86,
-        "reject": 11,
+        "complete": 88,
+        "reject": 12,
         "cancel": 0,
         "riderFault": 0,
         "morning": 39,
         "afternoon": 28,
-        "evening": 19,
+        "evening": 21,
         "midnight": 0,
         "count": 33,
         "onlineCount": 8,
-        "acceptRate": 88.7,
+        "acceptRate": 88.0,
         "spareRejects": 10
       },
       "targets": {
@@ -6203,7 +6203,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 5,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -6236,7 +6236,7 @@
             0,
             0
           ],
-          "acceptRate": 100.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -6246,13 +6246,13 @@
           "team": "달서팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 19,
+          "complete": 20,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 8,
           "afternoon": 8,
-          "evening": 3,
+          "evening": 4,
           "midnight": 0,
           "hourly": [
             0,
@@ -6266,7 +6266,7 @@
             5,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -6510,13 +6510,13 @@
           "team": "달서팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 3,
+          "evening": 4,
           "midnight": 0,
           "hourly": [
             0,
@@ -6530,7 +6530,7 @@
             0,
             0,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -6544,7 +6544,7 @@
             0,
             0
           ],
-          "acceptRate": 50.0,
+          "acceptRate": 57.1,
           "warning": true
         },
         {
@@ -7791,7 +7791,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 5,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -7824,7 +7824,7 @@
         0,
         0
       ],
-      "acceptRate": 100.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
@@ -8186,13 +8186,13 @@
       "team": "달서팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 19,
+      "complete": 20,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 8,
       "afternoon": 8,
-      "evening": 3,
+      "evening": 4,
       "midnight": 0,
       "hourly": [
         0,
@@ -8206,7 +8206,7 @@
         5,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -9110,13 +9110,13 @@
       "team": "달서팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 3,
+      "evening": 4,
       "midnight": 0,
       "hourly": [
         0,
@@ -9130,7 +9130,7 @@
         0,
         0,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -9144,7 +9144,7 @@
         0,
         0
       ],
-      "acceptRate": 50.0,
+      "acceptRate": 57.1,
       "warning": true
     },
     {
@@ -9330,13 +9330,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 1,
+      "complete": 2,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 1,
+      "evening": 2,
       "midnight": 0,
       "hourly": [
         0,
@@ -9351,7 +9351,7 @@
         0,
         0,
         1,
-        0,
+        1,
         0,
         0,
         0,
@@ -15313,14 +15313,14 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 18:07:53",
-      "totalComplete": 596,
-      "totalReject": 55,
+      "closedAt": "2026-05-26 18:09:01",
+      "totalComplete": 599,
+      "totalReject": 56,
       "totalCancel": 14,
       "riderFault": 0,
       "morning": 270,
       "afternoon": 229,
-      "evening": 97,
+      "evening": 100,
       "midnight": 0,
       "periodTargets": {
         "morning": 168,
@@ -15328,24 +15328,24 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 89.6,
-      "spareRejects": 80
+      "acceptRate": 89.5,
+      "spareRejects": 79
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 8893,
-    "reject": 1404,
+    "complete": 8896,
+    "reject": 1405,
     "cancel": 424,
     "riderFault": 4,
-    "badTotal": 1832,
+    "badTotal": 1833,
     "acceptRate": 82.9,
     "spareRejects": 391,
     "periodTotals": {
       "morning": 2552,
       "afternoon": 1804,
-      "evening": 2519,
+      "evening": 2522,
       "midnight": 2018
     },
     "periodTargets": {
@@ -15616,13 +15616,13 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 596,
-        "reject": 55,
+        "complete": 599,
+        "reject": 56,
         "cancel": 14,
         "riderFault": 0,
-        "badTotal": 69,
-        "acceptRate": 89.6,
-        "spareRejects": 80,
+        "badTotal": 70,
+        "acceptRate": 89.5,
+        "spareRejects": 79,
         "periods": [
           {
             "key": "morning",
@@ -15641,7 +15641,7 @@
           {
             "key": "evening",
             "label": "저녁피크",
-            "done": 97,
+            "done": 100,
             "goal": 240,
             "failed": true
           },
@@ -15653,7 +15653,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 18:07:53",
+        "closedAt": "2026-05-26 18:09:01",
         "hasData": true
       }
     ]
