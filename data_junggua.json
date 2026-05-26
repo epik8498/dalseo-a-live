@@ -9,30 +9,30 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 12:42:17",
+  "updatedAt": "2026-05-26 12:43:23",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 118,
-    "reject": 12,
+    "complete": 119,
+    "reject": 13,
     "cancel": 6,
     "riderFault": 0,
-    "morning": 118,
+    "morning": 119,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 14,
-    "acceptRate": 86.8,
-    "spareRejects": 11
+    "acceptRate": 86.2,
+    "spareRejects": 10
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 81,
-        "reject": 5,
+        "reject": 6,
         "cancel": 3,
         "riderFault": 0,
         "morning": 81,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 49,
         "onlineCount": 9,
-        "acceptRate": 91.0,
-        "spareRejects": 12
+        "acceptRate": 90.0,
+        "spareRejects": 11
       },
       "targets": {
         "morning": 84,
@@ -105,7 +105,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 7,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 7,
@@ -138,8 +138,8 @@
             0,
             0
           ],
-          "acceptRate": 87.5,
-          "warning": false
+          "acceptRate": 77.8,
+          "warning": true
         },
         {
           "name": "박경보",
@@ -2213,17 +2213,17 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 37,
+        "complete": 38,
         "reject": 7,
         "cancel": 3,
         "riderFault": 0,
-        "morning": 37,
+        "morning": 38,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 24,
         "onlineCount": 5,
-        "acceptRate": 78.7,
+        "acceptRate": 79.2,
         "spareRejects": -1
       },
       "targets": {
@@ -2242,11 +2242,11 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 5,
+          "complete": 6,
           "reject": 0,
           "cancel": 1,
           "riderFault": 0,
-          "morning": 5,
+          "morning": 6,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -2257,7 +2257,7 @@
             0,
             0,
             2,
-            3,
+            4,
             0,
             0,
             0,
@@ -2276,7 +2276,7 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
+          "acceptRate": 85.7,
           "warning": false
         },
         {
@@ -3346,11 +3346,11 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 5,
+      "complete": 6,
       "reject": 0,
       "cancel": 1,
       "riderFault": 0,
-      "morning": 5,
+      "morning": 6,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3361,7 +3361,7 @@
         0,
         0,
         2,
-        3,
+        4,
         0,
         0,
         0,
@@ -3380,7 +3380,7 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
+      "acceptRate": 85.7,
       "warning": false
     },
     {
@@ -3435,7 +3435,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 7,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 7,
@@ -3468,8 +3468,8 @@
         0,
         0
       ],
-      "acceptRate": 87.5,
-      "warning": false
+      "acceptRate": 77.8,
+      "warning": true
     },
     {
       "name": "박경보",
@@ -6601,12 +6601,12 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 12:42:17",
-      "totalComplete": 118,
-      "totalReject": 12,
+      "closedAt": "2026-05-26 12:43:23",
+      "totalComplete": 119,
+      "totalReject": 13,
       "totalCancel": 6,
       "riderFault": 0,
-      "morning": 118,
+      "morning": 119,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -6616,22 +6616,22 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 86.8,
-      "spareRejects": 11
+      "acceptRate": 86.2,
+      "spareRejects": 10
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 4856,
-    "reject": 601,
+    "complete": 4857,
+    "reject": 602,
     "cancel": 238,
     "riderFault": 1,
-    "badTotal": 840,
-    "acceptRate": 85.3,
-    "spareRejects": 374,
+    "badTotal": 841,
+    "acceptRate": 85.2,
+    "spareRejects": 373,
     "periodTotals": {
-      "morning": 1198,
+      "morning": 1199,
       "afternoon": 907,
       "evening": 1439,
       "midnight": 1312
@@ -6904,18 +6904,18 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 118,
-        "reject": 12,
+        "complete": 119,
+        "reject": 13,
         "cancel": 6,
         "riderFault": 0,
-        "badTotal": 18,
-        "acceptRate": 86.8,
-        "spareRejects": 11,
+        "badTotal": 19,
+        "acceptRate": 86.2,
+        "spareRejects": 10,
         "periods": [
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 118,
+            "done": 119,
             "goal": 105,
             "failed": false
           },
@@ -6941,7 +6941,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 12:42:17",
+        "closedAt": "2026-05-26 12:43:23",
         "hasData": true
       }
     ]
