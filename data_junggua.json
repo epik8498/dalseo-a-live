@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 18:29:18",
+  "updatedAt": "2026-05-26 18:30:23",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 338,
+    "complete": 339,
     "reject": 32,
     "cancel": 14,
     "riderFault": 0,
     "morning": 145,
     "afternoon": 121,
-    "evening": 72,
+    "evening": 73,
     "midnight": 0,
     "count": 74,
-    "onlineCount": 15,
-    "acceptRate": 88.0,
+    "onlineCount": 16,
+    "acceptRate": 88.1,
     "spareRejects": 38
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 251,
+        "complete": 252,
         "reject": 16,
         "cancel": 11,
         "riderFault": 0,
         "morning": 99,
         "afternoon": 98,
-        "evening": 54,
+        "evening": 55,
         "midnight": 0,
         "count": 50,
-        "onlineCount": 11,
+        "onlineCount": 12,
         "acceptRate": 90.3,
-        "spareRejects": 35
+        "spareRejects": 36
       },
       "targets": {
         "morning": 84,
@@ -53,6 +53,50 @@
         "sets": 4
       },
       "riders": [
+        {
+          "name": "강우기",
+          "phone": "010-5745-6300",
+          "userId": "aa57456300",
+          "team": "소닉팀",
+          "status": "운행중",
+          "isOnline": true,
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 100,
+          "warning": false
+        },
         {
           "name": "김민",
           "phone": "010-2287-7383",
@@ -104,13 +148,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 8,
+          "complete": 9,
           "reject": 3,
           "cancel": 1,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 4,
-          "evening": 4,
+          "evening": 5,
           "midnight": 0,
           "hourly": [
             0,
@@ -125,7 +169,7 @@
             2,
             2,
             4,
-            0,
+            1,
             0,
             0,
             0,
@@ -138,7 +182,7 @@
             0,
             0
           ],
-          "acceptRate": 66.7,
+          "acceptRate": 69.2,
           "warning": true
         },
         {
@@ -535,50 +579,6 @@
             0
           ],
           "acceptRate": 80.0,
-          "warning": false
-        },
-        {
-          "name": "강우기",
-          "phone": "010-5745-6300",
-          "userId": "aa57456300",
-          "team": "소닉팀",
-          "status": "운행 종료",
-          "isOnline": false,
-          "complete": 0,
-          "reject": 0,
-          "cancel": 0,
-          "riderFault": 0,
-          "morning": 0,
-          "afternoon": 0,
-          "evening": 0,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 100,
           "warning": false
         },
         {
@@ -3340,6 +3340,50 @@
   },
   "riders": [
     {
+      "name": "강우기",
+      "phone": "010-5745-6300",
+      "userId": "aa57456300",
+      "team": "소닉팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 0,
+      "reject": 0,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 0,
+      "afternoon": 0,
+      "evening": 0,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 100,
+      "warning": false
+    },
+    {
       "name": "김민",
       "phone": "010-2287-7383",
       "userId": "chols18",
@@ -3390,13 +3434,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 8,
+      "complete": 9,
       "reject": 3,
       "cancel": 1,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 4,
-      "evening": 4,
+      "evening": 5,
       "midnight": 0,
       "hourly": [
         0,
@@ -3411,7 +3455,7 @@
         2,
         2,
         4,
-        0,
+        1,
         0,
         0,
         0,
@@ -3424,7 +3468,7 @@
         0,
         0
       ],
-      "acceptRate": 66.7,
+      "acceptRate": 69.2,
       "warning": true
     },
     {
@@ -3997,50 +4041,6 @@
         0
       ],
       "acceptRate": 86.7,
-      "warning": false
-    },
-    {
-      "name": "강우기",
-      "phone": "010-5745-6300",
-      "userId": "aa57456300",
-      "team": "소닉팀",
-      "status": "운행 종료",
-      "isOnline": false,
-      "complete": 0,
-      "reject": 0,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 0,
-      "afternoon": 0,
-      "evening": 0,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 100,
       "warning": false
     },
     {
@@ -6689,14 +6689,14 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 18:29:18",
-      "totalComplete": 338,
+      "closedAt": "2026-05-26 18:30:23",
+      "totalComplete": 339,
       "totalReject": 32,
       "totalCancel": 14,
       "riderFault": 0,
       "morning": 145,
       "afternoon": 121,
-      "evening": 72,
+      "evening": 73,
       "midnight": 0,
       "periodTargets": {
         "morning": 105,
@@ -6704,14 +6704,14 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 88.0,
+      "acceptRate": 88.1,
       "spareRejects": 38
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 5076,
+    "complete": 5077,
     "reject": 621,
     "cancel": 246,
     "riderFault": 1,
@@ -6721,7 +6721,7 @@
     "periodTotals": {
       "morning": 1225,
       "afternoon": 1028,
-      "evening": 1511,
+      "evening": 1512,
       "midnight": 1312
     },
     "periodTargets": {
@@ -6992,12 +6992,12 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 338,
+        "complete": 339,
         "reject": 32,
         "cancel": 14,
         "riderFault": 0,
         "badTotal": 46,
-        "acceptRate": 88.0,
+        "acceptRate": 88.1,
         "spareRejects": 38,
         "periods": [
           {
@@ -7017,7 +7017,7 @@
           {
             "key": "evening",
             "label": "저녁피크",
-            "done": 72,
+            "done": 73,
             "goal": 150,
             "failed": true
           },
@@ -7029,7 +7029,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 18:29:18",
+        "closedAt": "2026-05-26 18:30:23",
         "hasData": true
       }
     ]
