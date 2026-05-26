@@ -9,40 +9,40 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 13:58:32",
+  "updatedAt": "2026-05-26 13:59:40",
   "businessDate": "2026-05-26",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 323,
-    "reject": 21,
+    "complete": 324,
+    "reject": 22,
     "cancel": 6,
     "riderFault": 0,
     "morning": 270,
-    "afternoon": 53,
+    "afternoon": 54,
     "evening": 0,
     "midnight": 0,
     "count": 172,
-    "onlineCount": 23,
-    "acceptRate": 92.3,
+    "onlineCount": 24,
+    "acceptRate": 92.0,
     "spareRejects": 53
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 274,
-        "reject": 19,
+        "complete": 275,
+        "reject": 20,
         "cancel": 6,
         "riderFault": 0,
         "morning": 231,
-        "afternoon": 43,
+        "afternoon": 44,
         "evening": 0,
         "midnight": 0,
         "count": 139,
         "onlineCount": 19,
-        "acceptRate": 91.6,
-        "spareRejects": 43
+        "acceptRate": 91.4,
+        "spareRejects": 42
       },
       "targets": {
         "morning": 147,
@@ -192,12 +192,12 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 10,
+          "complete": 11,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 9,
-          "afternoon": 1,
+          "afternoon": 2,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -208,7 +208,7 @@
             0,
             4,
             5,
-            1,
+            2,
             0,
             0,
             0,
@@ -226,7 +226,7 @@
             0,
             0
           ],
-          "acceptRate": 90.9,
+          "acceptRate": 91.7,
           "warning": false
         },
         {
@@ -589,7 +589,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -622,8 +622,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "이정호",
@@ -6182,7 +6182,7 @@
         "evening": 0,
         "midnight": 0,
         "count": 33,
-        "onlineCount": 4,
+        "onlineCount": 5,
         "acceptRate": 96.1,
         "spareRejects": 10
       },
@@ -6369,6 +6369,50 @@
             0
           ],
           "acceptRate": 100.0,
+          "warning": false
+        },
+        {
+          "name": "정판호",
+          "phone": "010-3839-6585",
+          "userId": "tnswn1330",
+          "team": "달서팀",
+          "status": "운행중",
+          "isOnline": true,
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 100,
           "warning": false
         },
         {
@@ -7516,50 +7560,6 @@
           "warning": false
         },
         {
-          "name": "정판호",
-          "phone": "010-3839-6585",
-          "userId": "tnswn1330",
-          "team": "달서팀",
-          "status": "운행 종료",
-          "isOnline": false,
-          "complete": 0,
-          "reject": 0,
-          "cancel": 0,
-          "riderFault": 0,
-          "morning": 0,
-          "afternoon": 0,
-          "evening": 0,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 100,
-          "warning": false
-        },
-        {
           "name": "조대영",
           "phone": "010-2820-1837",
           "userId": "wheodud12345",
@@ -7790,12 +7790,12 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 10,
+      "complete": 11,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 9,
-      "afternoon": 1,
+      "afternoon": 2,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -7806,7 +7806,7 @@
         0,
         4,
         5,
-        1,
+        2,
         0,
         0,
         0,
@@ -7824,7 +7824,7 @@
         0,
         0
       ],
-      "acceptRate": 90.9,
+      "acceptRate": 91.7,
       "warning": false
     },
     {
@@ -8275,7 +8275,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -8308,8 +8308,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "이정호",
@@ -8529,6 +8529,50 @@
         0
       ],
       "acceptRate": 100.0,
+      "warning": false
+    },
+    {
+      "name": "정판호",
+      "phone": "010-3839-6585",
+      "userId": "tnswn1330",
+      "team": "달서팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 0,
+      "reject": 0,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 0,
+      "afternoon": 0,
+      "evening": 0,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 100,
       "warning": false
     },
     {
@@ -14120,50 +14164,6 @@
       "warning": false
     },
     {
-      "name": "정판호",
-      "phone": "010-3839-6585",
-      "userId": "tnswn1330",
-      "team": "달서팀",
-      "status": "운행 종료",
-      "isOnline": false,
-      "complete": 0,
-      "reject": 0,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 0,
-      "afternoon": 0,
-      "evening": 0,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 100,
-      "warning": false
-    },
-    {
       "name": "조대영",
       "phone": "010-2820-1837",
       "userId": "wheodud12345",
@@ -15313,13 +15313,13 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 13:58:32",
-      "totalComplete": 323,
-      "totalReject": 21,
+      "closedAt": "2026-05-26 13:59:40",
+      "totalComplete": 324,
+      "totalReject": 22,
       "totalCancel": 6,
       "riderFault": 0,
       "morning": 270,
-      "afternoon": 53,
+      "afternoon": 54,
       "evening": 0,
       "midnight": 0,
       "periodTargets": {
@@ -15328,23 +15328,23 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 92.3,
+      "acceptRate": 92.0,
       "spareRejects": 53
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 8620,
-    "reject": 1370,
+    "complete": 8621,
+    "reject": 1371,
     "cancel": 416,
     "riderFault": 4,
-    "badTotal": 1790,
+    "badTotal": 1791,
     "acceptRate": 82.8,
-    "spareRejects": 365,
+    "spareRejects": 364,
     "periodTotals": {
       "morning": 2552,
-      "afternoon": 1628,
+      "afternoon": 1629,
       "evening": 2422,
       "midnight": 2018
     },
@@ -15616,12 +15616,12 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 323,
-        "reject": 21,
+        "complete": 324,
+        "reject": 22,
         "cancel": 6,
         "riderFault": 0,
-        "badTotal": 27,
-        "acceptRate": 92.3,
+        "badTotal": 28,
+        "acceptRate": 92.0,
         "spareRejects": 53,
         "periods": [
           {
@@ -15634,7 +15634,7 @@
           {
             "key": "afternoon",
             "label": "오후논피크",
-            "done": 53,
+            "done": 54,
             "goal": 160,
             "failed": true
           },
@@ -15653,7 +15653,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 13:58:32",
+        "closedAt": "2026-05-26 13:59:40",
         "hasData": true
       }
     ]
