@@ -9,30 +9,30 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 12:46:38",
+  "updatedAt": "2026-05-26 12:47:44",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 123,
-    "reject": 13,
+    "complete": 124,
+    "reject": 14,
     "cancel": 6,
     "riderFault": 0,
-    "morning": 123,
+    "morning": 124,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
-    "onlineCount": 14,
-    "acceptRate": 86.6,
+    "onlineCount": 13,
+    "acceptRate": 86.1,
     "spareRejects": 11
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 83,
-        "reject": 6,
+        "reject": 7,
         "cancel": 3,
         "riderFault": 0,
         "morning": 83,
@@ -41,8 +41,8 @@
         "midnight": 0,
         "count": 49,
         "onlineCount": 9,
-        "acceptRate": 90.2,
-        "spareRejects": 11
+        "acceptRate": 89.2,
+        "spareRejects": 10
       },
       "targets": {
         "morning": 84,
@@ -105,7 +105,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 8,
-          "reject": 2,
+          "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 8,
@@ -138,8 +138,8 @@
             0,
             0
           ],
-          "acceptRate": 80.0,
-          "warning": false
+          "acceptRate": 72.7,
+          "warning": true
         },
         {
           "name": "박경보",
@@ -2213,17 +2213,17 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 40,
+        "complete": 41,
         "reject": 7,
         "cancel": 3,
         "riderFault": 0,
-        "morning": 40,
+        "morning": 41,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 24,
-        "onlineCount": 5,
-        "acceptRate": 80.0,
+        "onlineCount": 4,
+        "acceptRate": 80.4,
         "spareRejects": 0
       },
       "targets": {
@@ -2235,50 +2235,6 @@
         "sets": 1
       },
       "riders": [
-        {
-          "name": "김성주",
-          "phone": "010-9581-9421",
-          "userId": "BC942145",
-          "team": "넘버팀",
-          "status": "운행중",
-          "isOnline": true,
-          "complete": 6,
-          "reject": 0,
-          "cancel": 1,
-          "riderFault": 0,
-          "morning": 6,
-          "afternoon": 0,
-          "evening": 0,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            4,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 85.7,
-          "warning": false
-        },
         {
           "name": "김시곤",
           "phone": "010-8858-8862",
@@ -2330,11 +2286,11 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 10,
+          "complete": 11,
           "reject": 2,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 10,
+          "morning": 11,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -2345,7 +2301,7 @@
             3,
             2,
             4,
-            1,
+            2,
             0,
             0,
             0,
@@ -2364,7 +2320,7 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
+          "acceptRate": 84.6,
           "warning": false
         },
         {
@@ -2585,6 +2541,50 @@
             0
           ],
           "acceptRate": 100,
+          "warning": false
+        },
+        {
+          "name": "김성주",
+          "phone": "010-9581-9421",
+          "userId": "BC942145",
+          "team": "넘버팀",
+          "status": "운행 종료",
+          "isOnline": false,
+          "complete": 6,
+          "reject": 0,
+          "cancel": 1,
+          "riderFault": 0,
+          "morning": 6,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 85.7,
           "warning": false
         },
         {
@@ -3340,50 +3340,6 @@
       "warning": false
     },
     {
-      "name": "김성주",
-      "phone": "010-9581-9421",
-      "userId": "BC942145",
-      "team": "넘버팀",
-      "status": "운행중",
-      "isOnline": true,
-      "complete": 6,
-      "reject": 0,
-      "cancel": 1,
-      "riderFault": 0,
-      "morning": 6,
-      "afternoon": 0,
-      "evening": 0,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        2,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 85.7,
-      "warning": false
-    },
-    {
       "name": "김시곤",
       "phone": "010-8858-8862",
       "userId": "mysigon2",
@@ -3435,7 +3391,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 8,
-      "reject": 2,
+      "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 8,
@@ -3468,8 +3424,8 @@
         0,
         0
       ],
-      "acceptRate": 80.0,
-      "warning": false
+      "acceptRate": 72.7,
+      "warning": true
     },
     {
       "name": "박경보",
@@ -3654,11 +3610,11 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 10,
+      "complete": 11,
       "reject": 2,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 10,
+      "morning": 11,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3669,7 +3625,7 @@
         3,
         2,
         4,
-        1,
+        2,
         0,
         0,
         0,
@@ -3688,7 +3644,7 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
+      "acceptRate": 84.6,
       "warning": false
     },
     {
@@ -4393,6 +4349,50 @@
         0
       ],
       "acceptRate": 100,
+      "warning": false
+    },
+    {
+      "name": "김성주",
+      "phone": "010-9581-9421",
+      "userId": "BC942145",
+      "team": "넘버팀",
+      "status": "운행 종료",
+      "isOnline": false,
+      "complete": 6,
+      "reject": 0,
+      "cancel": 1,
+      "riderFault": 0,
+      "morning": 6,
+      "afternoon": 0,
+      "evening": 0,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 85.7,
       "warning": false
     },
     {
@@ -6601,12 +6601,12 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 12:46:38",
-      "totalComplete": 123,
-      "totalReject": 13,
+      "closedAt": "2026-05-26 12:47:44",
+      "totalComplete": 124,
+      "totalReject": 14,
       "totalCancel": 6,
       "riderFault": 0,
-      "morning": 123,
+      "morning": 124,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -6616,22 +6616,22 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 86.6,
+      "acceptRate": 86.1,
       "spareRejects": 11
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 4861,
-    "reject": 602,
+    "complete": 4862,
+    "reject": 603,
     "cancel": 238,
     "riderFault": 1,
-    "badTotal": 841,
-    "acceptRate": 85.3,
-    "spareRejects": 374,
+    "badTotal": 842,
+    "acceptRate": 85.2,
+    "spareRejects": 373,
     "periodTotals": {
-      "morning": 1203,
+      "morning": 1204,
       "afternoon": 907,
       "evening": 1439,
       "midnight": 1312
@@ -6904,18 +6904,18 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 123,
-        "reject": 13,
+        "complete": 124,
+        "reject": 14,
         "cancel": 6,
         "riderFault": 0,
-        "badTotal": 19,
-        "acceptRate": 86.6,
+        "badTotal": 20,
+        "acceptRate": 86.1,
         "spareRejects": 11,
         "periods": [
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 123,
+            "done": 124,
             "goal": 105,
             "failed": false
           },
@@ -6941,7 +6941,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 12:46:38",
+        "closedAt": "2026-05-26 12:47:44",
         "hasData": true
       }
     ]
