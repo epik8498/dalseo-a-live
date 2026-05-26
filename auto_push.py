@@ -27,5 +27,5 @@ while True:
     except Exception as e:
         print("ERROR:", e)
 
-    print("120초 후 재시도")
-    time.sleep(120)
+    print("180초 후 재시도")
+    time.sleep(180)
