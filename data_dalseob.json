@@ -10,14 +10,14 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-27 07:44:57",
+  "updatedAt": "2026-05-27 07:48:22",
   "businessDate": "2026-05-27",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 0,
-    "reject": 1,
+    "reject": 3,
     "cancel": 0,
     "riderFault": 0,
     "morning": 0,
@@ -1643,7 +1643,7 @@
     "넘버팀": {
       "summary": {
         "complete": 0,
-        "reject": 1,
+        "reject": 3,
         "cancel": 0,
         "riderFault": 0,
         "morning": 0,
@@ -1672,7 +1672,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -1705,8 +1705,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "강명원",
@@ -7950,7 +7950,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -7983,8 +7983,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "강명원",
@@ -15888,9 +15888,9 @@
     },
     {
       "businessDate": "2026-05-27",
-      "closedAt": "2026-05-27 07:44:57",
+      "closedAt": "2026-05-27 07:48:22",
       "totalComplete": 0,
-      "totalReject": 1,
+      "totalReject": 3,
       "totalCancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -15911,10 +15911,10 @@
     "startDate": "2026-05-27",
     "endDate": "2026-06-02",
     "complete": 0,
-    "reject": 1,
+    "reject": 3,
     "cancel": 0,
     "riderFault": 0,
-    "badTotal": 1,
+    "badTotal": 3,
     "acceptRate": 0.0,
     "spareRejects": 0,
     "periodTotals": {
@@ -15934,10 +15934,10 @@
         "label": "수",
         "businessDate": "2026-05-27",
         "complete": 0,
-        "reject": 1,
+        "reject": 3,
         "cancel": 0,
         "riderFault": 0,
-        "badTotal": 1,
+        "badTotal": 3,
         "acceptRate": 0.0,
         "spareRejects": 0,
         "periods": [
@@ -15970,7 +15970,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-27 07:44:57",
+        "closedAt": "2026-05-27 07:48:22",
         "hasData": true
       },
       {
