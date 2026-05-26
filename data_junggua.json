@@ -9,39 +9,39 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 14:04:59",
+  "updatedAt": "2026-05-26 14:06:04",
   "businessDate": "2026-05-26",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 169,
+    "complete": 170,
     "reject": 14,
     "cancel": 6,
     "riderFault": 0,
     "morning": 145,
-    "afternoon": 24,
+    "afternoon": 25,
     "evening": 0,
     "midnight": 0,
     "count": 74,
     "onlineCount": 11,
-    "acceptRate": 89.4,
+    "acceptRate": 89.5,
     "spareRejects": 22
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 117,
+        "complete": 118,
         "reject": 7,
         "cancel": 3,
         "riderFault": 0,
         "morning": 99,
-        "afternoon": 18,
+        "afternoon": 19,
         "evening": 0,
         "midnight": 0,
         "count": 50,
         "onlineCount": 10,
-        "acceptRate": 92.1,
+        "acceptRate": 92.2,
         "spareRejects": 19
       },
       "targets": {
@@ -236,12 +236,12 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 5,
+          "complete": 6,
           "reject": 0,
           "cancel": 1,
           "riderFault": 0,
           "morning": 2,
-          "afternoon": 3,
+          "afternoon": 4,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -252,7 +252,7 @@
             0,
             2,
             0,
-            3,
+            4,
             0,
             0,
             0,
@@ -270,7 +270,7 @@
             0,
             0
           ],
-          "acceptRate": 83.3,
+          "acceptRate": 85.7,
           "warning": false
         },
         {
@@ -3522,12 +3522,12 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 5,
+      "complete": 6,
       "reject": 0,
       "cancel": 1,
       "riderFault": 0,
       "morning": 2,
-      "afternoon": 3,
+      "afternoon": 4,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -3538,7 +3538,7 @@
         0,
         2,
         0,
-        3,
+        4,
         0,
         0,
         0,
@@ -3556,7 +3556,7 @@
         0,
         0
       ],
-      "acceptRate": 83.3,
+      "acceptRate": 85.7,
       "warning": false
     },
     {
@@ -6689,13 +6689,13 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 14:04:59",
-      "totalComplete": 169,
+      "closedAt": "2026-05-26 14:06:04",
+      "totalComplete": 170,
       "totalReject": 14,
       "totalCancel": 6,
       "riderFault": 0,
       "morning": 145,
-      "afternoon": 24,
+      "afternoon": 25,
       "evening": 0,
       "midnight": 0,
       "periodTargets": {
@@ -6704,23 +6704,23 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 89.4,
+      "acceptRate": 89.5,
       "spareRejects": 22
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 4907,
+    "complete": 4908,
     "reject": 603,
     "cancel": 238,
     "riderFault": 1,
     "badTotal": 842,
     "acceptRate": 85.4,
-    "spareRejects": 384,
+    "spareRejects": 385,
     "periodTotals": {
       "morning": 1225,
-      "afternoon": 931,
+      "afternoon": 932,
       "evening": 1439,
       "midnight": 1312
     },
@@ -6992,12 +6992,12 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 169,
+        "complete": 170,
         "reject": 14,
         "cancel": 6,
         "riderFault": 0,
         "badTotal": 20,
-        "acceptRate": 89.4,
+        "acceptRate": 89.5,
         "spareRejects": 22,
         "periods": [
           {
@@ -7010,7 +7010,7 @@
           {
             "key": "afternoon",
             "label": "오후논피크",
-            "done": 24,
+            "done": 25,
             "goal": 100,
             "failed": true
           },
@@ -7029,7 +7029,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 14:04:59",
+        "closedAt": "2026-05-26 14:06:04",
         "hasData": true
       }
     ]
