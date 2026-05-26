@@ -91,7 +91,7 @@
   },
   {
     "businessDate": "2026-05-26",
-    "closedAt": "2026-05-27 05:58:15",
+    "closedAt": "2026-05-27 05:59:20",
     "totalComplete": 667,
     "totalReject": 79,
     "totalCancel": 33,
@@ -108,5 +108,25 @@
     },
     "acceptRate": 85.6,
     "spareRejects": 54
+  },
+  {
+    "businessDate": "2026-05-27",
+    "closedAt": "2026-05-27 06:01:31",
+    "totalComplete": 0,
+    "totalReject": 0,
+    "totalCancel": 0,
+    "riderFault": 0,
+    "morning": 0,
+    "afternoon": 0,
+    "evening": 0,
+    "midnight": 0,
+    "periodTargets": {
+      "morning": 105,
+      "afternoon": 100,
+      "evening": 150,
+      "midnight": 145
+    },
+    "acceptRate": 100,
+    "spareRejects": 0
   }
 ]
