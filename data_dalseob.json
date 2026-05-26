@@ -10,22 +10,22 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-26 19:15:24",
+  "updatedAt": "2026-05-26 19:16:33",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 978,
-    "reject": 93,
+    "complete": 980,
+    "reject": 94,
     "cancel": 30,
     "riderFault": 0,
     "morning": 336,
     "afternoon": 304,
-    "evening": 338,
+    "evening": 340,
     "midnight": 0,
     "count": 178,
-    "onlineCount": 42,
+    "onlineCount": 41,
     "acceptRate": 88.8,
     "spareRejects": 121
   },
@@ -33,7 +33,7 @@
     "소닉팀": {
       "summary": {
         "complete": 185,
-        "reject": 31,
+        "reject": 32,
         "cancel": 7,
         "riderFault": 0,
         "morning": 55,
@@ -42,8 +42,8 @@
         "midnight": 0,
         "count": 36,
         "onlineCount": 7,
-        "acceptRate": 83.0,
-        "spareRejects": 8
+        "acceptRate": 82.6,
+        "spareRejects": 7
       },
       "targets": {
         "morning": 42,
@@ -62,7 +62,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 13,
-          "reject": 2,
+          "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 3,
@@ -95,7 +95,7 @@
             0,
             0
           ],
-          "acceptRate": 86.7,
+          "acceptRate": 81.2,
           "warning": false
         },
         {
@@ -1642,18 +1642,18 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 399,
+        "complete": 400,
         "reject": 40,
         "cancel": 9,
         "riderFault": 0,
         "morning": 131,
         "afternoon": 119,
-        "evening": 149,
+        "evening": 150,
         "midnight": 0,
         "count": 47,
         "onlineCount": 16,
         "acceptRate": 89.1,
-        "spareRejects": 50
+        "spareRejects": 51
       },
       "targets": {
         "morning": 116,
@@ -2243,13 +2243,13 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 8,
+          "complete": 9,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 8,
+          "evening": 9,
           "midnight": 0,
           "hourly": [
             0,
@@ -2265,7 +2265,7 @@
             0,
             1,
             7,
-            0,
+            1,
             0,
             0,
             0,
@@ -2277,7 +2277,7 @@
             0,
             0
           ],
-          "acceptRate": 88.9,
+          "acceptRate": 90.0,
           "warning": false
         },
         {
@@ -3736,16 +3736,16 @@
     },
     "마음팀": {
       "summary": {
-        "complete": 394,
+        "complete": 395,
         "reject": 22,
         "cancel": 14,
         "riderFault": 0,
         "morning": 150,
         "afternoon": 116,
-        "evening": 128,
+        "evening": 129,
         "midnight": 0,
         "count": 95,
-        "onlineCount": 19,
+        "onlineCount": 18,
         "acceptRate": 91.6,
         "spareRejects": 62
       },
@@ -3758,50 +3758,6 @@
         "sets": 5.5
       },
       "riders": [
-        {
-          "name": "구용태",
-          "phone": "010-8880-2220",
-          "userId": "yy2146",
-          "team": "마음팀",
-          "status": "운행중",
-          "isOnline": true,
-          "complete": 1,
-          "reject": 0,
-          "cancel": 0,
-          "riderFault": 0,
-          "morning": 0,
-          "afternoon": 0,
-          "evening": 1,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 100.0,
-          "warning": false
-        },
         {
           "name": "김동욱",
           "phone": "010-4136-4623",
@@ -3853,13 +3809,13 @@
           "team": "마음팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 0,
+          "complete": 1,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 0,
+          "evening": 1,
           "midnight": 0,
           "hourly": [
             0,
@@ -3875,7 +3831,7 @@
             0,
             0,
             0,
-            0,
+            1,
             0,
             0,
             0,
@@ -3887,7 +3843,7 @@
             0,
             0
           ],
-          "acceptRate": 0.0,
+          "acceptRate": 50.0,
           "warning": true
         },
         {
@@ -4724,6 +4680,50 @@
             0
           ],
           "acceptRate": 100,
+          "warning": false
+        },
+        {
+          "name": "구용태",
+          "phone": "010-8880-2220",
+          "userId": "yy2146",
+          "team": "마음팀",
+          "status": "운행 종료",
+          "isOnline": false,
+          "complete": 1,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 1,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 100.0,
           "warning": false
         },
         {
@@ -7987,50 +7987,6 @@
       "warning": false
     },
     {
-      "name": "구용태",
-      "phone": "010-8880-2220",
-      "userId": "yy2146",
-      "team": "마음팀",
-      "status": "운행중",
-      "isOnline": true,
-      "complete": 1,
-      "reject": 0,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 0,
-      "afternoon": 0,
-      "evening": 1,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 100.0,
-      "warning": false
-    },
-    {
       "name": "김동규",
       "phone": "010-7116-6009",
       "userId": "1119kdk",
@@ -8038,7 +7994,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 13,
-      "reject": 2,
+      "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 3,
@@ -8071,7 +8027,7 @@
         0,
         0
       ],
-      "acceptRate": 86.7,
+      "acceptRate": 81.2,
       "warning": false
     },
     {
@@ -8125,13 +8081,13 @@
       "team": "마음팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 0,
+      "complete": 1,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 0,
+      "evening": 1,
       "midnight": 0,
       "hourly": [
         0,
@@ -8147,7 +8103,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -8159,7 +8115,7 @@
         0,
         0
       ],
-      "acceptRate": 0.0,
+      "acceptRate": 50.0,
       "warning": true
     },
     {
@@ -9489,13 +9445,13 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 8,
+      "complete": 9,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 8,
+      "evening": 9,
       "midnight": 0,
       "hourly": [
         0,
@@ -9511,7 +9467,7 @@
         0,
         1,
         7,
-        0,
+        1,
         0,
         0,
         0,
@@ -9523,7 +9479,7 @@
         0,
         0
       ],
-      "acceptRate": 88.9,
+      "acceptRate": 90.0,
       "warning": false
     },
     {
@@ -9964,6 +9920,50 @@
         0
       ],
       "acceptRate": 100,
+      "warning": false
+    },
+    {
+      "name": "구용태",
+      "phone": "010-8880-2220",
+      "userId": "yy2146",
+      "team": "마음팀",
+      "status": "운행 종료",
+      "isOnline": false,
+      "complete": 1,
+      "reject": 0,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 0,
+      "afternoon": 0,
+      "evening": 1,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 100.0,
       "warning": false
     },
     {
@@ -15868,14 +15868,14 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 19:15:24",
-      "totalComplete": 978,
-      "totalReject": 93,
+      "closedAt": "2026-05-26 19:16:33",
+      "totalComplete": 980,
+      "totalReject": 94,
       "totalCancel": 30,
       "riderFault": 0,
       "morning": 336,
       "afternoon": 304,
-      "evening": 338,
+      "evening": 340,
       "midnight": 0,
       "periodTargets": {
         "morning": 274,
@@ -15890,17 +15890,17 @@
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 14469,
-    "reject": 2285,
+    "complete": 14471,
+    "reject": 2286,
     "cancel": 596,
     "riderFault": 4,
-    "badTotal": 2885,
+    "badTotal": 2886,
     "acceptRate": 83.4,
-    "spareRejects": 732,
+    "spareRejects": 731,
     "periodTotals": {
       "morning": 3325,
       "afternoon": 2313,
-      "evening": 4335,
+      "evening": 4337,
       "midnight": 4496
     },
     "periodTargets": {
@@ -16171,11 +16171,11 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 978,
-        "reject": 93,
+        "complete": 980,
+        "reject": 94,
         "cancel": 30,
         "riderFault": 0,
-        "badTotal": 123,
+        "badTotal": 124,
         "acceptRate": 88.8,
         "spareRejects": 121,
         "periods": [
@@ -16196,7 +16196,7 @@
           {
             "key": "evening",
             "label": "저녁피크",
-            "done": 338,
+            "done": 340,
             "goal": 390,
             "failed": true
           },
@@ -16208,7 +16208,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 19:15:24",
+        "closedAt": "2026-05-26 19:16:33",
         "hasData": true
       }
     ]
