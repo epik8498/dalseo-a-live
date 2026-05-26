@@ -10,24 +10,24 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-26 22:35:13",
+  "updatedAt": "2026-05-26 22:36:22",
   "businessDate": "2026-05-26",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 1467,
+    "complete": 1468,
     "reject": 129,
     "cancel": 40,
     "riderFault": 0,
     "morning": 336,
     "afternoon": 304,
     "evening": 525,
-    "midnight": 302,
+    "midnight": 303,
     "count": 178,
-    "onlineCount": 23,
+    "onlineCount": 22,
     "acceptRate": 89.7,
-    "spareRejects": 197
+    "spareRejects": 198
   },
   "teams": {
     "소닉팀": {
@@ -1642,18 +1642,18 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 595,
+        "complete": 596,
         "reject": 49,
         "cancel": 13,
         "riderFault": 0,
         "morning": 131,
         "afternoon": 119,
         "evening": 221,
-        "midnight": 124,
+        "midnight": 125,
         "count": 47,
-        "onlineCount": 11,
+        "onlineCount": 10,
         "acceptRate": 90.6,
-        "spareRejects": 86
+        "spareRejects": 87
       },
       "targets": {
         "morning": 116,
@@ -1803,14 +1803,14 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 26,
+          "complete": 27,
           "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 2,
           "evening": 13,
-          "midnight": 11,
+          "midnight": 12,
           "hourly": [
             0,
             0,
@@ -1828,7 +1828,7 @@
             2,
             6,
             4,
-            1,
+            2,
             0,
             0,
             0,
@@ -1837,7 +1837,7 @@
             0,
             0
           ],
-          "acceptRate": 92.9,
+          "acceptRate": 93.1,
           "warning": false
         },
         {
@@ -1970,50 +1970,6 @@
             0
           ],
           "acceptRate": 100.0,
-          "warning": false
-        },
-        {
-          "name": "이헌재",
-          "phone": "010-9068-7818",
-          "userId": "Hunjae79",
-          "team": "넘버팀",
-          "status": "운행중",
-          "isOnline": true,
-          "complete": 30,
-          "reject": 2,
-          "cancel": 2,
-          "riderFault": 0,
-          "morning": 5,
-          "afternoon": 4,
-          "evening": 15,
-          "midnight": 6,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            1,
-            3,
-            1,
-            4,
-            0,
-            0,
-            0,
-            3,
-            7,
-            5,
-            2,
-            4,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 88.2,
           "warning": false
         },
         {
@@ -3510,6 +3466,50 @@
             0
           ],
           "acceptRate": 100,
+          "warning": false
+        },
+        {
+          "name": "이헌재",
+          "phone": "010-9068-7818",
+          "userId": "Hunjae79",
+          "team": "넘버팀",
+          "status": "운행 종료",
+          "isOnline": false,
+          "complete": 30,
+          "reject": 2,
+          "cancel": 2,
+          "riderFault": 0,
+          "morning": 5,
+          "afternoon": 4,
+          "evening": 15,
+          "midnight": 6,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            3,
+            1,
+            4,
+            0,
+            0,
+            0,
+            3,
+            7,
+            5,
+            2,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 88.2,
           "warning": false
         },
         {
@@ -8169,14 +8169,14 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 26,
+      "complete": 27,
       "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 2,
       "evening": 13,
-      "midnight": 11,
+      "midnight": 12,
       "hourly": [
         0,
         0,
@@ -8194,7 +8194,7 @@
         2,
         6,
         4,
-        1,
+        2,
         0,
         0,
         0,
@@ -8203,7 +8203,7 @@
         0,
         0
       ],
-      "acceptRate": 92.9,
+      "acceptRate": 93.1,
       "warning": false
     },
     {
@@ -8644,50 +8644,6 @@
         0
       ],
       "acceptRate": 100.0,
-      "warning": false
-    },
-    {
-      "name": "이헌재",
-      "phone": "010-9068-7818",
-      "userId": "Hunjae79",
-      "team": "넘버팀",
-      "status": "운행중",
-      "isOnline": true,
-      "complete": 30,
-      "reject": 2,
-      "cancel": 2,
-      "riderFault": 0,
-      "morning": 5,
-      "afternoon": 4,
-      "evening": 15,
-      "midnight": 6,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        3,
-        1,
-        4,
-        0,
-        0,
-        0,
-        3,
-        7,
-        5,
-        2,
-        4,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 88.2,
       "warning": false
     },
     {
@@ -14059,6 +14015,50 @@
       "warning": false
     },
     {
+      "name": "이헌재",
+      "phone": "010-9068-7818",
+      "userId": "Hunjae79",
+      "team": "넘버팀",
+      "status": "운행 종료",
+      "isOnline": false,
+      "complete": 30,
+      "reject": 2,
+      "cancel": 2,
+      "riderFault": 0,
+      "morning": 5,
+      "afternoon": 4,
+      "evening": 15,
+      "midnight": 6,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        3,
+        1,
+        4,
+        0,
+        0,
+        0,
+        3,
+        7,
+        5,
+        2,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 88.2,
+      "warning": false
+    },
+    {
       "name": "임승범",
       "phone": "010-5573-2053",
       "userId": "tmdqja1234",
@@ -15868,15 +15868,15 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 22:35:13",
-      "totalComplete": 1467,
+      "closedAt": "2026-05-26 22:36:22",
+      "totalComplete": 1468,
       "totalReject": 129,
       "totalCancel": 40,
       "riderFault": 0,
       "morning": 336,
       "afternoon": 304,
       "evening": 525,
-      "midnight": 302,
+      "midnight": 303,
       "periodTargets": {
         "morning": 274,
         "afternoon": 260,
@@ -15884,13 +15884,13 @@
         "midnight": 378
       },
       "acceptRate": 89.7,
-      "spareRejects": 197
+      "spareRejects": 198
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 14958,
+    "complete": 14959,
     "reject": 2321,
     "cancel": 606,
     "riderFault": 4,
@@ -15901,7 +15901,7 @@
       "morning": 3325,
       "afternoon": 2313,
       "evening": 4522,
-      "midnight": 4798
+      "midnight": 4799
     },
     "periodTargets": {
       "morning": 2238,
@@ -16171,13 +16171,13 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 1467,
+        "complete": 1468,
         "reject": 129,
         "cancel": 40,
         "riderFault": 0,
         "badTotal": 169,
         "acceptRate": 89.7,
-        "spareRejects": 197,
+        "spareRejects": 198,
         "periods": [
           {
             "key": "morning",
@@ -16203,12 +16203,12 @@
           {
             "key": "midnight",
             "label": "심야논피크",
-            "done": 302,
+            "done": 303,
             "goal": 378,
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 22:35:13",
+        "closedAt": "2026-05-26 22:36:22",
         "hasData": true
       }
     ]
