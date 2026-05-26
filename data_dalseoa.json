@@ -9,17 +9,17 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 10:31:22",
+  "updatedAt": "2026-05-26 10:32:31",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 42,
+    "complete": 43,
     "reject": 0,
     "cancel": 1,
     "riderFault": 0,
-    "morning": 42,
+    "morning": 43,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
@@ -31,17 +31,17 @@
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 32,
+        "complete": 33,
         "reject": 0,
         "cancel": 1,
         "riderFault": 0,
-        "morning": 32,
+        "morning": 33,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 141,
         "onlineCount": 15,
-        "acceptRate": 97.0,
+        "acceptRate": 97.1,
         "spareRejects": 7
       },
       "targets": {
@@ -544,11 +544,11 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 0,
           "cancel": 1,
           "riderFault": 0,
-          "morning": 3,
+          "morning": 4,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -557,7 +557,7 @@
             0,
             0,
             1,
-            2,
+            3,
             0,
             0,
             0,
@@ -578,8 +578,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "조준범",
@@ -8230,11 +8230,11 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 0,
       "cancel": 1,
       "riderFault": 0,
-      "morning": 3,
+      "morning": 4,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -8243,7 +8243,7 @@
         0,
         0,
         1,
-        2,
+        3,
         0,
         0,
         0,
@@ -8264,8 +8264,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "정성훈",
@@ -15489,12 +15489,12 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 10:31:22",
-      "totalComplete": 42,
+      "closedAt": "2026-05-26 10:32:31",
+      "totalComplete": 43,
       "totalReject": 0,
       "totalCancel": 1,
       "riderFault": 0,
-      "morning": 42,
+      "morning": 43,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -15511,15 +15511,15 @@
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 8339,
+    "complete": 8340,
     "reject": 1349,
     "cancel": 411,
     "riderFault": 4,
     "badTotal": 1764,
     "acceptRate": 82.5,
-    "spareRejects": 320,
+    "spareRejects": 321,
     "periodTotals": {
-      "morning": 2324,
+      "morning": 2325,
       "afternoon": 1575,
       "evening": 2422,
       "midnight": 2018
@@ -15792,7 +15792,7 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 42,
+        "complete": 43,
         "reject": 0,
         "cancel": 1,
         "riderFault": 0,
@@ -15803,7 +15803,7 @@
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 42,
+            "done": 43,
             "goal": 168,
             "failed": true
           },
@@ -15829,7 +15829,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 10:31:22",
+        "closedAt": "2026-05-26 10:32:31",
         "hasData": true
       }
     ]
