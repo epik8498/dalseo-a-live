@@ -10,24 +10,24 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-26 16:26:41",
+  "updatedAt": "2026-05-26 16:27:49",
   "businessDate": "2026-05-26",
   "currentPeriod": "afternoon",
   "currentPeriodLabel": "오후논피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 554,
+    "complete": 556,
     "reject": 26,
     "cancel": 10,
     "riderFault": 0,
     "morning": 336,
-    "afternoon": 218,
+    "afternoon": 220,
     "evening": 0,
     "midnight": 0,
     "count": 178,
     "onlineCount": 20,
     "acceptRate": 93.9,
-    "spareRejects": 102
+    "spareRejects": 103
   },
   "teams": {
     "소닉팀": {
@@ -1642,12 +1642,12 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 220,
+        "complete": 221,
         "reject": 13,
         "cancel": 3,
         "riderFault": 0,
         "morning": 131,
-        "afternoon": 89,
+        "afternoon": 90,
         "evening": 0,
         "midnight": 0,
         "count": 47,
@@ -1715,12 +1715,12 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 0,
           "cancel": 1,
           "riderFault": 0,
           "morning": 0,
-          "afternoon": 3,
+          "afternoon": 4,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -1734,7 +1734,7 @@
             0,
             0,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -1749,8 +1749,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "김현준",
@@ -3736,18 +3736,18 @@
     },
     "마음팀": {
       "summary": {
-        "complete": 231,
+        "complete": 232,
         "reject": 4,
         "cancel": 5,
         "riderFault": 0,
         "morning": 150,
-        "afternoon": 81,
+        "afternoon": 82,
         "evening": 0,
         "midnight": 0,
         "count": 95,
         "onlineCount": 8,
-        "acceptRate": 96.2,
-        "spareRejects": 48
+        "acceptRate": 96.3,
+        "spareRejects": 49
       },
       "targets": {
         "morning": 116,
@@ -3765,12 +3765,12 @@
           "team": "마음팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 0,
+          "complete": 1,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
-          "afternoon": 0,
+          "afternoon": 1,
           "evening": 0,
           "midnight": 0,
           "hourly": [
@@ -3784,7 +3784,7 @@
             0,
             0,
             0,
-            0,
+            1,
             0,
             0,
             0,
@@ -3799,7 +3799,7 @@
             0,
             0
           ],
-          "acceptRate": 0.0,
+          "acceptRate": 50.0,
           "warning": true
         },
         {
@@ -7993,12 +7993,12 @@
       "team": "마음팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 0,
+      "complete": 1,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
-      "afternoon": 0,
+      "afternoon": 1,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -8012,7 +8012,7 @@
         0,
         0,
         0,
-        0,
+        1,
         0,
         0,
         0,
@@ -8027,7 +8027,7 @@
         0,
         0
       ],
-      "acceptRate": 0.0,
+      "acceptRate": 50.0,
       "warning": true
     },
     {
@@ -8081,12 +8081,12 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 0,
       "cancel": 1,
       "riderFault": 0,
       "morning": 0,
-      "afternoon": 3,
+      "afternoon": 4,
       "evening": 0,
       "midnight": 0,
       "hourly": [
@@ -8100,7 +8100,7 @@
         0,
         0,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -8115,8 +8115,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "김현준",
@@ -15868,13 +15868,13 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 16:26:41",
-      "totalComplete": 554,
+      "closedAt": "2026-05-26 16:27:49",
+      "totalComplete": 556,
       "totalReject": 26,
       "totalCancel": 10,
       "riderFault": 0,
       "morning": 336,
-      "afternoon": 218,
+      "afternoon": 220,
       "evening": 0,
       "midnight": 0,
       "periodTargets": {
@@ -15884,13 +15884,13 @@
         "midnight": 378
       },
       "acceptRate": 93.9,
-      "spareRejects": 102
+      "spareRejects": 103
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 14045,
+    "complete": 14047,
     "reject": 2218,
     "cancel": 576,
     "riderFault": 4,
@@ -15899,7 +15899,7 @@
     "spareRejects": 713,
     "periodTotals": {
       "morning": 3325,
-      "afternoon": 2227,
+      "afternoon": 2229,
       "evening": 3997,
       "midnight": 4496
     },
@@ -16171,13 +16171,13 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 554,
+        "complete": 556,
         "reject": 26,
         "cancel": 10,
         "riderFault": 0,
         "badTotal": 36,
         "acceptRate": 93.9,
-        "spareRejects": 102,
+        "spareRejects": 103,
         "periods": [
           {
             "key": "morning",
@@ -16189,7 +16189,7 @@
           {
             "key": "afternoon",
             "label": "오후논피크",
-            "done": 218,
+            "done": 220,
             "goal": 260,
             "failed": true
           },
@@ -16208,7 +16208,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 16:26:41",
+        "closedAt": "2026-05-26 16:27:49",
         "hasData": true
       }
     ]
