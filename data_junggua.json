@@ -9,19 +9,19 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 18:31:28",
+  "updatedAt": "2026-05-26 18:32:34",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 340,
+    "complete": 341,
     "reject": 32,
     "cancel": 14,
     "riderFault": 0,
     "morning": 145,
     "afternoon": 121,
-    "evening": 74,
+    "evening": 75,
     "midnight": 0,
     "count": 74,
     "onlineCount": 16,
@@ -2257,18 +2257,18 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 87,
+        "complete": 88,
         "reject": 16,
         "cancel": 3,
         "riderFault": 0,
         "morning": 46,
         "afternoon": 23,
-        "evening": 18,
+        "evening": 19,
         "midnight": 0,
         "count": 24,
         "onlineCount": 4,
-        "acceptRate": 82.1,
-        "spareRejects": 2
+        "acceptRate": 82.2,
+        "spareRejects": 3
       },
       "targets": {
         "morning": 21,
@@ -2374,13 +2374,13 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 3,
+          "evening": 4,
           "midnight": 0,
           "hourly": [
             0,
@@ -2395,7 +2395,7 @@
             0,
             0,
             2,
-            1,
+            2,
             0,
             0,
             0,
@@ -2408,8 +2408,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "최문호",
@@ -3962,13 +3962,13 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 3,
+      "evening": 4,
       "midnight": 0,
       "hourly": [
         0,
@@ -3983,7 +3983,7 @@
         0,
         0,
         2,
-        1,
+        2,
         0,
         0,
         0,
@@ -3996,8 +3996,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "최문호",
@@ -6689,14 +6689,14 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 18:31:28",
-      "totalComplete": 340,
+      "closedAt": "2026-05-26 18:32:34",
+      "totalComplete": 341,
       "totalReject": 32,
       "totalCancel": 14,
       "riderFault": 0,
       "morning": 145,
       "afternoon": 121,
-      "evening": 74,
+      "evening": 75,
       "midnight": 0,
       "periodTargets": {
         "morning": 105,
@@ -6711,7 +6711,7 @@
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 5078,
+    "complete": 5079,
     "reject": 621,
     "cancel": 246,
     "riderFault": 1,
@@ -6721,7 +6721,7 @@
     "periodTotals": {
       "morning": 1225,
       "afternoon": 1028,
-      "evening": 1513,
+      "evening": 1514,
       "midnight": 1312
     },
     "periodTargets": {
@@ -6992,7 +6992,7 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 340,
+        "complete": 341,
         "reject": 32,
         "cancel": 14,
         "riderFault": 0,
@@ -7017,7 +7017,7 @@
           {
             "key": "evening",
             "label": "저녁피크",
-            "done": 74,
+            "done": 75,
             "goal": 150,
             "failed": true
           },
@@ -7029,7 +7029,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 18:31:28",
+        "closedAt": "2026-05-26 18:32:34",
         "hasData": true
       }
     ]
