@@ -10,14 +10,14 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-26 10:02:51",
+  "updatedAt": "2026-05-26 10:03:59",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 39,
-    "reject": 1,
+    "reject": 3,
     "cancel": 1,
     "riderFault": 0,
     "morning": 39,
@@ -26,8 +26,8 @@
     "midnight": 0,
     "count": 177,
     "onlineCount": 17,
-    "acceptRate": 95.1,
-    "spareRejects": 7
+    "acceptRate": 90.7,
+    "spareRejects": 5
   },
   "teams": {
     "소닉팀": {
@@ -1555,7 +1555,7 @@
     "넘버팀": {
       "summary": {
         "complete": 13,
-        "reject": 1,
+        "reject": 3,
         "cancel": 1,
         "riderFault": 0,
         "morning": 13,
@@ -1564,8 +1564,8 @@
         "midnight": 0,
         "count": 47,
         "onlineCount": 5,
-        "acceptRate": 86.7,
-        "spareRejects": 1
+        "acceptRate": 76.5,
+        "spareRejects": -1
       },
       "targets": {
         "morning": 116,
@@ -1628,7 +1628,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 1,
           "cancel": 1,
           "riderFault": 0,
           "morning": 0,
@@ -1672,7 +1672,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -1705,8 +1705,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "임현석",
@@ -8258,7 +8258,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 1,
       "cancel": 1,
       "riderFault": 0,
       "morning": 0,
@@ -8346,7 +8346,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -8379,8 +8379,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "임현석",
@@ -15780,9 +15780,9 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 10:02:51",
+      "closedAt": "2026-05-26 10:03:59",
       "totalComplete": 39,
-      "totalReject": 1,
+      "totalReject": 3,
       "totalCancel": 1,
       "riderFault": 0,
       "morning": 39,
@@ -15795,20 +15795,20 @@
         "evening": 390,
         "midnight": 378
       },
-      "acceptRate": 95.1,
-      "spareRejects": 7
+      "acceptRate": 90.7,
+      "spareRejects": 5
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
     "complete": 13530,
-    "reject": 2193,
+    "reject": 2195,
     "cancel": 567,
     "riderFault": 4,
-    "badTotal": 2764,
+    "badTotal": 2766,
     "acceptRate": 83.0,
-    "spareRejects": 618,
+    "spareRejects": 616,
     "periodTotals": {
       "morning": 3028,
       "afternoon": 2009,
@@ -16084,12 +16084,12 @@
         "label": "화",
         "businessDate": "2026-05-26",
         "complete": 39,
-        "reject": 1,
+        "reject": 3,
         "cancel": 1,
         "riderFault": 0,
-        "badTotal": 2,
-        "acceptRate": 95.1,
-        "spareRejects": 7,
+        "badTotal": 4,
+        "acceptRate": 90.7,
+        "spareRejects": 5,
         "periods": [
           {
             "key": "morning",
@@ -16120,7 +16120,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 10:02:51",
+        "closedAt": "2026-05-26 10:03:59",
         "hasData": true
       }
     ]
