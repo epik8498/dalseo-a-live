@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-27 06:56:13",
+  "updatedAt": "2026-05-27 06:59:38",
   "businessDate": "2026-05-27",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 2,
-    "reject": 0,
+    "reject": 1,
     "cancel": 0,
     "riderFault": 0,
     "morning": 2,
@@ -25,8 +25,8 @@
     "midnight": 0,
     "count": 173,
     "onlineCount": 2,
-    "acceptRate": 100.0,
-    "spareRejects": 0
+    "acceptRate": 66.7,
+    "spareRejects": -1
   },
   "teams": {
     "소닉팀": {
@@ -6218,7 +6218,7 @@
     "달서팀": {
       "summary": {
         "complete": 0,
-        "reject": 0,
+        "reject": 1,
         "cancel": 0,
         "riderFault": 0,
         "morning": 0,
@@ -6227,7 +6227,7 @@
         "midnight": 0,
         "count": 33,
         "onlineCount": 1,
-        "acceptRate": 100,
+        "acceptRate": 0.0,
         "spareRejects": 0
       },
       "targets": {
@@ -6247,7 +6247,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -6280,8 +6280,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "김기헌",
@@ -7703,7 +7703,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -7736,8 +7736,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "지명환",
@@ -15421,9 +15421,9 @@
     },
     {
       "businessDate": "2026-05-27",
-      "closedAt": "2026-05-27 06:56:13",
+      "closedAt": "2026-05-27 06:59:38",
       "totalComplete": 2,
-      "totalReject": 0,
+      "totalReject": 1,
       "totalCancel": 0,
       "riderFault": 0,
       "morning": 2,
@@ -15436,20 +15436,20 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 100.0,
-      "spareRejects": 0
+      "acceptRate": 66.7,
+      "spareRejects": -1
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-27",
     "endDate": "2026-06-02",
     "complete": 2,
-    "reject": 0,
+    "reject": 1,
     "cancel": 0,
     "riderFault": 0,
-    "badTotal": 0,
-    "acceptRate": 100.0,
-    "spareRejects": 0,
+    "badTotal": 1,
+    "acceptRate": 66.7,
+    "spareRejects": -1,
     "periodTotals": {
       "morning": 2,
       "afternoon": 0,
@@ -15467,12 +15467,12 @@
         "label": "수",
         "businessDate": "2026-05-27",
         "complete": 2,
-        "reject": 0,
+        "reject": 1,
         "cancel": 0,
         "riderFault": 0,
-        "badTotal": 0,
-        "acceptRate": 100.0,
-        "spareRejects": 0,
+        "badTotal": 1,
+        "acceptRate": 66.7,
+        "spareRejects": -1,
         "periods": [
           {
             "key": "morning",
@@ -15503,7 +15503,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-27 06:56:13",
+        "closedAt": "2026-05-27 06:59:38",
         "hasData": true
       },
       {
