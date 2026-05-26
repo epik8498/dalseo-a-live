@@ -10,23 +10,23 @@
     "넘버팀",
     "마음팀"
   ],
-  "updatedAt": "2026-05-26 09:26:27",
+  "updatedAt": "2026-05-26 09:27:35",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 19,
+    "complete": 20,
     "reject": 0,
-    "cancel": 0,
+    "cancel": 1,
     "riderFault": 0,
-    "morning": 19,
+    "morning": 20,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 177,
     "onlineCount": 14,
-    "acceptRate": 100.0,
+    "acceptRate": 95.2,
     "spareRejects": 4
   },
   "teams": {
@@ -1556,7 +1556,7 @@
       "summary": {
         "complete": 9,
         "reject": 0,
-        "cancel": 0,
+        "cancel": 1,
         "riderFault": 0,
         "morning": 9,
         "afternoon": 0,
@@ -1564,8 +1564,8 @@
         "midnight": 0,
         "count": 47,
         "onlineCount": 4,
-        "acceptRate": 100.0,
-        "spareRejects": 2
+        "acceptRate": 90.0,
+        "spareRejects": 1
       },
       "targets": {
         "morning": 116,
@@ -1629,7 +1629,7 @@
           "isOnline": true,
           "complete": 0,
           "reject": 0,
-          "cancel": 0,
+          "cancel": 1,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
@@ -1661,8 +1661,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "임현석",
@@ -3648,11 +3648,11 @@
     },
     "마음팀": {
       "summary": {
-        "complete": 10,
+        "complete": 11,
         "reject": 0,
         "cancel": 0,
         "riderFault": 0,
-        "morning": 10,
+        "morning": 11,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
@@ -3897,11 +3897,11 @@
           "team": "마음팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 3,
+          "morning": 4,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -3909,7 +3909,7 @@
             0,
             0,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -8215,7 +8215,7 @@
       "isOnline": true,
       "complete": 0,
       "reject": 0,
-      "cancel": 0,
+      "cancel": 1,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
@@ -8247,8 +8247,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "이전필",
@@ -8257,11 +8257,11 @@
       "team": "마음팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 3,
+      "morning": 4,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -8269,7 +8269,7 @@
         0,
         0,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -15780,12 +15780,12 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 09:26:27",
-      "totalComplete": 19,
+      "closedAt": "2026-05-26 09:27:35",
+      "totalComplete": 20,
       "totalReject": 0,
-      "totalCancel": 0,
+      "totalCancel": 1,
       "riderFault": 0,
-      "morning": 19,
+      "morning": 20,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -15795,22 +15795,22 @@
         "evening": 390,
         "midnight": 378
       },
-      "acceptRate": 100.0,
+      "acceptRate": 95.2,
       "spareRejects": 4
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 13510,
+    "complete": 13511,
     "reject": 2192,
-    "cancel": 566,
+    "cancel": 567,
     "riderFault": 4,
-    "badTotal": 2762,
+    "badTotal": 2763,
     "acceptRate": 83.0,
-    "spareRejects": 615,
+    "spareRejects": 614,
     "periodTotals": {
-      "morning": 3008,
+      "morning": 3009,
       "afternoon": 2009,
       "evening": 3997,
       "midnight": 4496
@@ -16083,18 +16083,18 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 19,
+        "complete": 20,
         "reject": 0,
-        "cancel": 0,
+        "cancel": 1,
         "riderFault": 0,
-        "badTotal": 0,
-        "acceptRate": 100.0,
+        "badTotal": 1,
+        "acceptRate": 95.2,
         "spareRejects": 4,
         "periods": [
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 19,
+            "done": 20,
             "goal": 274,
             "failed": true
           },
@@ -16120,7 +16120,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 09:26:27",
+        "closedAt": "2026-05-26 09:27:35",
         "hasData": true
       }
     ]
