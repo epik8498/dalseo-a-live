@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 17:09:48",
+  "updatedAt": "2026-05-26 17:10:57",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 488,
-    "reject": 35,
+    "reject": 36,
     "cancel": 7,
     "riderFault": 0,
     "morning": 270,
@@ -24,15 +24,15 @@
     "evening": 1,
     "midnight": 0,
     "count": 172,
-    "onlineCount": 30,
-    "acceptRate": 92.1,
-    "spareRejects": 80
+    "onlineCount": 31,
+    "acceptRate": 91.9,
+    "spareRejects": 79
   },
   "teams": {
     "소닉팀": {
       "summary": {
         "complete": 422,
-        "reject": 30,
+        "reject": 31,
         "cancel": 7,
         "riderFault": 0,
         "morning": 231,
@@ -40,9 +40,9 @@
         "evening": 1,
         "midnight": 0,
         "count": 139,
-        "onlineCount": 24,
-        "acceptRate": 91.9,
-        "spareRejects": 68
+        "onlineCount": 25,
+        "acceptRate": 91.7,
+        "spareRejects": 67
       },
       "targets": {
         "morning": 147,
@@ -193,7 +193,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 17,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 9,
@@ -226,7 +226,7 @@
             0,
             0
           ],
-          "acceptRate": 94.4,
+          "acceptRate": 89.5,
           "warning": false
         },
         {
@@ -975,6 +975,50 @@
             0
           ],
           "acceptRate": 84.2,
+          "warning": false
+        },
+        {
+          "name": "최용대",
+          "phone": "010-6508-4564",
+          "userId": "choiyongdae",
+          "team": "소닉팀",
+          "status": "운행중",
+          "isOnline": true,
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 100,
           "warning": false
         },
         {
@@ -5598,50 +5642,6 @@
           "warning": false
         },
         {
-          "name": "최용대",
-          "phone": "010-6508-4564",
-          "userId": "choiyongdae",
-          "team": "소닉팀",
-          "status": "운행 종료",
-          "isOnline": false,
-          "complete": 0,
-          "reject": 0,
-          "cancel": 0,
-          "riderFault": 0,
-          "morning": 0,
-          "afternoon": 0,
-          "evening": 0,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 100,
-          "warning": false
-        },
-        {
           "name": "최윤봉",
           "phone": "010-3296-3650",
           "userId": "ekqhd7",
@@ -7835,7 +7835,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 17,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 9,
@@ -7868,7 +7868,7 @@
         0,
         0
       ],
-      "acceptRate": 94.4,
+      "acceptRate": 89.5,
       "warning": false
     },
     {
@@ -8837,6 +8837,50 @@
         0
       ],
       "acceptRate": 84.2,
+      "warning": false
+    },
+    {
+      "name": "최용대",
+      "phone": "010-6508-4564",
+      "userId": "choiyongdae",
+      "team": "소닉팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 0,
+      "reject": 0,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 0,
+      "afternoon": 0,
+      "evening": 0,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 100,
       "warning": false
     },
     {
@@ -14604,50 +14648,6 @@
       "warning": false
     },
     {
-      "name": "최용대",
-      "phone": "010-6508-4564",
-      "userId": "choiyongdae",
-      "team": "소닉팀",
-      "status": "운행 종료",
-      "isOnline": false,
-      "complete": 0,
-      "reject": 0,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 0,
-      "afternoon": 0,
-      "evening": 0,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 100,
-      "warning": false
-    },
-    {
       "name": "최윤봉",
       "phone": "010-3296-3650",
       "userId": "ekqhd7",
@@ -15313,9 +15313,9 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 17:09:48",
+      "closedAt": "2026-05-26 17:10:57",
       "totalComplete": 488,
-      "totalReject": 35,
+      "totalReject": 36,
       "totalCancel": 7,
       "riderFault": 0,
       "morning": 270,
@@ -15328,20 +15328,20 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 92.1,
-      "spareRejects": 80
+      "acceptRate": 91.9,
+      "spareRejects": 79
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
     "complete": 8785,
-    "reject": 1384,
+    "reject": 1385,
     "cancel": 417,
     "riderFault": 4,
-    "badTotal": 1805,
-    "acceptRate": 83.0,
-    "spareRejects": 391,
+    "badTotal": 1806,
+    "acceptRate": 82.9,
+    "spareRejects": 390,
     "periodTotals": {
       "morning": 2552,
       "afternoon": 1792,
@@ -15617,12 +15617,12 @@
         "label": "화",
         "businessDate": "2026-05-26",
         "complete": 488,
-        "reject": 35,
+        "reject": 36,
         "cancel": 7,
         "riderFault": 0,
-        "badTotal": 42,
-        "acceptRate": 92.1,
-        "spareRejects": 80,
+        "badTotal": 43,
+        "acceptRate": 91.9,
+        "spareRejects": 79,
         "periods": [
           {
             "key": "morning",
@@ -15653,7 +15653,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 17:09:48",
+        "closedAt": "2026-05-26 17:10:57",
         "hasData": true
       }
     ]
