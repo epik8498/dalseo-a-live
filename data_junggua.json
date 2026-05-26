@@ -9,40 +9,40 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-26 12:48:49",
+  "updatedAt": "2026-05-26 12:49:54",
   "businessDate": "2026-05-26",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 124,
+    "complete": 125,
     "reject": 14,
     "cancel": 6,
     "riderFault": 0,
-    "morning": 124,
+    "morning": 125,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 13,
-    "acceptRate": 86.1,
+    "acceptRate": 86.2,
     "spareRejects": 11
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 83,
+        "complete": 84,
         "reject": 7,
         "cancel": 3,
         "riderFault": 0,
-        "morning": 83,
+        "morning": 84,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 49,
         "onlineCount": 9,
-        "acceptRate": 89.2,
-        "spareRejects": 10
+        "acceptRate": 89.4,
+        "spareRejects": 11
       },
       "targets": {
         "morning": 84,
@@ -324,11 +324,11 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 9,
+          "complete": 10,
           "reject": 0,
           "cancel": 1,
           "riderFault": 0,
-          "morning": 9,
+          "morning": 10,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -339,7 +339,7 @@
             2,
             0,
             5,
-            2,
+            3,
             0,
             0,
             0,
@@ -358,7 +358,7 @@
             0,
             0
           ],
-          "acceptRate": 90.0,
+          "acceptRate": 90.9,
           "warning": false
         },
         {
@@ -3654,11 +3654,11 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 9,
+      "complete": 10,
       "reject": 0,
       "cancel": 1,
       "riderFault": 0,
-      "morning": 9,
+      "morning": 10,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3669,7 +3669,7 @@
         2,
         0,
         5,
-        2,
+        3,
         0,
         0,
         0,
@@ -3688,7 +3688,7 @@
         0,
         0
       ],
-      "acceptRate": 90.0,
+      "acceptRate": 90.9,
       "warning": false
     },
     {
@@ -6601,12 +6601,12 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 12:48:49",
-      "totalComplete": 124,
+      "closedAt": "2026-05-26 12:49:54",
+      "totalComplete": 125,
       "totalReject": 14,
       "totalCancel": 6,
       "riderFault": 0,
-      "morning": 124,
+      "morning": 125,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -6616,14 +6616,14 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 86.1,
+      "acceptRate": 86.2,
       "spareRejects": 11
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 4862,
+    "complete": 4863,
     "reject": 603,
     "cancel": 238,
     "riderFault": 1,
@@ -6631,7 +6631,7 @@
     "acceptRate": 85.2,
     "spareRejects": 373,
     "periodTotals": {
-      "morning": 1204,
+      "morning": 1205,
       "afternoon": 907,
       "evening": 1439,
       "midnight": 1312
@@ -6904,18 +6904,18 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 124,
+        "complete": 125,
         "reject": 14,
         "cancel": 6,
         "riderFault": 0,
         "badTotal": 20,
-        "acceptRate": 86.1,
+        "acceptRate": 86.2,
         "spareRejects": 11,
         "periods": [
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 124,
+            "done": 125,
             "goal": 105,
             "failed": false
           },
@@ -6941,7 +6941,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 12:48:49",
+        "closedAt": "2026-05-26 12:49:54",
         "hasData": true
       }
     ]
