@@ -9,40 +9,40 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 21:25:32",
+  "updatedAt": "2026-05-26 21:26:41",
   "businessDate": "2026-05-26",
   "currentPeriod": "midnight",
   "currentPeriodLabel": "심야논피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 1066,
+    "complete": 1069,
     "reject": 106,
     "cancel": 35,
     "riderFault": 0,
     "morning": 270,
     "afternoon": 229,
     "evening": 413,
-    "midnight": 154,
+    "midnight": 157,
     "count": 172,
     "onlineCount": 34,
     "acceptRate": 88.3,
-    "spareRejects": 125
+    "spareRejects": 126
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 873,
+        "complete": 876,
         "reject": 76,
         "cancel": 28,
         "riderFault": 0,
         "morning": 231,
         "afternoon": 201,
         "evening": 328,
-        "midnight": 113,
+        "midnight": 116,
         "count": 139,
         "onlineCount": 26,
         "acceptRate": 89.4,
-        "spareRejects": 114
+        "spareRejects": 115
       },
       "targets": {
         "morning": 147,
@@ -544,14 +544,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 5,
+          "complete": 6,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
           "evening": 0,
-          "midnight": 5,
+          "midnight": 6,
           "hourly": [
             0,
             0,
@@ -568,7 +568,7 @@
             0,
             0,
             4,
-            1,
+            2,
             0,
             0,
             0,
@@ -676,14 +676,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 27,
+          "complete": 28,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 7,
           "afternoon": 6,
           "evening": 11,
-          "midnight": 3,
+          "midnight": 4,
           "hourly": [
             0,
             0,
@@ -700,7 +700,7 @@
             4,
             3,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -984,14 +984,14 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 39,
+          "complete": 40,
           "reject": 6,
           "cancel": 2,
           "riderFault": 0,
           "morning": 13,
           "afternoon": 3,
           "evening": 18,
-          "midnight": 5,
+          "midnight": 6,
           "hourly": [
             0,
             0,
@@ -1008,7 +1008,7 @@
             9,
             5,
             5,
-            0,
+            1,
             0,
             0,
             0,
@@ -1018,7 +1018,7 @@
             0,
             0
           ],
-          "acceptRate": 83.0,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -8362,14 +8362,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 5,
+      "complete": 6,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
       "evening": 0,
-      "midnight": 5,
+      "midnight": 6,
       "hourly": [
         0,
         0,
@@ -8386,7 +8386,7 @@
         0,
         0,
         4,
-        1,
+        2,
         0,
         0,
         0,
@@ -8494,14 +8494,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 27,
+      "complete": 28,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
       "morning": 7,
       "afternoon": 6,
       "evening": 11,
-      "midnight": 3,
+      "midnight": 4,
       "hourly": [
         0,
         0,
@@ -8518,7 +8518,7 @@
         4,
         3,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -8846,14 +8846,14 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 39,
+      "complete": 40,
       "reject": 6,
       "cancel": 2,
       "riderFault": 0,
       "morning": 13,
       "afternoon": 3,
       "evening": 18,
-      "midnight": 5,
+      "midnight": 6,
       "hourly": [
         0,
         0,
@@ -8870,7 +8870,7 @@
         9,
         5,
         5,
-        0,
+        1,
         0,
         0,
         0,
@@ -8880,7 +8880,7 @@
         0,
         0
       ],
-      "acceptRate": 83.0,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
@@ -15313,15 +15313,15 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 21:25:32",
-      "totalComplete": 1066,
+      "closedAt": "2026-05-26 21:26:41",
+      "totalComplete": 1069,
       "totalReject": 106,
       "totalCancel": 35,
       "riderFault": 0,
       "morning": 270,
       "afternoon": 229,
       "evening": 413,
-      "midnight": 154,
+      "midnight": 157,
       "periodTargets": {
         "morning": 168,
         "afternoon": 160,
@@ -15329,24 +15329,24 @@
         "midnight": 232
       },
       "acceptRate": 88.3,
-      "spareRejects": 125
+      "spareRejects": 126
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 9363,
+    "complete": 9366,
     "reject": 1455,
     "cancel": 445,
     "riderFault": 4,
     "badTotal": 1904,
     "acceptRate": 83.1,
-    "spareRejects": 436,
+    "spareRejects": 437,
     "periodTotals": {
       "morning": 2552,
       "afternoon": 1804,
       "evening": 2835,
-      "midnight": 2172
+      "midnight": 2175
     },
     "periodTargets": {
       "morning": 1376,
@@ -15616,13 +15616,13 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 1066,
+        "complete": 1069,
         "reject": 106,
         "cancel": 35,
         "riderFault": 0,
         "badTotal": 141,
         "acceptRate": 88.3,
-        "spareRejects": 125,
+        "spareRejects": 126,
         "periods": [
           {
             "key": "morning",
@@ -15648,12 +15648,12 @@
           {
             "key": "midnight",
             "label": "심야논피크",
-            "done": 154,
+            "done": 157,
             "goal": 232,
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 21:25:32",
+        "closedAt": "2026-05-26 21:26:41",
         "hasData": true
       }
     ]
