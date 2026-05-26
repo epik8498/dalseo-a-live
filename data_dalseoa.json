@@ -9,35 +9,35 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-26 19:58:27",
+  "updatedAt": "2026-05-26 19:59:36",
   "businessDate": "2026-05-26",
   "currentPeriod": "evening",
   "currentPeriodLabel": "저녁피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 878,
+    "complete": 879,
     "reject": 93,
-    "cancel": 29,
+    "cancel": 30,
     "riderFault": 0,
     "morning": 270,
     "afternoon": 229,
-    "evening": 379,
+    "evening": 380,
     "midnight": 0,
     "count": 172,
-    "onlineCount": 31,
-    "acceptRate": 87.8,
-    "spareRejects": 97
+    "onlineCount": 32,
+    "acceptRate": 87.7,
+    "spareRejects": 96
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 730,
+        "complete": 731,
         "reject": 66,
         "cancel": 25,
         "riderFault": 0,
         "morning": 231,
         "afternoon": 201,
-        "evening": 298,
+        "evening": 299,
         "midnight": 0,
         "count": 139,
         "onlineCount": 26,
@@ -1072,13 +1072,13 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 9,
+          "complete": 10,
           "reject": 0,
           "cancel": 2,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 9,
+          "evening": 10,
           "midnight": 0,
           "hourly": [
             0,
@@ -1094,7 +1094,7 @@
             0,
             1,
             6,
-            2,
+            3,
             0,
             0,
             0,
@@ -1106,7 +1106,7 @@
             0,
             0
           ],
-          "acceptRate": 81.8,
+          "acceptRate": 83.3,
           "warning": false
         },
         {
@@ -6175,16 +6175,16 @@
       "summary": {
         "complete": 148,
         "reject": 27,
-        "cancel": 4,
+        "cancel": 5,
         "riderFault": 0,
         "morning": 39,
         "afternoon": 28,
         "evening": 81,
         "midnight": 0,
         "count": 33,
-        "onlineCount": 5,
-        "acceptRate": 82.7,
-        "spareRejects": 6
+        "onlineCount": 6,
+        "acceptRate": 82.2,
+        "spareRejects": 5
       },
       "targets": {
         "morning": 21,
@@ -6196,6 +6196,50 @@
       },
       "riders": [
         {
+          "name": "김병철",
+          "phone": "010-4494-1615",
+          "userId": "gug224600",
+          "team": "달서팀",
+          "status": "운행중",
+          "isOnline": true,
+          "complete": 11,
+          "reject": 2,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 6,
+          "afternoon": 0,
+          "evening": 5,
+          "midnight": 0,
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "acceptRate": 84.6,
+          "warning": false
+        },
+        {
           "name": "김태광",
           "phone": "010-7799-2317",
           "userId": "taegwang92",
@@ -6204,7 +6248,7 @@
           "isOnline": true,
           "complete": 28,
           "reject": 0,
-          "cancel": 0,
+          "cancel": 1,
           "riderFault": 0,
           "morning": 8,
           "afternoon": 8,
@@ -6236,7 +6280,7 @@
             0,
             0
           ],
-          "acceptRate": 100.0,
+          "acceptRate": 96.6,
           "warning": false
         },
         {
@@ -6633,50 +6677,6 @@
             0
           ],
           "acceptRate": 100,
-          "warning": false
-        },
-        {
-          "name": "김병철",
-          "phone": "010-4494-1615",
-          "userId": "gug224600",
-          "team": "달서팀",
-          "status": "운행 종료",
-          "isOnline": false,
-          "complete": 11,
-          "reject": 2,
-          "cancel": 0,
-          "riderFault": 0,
-          "morning": 6,
-          "afternoon": 0,
-          "evening": 5,
-          "midnight": 0,
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-            3,
-            0,
-            0,
-            0,
-            0,
-            0,
-            4,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "acceptRate": 84.6,
           "warning": false
         },
         {
@@ -7872,6 +7872,50 @@
       "warning": false
     },
     {
+      "name": "김병철",
+      "phone": "010-4494-1615",
+      "userId": "gug224600",
+      "team": "달서팀",
+      "status": "운행중",
+      "isOnline": true,
+      "complete": 11,
+      "reject": 2,
+      "cancel": 0,
+      "riderFault": 0,
+      "morning": 6,
+      "afternoon": 0,
+      "evening": 5,
+      "midnight": 0,
+      "hourly": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "acceptRate": 84.6,
+      "warning": false
+    },
+    {
       "name": "김일환",
       "phone": "010-2501-0064",
       "userId": "midnightrain",
@@ -8012,7 +8056,7 @@
       "isOnline": true,
       "complete": 28,
       "reject": 0,
-      "cancel": 0,
+      "cancel": 1,
       "riderFault": 0,
       "morning": 8,
       "afternoon": 8,
@@ -8044,7 +8088,7 @@
         0,
         0
       ],
-      "acceptRate": 100.0,
+      "acceptRate": 96.6,
       "warning": false
     },
     {
@@ -8846,13 +8890,13 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 9,
+      "complete": 10,
       "reject": 0,
       "cancel": 2,
       "riderFault": 0,
       "morning": 0,
       "afternoon": 0,
-      "evening": 9,
+      "evening": 10,
       "midnight": 0,
       "hourly": [
         0,
@@ -8868,7 +8912,7 @@
         0,
         1,
         6,
-        2,
+        3,
         0,
         0,
         0,
@@ -8880,7 +8924,7 @@
         0,
         0
       ],
-      "acceptRate": 81.8,
+      "acceptRate": 83.3,
       "warning": false
     },
     {
@@ -9629,50 +9673,6 @@
         0
       ],
       "acceptRate": 100,
-      "warning": false
-    },
-    {
-      "name": "김병철",
-      "phone": "010-4494-1615",
-      "userId": "gug224600",
-      "team": "달서팀",
-      "status": "운행 종료",
-      "isOnline": false,
-      "complete": 11,
-      "reject": 2,
-      "cancel": 0,
-      "riderFault": 0,
-      "morning": 6,
-      "afternoon": 0,
-      "evening": 5,
-      "midnight": 0,
-      "hourly": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        3,
-        3,
-        0,
-        0,
-        0,
-        0,
-        0,
-        4,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0
-      ],
-      "acceptRate": 84.6,
       "warning": false
     },
     {
@@ -15313,14 +15313,14 @@
     },
     {
       "businessDate": "2026-05-26",
-      "closedAt": "2026-05-26 19:58:27",
-      "totalComplete": 878,
+      "closedAt": "2026-05-26 19:59:36",
+      "totalComplete": 879,
       "totalReject": 93,
-      "totalCancel": 29,
+      "totalCancel": 30,
       "riderFault": 0,
       "morning": 270,
       "afternoon": 229,
-      "evening": 379,
+      "evening": 380,
       "midnight": 0,
       "periodTargets": {
         "morning": 168,
@@ -15328,24 +15328,24 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 87.8,
-      "spareRejects": 97
+      "acceptRate": 87.7,
+      "spareRejects": 96
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-20",
     "endDate": "2026-05-26",
-    "complete": 9175,
+    "complete": 9176,
     "reject": 1442,
-    "cancel": 439,
+    "cancel": 440,
     "riderFault": 4,
-    "badTotal": 1885,
+    "badTotal": 1886,
     "acceptRate": 83.0,
     "spareRejects": 408,
     "periodTotals": {
       "morning": 2552,
       "afternoon": 1804,
-      "evening": 2801,
+      "evening": 2802,
       "midnight": 2018
     },
     "periodTargets": {
@@ -15616,13 +15616,13 @@
       {
         "label": "화",
         "businessDate": "2026-05-26",
-        "complete": 878,
+        "complete": 879,
         "reject": 93,
-        "cancel": 29,
+        "cancel": 30,
         "riderFault": 0,
-        "badTotal": 122,
-        "acceptRate": 87.8,
-        "spareRejects": 97,
+        "badTotal": 123,
+        "acceptRate": 87.7,
+        "spareRejects": 96,
         "periods": [
           {
             "key": "morning",
@@ -15641,7 +15641,7 @@
           {
             "key": "evening",
             "label": "저녁피크",
-            "done": 379,
+            "done": 380,
             "goal": 240,
             "failed": false
           },
@@ -15653,7 +15653,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-26 19:58:27",
+        "closedAt": "2026-05-26 19:59:36",
         "hasData": true
       }
     ]
