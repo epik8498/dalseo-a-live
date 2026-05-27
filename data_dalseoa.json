@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-27 09:25:21",
+  "updatedAt": "2026-05-27 09:28:46",
   "businessDate": "2026-05-27",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 17,
-    "reject": 4,
+    "reject": 6,
     "cancel": 0,
     "riderFault": 0,
     "morning": 17,
@@ -25,8 +25,8 @@
     "midnight": 0,
     "count": 173,
     "onlineCount": 9,
-    "acceptRate": 81.0,
-    "spareRejects": 0
+    "acceptRate": 73.9,
+    "spareRejects": -2
   },
   "teams": {
     "소닉팀": {
@@ -6218,7 +6218,7 @@
     "달서팀": {
       "summary": {
         "complete": 2,
-        "reject": 3,
+        "reject": 5,
         "cancel": 0,
         "riderFault": 0,
         "morning": 2,
@@ -6227,8 +6227,8 @@
         "midnight": 0,
         "count": 33,
         "onlineCount": 2,
-        "acceptRate": 40.0,
-        "spareRejects": -3
+        "acceptRate": 28.6,
+        "spareRejects": -5
       },
       "targets": {
         "morning": 21,
@@ -6247,7 +6247,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 2,
-          "reject": 2,
+          "reject": 3,
           "cancel": 0,
           "riderFault": 0,
           "morning": 2,
@@ -6280,7 +6280,7 @@
             0,
             0
           ],
-          "acceptRate": 50.0,
+          "acceptRate": 40.0,
           "warning": true
         },
         {
@@ -6291,7 +6291,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 0,
+          "reject": 1,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -6324,8 +6324,8 @@
             0,
             0
           ],
-          "acceptRate": 100,
-          "warning": false
+          "acceptRate": 0.0,
+          "warning": true
         },
         {
           "name": "김기헌",
@@ -7791,7 +7791,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 2,
-      "reject": 2,
+      "reject": 3,
       "cancel": 0,
       "riderFault": 0,
       "morning": 2,
@@ -7824,7 +7824,7 @@
         0,
         0
       ],
-      "acceptRate": 50.0,
+      "acceptRate": 40.0,
       "warning": true
     },
     {
@@ -7923,7 +7923,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 0,
+      "reject": 1,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -7956,8 +7956,8 @@
         0,
         0
       ],
-      "acceptRate": 100,
-      "warning": false
+      "acceptRate": 0.0,
+      "warning": true
     },
     {
       "name": "조준범",
@@ -15421,9 +15421,9 @@
     },
     {
       "businessDate": "2026-05-27",
-      "closedAt": "2026-05-27 09:25:21",
+      "closedAt": "2026-05-27 09:28:46",
       "totalComplete": 17,
-      "totalReject": 4,
+      "totalReject": 6,
       "totalCancel": 0,
       "riderFault": 0,
       "morning": 17,
@@ -15436,20 +15436,20 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 81.0,
-      "spareRejects": 0
+      "acceptRate": 73.9,
+      "spareRejects": -2
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-27",
     "endDate": "2026-06-02",
     "complete": 17,
-    "reject": 4,
+    "reject": 6,
     "cancel": 0,
     "riderFault": 0,
-    "badTotal": 4,
-    "acceptRate": 81.0,
-    "spareRejects": 0,
+    "badTotal": 6,
+    "acceptRate": 73.9,
+    "spareRejects": -2,
     "periodTotals": {
       "morning": 17,
       "afternoon": 0,
@@ -15467,12 +15467,12 @@
         "label": "수",
         "businessDate": "2026-05-27",
         "complete": 17,
-        "reject": 4,
+        "reject": 6,
         "cancel": 0,
         "riderFault": 0,
-        "badTotal": 4,
-        "acceptRate": 81.0,
-        "spareRejects": 0,
+        "badTotal": 6,
+        "acceptRate": 73.9,
+        "spareRejects": -2,
         "periods": [
           {
             "key": "morning",
@@ -15503,7 +15503,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-27 09:25:21",
+        "closedAt": "2026-05-27 09:28:46",
         "hasData": true
       },
       {
