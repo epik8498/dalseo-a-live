@@ -8,6 +8,7 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 from playwright.sync_api import sync_playwright
+from firebase_uploader import upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
@@ -615,6 +616,14 @@ def make_data(riders):
 def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+    try:
+        upload_json("data_dalseoa.json", "/live/dalseoa")
+        upload_json("weekly_dalseoa.json", "/weekly/dalseoa")
+        print("Firebase 업로드 완료")
+    except Exception as e:
+        print("Firebase 업로드 실패")
+        print(e)
 
 
 def save_html():
