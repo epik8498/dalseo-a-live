@@ -9,39 +9,39 @@
     "소닉팀",
     "넘버팀"
   ],
-  "updatedAt": "2026-05-27 11:42:29",
+  "updatedAt": "2026-05-27 11:44:39",
   "businessDate": "2026-05-27",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
-    "complete": 44,
-    "reject": 2,
+    "complete": 46,
+    "reject": 3,
     "cancel": 2,
     "riderFault": 0,
-    "morning": 44,
+    "morning": 46,
     "afternoon": 0,
     "evening": 0,
     "midnight": 0,
     "count": 73,
     "onlineCount": 12,
-    "acceptRate": 91.7,
-    "spareRejects": 7
+    "acceptRate": 90.2,
+    "spareRejects": 6
   },
   "teams": {
     "소닉팀": {
       "summary": {
-        "complete": 39,
-        "reject": 2,
+        "complete": 40,
+        "reject": 3,
         "cancel": 2,
         "riderFault": 0,
-        "morning": 39,
+        "morning": 40,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
         "count": 49,
         "onlineCount": 9,
-        "acceptRate": 90.7,
+        "acceptRate": 88.9,
         "spareRejects": 5
       },
       "targets": {
@@ -236,11 +236,11 @@
           "team": "소닉팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 3,
+          "complete": 4,
           "reject": 1,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 3,
+          "morning": 4,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -250,7 +250,7 @@
             0,
             0,
             3,
-            0,
+            1,
             0,
             0,
             0,
@@ -270,8 +270,8 @@
             0,
             0
           ],
-          "acceptRate": 75.0,
-          "warning": true
+          "acceptRate": 80.0,
+          "warning": false
         },
         {
           "name": "윤영훈",
@@ -369,7 +369,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 1,
-          "reject": 0,
+          "reject": 1,
           "cancel": 1,
           "riderFault": 0,
           "morning": 1,
@@ -402,7 +402,7 @@
             0,
             0
           ],
-          "acceptRate": 50.0,
+          "acceptRate": 33.3,
           "warning": true
         },
         {
@@ -2213,11 +2213,11 @@
     },
     "넘버팀": {
       "summary": {
-        "complete": 5,
+        "complete": 6,
         "reject": 0,
         "cancel": 0,
         "riderFault": 0,
-        "morning": 5,
+        "morning": 6,
         "afternoon": 0,
         "evening": 0,
         "midnight": 0,
@@ -2286,11 +2286,11 @@
           "team": "넘버팀",
           "status": "운행중",
           "isOnline": true,
-          "complete": 4,
+          "complete": 5,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
-          "morning": 4,
+          "morning": 5,
           "afternoon": 0,
           "evening": 0,
           "midnight": 0,
@@ -2300,7 +2300,7 @@
             0,
             0,
             2,
-            2,
+            3,
             0,
             0,
             0,
@@ -3522,11 +3522,11 @@
       "team": "소닉팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 3,
+      "complete": 4,
       "reject": 1,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 3,
+      "morning": 4,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3536,7 +3536,7 @@
         0,
         0,
         3,
-        0,
+        1,
         0,
         0,
         0,
@@ -3556,8 +3556,8 @@
         0,
         0
       ],
-      "acceptRate": 75.0,
-      "warning": true
+      "acceptRate": 80.0,
+      "warning": false
     },
     {
       "name": "윤영훈",
@@ -3654,11 +3654,11 @@
       "team": "넘버팀",
       "status": "운행중",
       "isOnline": true,
-      "complete": 4,
+      "complete": 5,
       "reject": 0,
       "cancel": 0,
       "riderFault": 0,
-      "morning": 4,
+      "morning": 5,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -3668,7 +3668,7 @@
         0,
         0,
         2,
-        2,
+        3,
         0,
         0,
         0,
@@ -3699,7 +3699,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 1,
-      "reject": 0,
+      "reject": 1,
       "cancel": 1,
       "riderFault": 0,
       "morning": 1,
@@ -3732,7 +3732,7 @@
         0,
         0
       ],
-      "acceptRate": 50.0,
+      "acceptRate": 33.3,
       "warning": true
     },
     {
@@ -6621,12 +6621,12 @@
     },
     {
       "businessDate": "2026-05-27",
-      "closedAt": "2026-05-27 11:42:29",
-      "totalComplete": 44,
-      "totalReject": 2,
+      "closedAt": "2026-05-27 11:44:39",
+      "totalComplete": 46,
+      "totalReject": 3,
       "totalCancel": 2,
       "riderFault": 0,
-      "morning": 44,
+      "morning": 46,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0,
@@ -6636,22 +6636,22 @@
         "evening": 150,
         "midnight": 145
       },
-      "acceptRate": 91.7,
-      "spareRejects": 7
+      "acceptRate": 90.2,
+      "spareRejects": 6
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-27",
     "endDate": "2026-06-02",
-    "complete": 44,
-    "reject": 2,
+    "complete": 46,
+    "reject": 3,
     "cancel": 2,
     "riderFault": 0,
-    "badTotal": 4,
-    "acceptRate": 91.7,
-    "spareRejects": 7,
+    "badTotal": 5,
+    "acceptRate": 90.2,
+    "spareRejects": 6,
     "periodTotals": {
-      "morning": 44,
+      "morning": 46,
       "afternoon": 0,
       "evening": 0,
       "midnight": 0
@@ -6666,18 +6666,18 @@
       {
         "label": "수",
         "businessDate": "2026-05-27",
-        "complete": 44,
-        "reject": 2,
+        "complete": 46,
+        "reject": 3,
         "cancel": 2,
         "riderFault": 0,
-        "badTotal": 4,
-        "acceptRate": 91.7,
-        "spareRejects": 7,
+        "badTotal": 5,
+        "acceptRate": 90.2,
+        "spareRejects": 6,
         "periods": [
           {
             "key": "morning",
             "label": "오전피크",
-            "done": 44,
+            "done": 46,
             "goal": 105,
             "failed": true
           },
@@ -6703,7 +6703,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-27 11:42:29",
+        "closedAt": "2026-05-27 11:44:39",
         "hasData": true
       },
       {
