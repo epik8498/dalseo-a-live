@@ -9,14 +9,14 @@
     "소닉팀",
     "달서팀"
   ],
-  "updatedAt": "2026-05-27 09:34:29",
+  "updatedAt": "2026-05-27 09:37:54",
   "businessDate": "2026-05-27",
   "currentPeriod": "morning",
   "currentPeriodLabel": "오전피크",
   "targetAcceptRate": 80,
   "total": {
     "complete": 18,
-    "reject": 7,
+    "reject": 8,
     "cancel": 0,
     "riderFault": 0,
     "morning": 18,
@@ -25,8 +25,8 @@
     "midnight": 0,
     "count": 173,
     "onlineCount": 9,
-    "acceptRate": 72.0,
-    "spareRejects": -3
+    "acceptRate": 69.2,
+    "spareRejects": -4
   },
   "teams": {
     "소닉팀": {
@@ -6218,7 +6218,7 @@
     "달서팀": {
       "summary": {
         "complete": 3,
-        "reject": 6,
+        "reject": 7,
         "cancel": 0,
         "riderFault": 0,
         "morning": 3,
@@ -6227,8 +6227,8 @@
         "midnight": 0,
         "count": 33,
         "onlineCount": 2,
-        "acceptRate": 33.3,
-        "spareRejects": -6
+        "acceptRate": 30.0,
+        "spareRejects": -7
       },
       "targets": {
         "morning": 21,
@@ -6291,7 +6291,7 @@
           "status": "운행중",
           "isOnline": true,
           "complete": 0,
-          "reject": 1,
+          "reject": 2,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
@@ -7923,7 +7923,7 @@
       "status": "운행중",
       "isOnline": true,
       "complete": 0,
-      "reject": 1,
+      "reject": 2,
       "cancel": 0,
       "riderFault": 0,
       "morning": 0,
@@ -15421,9 +15421,9 @@
     },
     {
       "businessDate": "2026-05-27",
-      "closedAt": "2026-05-27 09:34:29",
+      "closedAt": "2026-05-27 09:37:54",
       "totalComplete": 18,
-      "totalReject": 7,
+      "totalReject": 8,
       "totalCancel": 0,
       "riderFault": 0,
       "morning": 18,
@@ -15436,20 +15436,20 @@
         "evening": 240,
         "midnight": 232
       },
-      "acceptRate": 72.0,
-      "spareRejects": -3
+      "acceptRate": 69.2,
+      "spareRejects": -4
     }
   ],
   "weeklySummary": {
     "startDate": "2026-05-27",
     "endDate": "2026-06-02",
     "complete": 18,
-    "reject": 7,
+    "reject": 8,
     "cancel": 0,
     "riderFault": 0,
-    "badTotal": 7,
-    "acceptRate": 72.0,
-    "spareRejects": -3,
+    "badTotal": 8,
+    "acceptRate": 69.2,
+    "spareRejects": -4,
     "periodTotals": {
       "morning": 18,
       "afternoon": 0,
@@ -15467,12 +15467,12 @@
         "label": "수",
         "businessDate": "2026-05-27",
         "complete": 18,
-        "reject": 7,
+        "reject": 8,
         "cancel": 0,
         "riderFault": 0,
-        "badTotal": 7,
-        "acceptRate": 72.0,
-        "spareRejects": -3,
+        "badTotal": 8,
+        "acceptRate": 69.2,
+        "spareRejects": -4,
         "periods": [
           {
             "key": "morning",
@@ -15503,7 +15503,7 @@
             "failed": true
           }
         ],
-        "closedAt": "2026-05-27 09:34:29",
+        "closedAt": "2026-05-27 09:37:54",
         "hasData": true
       },
       {
