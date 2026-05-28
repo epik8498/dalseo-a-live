@@ -80,9 +80,9 @@ const AREAS={
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 let DATA=null,WEEKLY=[],CURRENT='달서A',FILTER='달서팀';
 function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}
-function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT='달서A';FILTER='달서팀';loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
+function toggleAreaMenu(){}function selectArea(area){CURRENT='달서A';FILTER='달서팀';loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
-function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
+function renderAreaMenu(){}
 async function fetchJson(path){
   const url=FIREBASE_BASE+path+".json?v="+Date.now();
   const r=await fetch(url,{cache:'no-store'});
