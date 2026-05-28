@@ -66,6 +66,16 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
   <div class="riders" id="riderGrid"></div><div class="footer" id="footerTime">마지막 업데이트 : -</div>
 </div>
 <script>
+const PAGE_PASSWORD = "2541";
+
+if (sessionStorage.getItem("page_ok") !== "yes") {
+  const input = prompt("비밀번호를 입력하세요");
+  if (input !== PAGE_PASSWORD) {
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:80px'>접근이 제한되었습니다.</h2>";
+    throw new Error("password blocked");
+  }
+  sessionStorage.setItem("page_ok", "yes");
+}
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
   "마음 달서A":{
