@@ -181,16 +181,17 @@ async function saveTeamMap(){
 
     const result=await res.json();
 
-    if(result.ok){
-      alert('팀 변경 저장 완료');
-    }else{
+   if(result.ok){
+  alert('팀 변경 저장 완료. 다음 수집 후 반영됩니다.');
+  loadData();
+}else{
       alert('저장 실패: '+result.error);
     }
   }catch(e){
     alert('저장 오류: '+e.message);
   }
 }
-loadData();setInterval(loadData,120000);
+loadData();setInterval(loadData,30000);
 </script>
 </body>
 </html>
