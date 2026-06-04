@@ -93,7 +93,13 @@ function togglePanel(id,btnId){const p=document.getElementById(id),b=document.ge
 function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
 async function fetchJson(path){
   const url=FIREBASE_BASE+path+".json?v="+Date.now();
-  const r=await fetch(url,{cache:'no-store'});
+  const r=await fetch(url,{
+  cache:'no-store',
+  headers:{
+    'Cache-Control':'no-cache',
+    'Pragma':'no-cache'
+  }
+});
   if(!r.ok)throw new Error(path);
   const data=await r.json();
   if(data===null||data===undefined)throw new Error(path+" empty");
