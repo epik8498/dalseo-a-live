@@ -156,16 +156,21 @@ function setManageFilter(team){
 async function saveTeamMap(){
   const selects=document.querySelectorAll('#manageList select');
 
-  const currentMap={};
+  const teamMap={};
+
+  // 현재 DATA.riders 전체를 기본값으로 먼저 저장
   (DATA.riders||[]).forEach(r=>{
-    currentMap[r.name]=r.team;
+    if(r.name && r.team){
+      teamMap[r.name]=r.team;
+    }
   });
 
+  // 화면에서 변경한 드롭다운 값으로 덮어쓰기
   selects.forEach(sel=>{
     const name=sel.getAttribute('data-rider-name');
     const team=sel.value;
     if(name && team){
-      currentMap[name]=team;
+      teamMap[name]=team;
     }
   });
 
@@ -175,23 +180,22 @@ async function saveTeamMap(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         area:'dalseoa',
-        teamMap:currentMap
+        teamMap:teamMap
       })
     });
 
     const result=await res.json();
 
-   if(result.ok){
-  alert('팀 변경 저장 완료. 다음 수집 후 반영됩니다.');
-  loadData();
-}else{
+    if(result.ok){
+      alert('팀 변경 저장 완료');
+      loadData();
+    }else{
       alert('저장 실패: '+result.error);
     }
   }catch(e){
     alert('저장 오류: '+e.message);
   }
-}
-loadData();setInterval(loadData,30000);
+}loadData();setInterval(loadData,30000);
 </script>
 </body>
 </html>
