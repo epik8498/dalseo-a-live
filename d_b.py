@@ -29,7 +29,8 @@ SONIC_TEAM_RIDERS = [
     '이정민', '이재상', '이재관', '윤철훈', '유영멸',
     '엄정철', '심재득', '신진학', '배준호', '박정민',
     '김주동', '김재현', '김상엽', '김동규', '권휘재',
-    '최지용', '김종차', '이상엽',
+    '최지용', '김종찬', '이상엽', '노우현', '박성우',
+    '배재현', '신정훈', '최현준', '이부관', 
 ]
 
 NUMBER_TEAM_RIDERS = [
@@ -42,11 +43,11 @@ NUMBER_TEAM_RIDERS = [
     '김태하', '김종희', '김용운', '김영천', '김명수',
     '김명한', '김동국', '권오현', '황홍섭', '강지은',
     '최윤호', '신명섭', '윤민석', '김애선', '이대겸',
-    '김대운', '이헌재', '김병수', '이재헌', 
+    '김대운', '이헌재', '김병수', '이재헌', '한창목',
 ]
 
 MAEUM_TEAM_RIDERS = [
-    '박성우', '임용우', '김강호', '김영우', '강지우',
+    '임용우', '김강호', '김영우', '강지우',
     '이승훈', '박성림', '이영민', '손성곤', '구상훈',
     '박한울', '신가희', '박연호', '김형택', '김낙훈',
     '권영남', '이진복', '김석원', '길태빈', '김창범',
@@ -55,7 +56,7 @@ MAEUM_TEAM_RIDERS = [
     '임지훈', '장민서', '임종현', '윤동근', '도수현',
     '김동현', '정동진', '정동수', '전한', '전하경',
     '전승욱', '전대명', '장예환', '장대웅', '임재백',
-    '이진욱', '이진승', '최현준', '이승준', '이경태',
+    '이진욱', '이진승', '이승준', '이경태', '전현',
     '최현주', '안호식', '신원순', '서봉용', '박호일',
     '도인환', '노지훈', '김현진', '김지성', '김재훈',
     '황유경', '김성현', '김서현', '문영신', '곽봉수',
@@ -67,15 +68,14 @@ MAEUM_TEAM_RIDERS = [
     '피우정', '백창열', '하태수', '명재규', '한희숙',
     '김동욱', '김도형', '김대환', '김임식', '명제규',
     '박성립', '신정학', '신원준', '임종헌', '전승옥',
-    '전현',
 ]
 
 TEAM_ORDER = ["소닉팀", "넘버팀", "마음팀"]
 
 AREA_CONFIG = {
     "달서B": {
-        "소닉팀": 2,
-        "넘버팀": 5.5,
+        "소닉팀": 2.5,
+        "넘버팀": 5,
         "마음팀": 5.5,
     }
 }
@@ -92,6 +92,7 @@ DAY_TARGETS = {
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
+    "2026-06-03": 6,
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
@@ -529,17 +530,11 @@ def weekly_summary(weekly_rows, now):
 
 
 def save_weekly_if_close(data):
-    """
-    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
-    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
-    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    period_targets = {
-        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
-        for p in PERIODS
-    }
+    target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
+    period_targets = target_total_by_period_for_date(target_date)
 
     row = {
         "businessDate": today_key,
@@ -557,23 +552,31 @@ def save_weekly_if_close(data):
         "spareRejects": data["total"]["spareRejects"],
     }
 
+    def same_stats(a, b):
+        return (
+            to_int(a.get("totalComplete", 0)) == to_int(b.get("totalComplete", 0)) and
+            to_int(a.get("totalReject", 0)) == to_int(b.get("totalReject", 0)) and
+            to_int(a.get("totalCancel", 0)) == to_int(b.get("totalCancel", 0)) and
+            to_int(a.get("riderFault", 0)) == to_int(b.get("riderFault", 0)) and
+            to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
+            to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
+            to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
+            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0))
+        )
+
     found = False
 
-    for i, x in enumerate(weekly):
-        if x.get("businessDate") == today_key:
-            old_complete = to_int(x.get("totalComplete", 0))
-            old_reject = to_int(x.get("totalReject", 0))
-            old_cancel = to_int(x.get("totalCancel", 0))
-            old_total = old_complete + old_reject + old_cancel
-            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
-
-            if new_total >= old_total:
-                weekly[i] = row
+    for i, old in enumerate(weekly):
+        if old.get("businessDate") == today_key:
+            weekly[i] = row
             found = True
             break
 
     if not found:
-        weekly.append(row)
+        if weekly and same_stats(weekly[-1], row):
+            print("전날 데이터와 동일해서 weekly 새 날짜 저장 건너뜀")
+        else:
+            weekly.append(row)
 
     weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 
@@ -618,8 +621,8 @@ def save_json(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     try:
-        upload_json("data_dalseoa.json", "/live/dalseoa")
-        upload_json("weekly_dalseoa.json", "/weekly/dalseoa")
+        upload_json("data_dalseob.json", "/live/dalseob")
+        upload_json("weekly_dalseob.json", "/weekly/dalseob")
         print("Firebase 업로드 완료")
     except Exception as e:
         print("Firebase 업로드 실패")

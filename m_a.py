@@ -26,17 +26,17 @@ MAEUM3_TEAM_RIDERS = [
     "김리현", "김민웅", "김원제", "김익한", "김재준",
     "남현우", "문재훈", "박명규", "박정현", "성동훈",
     "오세원", "윤종홍", "이우훈", "이정석", "이정호",
-    "전재욱", "정은경", "정장훈", "정재균", "최민경",
-    "최영섭", "최종광", "최홍석", "추진태", "함영국",
-    "현승희",
+    "전재욱", "정은경", "정장훈", "정재균", "최영섭",
+    "최종광", "최홍석", "추진태", "함영국", "현승희",
+    "전재옥", "김래현", "김제헌", "이낙철",
 ]
 
 TEAM_ORDER = ["마음1", "마음3"]
 
 AREA_CONFIG = {
     "마음 달서A": {
-        "마음1": 8.5,
-        "마음3": 2.5,
+        "마음1": 7,
+        "마음3": 3,
     }
 }
 
@@ -52,6 +52,7 @@ DAY_TARGETS = {
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
+    "2026-06-03": 6,
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
@@ -486,17 +487,11 @@ def weekly_summary(weekly_rows, now):
 
 
 def save_weekly_if_close(data):
-    """
-    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
-    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
-    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    period_targets = {
-        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
-        for p in PERIODS
-    }
+    target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
+    period_targets = target_total_by_period_for_date(target_date)
 
     row = {
         "businessDate": today_key,
@@ -514,23 +509,31 @@ def save_weekly_if_close(data):
         "spareRejects": data["total"]["spareRejects"],
     }
 
+    def same_stats(a, b):
+        return (
+            to_int(a.get("totalComplete", 0)) == to_int(b.get("totalComplete", 0)) and
+            to_int(a.get("totalReject", 0)) == to_int(b.get("totalReject", 0)) and
+            to_int(a.get("totalCancel", 0)) == to_int(b.get("totalCancel", 0)) and
+            to_int(a.get("riderFault", 0)) == to_int(b.get("riderFault", 0)) and
+            to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
+            to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
+            to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
+            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0))
+        )
+
     found = False
 
-    for i, x in enumerate(weekly):
-        if x.get("businessDate") == today_key:
-            old_complete = to_int(x.get("totalComplete", 0))
-            old_reject = to_int(x.get("totalReject", 0))
-            old_cancel = to_int(x.get("totalCancel", 0))
-            old_total = old_complete + old_reject + old_cancel
-            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
-
-            if new_total >= old_total:
-                weekly[i] = row
+    for i, old in enumerate(weekly):
+        if old.get("businessDate") == today_key:
+            weekly[i] = row
             found = True
             break
 
     if not found:
-        weekly.append(row)
+        if weekly and same_stats(weekly[-1], row):
+            print("전날 데이터와 동일해서 weekly 새 날짜 저장 건너뜀")
+        else:
+            weekly.append(row)
 
     weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 

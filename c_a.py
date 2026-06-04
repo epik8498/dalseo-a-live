@@ -51,6 +51,7 @@ DAY_TARGETS = {
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,  # 대체공휴일: 일요일 물량 적용
+    "2026-06-03": 6,  # 대체공휴일: 일요일 물량 적용
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
@@ -484,17 +485,11 @@ def weekly_summary(weekly_rows, now):
 
 
 def save_weekly_if_close(data):
-    """
-    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
-    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
-    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    period_targets = {
-        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
-        for p in PERIODS
-    }
+    target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
+    period_targets = target_total_by_period_for_date(target_date)
 
     row = {
         "businessDate": today_key,
@@ -512,23 +507,31 @@ def save_weekly_if_close(data):
         "spareRejects": data["total"]["spareRejects"],
     }
 
+    def same_stats(a, b):
+        return (
+            to_int(a.get("totalComplete", 0)) == to_int(b.get("totalComplete", 0)) and
+            to_int(a.get("totalReject", 0)) == to_int(b.get("totalReject", 0)) and
+            to_int(a.get("totalCancel", 0)) == to_int(b.get("totalCancel", 0)) and
+            to_int(a.get("riderFault", 0)) == to_int(b.get("riderFault", 0)) and
+            to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
+            to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
+            to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
+            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0))
+        )
+
     found = False
 
-    for i, x in enumerate(weekly):
-        if x.get("businessDate") == today_key:
-            old_complete = to_int(x.get("totalComplete", 0))
-            old_reject = to_int(x.get("totalReject", 0))
-            old_cancel = to_int(x.get("totalCancel", 0))
-            old_total = old_complete + old_reject + old_cancel
-            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
-
-            if new_total >= old_total:
-                weekly[i] = row
+    for i, old in enumerate(weekly):
+        if old.get("businessDate") == today_key:
+            weekly[i] = row
             found = True
             break
 
     if not found:
-        weekly.append(row)
+        if weekly and same_stats(weekly[-1], row):
+            print("전날 데이터와 동일해서 weekly 새 날짜 저장 건너뜀")
+        else:
+            weekly.append(row)
 
     weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 
@@ -574,8 +577,8 @@ def save_json(data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     try:
-        upload_json("data_dalseoa.json", "/live/dalseoa")
-        upload_json("weekly_dalseoa.json", "/weekly/dalseoa")
+        upload_json("data_junggua.json", "/live/junggua")
+        upload_json("weekly_junggua.json", "/weekly/junggua")
         print("Firebase 업로드 완료")
     except Exception as e:
         print("Firebase 업로드 실패")

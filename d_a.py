@@ -6,6 +6,8 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+from firebase_admin import db
+from firebase_uploader import init_firebase
 
 from playwright.sync_api import sync_playwright
 from firebase_uploader import upload_json
@@ -31,7 +33,7 @@ DALSEO_TEAM_RIDERS = [
     '신진관', '임선미', '여재환', '정주현', '김기현',
     '김범준', '이윤석', '양혜진', '김민우', '김혜성',
     '김기헌', '조대영', '정승덕', '임상완', '김우진',
-    "신민규",
+    '신민규', '김진현', '김재석', '서청만',
 ]
 
 TEAM_ORDER = ["소닉팀", "달서팀"]
@@ -55,6 +57,7 @@ DAY_TARGETS = {
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
+    "2026-06-03": 6,
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
@@ -110,8 +113,24 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
     return max_bad_total - bad_total
 
 
+TEAM_MAP_CACHE = None
+
 def team_of(name):
-    return "달서팀" if name in DALSEO_TEAM_RIDERS else "소닉팀"
+    global TEAM_MAP_CACHE
+
+    if TEAM_MAP_CACHE is None:
+        try:
+            init_firebase()
+            TEAM_MAP_CACHE = (
+                db.reference("/settings/dalseoa/teamMap").get()
+                or {}
+            )
+            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+        except Exception as e:
+            print("teamMap 로드 실패:", e)
+            TEAM_MAP_CACHE = {}
+
+    return TEAM_MAP_CACHE.get(name, "소닉팀")
 
 
 def to_int(value):
@@ -489,17 +508,11 @@ def weekly_summary(weekly_rows, now):
 
 
 def save_weekly_if_close(data):
-    """
-    매 수집마다 영업일별 최고 누적값을 weekly 파일에 저장합니다.
-    배민비즈가 초기화되거나 수집 오류로 값이 낮아지는 경우 기존 기록을 보호합니다.
-    """
     weekly = load_weekly()
     today_key = data["businessDate"]
 
-    period_targets = {
-        p: sum(data["teams"][team]["targets"].get(p, 0) for team in TEAM_ORDER)
-        for p in PERIODS
-    }
+    target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
+    period_targets = target_total_by_period_for_date(target_date)
 
     row = {
         "businessDate": today_key,
@@ -517,23 +530,31 @@ def save_weekly_if_close(data):
         "spareRejects": data["total"]["spareRejects"],
     }
 
+    def same_stats(a, b):
+        return (
+            to_int(a.get("totalComplete", 0)) == to_int(b.get("totalComplete", 0)) and
+            to_int(a.get("totalReject", 0)) == to_int(b.get("totalReject", 0)) and
+            to_int(a.get("totalCancel", 0)) == to_int(b.get("totalCancel", 0)) and
+            to_int(a.get("riderFault", 0)) == to_int(b.get("riderFault", 0)) and
+            to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
+            to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
+            to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
+            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0))
+        )
+
     found = False
 
-    for i, x in enumerate(weekly):
-        if x.get("businessDate") == today_key:
-            old_complete = to_int(x.get("totalComplete", 0))
-            old_reject = to_int(x.get("totalReject", 0))
-            old_cancel = to_int(x.get("totalCancel", 0))
-            old_total = old_complete + old_reject + old_cancel
-            new_total = row["totalComplete"] + row["totalReject"] + row["totalCancel"]
-
-            if new_total >= old_total:
-                weekly[i] = row
+    for i, old in enumerate(weekly):
+        if old.get("businessDate") == today_key:
+            weekly[i] = row
             found = True
             break
 
     if not found:
-        weekly.append(row)
+        if weekly and same_stats(weekly[-1], row):
+            print("전날 데이터와 동일해서 weekly 새 날짜 저장 건너뜀")
+        else:
+            weekly.append(row)
 
     weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
 
