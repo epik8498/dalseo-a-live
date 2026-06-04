@@ -127,11 +127,12 @@ function renderManageList(){
   }
 
   document.getElementById('manageList').innerHTML=`
-   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-  ${['전체', ...teams].map(t=>`
-    <button class="move" onclick="setManageFilter('${t}')">${t}</button>
-  `).join('')}
-</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="move" onclick="setManageFilter('전체')">전체</button>
+      ${teams.map(t=>`
+        <button class="move" onclick="setManageFilter('${t}')">${t}</button>
+      `).join('')}
+    </div>
 
     <button class="toggle-btn" onclick="saveTeamMap()">팀 변경 저장</button>
 
@@ -147,7 +148,6 @@ function renderManageList(){
     `).join('')}
   `;
 }
-
 function setManageFilter(team){
   window.manageFilter=team;
   renderManageList();
