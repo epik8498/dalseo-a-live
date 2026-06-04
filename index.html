@@ -127,11 +127,11 @@ function renderManageList(){
   }
 
   document.getElementById('manageList').innerHTML=`
-    <div style="display:flex;gap:8px;margin-bottom:12px">
-      <button class="move" onclick="setManageFilter('전체')">전체</button>
-      <button class="move" onclick="setManageFilter('소닉팀')">소닉팀</button>
-      <button class="move" onclick="setManageFilter('달서팀')">달서팀</button>
-    </div>
+   <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+  ${['전체', ...teams].map(t=>`
+    <button class="move" onclick="setManageFilter('${t}')">${t}</button>
+  `).join('')}
+</div>
 
     <button class="toggle-btn" onclick="saveTeamMap()">팀 변경 저장</button>
 
