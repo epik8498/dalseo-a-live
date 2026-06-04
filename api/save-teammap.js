@@ -11,11 +11,11 @@ if (riders.exists()) {
   const riderList = riders.val();
 
   const updates = {};
-  riderList.forEach((rider, index) => {
-    if (rider && rider.name && teamMap[rider.name]) {
-      updates[`${index}/team`] = teamMap[rider.name];
-    }
-  });
+ Object.entries(riderList).forEach(([index, rider]) => {
+  if (rider && rider.name && teamMap[rider.name]) {
+    updates[`${index}/team`] = teamMap[rider.name];
+  }
+});
 
   if (Object.keys(updates).length > 0) {
     await liveRef.update(updates);
