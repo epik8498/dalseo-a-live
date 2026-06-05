@@ -15,17 +15,16 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { area, teamMap } = req.body;
+    const { area, changes } = req.body;
 
-    if (!area || !teamMap) {
-      return res.status(400).json({ ok: false, error: "area/teamMap missing" });
+    if (!area || !changes) {
+      return res.status(400).json({ ok: false, error: "area/changes missing" });
     }
 
     const database = admin.database();
 
-    await database
-      .ref(`/settings/${area}/teamMap`)
-      .set(teamMap);
+    const settingsRef = database.ref(`/settings/${area}/teamMap`);
+    await settingsRef.update(changes);
 
     const liveRef = database.ref(`/live/${area}/riders`);
     const ridersSnap = await liveRef.get();
@@ -35,8 +34,8 @@ module.exports = async function handler(req, res) {
       const updates = {};
 
       Object.entries(riderList).forEach(([index, rider]) => {
-        if (rider && rider.name && teamMap[rider.name]) {
-          updates[`${index}/team`] = teamMap[rider.name];
+        if (rider && rider.name && changes[rider.name]) {
+          updates[`${index}/team`] = changes[rider.name];
         }
       });
 
