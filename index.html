@@ -81,25 +81,11 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
 <script>
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
-  "달서A":{
-    key:"dalseoa",
-    file:"/live/dalseoa",
-    weekly:"/weekly/dalseoa",
-    ...
-  },
-  "달서B":{
-    key:"dalseob",
-    file:"/live/dalseob",
-    weekly:"/weekly/dalseob",
-    ...
-  },
-  "중구A":{
-    key:"junggua",
-    file:"/live/junggua",
-    weekly:"/weekly/junggua",
-    ...
-  }
-};const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
+  "달서A":{key:"dalseoa",file:"/live/dalseoa",weekly:"/weekly/dalseoa",teams:["소닉팀","달서팀"],labels:{"소닉팀":"소닉","달서팀":"달서"},classes:{"소닉팀":"sonic","달서팀":"dalseo"},missionTeam:null},
+  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀"},
+  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["소닉팀","넘버팀"],labels:{"소닉팀":"소닉","넘버팀":"넘버"},classes:{"소닉팀":"sonic","넘버팀":"number"},missionTeam:"소닉팀"}
+};
+const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 let DATA=null,WEEKLY=[],CURRENT=localStorage.getItem('selectedArea')||'달서A',FILTER='전체';
 function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}
 function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';localStorage.setItem('selectedArea',area);document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
@@ -197,10 +183,13 @@ async function saveTeamMap(){
     }else{
       alert('저장 실패: '+result.error);
     }
-  }catch(e){
+   }catch(e){
     alert('저장 오류: '+e.message);
   }
-}}loadData();setInterval(loadData,30000);
+}
+
+loadData();
+setInterval(loadData,30000);
 </script>
 </body>
 </html>
