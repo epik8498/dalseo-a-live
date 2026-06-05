@@ -185,7 +185,7 @@ async function saveTeamMap(){
   });
 
   try{
-    const res=await fetch('https://dalseo-a-live.vercel.app/api/save-teammap'{
+    const res=await fetch('https://dalseo-a-live.vercel.app/api/save-teammap',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
