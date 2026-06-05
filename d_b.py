@@ -8,7 +8,8 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 from playwright.sync_api import sync_playwright
-from firebase_uploader import upload_json
+from firebase_admin import db
+from firebase_uploader import init_firebase, upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
@@ -142,17 +143,29 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
     bad_total = reject + cancel + rider_fault
     if complete <= 0:
         return 0
-    # 80% 기준: 완료 4건당 실패 1건까지 허용
     max_bad_total = math.floor(complete * 0.25)
     return max_bad_total - bad_total
 
 
+TEAM_MAP_CACHE = None
+
+
 def team_of(name):
-    if name in NUMBER_TEAM_RIDERS:
-        return "넘버팀"
-    if name in MAEUM_TEAM_RIDERS:
-        return "마음팀"
-    return "소닉팀"
+    global TEAM_MAP_CACHE
+
+    if TEAM_MAP_CACHE is None:
+        try:
+            init_firebase()
+            TEAM_MAP_CACHE = (
+                db.reference("/settings/dalseob/teamMap").get()
+                or {}
+            )
+            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+        except Exception as e:
+            print("teamMap 로드 실패:", e)
+            TEAM_MAP_CACHE = {}
+
+    return TEAM_MAP_CACHE.get(name, "소닉팀")
 
 
 def to_int(value):
@@ -692,6 +705,8 @@ def run_update(page):
 
 
 def main():
+    global TEAM_MAP_CACHE
+
     print("SUPERSONIC 달서B DOM 자동 수집기")
 
     with sync_playwright() as p:
@@ -715,6 +730,8 @@ def main():
         input("Enter 대기 중...")
 
         while True:
+            TEAM_MAP_CACHE = None
+
             print("")
             print("===================================")
             print("자동 수집 시작")
