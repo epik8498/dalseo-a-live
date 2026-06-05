@@ -43,6 +43,14 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
   <button class="toggle-btn" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
   <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
 
+<div class="section-title"><span class="icon"></span>기사관리</div>
+<button class="toggle-btn" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
+<div class="panel" id="managePanel">
+  <div class="mission-box">
+    <div id="manageList">기사 목록 로딩중...</div>
+  </div>
+</div>
+
   <div class="section-title"><span class="icon"></span>미션비 집계</div>
   <button class="toggle-btn" onclick="togglePanel('missionPanel','missionToggle')" id="missionToggle">미션비 집계 보기 ▾</button>
   <div class="panel" id="missionPanel">
@@ -80,21 +88,23 @@ if (sessionStorage.getItem("page_ok") !== "yes") {
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
   "마음 달서A":{
-    file:"/live/maeuma",
-    weekly:"/weekly/maeuma",
-    teams:["마음1","마음3"],
-    labels:{"마음1":"마음1","마음3":"마음3"},
-    classes:{"마음1":"sonic","마음3":"maeum"},
-    missionTeam:null
-  },
+     key:"maeuma",
+  file:"/live/maeuma",
+  weekly:"/weekly/maeuma",
+  teams:["마음1","마음3"],
+  labels:{"마음1":"마음1","마음3":"마음3"},
+  classes:{"마음1":"sonic","마음3":"maeum"},
+  missionTeam:null
+},
   "달서B":{
-    file:"/live/dalseob",
-    weekly:"/weekly/dalseob",
-    teams:["소닉팀","넘버팀","마음팀"],
-    labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음"},
-    classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},
-    missionTeam:"소닉팀"
-  }
+    key:"dalseob",
+  file:"/live/dalseob",
+  weekly:"/weekly/dalseob",
+  teams:["소닉팀","넘버팀","마음팀"],
+  labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음"},
+  classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},
+  missionTeam:"소닉팀"
+}
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 let DATA=null,WEEKLY=[],CURRENT=localStorage.getItem('selectedArea_maeum')||'마음 달서A',FILTER='전체';
@@ -116,11 +126,86 @@ async function fetchJson(path){
 async function loadData(){renderAreaMenu();try{DATA=await fetchJson(areaCfg().file);try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}document.getElementById('errorBox').innerHTML='';render()}catch(e){DATA=null;document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 데이터를 읽지 못했습니다.<br>Firebase 업로드와 Realtime Database 상태를 확인하세요.</div>`}}
 function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
 let totals={complete:0,bad:0,spare:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;return{label:labels[i]||'',date:dk,has,complete,bad,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
-function render(){const d=DATA;if(!d)return;const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';document.getElementById('areaText').innerText=d.area||CURRENT;document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;document.getElementById('weekComplete').innerText=n(ws.complete);document.getElementById('weekBad').innerText=n(ws.bad);document.getElementById('weekRate').innerText=ws.rate+'%';document.getElementById('weekSpare').innerText=n(ws.spare);document.getElementById('dayComplete').innerText=n(d.total.complete);document.getElementById('dayOrder').innerText=n(totalOrder);document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';document.getElementById('daySpare').innerText=n(d.total.spareRejects);document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');renderWeekly(ws);renderPeriods();renderFiltersAndRiders();renderMission()}
+function render(){const d=DATA;if(!d)return;const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';document.getElementById('areaText').innerText=d.area||CURRENT;document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;document.getElementById('weekComplete').innerText=n(ws.complete);document.getElementById('weekBad').innerText=n(ws.bad);document.getElementById('weekRate').innerText=ws.rate+'%';document.getElementById('weekSpare').innerText=n(ws.spare);document.getElementById('dayComplete').innerText=n(d.total.complete);document.getElementById('dayOrder').innerText=n(totalOrder);document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';document.getElementById('daySpare').innerText=n(d.total.spareRejects);document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');renderWeekly(ws);renderPeriods();renderFiltersAndRiders();renderMission();renderManageList()}
 function renderWeekly(ws){let failed=ws.days.filter(x=>x.has&&!x.ok);document.getElementById('weeklyStatus').innerHTML=`<div class="weekly-status"><div class="status-line"><span>주간 미션 결과</span>${failed.length?`<span class="badge fail">실패 ${failed.length}일</span>`:`<span class="badge ok">전체 성공</span>`}</div>${failed.length?`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">실패일: ${failed.map(d=>d.label+'('+d.failPeriods.map(p=>p.label).join('/')+')').join(', ')}</div>`:`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">기록된 모든 날짜가 구간 목표를 달성했습니다.</div>`}</div>`;document.getElementById('weeklyGrid').innerHTML=ws.days.map(day=>`<div class="day-card"><div class="day-head"><div class="day-label">${day.label}</div><div class="day-date">${day.date}</div></div>${day.periods.map(p=>`<div class="period-row ${p.fail?'fail':p.ok?'ok':''}"><div class="pname">${p.label}</div><div class="pval">${n(p.done)} / ${n(p.goal)}</div></div>`).join('')}<div class="day-line"></div><div class="day-total"><b>완료 ${n(day.complete)}</b><br><b>거절합계 ${n(day.bad)}</b><br><b>수락률 ${day.rate}%</b></div><div class="day-result">${!day.has?'<span class="badge wait">기록없음</span>':day.ok?'<span class="badge ok">성공</span>':`<span class="badge fail">실패: ${day.failPeriods.map(p=>p.label).join(', ')}</span>`}</div></div>`).join('')}
 function renderPeriods(){const cfg=areaCfg(),teams=cfg.teams;document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{const totalDone=teams.reduce((s,t)=>s+Number(teamObj(t).summary[key]||0),0),totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0);return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=Number(teamObj(t).summary[key]||0),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`}).join('')}
 function renderFiltersAndRiders(){const cfg=areaCfg(),teams=cfg.teams;document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');let riders=[...(DATA.riders||[])];if(FILTER!=='전체')riders=riders.filter(r=>r.team===FILTER);let sort=document.getElementById('sortSelect').value;if(sort==='name'){riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return a.name.localeCompare(b.name,'ko')})}else{riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return Number(b.complete||0)-Number(a.complete||0)})}document.getElementById('riderGrid').innerHTML=riders.map(r=>`<div class="rider ${r.isOnline?'active':''}"><div class="rider-top"><div class="rider-name"><span class="dot"></span>${r.name}</div><div><span class="status">${r.isOnline?'접속중':'운행종료'}</span>${r.warning?'<span class="warn">80%↓</span>':''}</div></div><div class="stats"><div class="stat"><small>완료</small><b class="red">${n(r.complete)}</b></div><div class="stat"><small>거절/취소</small><b>${n(r.reject)} / ${n(r.cancel)}</b></div><div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div></div><div class="times"><div>오전<b>${n(r.morning)}</b></div><div>오후<b>${n(r.afternoon)}</b></div><div>저녁<b>${n(r.evening)}</b></div><div>심야<b>${n(r.midnight)}</b></div></div></div>`).join('')}
 function renderMission(){if(!DATA)return;const cfg=areaCfg(),period=document.getElementById('missionPeriod').value,need=Number(document.getElementById('missionCount').value||0),price=Number(document.getElementById('missionPrice').value||0);let riders=[...(DATA.riders||[])];if(cfg.missionTeam)riders=riders.filter(r=>r.team===cfg.missionTeam);let success=need>0?riders.filter(r=>Number(r[period]||0)>=need):[];success.sort((a,b)=>Number(b[period]||0)-Number(a[period]||0));document.getElementById('missionTarget').innerText=n(riders.length)+'명';document.getElementById('missionSuccess').innerText=n(success.length)+'명';document.getElementById('missionTotal').innerText=won(success.length*price);document.getElementById('missionList').innerHTML=need>0?success.map(r=>`<div class="mission-rider"><b>${r.name}</b><span>${n(r[period])}건 / ${won(price)}</span></div>`).join(''):`<div style="grid-column:1/-1;color:var(--muted);font-weight:1000;text-align:center;padding:16px">목표 건수를 입력하면 성공기사가 표시됩니다.</div>`}
+function renderManageList(){
+  if(!DATA || !DATA.riders){
+    document.getElementById('manageList').innerHTML='기사 데이터가 없습니다.';
+    return;
+  }
+
+  const teams=areaCfg().teams;
+  let riders=[...DATA.riders];
+
+  if(window.manageFilter && window.manageFilter!=='전체'){
+    riders=riders.filter(r=>r.team===window.manageFilter);
+  }
+
+  document.getElementById('manageList').innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="move" onclick="setManageFilter('전체')">전체</button>
+      ${teams.map(t=>`
+        <button class="move" onclick="setManageFilter('${t}')">${t}</button>
+      `).join('')}
+    </div>
+
+    <button class="toggle-btn" onclick="saveTeamMap()">팀 변경 저장</button>
+
+    ${riders.map(r=>`
+      <div class="mission-rider">
+        <b>${r.name}</b>
+        <select data-rider-name="${r.name}" style="border:1px solid var(--line);border-radius:10px;padding:8px;font-weight:1000">
+          ${teams.map(t=>`
+            <option value="${t}" ${r.team===t?'selected':''}>${t}</option>
+          `).join('')}
+        </select>
+      </div>
+    `).join('')}
+  `;
+}
+
+function setManageFilter(team){
+  window.manageFilter=team;
+  renderManageList();
+}
+
+async function saveTeamMap(){
+  const selects=document.querySelectorAll('#manageList select');
+  const changes={};
+
+  selects.forEach(sel=>{
+    const name=sel.getAttribute('data-rider-name');
+    const team=sel.value;
+    if(name && team){
+      changes[name]=team;
+    }
+  });
+
+  try{
+    const res=await fetch('/api/save-teammap',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        area:areaCfg().key,
+        changes:changes
+      })
+    });
+
+    const result=await res.json();
+
+    if(result.ok){
+      alert('팀 변경 저장 완료');
+      loadData();
+    }else{
+      alert('저장 실패: '+result.error);
+    }
+  }catch(e){
+    alert('저장 오류: '+e.message);
+  }
+}
 loadData();setInterval(loadData,120000);
 </script>
 </body>
