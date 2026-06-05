@@ -155,22 +155,13 @@ function setManageFilter(team){
 
 async function saveTeamMap(){
   const selects=document.querySelectorAll('#manageList select');
+  const changes={};
 
-  const teamMap={};
-
-  // 현재 DATA.riders 전체를 기본값으로 먼저 저장
-  (DATA.riders||[]).forEach(r=>{
-    if(r.name && r.team){
-      teamMap[r.name]=r.team;
-    }
-  });
-
-  // 화면에서 변경한 드롭다운 값으로 덮어쓰기
   selects.forEach(sel=>{
     const name=sel.getAttribute('data-rider-name');
     const team=sel.value;
     if(name && team){
-      teamMap[name]=team;
+      changes[name]=team;
     }
   });
 
@@ -180,7 +171,7 @@ async function saveTeamMap(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         area:'dalseoa',
-        teamMap:teamMap
+        changes:changes
       })
     });
 
