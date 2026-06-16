@@ -17,78 +17,38 @@ MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
 BASE_DIR = Path(__file__).parent
-DATA_FILE = BASE_DIR / "data_dalseob.json"
+DATA_FILE = BASE_DIR / "data_maeuma.json"
 HTML_FILE = BASE_DIR / "index.html"
-WEEKLY_FILE = BASE_DIR / "weekly_dalseob.json"
+WEEKLY_FILE = BASE_DIR / "weekly_maeuma.json"
 
-AREA_NAME = "달서B"
+AREA_NAME = "마음 달서A"
 
-SONIC_TEAM_RIDERS = [
-    '최경민', '윤규범', '신성욱', '박무성', '송득근',
-    '정우혁', '김경섭', '장근영', '조윤환', '조승래',
-    '정기정', '정규태', '장재근', '최지나', '이종필',
-    '이정민', '이재상', '이재관', '윤철훈', '유영멸',
-    '엄정철', '심재득', '신진학', '배준호', '박정민',
-    '김주동', '김재현', '김상엽', '김동규', '권휘재',
-    '최지용', '김종찬', '이상엽', '노우현', '박성우',
-    '배재현', '신정훈', '최현준', '이부관', 
+MAEUM3_TEAM_RIDERS = [
+    "김리현", "김민웅", "김원제", "김익한", "김재준",
+    "남현우", "문재훈", "박명규", "박정현", "성동훈",
+    "오세원", "윤종홍", "이우훈", "이정석", "이정호",
+    "전재욱", "정은경", "정장훈", "정재균", "최영섭",
+    "최종광", "최홍석", "추진태", "함영국", "현승희",
+    "전재옥", "김래현", "김제헌", "이낙철",
 ]
 
-NUMBER_TEAM_RIDERS = [
-    '유호성', '박세창', '강명원', '김수진', '배서후',
-    '김요한', '김정근', '남승호', '이현재', '이윤재',
-    '정수영', '장정석', '최영진', '임현석', '임승범',
-    '이태훈', '이철우', '이재현', '이은성', '이영희',
-    '이선노', '이동석', '우효상', '서강원', '한동훈',
-    '마경민', '노재권', '남윤정', '남동욱', '김현준',
-    '김태하', '김종희', '김용운', '김영천', '김명수',
-    '김명한', '김동국', '권오현', '황홍섭', '강지은',
-    '최윤호', '신명섭', '윤민석', '김애선', '이대겸',
-    '김대운', '이헌재', '김병수', '이재헌', '한창목',
-]
-
-MAEUM_TEAM_RIDERS = [
-    '임용우', '김강호', '김영우', '강지우',
-    '이승훈', '박성림', '이영민', '손성곤', '구상훈',
-    '박한울', '신가희', '박연호', '김형택', '김낙훈',
-    '권영남', '이진복', '김석원', '길태빈', '김창범',
-    '박광용', '성영길', '박원희', '최영우', '이전필',
-    '이재현', '이강현', '김대한', '여세동', '신정하',
-    '임지훈', '장민서', '임종현', '윤동근', '도수현',
-    '김동현', '정동진', '정동수', '전한', '전하경',
-    '전승욱', '전대명', '장예환', '장대웅', '임재백',
-    '이진욱', '이진승', '이승준', '이경태', '전현',
-    '최현주', '안호식', '신원순', '서봉용', '박호일',
-    '도인환', '노지훈', '김현진', '김지성', '김재훈',
-    '황유경', '김성현', '김서현', '문영신', '곽봉수',
-    '장민규', '김효겸', '송인섭', '김종서', '김종호',
-    '남재화', '박남아', '구용태', '한대성', '윤정원',
-    '손지수', '김숙자', '김현숙', '최종현', '김인수',
-    '김일식', '신인호', '구자돈', '차무길', '차성원',
-    '박지홍', '이예준', '위석훈', '피우덕', '소귀숙',
-    '피우정', '백창열', '하태수', '명재규', '한희숙',
-    '김동욱', '김도형', '김대환', '김임식', '명제규',
-    '박성립', '신정학', '신원준', '임종헌', '전승옥',
-]
-
-TEAM_ORDER = ["소닉팀", "넘버팀", "마음팀"]
+TEAM_ORDER = ["마음1", "마음3"]
 
 AREA_CONFIG = {
-    "달서B": {
-        "소닉팀": 2.5,
-        "넘버팀": 5,
-        "마음팀": 5.5,
+    "마음 달서A": {
+        "마음1": 7,
+        "마음3": 3,
     }
 }
 
 DAY_TARGETS = {
-    0: [22, 21, 32, 25],
-    1: [22, 21, 32, 25],
-    2: [22, 21, 32, 25],
-    3: [22, 21, 32, 25],
-    4: [25, 22, 34, 29],
-    5: [31, 23, 38, 28],
-    6: [32, 24, 37, 27],
+    0: [21, 20, 30, 29],
+    1: [21, 20, 30, 29],
+    2: [21, 20, 30, 29],
+    3: [21, 20, 30, 29],
+    4: [24, 21, 32, 33],
+    5: [31, 22, 36, 31],
+    6: [33, 22, 35, 30],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
@@ -103,6 +63,40 @@ PERIOD_LABELS = {
     "evening": "저녁피크",
     "midnight": "심야논피크",
 }
+
+def change_center(page, center_name):
+    print(f"협력사 변경 시도: {center_name}")
+
+    page.goto(
+        "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
+    )
+    page.wait_for_load_state("networkidle")
+    time.sleep(2)
+
+    page.get_by_text("협력사 변경").click()
+    page.wait_for_load_state("networkidle")
+    time.sleep(2)
+
+    print("협력사 변경 화면 진입")
+
+    # 드롭다운 박스 좌표 클릭
+    page.mouse.click(640, 470)
+    time.sleep(1)
+
+    body_text = page.locator("body").inner_text()
+    print("드롭다운 클릭 후 화면 텍스트:")
+    print(body_text[:2000])
+
+    input("목록이 열렸는지 확인 후 Enter")
+
+    page.get_by_text(center_name, exact=False).click()
+    time.sleep(1)
+
+    page.get_by_text("선택 완료").click()
+    page.wait_for_load_state("networkidle")
+    time.sleep(3)
+
+    print("권역 변경 완료")
 
 
 def business_date(now):
@@ -133,7 +127,8 @@ def current_period(now):
 
 
 def calc_accept_rate(complete, reject, cancel=0, rider_fault=0):
-    total = complete + reject + cancel + rider_fault
+    bad_total = reject + cancel + rider_fault
+    total = complete + bad_total
     if total == 0:
         return 100
     return round((complete / total) * 100, 1)
@@ -156,16 +151,19 @@ def team_of(name):
     if TEAM_MAP_CACHE is None:
         try:
             init_firebase()
+
             TEAM_MAP_CACHE = (
-                db.reference("/settings/dalseob/teamMap").get()
+                db.reference("/settings/maeuma/teamMap").get()
                 or {}
             )
+
             print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
 
-    return TEAM_MAP_CACHE.get(name, "소닉팀")
+    return TEAM_MAP_CACHE.get(name, "마음1")
 
 
 def to_int(value):
@@ -319,8 +317,6 @@ def parse_row_lines(row_lines):
     for h in range(24):
         hourly.append(to_int(lines[phone_idx + 12 + h]))
 
-    excluded = sum(hourly[18:24]) + sum(hourly[0:4])
-
     user_id = lines[phone_idx + 36]
     is_online = status_online(status)
 
@@ -339,7 +335,6 @@ def parse_row_lines(row_lines):
         "afternoon": afternoon,
         "evening": evening,
         "midnight": midnight,
-        "excluded": excluded,
         "hourly": hourly,
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
         "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
@@ -423,7 +418,6 @@ def summary(rows):
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
-        "excluded": sum(r.get("excluded", 0) for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
@@ -620,30 +614,31 @@ def make_data(riders):
             "riders": rows,
         }
 
-    return {
-        "area": AREA_NAME,
-        "areas": ["달서A", "달서B", "중구A"],
-        "teamOrder": TEAM_ORDER,
-        "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
-        "businessDate": str(business_date(now)),
-        "currentPeriod": current_period(now),
-        "currentPeriodLabel": PERIOD_LABELS[current_period(now)],
-        "targetAcceptRate": TARGET_ACCEPT_RATE,
-        "total": summary(riders),
-        "teams": teams,
-        "riders": riders,
-        "weekly": load_weekly(),
-        "weeklySummary": weekly_summary(load_weekly(), now),
-    }
+    weekly = load_weekly()
 
+    return {
+    "area": AREA_NAME,
+    "areas": ["마음 달서A", "달서B"],
+    "teamOrder": TEAM_ORDER,
+    "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
+    "businessDate": str(business_date(now)),
+    "currentPeriod": current_period(now),
+    "currentPeriodLabel": PERIOD_LABELS[current_period(now)],
+    "targetAcceptRate": TARGET_ACCEPT_RATE,
+    "total": summary(riders),
+    "teams": teams,
+    "riders": riders,
+    "weekly": weekly,
+    "weeklySummary": weekly_summary(weekly, now),
+    }
 
 def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
     try:
-        upload_json("data_dalseob.json", "/live/dalseob")
-        upload_json("weekly_dalseob.json", "/weekly/dalseob")
+        upload_json("data_maeuma.json", "/live/maeuma")
+        upload_json("weekly_maeuma.json", "/weekly/maeuma")
         print("Firebase 업로드 완료")
     except Exception as e:
         print("Firebase 업로드 실패")
@@ -658,10 +653,10 @@ def git_push():
     if not AUTO_GIT_PUSH:
         return
 
-    subprocess.run(["git", "add", "data_dalseob.json", "index.html", "d_b.py", "logo.png"], cwd=BASE_DIR)
+    subprocess.run(["git", "add", "data_dalseoa.json", "index.html", "d_a.py", "logo.png"], cwd=BASE_DIR)
 
     if WEEKLY_FILE.exists():
-        subprocess.run(["git", "add", "weekly_dalseob.json"], cwd=BASE_DIR)
+        subprocess.run(["git", "add", "weekly_dalseoa.json"], cwd=BASE_DIR)
 
     commit = subprocess.run(
         ["git", "commit", "-m", "auto update"],
@@ -705,21 +700,19 @@ def run_update(page):
     print(f"업로드 완료: {data['updatedAt']}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
-    print(f"소닉팀 접속중: {data['teams']['소닉팀']['summary']['onlineCount']}")
-    print(f"넘버팀 접속중: {data['teams']['넘버팀']['summary']['onlineCount']}")
-    print(f"마음팀 접속중: {data['teams']['마음팀']['summary']['onlineCount']}")
+    print(f"마음1 접속중: {data['teams']['마음1']['summary']['onlineCount']}")
+    print(f"마음3 접속중: {data['teams']['마음3']['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"수락률: {data['total']['acceptRate']}%")
 
 
 def main():
     global TEAM_MAP_CACHE
-
-    print("SUPERSONIC 달서B DOM 자동 수집기")
+    print("SUPERSONIC 마음A DOM 자동 수집기")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
-            user_data_dir=str(BASE_DIR / "chrome_profile_dalseob"),
+            user_data_dir=str(BASE_DIR / "chrome_profile_maeuma"),
             headless=False,
             viewport={"width": 1400, "height": 900},
         )
@@ -731,15 +724,18 @@ def main():
         )
 
         print("1. 열린 배민비즈 창에서 로그인하세요.")
-        print("2. 달서B 기사 실적 페이지로 이동하세요.")
+        print("2. 달서A 기사 실적 페이지로 이동하세요.")
         print("3. 100개 보기로 맞추세요.")
         print("4. 준비되면 CMD에서 Enter 누르세요.")
 
         input("Enter 대기 중...")
+        print("현재 권역 -> 수성C 변경 테스트")
+        change_center(page, "수성C")
+            
+        input("변경 확인 후 Enter 누르세요")
 
         while True:
             TEAM_MAP_CACHE = None
-
             print("")
             print("===================================")
             print("자동 수집 시작")

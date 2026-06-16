@@ -8,7 +8,8 @@ from pathlib import Path
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
 from playwright.sync_api import sync_playwright
-from firebase_uploader import upload_json
+from firebase_admin import db
+from firebase_uploader import init_firebase, upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
@@ -40,13 +41,13 @@ AREA_CONFIG = {
 }
 
 DAY_TARGETS = {
-    0: [21, 20, 30, 29],
-    1: [21, 20, 30, 29],
-    2: [21, 20, 30, 29],
-    3: [21, 20, 30, 29],
-    4: [24, 21, 32, 33],
-    5: [31, 22, 36, 31],
-    6: [33, 22, 35, 30],
+    0: [22, 21, 32, 25],
+    1: [22, 21, 32, 25],
+    2: [22, 21, 32, 25],
+    3: [22, 21, 32, 25],
+    4: [25, 22, 34, 29],
+    5: [31, 23, 38, 28],
+    6: [32, 24, 37, 27],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
@@ -101,13 +102,32 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
     bad_total = reject + cancel + rider_fault
     if complete <= 0:
         return 0
-    # 80% 기준: 완료 4건당 실패 1건까지 허용
     max_bad_total = math.floor(complete * 0.25)
     return max_bad_total - bad_total
 
 
+TEAM_MAP_CACHE = None
+
+
 def team_of(name):
-    return "넘버팀" if name in NUMBER_TEAM_RIDERS else "소닉팀"
+    global TEAM_MAP_CACHE
+
+    if TEAM_MAP_CACHE is None:
+        try:
+            init_firebase()
+
+            TEAM_MAP_CACHE = (
+                db.reference("/settings/junggua/teamMap").get()
+                or {}
+            )
+
+            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+
+        except Exception as e:
+            print("teamMap 로드 실패:", e)
+            TEAM_MAP_CACHE = {}
+
+    return TEAM_MAP_CACHE.get(name, "소닉팀")
 
 
 def to_int(value):
@@ -240,24 +260,30 @@ def parse_row_lines(row_lines):
     if not name:
         return None
 
-    if phone_idx + 33 >= len(lines):
+    if phone_idx + 36 >= len(lines):
         return None
 
-    complete = to_int(lines[phone_idx + 1])
-    reject = to_int(lines[phone_idx + 2])
-    cancel = to_int(lines[phone_idx + 3])
-    rider_fault = to_int(lines[phone_idx + 4])
+    food_complete = to_int(lines[phone_idx + 1])
+    bmart_complete = to_int(lines[phone_idx + 2])
+    store_complete = to_int(lines[phone_idx + 3])
+    complete = to_int(lines[phone_idx + 4])
 
-    morning = to_int(lines[phone_idx + 5])
-    afternoon = to_int(lines[phone_idx + 6])
-    evening = to_int(lines[phone_idx + 7])
-    midnight = to_int(lines[phone_idx + 8])
+    reject = to_int(lines[phone_idx + 5])
+    cancel = to_int(lines[phone_idx + 6])
+    rider_fault = to_int(lines[phone_idx + 7])
+
+    morning = to_int(lines[phone_idx + 8])
+    afternoon = to_int(lines[phone_idx + 9])
+    evening = to_int(lines[phone_idx + 10])
+    midnight = to_int(lines[phone_idx + 11])
 
     hourly = []
     for h in range(24):
-        hourly.append(to_int(lines[phone_idx + 9 + h]))
+        hourly.append(to_int(lines[phone_idx + 12 + h]))
 
-    user_id = lines[phone_idx + 33]
+    excluded = sum(hourly[18:24]) + sum(hourly[0:4])
+
+    user_id = lines[phone_idx + 36]
     is_online = status_online(status)
 
     return {
@@ -275,6 +301,7 @@ def parse_row_lines(row_lines):
         "afternoon": afternoon,
         "evening": evening,
         "midnight": midnight,
+        "excluded": excluded,
         "hourly": hourly,
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
         "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
@@ -358,6 +385,7 @@ def summary(rows):
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
+        "excluded": sum(r.get("excluded", 0) for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
@@ -647,6 +675,7 @@ def run_update(page):
 
 
 def main():
+    global TEAM_MAP_CACHE
     print("SUPERSONIC 중구A DOM 자동 수집기")
 
     with sync_playwright() as p:
@@ -656,7 +685,7 @@ def main():
             viewport={"width": 1400, "height": 900},
         )
 
-        page = browser.new_page()
+        page = browser.pages[0]
 
         page.goto(
             "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
@@ -670,6 +699,7 @@ def main():
         input("Enter 대기 중...")
 
         while True:
+            TEAM_MAP_CACHE = None
             print("")
             print("===================================")
             print("자동 수집 시작")

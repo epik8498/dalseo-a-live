@@ -46,13 +46,13 @@ AREA_CONFIG = {
 }
 
 DAY_TARGETS = {
-    0: [21, 20, 30, 29],
-    1: [21, 20, 30, 29],
-    2: [21, 20, 30, 29],
-    3: [21, 20, 30, 29],
-    4: [24, 21, 32, 33],
-    5: [31, 22, 36, 31],
-    6: [33, 22, 35, 30],
+    0: [22, 21, 32, 25],
+    1: [22, 21, 32, 25],
+    2: [22, 21, 32, 25],
+    3: [22, 21, 32, 25],
+    4: [25, 22, 34, 29],
+    5: [31, 23, 38, 28],
+    6: [32, 24, 37, 27],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
@@ -126,6 +126,8 @@ def team_of(name):
                 or {}
             )
             print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+            print("이주철 현재 팀:", TEAM_MAP_CACHE.get("이주철"))
+            print("김경오 현재 팀:", TEAM_MAP_CACHE.get("김경오"))
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
@@ -263,24 +265,36 @@ def parse_row_lines(row_lines):
     if not name:
         return None
 
-    if phone_idx + 33 >= len(lines):
+    if phone_idx + 36 >= len(lines):
         return None
 
-    complete = to_int(lines[phone_idx + 1])
-    reject = to_int(lines[phone_idx + 2])
-    cancel = to_int(lines[phone_idx + 3])
-    rider_fault = to_int(lines[phone_idx + 4])
+        food_complete = to_int(lines[phone_idx + 1])
+    bmart_complete = to_int(lines[phone_idx + 2])
+    store_complete = to_int(lines[phone_idx + 3])
+    complete = to_int(lines[phone_idx + 4])
 
-    morning = to_int(lines[phone_idx + 5])
-    afternoon = to_int(lines[phone_idx + 6])
-    evening = to_int(lines[phone_idx + 7])
-    midnight = to_int(lines[phone_idx + 8])
+    reject = to_int(lines[phone_idx + 5])
+    cancel = to_int(lines[phone_idx + 6])
+    rider_fault = to_int(lines[phone_idx + 7])
 
+    # 배민이 계산해주는 피크값 그대로 사용
+    morning = to_int(lines[phone_idx + 8])
+    afternoon = to_int(lines[phone_idx + 9])
+    evening = to_int(lines[phone_idx + 10])
+    midnight = to_int(lines[phone_idx + 11])
+
+    # 배민 시간 컬럼 순서:
+    # 6시~23시, 0시~5시
     hourly = []
     for h in range(24):
-        hourly.append(to_int(lines[phone_idx + 9 + h]))
+        hourly.append(to_int(lines[phone_idx + 12 + h]))
 
-    user_id = lines[phone_idx + 33]
+    # 미포함물량: 0시~9시
+    # hourly[18:24] = 0시~5시
+    # hourly[0:4] = 6시~9시
+    excluded = sum(hourly[18:24]) + sum(hourly[0:4])
+
+    user_id = lines[phone_idx + 36]
     is_online = status_online(status)
 
     return {
@@ -298,6 +312,7 @@ def parse_row_lines(row_lines):
         "afternoon": afternoon,
         "evening": evening,
         "midnight": midnight,
+        "excluded": excluded,
         "hourly": hourly,
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
         "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
@@ -381,6 +396,7 @@ def summary(rows):
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
+        "excluded": sum(r.get("excluded", 0) for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
@@ -670,6 +686,7 @@ def run_update(page):
 
 
 def main():
+    global TEAM_MAP_CACHE
     print("SUPERSONIC 달서A DOM 자동 수집기")
 
     with sync_playwright() as p:
@@ -679,7 +696,7 @@ def main():
             viewport={"width": 1400, "height": 900},
         )
 
-        page = browser.new_page()
+        page = browser.pages[0]
 
         page.goto(
             "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
@@ -693,6 +710,8 @@ def main():
         input("Enter 대기 중...")
 
         while True:
+            TEAM_MAP_CACHE = None
+
             print("")
             print("===================================")
             print("자동 수집 시작")
@@ -710,3 +729,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
