@@ -511,7 +511,7 @@
   },
   {
     "businessDate": "2026-06-16",
-    "closedAt": "2026-06-17 03:08:09",
+    "closedAt": "2026-06-17 05:59:30",
     "totalComplete": 1198,
     "totalReject": 122,
     "totalCancel": 36,
@@ -528,5 +528,45 @@
     },
     "acceptRate": 88.3,
     "spareRejects": 140
+  },
+  {
+    "businessDate": "2026-06-17",
+    "closedAt": "2026-06-18 05:59:04",
+    "totalComplete": 1231,
+    "totalReject": 156,
+    "totalCancel": 48,
+    "riderFault": 0,
+    "morning": 256,
+    "afternoon": 247,
+    "evening": 444,
+    "midnight": 284,
+    "periodTargets": {
+      "morning": 176,
+      "afternoon": 168,
+      "evening": 256,
+      "midnight": 200
+    },
+    "acceptRate": 85.8,
+    "spareRejects": 103
+  },
+  {
+    "businessDate": "2026-06-18",
+    "closedAt": "2026-06-19 01:00:34",
+    "totalComplete": 1209,
+    "totalReject": 234,
+    "totalCancel": 56,
+    "riderFault": 2,
+    "morning": 257,
+    "afternoon": 266,
+    "evening": 449,
+    "midnight": 237,
+    "periodTargets": {
+      "morning": 176,
+      "afternoon": 168,
+      "evening": 256,
+      "midnight": 200
+    },
+    "acceptRate": 80.5,
+    "spareRejects": 10
   }
 ]
