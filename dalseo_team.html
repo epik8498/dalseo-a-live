@@ -80,7 +80,7 @@ const AREAS={
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 let DATA=null,WEEKLY=[],CURRENT='달서A',FILTER='달서팀';
-function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return hsum(r,0,4)}function midnightExcluded(r){return hsum(r,18,24)}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
+function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return Number(r.morningExcluded!=null?r.morningExcluded:hsum(r,6,10))}function midnightExcluded(r){return Number(r.midnightExcluded!=null?r.midnightExcluded:hsum(r,0,6))}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
 function toggleAreaMenu(){}function selectArea(area){CURRENT='달서A';FILTER='달서팀';loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
 function renderAreaMenu(){}
@@ -108,16 +108,9 @@ function renderWeekly(ws){
 }
 
 function periodIncludedDone(team,key){
-  let done=Number(teamObj(team).summary[key]||0);
-  let miss=0;
-
-  if(key==='morning'){
-    miss=(teamObj(team).riders||[]).reduce((s,r)=>s+morningExcluded(r),0);
-  }else if(key==='midnight'){
-    miss=(teamObj(team).riders||[]).reduce((s,r)=>s+midnightExcluded(r),0);
-  }
-
-  return Math.max(0,done-miss);
+  // 수집기에서 morning/afternoon/evening/midnight는 이미 SLA 포함 구간만 계산되어 들어옵니다.
+  // 오전/심야 미포함은 표시 전용이므로 여기서 다시 차감하지 않습니다.
+  return Number(teamObj(team).summary[key]||0);
 }
 
 function renderPeriods(){
