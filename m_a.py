@@ -36,8 +36,8 @@ TEAM_ORDER = ["마음1", "마음3"]
 
 AREA_CONFIG = {
     "마음 달서A": {
-        "마음1": 7,
-        "마음3": 3,
+        "마음1": 5.5,
+        "마음3": 3.5,
     }
 }
 
@@ -65,6 +65,38 @@ PERIOD_LABELS = {
 }
 
 
+def split_hourly_by_sla(hourly, date_value=None):
+    h = list(hourly or [])[:24]
+    if len(h) < 24:
+        h += [0] * (24 - len(h))
+    if date_value is None:
+        date_value = business_date(datetime.now())
+    weekend = date_value.weekday() >= 5
+
+    # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
+    morning_excluded = sum(h[6:10])       # 06,07,08,09
+    midnight_excluded = sum(h[0:6])      # 00,01,02,03,04,05
+
+    if weekend:
+        morning = sum(h[10:14])          # 토일 10,11,12,13
+        afternoon = sum(h[14:17])        # 토일 14,15,16
+    else:
+        morning = sum(h[10:13])          # 평일 10,11,12
+        afternoon = sum(h[13:17])        # 평일 13,14,15,16
+
+    evening = sum(h[17:20])              # 17,18,19
+    midnight = sum(h[20:24])             # 20,21,22,23
+
+    return {
+        "morning": morning,
+        "afternoon": afternoon,
+        "evening": evening,
+        "midnight": midnight,
+        "morningExcluded": morning_excluded,
+        "midnightExcluded": midnight_excluded,
+        "excluded": morning_excluded + midnight_excluded,
+    }
+
 def business_date(now):
     if now.hour < 6:
         return (now - timedelta(days=1)).date()
@@ -75,22 +107,23 @@ def current_period(now):
     h = now.hour
     weekend = now.weekday() >= 5
 
+    # SLA 포함 구간 기준입니다.
+    # 06~09, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
     if weekend:
-        if 6 <= h <= 13:
+        if 10 <= h < 14:
             return "morning"
-        if 14 <= h <= 16:
+        if 14 <= h < 17:
             return "afternoon"
     else:
-        if 6 <= h <= 12:
+        if 10 <= h < 13:
             return "morning"
-        if 13 <= h <= 16:
+        if 13 <= h < 17:
             return "afternoon"
 
-    if 17 <= h <= 19:
+    if 17 <= h < 20:
         return "evening"
 
     return "midnight"
-
 
 def calc_accept_rate(complete, reject, cancel=0, rider_fault=0):
     bad_total = reject + cancel + rider_fault
@@ -159,9 +192,11 @@ def is_bad_name(value):
         "배차취소", "배달취소(라이더귀책)", "아이디", "합계",
         "아침점심피크", "오후논피크", "저녁피크", "심야논피크",
         "운행중", "운행 중", "운행 종료", "운행종료",
+        "개인정보처리방침", "이용약관", "고객센터", "공지사항",
+        "회사소개", "사업자정보", "서비스이용약관", "위치기반서비스이용약관",
+        "개인정보", "처리방침", "푸터", "footer",
     }
     return v in bad or is_phone(v) or v.isdigit() or v.endswith("시")
-
 
 def set_page_number(url, page_no):
     parsed = urlparse(url)
@@ -180,58 +215,193 @@ def set_page_number(url, page_no):
 
 def read_dom_rows(page):
     """
-    Ctrl+C로 빠지는 운행상태를 잡기 위해 브라우저 DOM에서
-    전화번호가 들어있는 행의 부모 박스를 직접 읽습니다.
+    배민 화면이 div-grid/고정열/가로스크롤로 바뀌어도 헤더의 x좌표를 기준으로
+    00~23시 값을 직접 매칭합니다. offset 추정 금지.
     """
     return page.evaluate(r"""
     () => {
       const phoneRe = /010[-\s]?\d{3,4}[-\s]?\d{4}/;
+      const hourRe = /^(?:[01]?\d|2[0-3])\s*시$/;
       const out = [];
       const seen = new Set();
 
-      function visible(el){
+      function isVisible(el){
         const r = el.getBoundingClientRect();
         const s = window.getComputedStyle(el);
         return r.width > 0 && r.height > 0 && s.display !== 'none' && s.visibility !== 'hidden';
       }
+      function textOf(el){ return (el.innerText || el.textContent || '').trim(); }
+      function norm(t){ return String(t||'').replace(/\u200b|\ufeff/g,'').trim(); }
+      function isIntText(t){ return /^-?\d{1,5}$/.test(String(t||'').replace(/,/g,'').trim()); }
+      function toInt(t){ const n = parseInt(String(t||'0').replace(/,/g,'').trim(),10); return Number.isFinite(n)?n:0; }
 
-      const elements = Array.from(document.querySelectorAll('body *'))
-        .filter(el => visible(el) && phoneRe.test(el.innerText || ''));
-
-      for (const el of elements) {
-        let best = null;
-        let cur = el;
-
-        for (let depth = 0; depth < 12 && cur && cur !== document.body; depth++, cur = cur.parentElement) {
-          const txt = (cur.innerText || '').trim();
-          if (!phoneRe.test(txt)) continue;
-
-          const r = cur.getBoundingClientRect();
-          const lines = txt.split(/\n+/).map(x => x.trim()).filter(Boolean);
-
-          if (r.width >= 650 && r.height >= 20 && r.height <= 180 && lines.length >= 8 && lines.length <= 60) {
-            best = cur;
-            break;
-          }
+      function isLeafText(el){
+        const t = norm(textOf(el));
+        if (!t || !isVisible(el)) return false;
+        for (const c of Array.from(el.children || [])) {
+          const ct = norm(textOf(c));
+          if (ct && ct === t && isVisible(c)) return false;
         }
+        return true;
+      }
 
-        if (!best) continue;
+      const badLegalNames = new Set(['개인정보처리방침','이용약관','고객센터','공지사항','회사소개','사업자정보','서비스이용약관','위치기반서비스이용약관']);
 
-        const txt = (best.innerText || '').trim();
-        const m = txt.match(phoneRe);
+      const nodes = Array.from(document.querySelectorAll('body *')).filter(isLeafText).map(el => {
+        const r = el.getBoundingClientRect();
+        return {el, text:norm(textOf(el)), left:r.left, right:r.right, top:r.top, bottom:r.bottom, cx:r.left+r.width/2, cy:r.top+r.height/2, width:r.width, height:r.height};
+      });
+
+      const hourHeaders = [];
+      for (const n of nodes) {
+        const m = n.text.match(hourRe);
         if (!m) continue;
+        const h = parseInt(n.text.replace(/\D/g,''),10);
+        if (h >= 0 && h <= 23) hourHeaders.push({...n, hour:h});
+      }
+      // 같은 시간 헤더가 여러 번 잡히면 실제 기사행 바로 위의 가장 아래쪽 헤더를 사용
+      const hourMap = {};
+      for (const h of hourHeaders) {
+        if (!hourMap[h.hour] || h.top > hourMap[h.hour].top) hourMap[h.hour] = h;
+      }
+      const hours = [];
+      for (let h=0; h<24; h++) if (hourMap[h]) hours.push(hourMap[h]);
 
-        const key = m[0].replace(/\s/g,'');
+      function findHeader(...names){
+        let candidates = nodes.filter(n => names.some(name => n.text === name || n.text.replace(/\s/g,'') === name.replace(/\s/g,'')));
+        // 너무 위쪽 메뉴/필터가 아니라 기사행 바로 위쪽 실제 컬럼 헤더를 우선 사용
+        candidates = candidates.filter(n => n.width > 0 && n.height > 0).sort((a,b)=>b.top-a.top);
+        return candidates[0] || null;
+      }
+      const metricHeaders = {
+        complete: findHeader('완료'),
+        reject: findHeader('거절'),
+        cancel: findHeader('배차취소', '배달취소'),
+        riderFault: findHeader('배달취소(라이더귀책)', '라이더귀책')
+      };
+
+      // 시간 헤더를 20개 이상 못 찾으면 기존 파서가 처리하도록 raw lines로 반환
+      if (hours.length < 20) {
+        const phoneNodes = nodes.filter(n => phoneRe.test(n.text));
+        for (const p of phoneNodes) {
+          const key = (p.text.match(phoneRe)?.[0] || '').replace(/\s/g,'');
+          if (!key || seen.has(key)) continue;
+          seen.add(key);
+          const rowNodes = nodes.filter(x => Math.abs(x.cy - p.cy) <= 12 && x.height > 0 && x.height <= 80 && x.text.length <= 40)
+                              .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
+          out.push({__raw: rowNodes.map(x=>x.text)});
+        }
+        return out;
+      }
+
+      const phoneNodes = nodes.filter(n => phoneRe.test(n.text));
+      for (const phoneNode of phoneNodes) {
+        const phone = phoneNode.text.match(phoneRe)?.[0];
+        if (!phone) continue;
+        const key = phone.replace(/\s/g,'');
         if (seen.has(key)) continue;
         seen.add(key);
 
-        out.push(txt.split(/\n+/).map(x => x.trim()).filter(Boolean));
-      }
+        const row = nodes.filter(x => Math.abs(x.cy - phoneNode.cy) <= 13 && x.height > 0 && x.height <= 80 && x.text.length <= 50)
+                         .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
 
+        const texts = row.map(x=>x.text);
+        let status = texts.some(t => t.replace(/\s/g,'') === '운행중') ? '운행중' : '운행 종료';
+
+        let name = '';
+        const phoneIdx = row.findIndex(x => phoneRe.test(x.text));
+        for (let i = phoneIdx - 1; i >= 0; i--) {
+          const t = row[i].text;
+          if (!t || phoneRe.test(t) || /^\d+$/.test(t) || t.includes('운행') || t.includes('휴대폰') || t.includes('이름')) continue;
+          name = t; break;
+        }
+        if (!name || badLegalNames.has(name)) continue;
+
+        const rightNums = row.filter(x => x.cx > phoneNode.cx + 10 && isIntText(x.text));
+
+        // 핵심: 요약 실적 숫자는 00~23시 시간대 컬럼 앞에 있는 숫자만 사용합니다.
+        // 이전 버전은 오른쪽 숫자를 전부 섞어서 00시/01시/02시 값을 완료·거절로 오인했습니다.
+        const firstHourLeft = Math.min(...hours.map(h => h.left));
+        let metricCells = row
+          .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstHourLeft - 4 && isIntText(x.text))
+          .sort((a,b) => a.left - b.left);
+
+        // 배민 화면 폭/고정열 때문에 firstHourLeft 기준이 실패할 때만 전체 오른쪽 숫자 앞부분으로 fallback
+        if (metricCells.length < 7) {
+          metricCells = rightNums.slice(0, 7);
+        }
+
+        // 배민비즈 도출 기준:
+        // 완료 = 푸드 완료 + B마트 완료 + 배민스토어 완료 (또는 배민의 전체 완료 칸)
+        // 수락률 실패값 = 푸드 거절 + 푸드 취소 + 라이더귀책만 사용
+        // B마트/배민스토어 거절·취소는 반영하지 않습니다.
+        const metricNums = metricCells.map(x => toInt(x.text));
+        // 배민비즈 현재 컬럼은 서비스별로 묶여 있습니다.
+        // [푸드 완료, 푸드 거절, 푸드 취소, B마트 완료, B마트 거절, B마트 취소, 배민스토어 완료, ...]
+        // 수락률 실패값은 반드시 푸드 거절/푸드 취소만 사용해야 하므로 1,2번을 사용합니다.
+        // 배민비즈 현재 화면은 시간대 컬럼 앞 요약 숫자가 보통
+        // [푸드완료, B마트완료, 배민스토어완료, 전체완료, 기타/예약, 푸드거절, 푸드취소, 라이더귀책 ...]
+        // 순서로 잡힙니다. 이전 버전은 1,2번을 거절/취소로 읽어서 기사카드와 total reject/cancel이 0으로 올라갔습니다.
+        const foodComplete = metricNums[0] || 0;
+        const bmartComplete = metricNums[1] || 0;
+        const storeComplete = metricNums[2] || 0;
+        let complete = metricNums[3] || (foodComplete + bmartComplete + storeComplete);
+
+        // 수락률 실패값은 푸드 거절/푸드 취소만 사용합니다.
+        // 우선 검증된 위치(5,6)를 사용하고, 예전/다른 레이아웃 fallback으로 (1,2)를 사용합니다.
+        let reject = metricNums[5] || 0;
+        let cancel = metricNums[6] || 0;
+        let riderFault = metricNums[7] || metricNums[8] || 0;
+
+        if (reject === 0 && cancel === 0 && metricNums.length >= 3) {
+          // 구형 레이아웃 fallback: [푸드완료, 푸드거절, 푸드취소, ...]
+          const altReject = metricNums[1] || 0;
+          const altCancel = metricNums[2] || 0;
+          const altComplete = metricNums[0] || 0;
+          // 1,2번이 B마트/스토어 완료처럼 보이지 않는 경우에만 fallback 적용
+          if ((altReject + altCancel) > 0 && (altReject + altCancel) <= Math.max(altComplete * 2, 20)) {
+            reject = altReject;
+            cancel = altCancel;
+            riderFault = metricNums[3] || riderFault;
+          }
+        }
+
+        const hourly = Array(24).fill(0);
+        for (const hh of hours) {
+          // 해당 시간 헤더 x좌표와 가장 가까운 숫자 셀을 같은 행에서 선택
+          let best = null;
+          for (const cell of row) {
+            if (!isIntText(cell.text)) continue;
+            if (cell.cx <= phoneNode.cx) continue;
+            const dx = Math.abs(cell.cx - hh.cx);
+            if (dx > Math.max(28, hh.width * 1.8)) continue;
+            const score = dx + Math.abs(cell.width - hh.width) * 0.05;
+            if (!best || score < best.score) best = {cell, score};
+          }
+          if (best) hourly[hh.hour] = toInt(best.cell.text);
+        }
+
+        // 완료 컬럼이 배민 UI 변경으로 잘못 잡히는 경우가 있어
+        // 검증된 00~23시 헤더 x좌표 매칭값의 합계를 완료 기준으로 사용합니다.
+        // 수락률 분모의 완료도 이 값으로 계산됩니다.
+        const hourlyTotal = hourly.reduce((a, b) => a + b, 0);
+        if (hourlyTotal > 0) {
+          complete = hourlyTotal;
+        }
+
+        let userId = '';
+        for (let i=row.length-1; i>phoneIdx; i--) {
+          const t = row[i].text;
+          if (!t || isIntText(t) || hourRe.test(t) || t.includes('개인정보')) continue;
+          if (t === phone || t.includes('운행')) continue;
+          userId = t; break;
+        }
+
+        out.push({name, phone, userId, status, complete, reject, cancel, riderFault, hourly, __raw:texts});
+      }
       return out;
     }
     """)
-
 
 def parse_row_lines(row_lines):
     lines = [norm(x) for x in row_lines if norm(x)]
@@ -261,8 +431,10 @@ def parse_row_lines(row_lines):
 
     if not name:
         return None
+    if is_bad_name(name):
+        return None
 
-    if phone_idx + 36 >= len(lines):
+    if phone_idx + 35 >= len(lines):
         return None
 
     food_complete = to_int(lines[phone_idx + 1])
@@ -274,18 +446,25 @@ def parse_row_lines(row_lines):
     cancel = to_int(lines[phone_idx + 6])
     rider_fault = to_int(lines[phone_idx + 7])
 
-    morning = to_int(lines[phone_idx + 8])
-    afternoon = to_int(lines[phone_idx + 9])
-    evening = to_int(lines[phone_idx + 10])
-    midnight = to_int(lines[phone_idx + 11])
-
     hourly = []
     for h in range(24):
         hourly.append(to_int(lines[phone_idx + 12 + h]))
 
-    excluded = sum(hourly[18:24]) + sum(hourly[0:4])
+    sla = split_hourly_by_sla(hourly)
+    morning = sla["morning"]
+    afternoon = sla["afternoon"]
+    evening = sla["evening"]
+    midnight = sla["midnight"]
+    morning_excluded = sla["morningExcluded"]
+    midnight_excluded = sla["midnightExcluded"]
+    excluded = sla["excluded"]
 
-    user_id = lines[phone_idx + 36]
+    user_id = ""
+    for item in reversed(lines[phone_idx + 36:]):
+        if not str(item).isdigit() and not is_bad_name(item):
+            user_id = item
+            break
+
     is_online = status_online(status)
 
     return {
@@ -303,21 +482,54 @@ def parse_row_lines(row_lines):
         "afternoon": afternoon,
         "evening": evening,
         "midnight": midnight,
+        "morningExcluded": morning_excluded,
+        "midnightExcluded": midnight_excluded,
         "excluded": excluded,
         "hourly": hourly,
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
         "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
     }
 
-
 def parse_dom_rows(row_groups):
     riders = []
     for group in row_groups:
-        rider = parse_row_lines(group)
-        if rider:
+        if isinstance(group, dict) and group.get("__raw") and not group.get("hourly"):
+            rider = parse_row_lines(group.get("__raw") or [])
+        elif isinstance(group, dict):
+            hourly = group.get("hourly") or [0] * 24
+            sla = split_hourly_by_sla(hourly)
+            complete = to_int(group.get("complete", 0))
+            reject = to_int(group.get("reject", 0))
+            cancel = to_int(group.get("cancel", 0))
+            rider_fault = to_int(group.get("riderFault", 0))
+            is_online = status_online(group.get("status", ""))
+            rider = {
+                "name": group.get("name", ""),
+                "phone": group.get("phone", ""),
+                "userId": group.get("userId", ""),
+                "team": team_of(group.get("name", "")),
+                "status": "운행중" if is_online else "운행 종료",
+                "isOnline": is_online,
+                "complete": complete,
+                "reject": reject,
+                "cancel": cancel,
+                "riderFault": rider_fault,
+                "morning": sla["morning"],
+                "afternoon": sla["afternoon"],
+                "evening": sla["evening"],
+                "midnight": sla["midnight"],
+                "morningExcluded": sla["morningExcluded"],
+                "midnightExcluded": sla["midnightExcluded"],
+                "excluded": sla["excluded"],
+                "hourly": hourly,
+                "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+                "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
+            }
+        else:
+            rider = parse_row_lines(group)
+        if rider and rider.get("name") and rider.get("phone") and not is_bad_name(rider.get("name")):
             riders.append(rider)
     return riders
-
 
 def collect_all_pages_by_dom(page):
     base_url = page.url
@@ -387,6 +599,8 @@ def summary(rows):
         "afternoon": sum(r["afternoon"] for r in rows),
         "evening": sum(r["evening"] for r in rows),
         "midnight": sum(r["midnight"] for r in rows),
+        "morningExcluded": sum(r.get("morningExcluded", 0) for r in rows),
+        "midnightExcluded": sum(r.get("midnightExcluded", 0) for r in rows),
         "excluded": sum(r.get("excluded", 0) for r in rows),
         "count": len(rows),
         "onlineCount": sum(1 for r in rows if r.get("isOnline")),
@@ -394,9 +608,9 @@ def summary(rows):
         "spareRejects": spare_rejects(complete, reject, cancel, rider_fault),
     }
 
-
 def team_targets(now):
-    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(now.strftime("%Y-%m-%d"), now.weekday())
+    bd = business_date(now)
+    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(bd.strftime("%Y-%m-%d"), bd.weekday())
     base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     result = {}
 
@@ -409,11 +623,13 @@ def team_targets(now):
 
 
 def load_weekly():
-    if WEEKLY_FILE.exists():
-        with open(WEEKLY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+    try:
+        if WEEKLY_FILE.exists():
+            with open(WEEKLY_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except Exception:
+        print("weekly 파일 손상 - 새로 생성")
     return []
-
 
 def week_start_wednesday(date_value):
     """수요일~화요일 주차 기준의 시작일을 반환합니다."""
@@ -445,6 +661,9 @@ def weekly_summary(weekly_rows, now):
     total_rider_fault = 0
     total_periods = {p: 0 for p in PERIODS}
     total_period_targets = {p: 0 for p in PERIODS}
+    total_excluded = 0
+    total_morning_excluded = 0
+    total_midnight_excluded = 0
 
     labels = ["수", "목", "금", "토", "일", "월", "화"]
     period_names = {
@@ -461,6 +680,9 @@ def weekly_summary(weekly_rows, now):
         cancel = to_int(row.get("totalCancel", 0))
         rider_fault = to_int(row.get("riderFault", 0))
         bad_total = reject + cancel + rider_fault
+        morning_excluded = to_int(row.get("morningExcluded", 0))
+        midnight_excluded = to_int(row.get("midnightExcluded", 0))
+        excluded = to_int(row.get("excluded", row.get("totalExcluded", morning_excluded + midnight_excluded)))
         period_targets = row.get("periodTargets") or target_total_by_period_for_date(date_value)
 
         period_rows = []
@@ -482,6 +704,9 @@ def weekly_summary(weekly_rows, now):
         total_reject += reject
         total_cancel += cancel
         total_rider_fault += rider_fault
+        total_excluded += excluded
+        total_morning_excluded += morning_excluded
+        total_midnight_excluded += midnight_excluded
 
         days.append({
             "label": label,
@@ -491,7 +716,10 @@ def weekly_summary(weekly_rows, now):
             "cancel": cancel,
             "riderFault": rider_fault,
             "badTotal": bad_total,
-            "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
+            "morningExcluded": morning_excluded,
+            "midnightExcluded": midnight_excluded,
+            "excluded": excluded,
+            "acceptRate": row.get("acceptRate", calc_accept_rate(complete, reject, cancel, rider_fault)),
             "spareRejects": spare_rejects(complete, reject, cancel, rider_fault),
             "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
@@ -510,9 +738,11 @@ def weekly_summary(weekly_rows, now):
         "spareRejects": spare_rejects(total_complete, total_reject, total_cancel, total_rider_fault),
         "periodTotals": total_periods,
         "periodTargets": total_period_targets,
+        "morningExcluded": total_morning_excluded,
+        "midnightExcluded": total_midnight_excluded,
+        "excluded": total_excluded,
         "days": days,
     }
-
 
 def save_weekly_if_close(data):
     weekly = load_weekly()
@@ -532,6 +762,9 @@ def save_weekly_if_close(data):
         "afternoon": data["total"]["afternoon"],
         "evening": data["total"]["evening"],
         "midnight": data["total"]["midnight"],
+        "morningExcluded": data["total"].get("morningExcluded", 0),
+        "midnightExcluded": data["total"].get("midnightExcluded", 0),
+        "excluded": data["total"].get("excluded", 0),
         "periodTargets": period_targets,
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
@@ -546,7 +779,8 @@ def save_weekly_if_close(data):
             to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
             to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
             to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
-            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0))
+            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0)) and
+            to_int(a.get("excluded", 0)) == to_int(b.get("excluded", 0))
         )
 
     found = False
@@ -567,7 +801,6 @@ def save_weekly_if_close(data):
 
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
-
 
 def make_data(riders):
     now = datetime.now()
@@ -623,10 +856,10 @@ def git_push():
     if not AUTO_GIT_PUSH:
         return
 
-    subprocess.run(["git", "add", "data_dalseoa.json", "index.html", "d_a.py", "logo.png"], cwd=BASE_DIR)
+    subprocess.run(["git", "add", "data_maeuma.json", "index.html", "m_a.py", "logo.png"], cwd=BASE_DIR)
 
     if WEEKLY_FILE.exists():
-        subprocess.run(["git", "add", "weekly_dalseoa.json"], cwd=BASE_DIR)
+        subprocess.run(["git", "add", "weekly_maeuma.json"], cwd=BASE_DIR)
 
     commit = subprocess.run(
         ["git", "commit", "-m", "auto update"],
@@ -673,6 +906,8 @@ def run_update(page):
     print(f"마음1 접속중: {data['teams']['마음1']['summary']['onlineCount']}")
     print(f"마음3 접속중: {data['teams']['마음3']['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
+    print(f"전체 거절: {data['total']['reject']}")
+    print(f"전체 취소: {data['total']['cancel']}")
     print(f"수락률: {data['total']['acceptRate']}%")
 
 

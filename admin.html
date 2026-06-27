@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<title>SUPERSONIC 관리자 센터</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--red:#e60012;--blue:#2563eb;--green:#10b981;--orange:#f59e0b;--purple:#7c3aed;--shadow:0 16px 40px rgba(15,23,42,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,'Noto Sans KR',sans-serif;font-weight:800}.app{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.side{background:#07111f;color:#fff;padding:24px 18px;position:sticky;top:0;height:100vh}.brand{display:flex;align-items:center;gap:12px;margin-bottom:28px}.mark{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--red),#ff7a00);display:grid;place-items:center;font-size:22px}.brand b{font-size:20px}.brand small{display:block;color:#93a4ba;margin-top:3px}.nav button{width:100%;display:flex;align-items:center;gap:10px;border:0;border-radius:14px;background:transparent;color:#b9c6d8;padding:14px 14px;margin:4px 0;text-align:left;font-size:15px;font-weight:1000;cursor:pointer}.nav button.active,.nav button:hover{background:rgba(255,255,255,.1);color:#fff}.main{padding:26px 30px 50px}.top{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:24px}.title h1{margin:0;font-size:30px;letter-spacing:-1px}.title p{margin:8px 0 0;color:var(--muted)}.actions{display:flex;gap:10px;align-items:center}.select,.btn{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:12px 14px;font-weight:1000;color:var(--text)}.btn{cursor:pointer}.btn.primary{background:var(--red);border-color:var(--red);color:#fff}.grid{display:grid;gap:16px}.kpis{grid-template-columns:repeat(5,minmax(140px,1fr));margin-bottom:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}.kpi small{display:block;color:var(--muted);font-size:13px}.kpi b{display:block;margin-top:10px;font-size:28px;letter-spacing:-1px}.kpi .up{color:var(--green)}.kpi .bad{color:var(--red)}.layout{grid-template-columns:1.35fr .65fr}.section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.section-title h2{margin:0;font-size:20px}.pill{border-radius:999px;padding:7px 10px;font-size:12px;background:#eef2ff;color:#3730a3}.table{width:100%;border-collapse:separate;border-spacing:0 10px}.table th{font-size:12px;color:var(--muted);text-align:left;padding:0 10px}.table td{background:#f8fafc;padding:13px 10px;border-top:1px solid #eef2f7;border-bottom:1px solid #eef2f7;font-size:14px}.table td:first-child{border-radius:14px 0 0 14px;border-left:1px solid #eef2f7}.table td:last-child{border-radius:0 14px 14px 0;border-right:1px solid #eef2f7}.status{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:7px 10px;font-size:12px}.status.on{background:#e8fff3;color:#047857}.status.off{background:#f1f5f9;color:#64748b}.status.warn{background:#fff7ed;color:#c2410c}.bar{height:9px;background:#e5e7eb;border-radius:999px;overflow:hidden}.fill{height:100%;background:var(--red);border-radius:999px}.memo textarea,.memo input{width:100%;border:1px solid var(--line);border-radius:14px;padding:13px 14px;font-weight:800;resize:vertical}.memo textarea{height:112px;margin:10px 0}.memo-list{display:grid;gap:10px;margin-top:14px}.memo-item{background:#f8fafc;border:1px solid #eef2f7;border-radius:16px;padding:13px}.memo-item b{display:block;font-size:14px}.memo-item p{margin:7px 0;color:#334155;font-weight:700}.memo-item small{color:var(--muted)}.settle{display:grid;gap:10px}.settle-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}.settle-row.total{font-size:22px;color:var(--red);border-bottom:0}.hidden{display:none}.login{position:fixed;inset:0;background:linear-gradient(135deg,#07111f,#172554);display:grid;place-items:center;z-index:30}.login-box{width:min(420px,92vw);background:#fff;border-radius:28px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.25)}.login-box h1{margin:0 0 10px}.login-box p{color:var(--muted);margin:0 0 22px}.login-box input{width:100%;border:1px solid var(--line);border-radius:14px;padding:15px;margin:7px 0;font-weight:900}.login-box button{width:100%;margin-top:10px;border:0;border-radius:14px;background:var(--red);color:#fff;padding:15px;font-weight:1000;font-size:16px;cursor:pointer}.notice{padding:12px 14px;background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;color:#9a3412;margin-bottom:16px}@media(max-width:980px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.kpis,.layout{grid-template-columns:1fr}.main{padding:18px}.top{display:block}.actions{margin-top:14px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="login" id="login">
+  <div class="login-box">
+    <h1>SUPERSONIC 관리자</h1>
+    <p>권역장 전용 운영 사이트</p>
+    <input id="loginId" placeholder="아이디: admin / dalseoa / dalseob / junggua" />
+    <input id="loginPw" type="password" placeholder="비밀번호: 1234" />
+    <button onclick="login()">로그인</button>
+  </div>
+</div>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="mark">⚡</div><div><b>SUPERSONIC</b><small>Admin Center</small></div></div>
+    <div class="nav">
+      <button class="active" onclick="showTab('dashboard',this)">🏠 대시보드</button>
+      <button onclick="showTab('riders',this)">👤 기사 상세</button>
+      <button onclick="showTab('notes',this)">📝 운영일지</button>
+      <button onclick="showTab('settlement',this)">💰 가정산</button>
+      <button onclick="showTab('audit',this)">🧾 수정이력</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top">
+      <div class="title"><h1 id="pageTitle">관리자 대시보드</h1><p id="subTitle">실시간 수집 데이터 기반 운영 현황</p></div>
+      <div class="actions">
+        <select class="select" id="areaSelect" onchange="loadAll()">
+          <option value="달서A">달서A</option><option value="달서B">달서B</option><option value="중구A">중구A</option>
+        </select>
+        <button class="btn" onclick="loadAll()">새로고침</button>
+        <button class="btn primary" onclick="logout()">로그아웃</button>
+      </div>
+    </div>
+    <div class="notice">현재 1차 버전은 기존 JSON(data_dalseoa.json / weekly_dalseoa.json)을 읽고, 수기 메모는 브라우저 저장소에 저장합니다. Firebase 저장은 다음 단계에서 연결하면 됩니다.</div>
+
+    <section id="dashboard">
+      <div class="grid kpis">
+        <div class="card kpi"><small>완료</small><b id="kComplete">0</b></div>
+        <div class="card kpi"><small>미포함</small><b id="kExcluded">0</b></div>
+        <div class="card kpi"><small>거절</small><b class="bad" id="kReject">0</b></div>
+        <div class="card kpi"><small>취소</small><b id="kCancel">0</b></div>
+        <div class="card kpi"><small>수락률</small><b class="up" id="kAccept">0%</b></div>
+      </div>
+      <div class="grid layout">
+        <div class="card"><div class="section-title"><h2>팀별 목표 현황</h2><span class="pill" id="updatedAt">-</span></div><div id="teamCards"></div></div>
+        <div class="card memo"><div class="section-title"><h2>오늘 권역 특이사항</h2></div><input id="regionNoteTitle" placeholder="제목"/><textarea id="regionNote" placeholder="예: 비로 인해 거절 증가 / 사고 접수 / 배민 문의사항"></textarea><button class="btn primary" onclick="saveRegionNote()">특이사항 저장</button><div class="memo-list" id="regionNotes"></div></div>
+      </div>
+    </section>
+
+    <section id="riders" class="hidden">
+      <div class="card"><div class="section-title"><h2>기사 상세 내역</h2><span class="pill">접속/실적/거절/취소</span></div><table class="table"><thead><tr><th>기사</th><th>팀</th><th>상태</th><th>완료</th><th>거절</th><th>취소</th><th>수락률</th><th>메모</th></tr></thead><tbody id="riderRows"></tbody></table></div>
+    </section>
+
+    <section id="notes" class="hidden">
+      <div class="card memo"><div class="section-title"><h2>운영일지 전체</h2></div><div id="allNotes" class="memo-list"></div></div>
+    </section>
+
+    <section id="settlement" class="hidden">
+      <div class="grid layout"><div class="card"><div class="section-title"><h2>이번 주 가정산</h2><span class="pill">예상값</span></div><div class="settle" id="settleBox"></div></div><div class="card"><div class="section-title"><h2>계산 기준</h2></div><p style="color:#64748b;line-height:1.7">기본관리비, 추가보너스, 초과물량, 시간 외 운행 관리비 기준은 실제 계약 단가 입력 후 정확 계산됩니다. 현재는 샘플 단가로 미리보기합니다.</p></div></div>
+    </section>
+
+    <section id="audit" class="hidden"><div class="card"><div class="section-title"><h2>수정 이력</h2></div><div id="auditList" class="memo-list"></div></div></section>
+  </main>
+</div>
+
+<script>
+let DATA=null,WEEKLY=[],USER=null;
+const accounts={admin:{pw:'1234',name:'총관리자',role:'super_admin',area:'전체'},dalseoa:{pw:'1234',name:'달서A 권역장',role:'manager',area:'달서A'},dalseob:{pw:'1234',name:'달서B 권역장',role:'manager',area:'달서B'},junggua:{pw:'1234',name:'중구A 권역장',role:'manager',area:'중구A'}};
+function money(n){return Number(n||0).toLocaleString('ko-KR')+'원'}
+function num(n){return Number(n||0).toLocaleString('ko-KR')}
+function storage(k){return JSON.parse(localStorage.getItem(k)||'[]')}
+function setStorage(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function login(){const id=loginId.value.trim();const pw=loginPw.value.trim();if(!accounts[id]||accounts[id].pw!==pw){alert('아이디/비밀번호 확인');return}USER={id,...accounts[id]};localStorage.setItem('adminUser',JSON.stringify(USER));document.getElementById('login').style.display='none';if(USER.area!=='전체'){areaSelect.value=USER.area;areaSelect.disabled=true}loadAll();}
+function logout(){localStorage.removeItem('adminUser');location.reload()}
+function showTab(id,btn){document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');pageTitle.textContent=btn.textContent.trim(); if(id==='notes') renderAllNotes(); if(id==='audit') renderAudit();}
+async function loadJson(path){try{const r=await fetch(path+'?v='+Date.now());if(!r.ok)throw new Error();return await r.json()}catch(e){return null}}
+async function loadAll(){const area=areaSelect.value;let dataFile='data_dalseoa.json', weeklyFile='weekly_dalseoa.json';DATA=await loadJson(dataFile);WEEKLY=await loadJson(weeklyFile)||[];renderDashboard();renderRiders();renderNotes();renderSettlement();renderAudit();}
+function renderDashboard(){if(!DATA)return;const t=DATA.total||{};kComplete.textContent=num(t.complete);kExcluded.textContent=num(t.excluded);kReject.textContent=num(t.reject);kCancel.textContent=num(t.cancel);kAccept.textContent=(t.acceptRate||0)+'%';updatedAt.textContent='업데이트 '+(DATA.updatedAt||'-');teamCards.innerHTML='';Object.entries(DATA.teams||{}).forEach(([name,team])=>{const s=team.summary||{}, tg=team.targets||{};const pct=Math.min(100,Math.round((s.complete||0)/(tg.total||1)*100));teamCards.insertAdjacentHTML('beforeend',`<div style="margin:16px 0;padding:16px;border:1px solid #eef2f7;border-radius:18px;background:#f8fafc"><div style="display:flex;justify-content:space-between"><b>${name}</b><span>${num(s.complete)} / ${num(tg.total)}건</span></div><div class="bar" style="margin:12px 0"><div class="fill" style="width:${pct}%"></div></div><div style="display:flex;gap:12px;color:#64748b;font-size:13px"><span>거절 ${num(s.reject)}</span><span>취소 ${num(s.cancel)}</span><span>온라인 ${num(s.onlineCount)}</span><span>수락률 ${s.acceptRate||0}%</span></div></div>`)});}
+function allRiders(){let out=[];Object.values(DATA?.teams||{}).forEach(t=>(t.riders||[]).forEach(r=>out.push(r)));return out}
+function renderRiders(){riderRows.innerHTML='';allRiders().sort((a,b)=>(b.complete||0)-(a.complete||0)).forEach(r=>{const st=r.isOnline?'on':(r.warning?'warn':'off');riderRows.insertAdjacentHTML('beforeend',`<tr><td><b>${r.name}</b><br><small>${r.userId||''}</small></td><td>${r.team||''}</td><td><span class="status ${st}">${r.status||'-'}</span></td><td>${num(r.complete)}</td><td>${num(r.reject)}</td><td>${num(r.cancel)}</td><td>${r.acceptRate||0}%</td><td><button class="btn" onclick="quickRiderNote('${r.userId}','${r.name}')">메모</button></td></tr>`)});}
+function saveRegionNote(){const title=regionNoteTitle.value.trim();const note=regionNote.value.trim();if(!note)return alert('내용 입력');const arr=storage('regionNotes');arr.unshift({id:Date.now(),area:areaSelect.value,title,note,by:USER?.name||'unknown',at:new Date().toLocaleString('ko-KR')});setStorage('regionNotes',arr);audit('create','regionNotes',{title,note});regionNoteTitle.value='';regionNote.value='';renderNotes();}
+function quickRiderNote(riderId,name){const note=prompt(`${name} 기사 메모 입력`);if(!note)return;const arr=storage('riderNotes');arr.unshift({id:Date.now(),area:areaSelect.value,riderId,name,note,by:USER?.name||'unknown',at:new Date().toLocaleString('ko-KR')});setStorage('riderNotes',arr);audit('create','riderNotes',{riderId,name,note});alert('저장되었습니다');}
+function renderNotes(){const rn=storage('regionNotes').filter(x=>x.area===areaSelect.value);regionNotes.innerHTML=rn.slice(0,5).map(x=>`<div class="memo-item"><b>${x.title||'특이사항'}</b><p>${x.note}</p><small>${x.by} · ${x.at}</small></div>`).join('')||'<small>아직 기록 없음</small>';}
+function renderAllNotes(){const rn=storage('regionNotes'), rider=storage('riderNotes');allNotes.innerHTML=[...rn,...rider].sort((a,b)=>b.id-a.id).map(x=>`<div class="memo-item"><b>${x.area} · ${x.name?x.name+' 기사':'권역 특이사항'}</b><p>${x.title?x.title+' - ':''}${x.note}</p><small>${x.by} · ${x.at}</small></div>`).join('')||'<small>기록 없음</small>';}
+function renderSettlement(){const complete=(WEEKLY||[]).slice(-7).reduce((a,x)=>a+(x.totalComplete||0),0);const reject=(WEEKLY||[]).slice(-7).reduce((a,x)=>a+(x.totalReject||0),0);const base=complete*500, outside=Math.round(complete*.08)*200, excess=Math.max(0,complete-7000)*150, grade=complete>=7000?complete*50:0,total=base+outside+excess+grade;settleBox.innerHTML=`<div class="settle-row"><span>최근 7일 완료</span><b>${num(complete)}건</b></div><div class="settle-row"><span>기본관리비</span><b>${money(base)}</b></div><div class="settle-row"><span>등급 추가관리비</span><b>${money(grade)}</b></div><div class="settle-row"><span>초과물량 관리비</span><b>${money(excess)}</b></div><div class="settle-row"><span>시간 외 운행 관리비</span><b>${money(outside)}</b></div><div class="settle-row total"><span>예상 총액</span><b>${money(total)}</b></div><div style="color:#64748b;font-size:13px;line-height:1.7">기본: ${num(complete)}건 × 500원<br>거절: ${num(reject)}건 참고용 표시</div>`;}
+function audit(action,table,after){const arr=storage('auditLogs');arr.unshift({id:Date.now(),action,table,after,by:USER?.name||'unknown',area:areaSelect.value,at:new Date().toLocaleString('ko-KR')});setStorage('auditLogs',arr)}
+function renderAudit(){const arr=storage('auditLogs');auditList.innerHTML=arr.map(x=>`<div class="memo-item"><b>${x.action} · ${x.table}</b><p>${JSON.stringify(x.after)}</p><small>${x.area} · ${x.by} · ${x.at}</small></div>`).join('')||'<small>수정 이력 없음</small>';}
+(function init(){const u=localStorage.getItem('adminUser');if(u){USER=JSON.parse(u);login.style.display='none';if(USER.area!=='전체'){areaSelect.value=USER.area;areaSelect.disabled=true}loadAll();}})();
+setInterval(loadAll,60000);
+</script>
+</body>
+</html>
