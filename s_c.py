@@ -155,22 +155,29 @@ TEAM_MAP_CACHE = None
 def team_of(name):
     global TEAM_MAP_CACHE
 
+    name = norm(name)
+
     if TEAM_MAP_CACHE is None:
         try:
             init_firebase()
-
             TEAM_MAP_CACHE = (
                 db.reference("/settings/suseongc/teamMap").get()
                 or {}
             )
-
+            TEAM_MAP_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_CACHE.items()}
             print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
-
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
 
-    return TEAM_MAP_CACHE.get(name, "마음팀")
+    mapped = TEAM_MAP_CACHE.get(name)
+    if mapped in TEAM_ORDER:
+        return mapped
+
+    if name in {norm(x) for x in BDMJ_TEAM_RIDERS}:
+        return "BDMJ팀"
+
+    return "마음팀"
 
 
 def to_int(value):
@@ -182,6 +189,10 @@ def to_int(value):
 
 def norm(value):
     return str(value).replace("\u200b", "").replace("\ufeff", "").strip()
+
+
+def normalize_phone(value):
+    return re.sub(r"\D", "", str(value or ""))
 
 
 def status_online(status):
@@ -229,6 +240,7 @@ def read_dom_rows(page):
     return page.evaluate(r"""
     () => {
       const phoneRe = /010[-\s]?\d{3,4}[-\s]?\d{4}/;
+      const exactPhoneRe = /^010[-\s]?\d{3,4}[-\s]?\d{4}$/;
       const hourRe = /^(?:[01]?\d|2[0-3])\s*시$/;
       const out = [];
       const seen = new Set();
@@ -242,6 +254,7 @@ def read_dom_rows(page):
       function norm(t){ return String(t||'').replace(/\u200b|\ufeff/g,'').trim(); }
       function isIntText(t){ return /^-?\d{1,5}$/.test(String(t||'').replace(/,/g,'').trim()); }
       function toInt(t){ const n = parseInt(String(t||'0').replace(/,/g,'').trim(),10); return Number.isFinite(n)?n:0; }
+      function phoneKey(t){ return String(t||'').replace(/\D/g,''); }
 
       function isLeafText(el){
         const t = norm(textOf(el));
@@ -285,16 +298,37 @@ def read_dom_rows(page):
         complete: findHeader('완료'),
         reject: findHeader('거절'),
         cancel: findHeader('배차취소', '배달취소'),
-        riderFault: findHeader('배달취소(라이더귀책)', '라이더귀책')
+        riderFault: findHeader('배달취소(라이더귀책)', '라이더귀책'),
+        morningPeriod: findHeader('아침점심피크'),
+        afternoonPeriod: findHeader('오후논피크'),
+        eveningPeriod: findHeader('저녁피크'),
+        midnightPeriod: findHeader('심야논피크')
       };
+
+      function nearestMetricByHeader(row, header, phoneNode, firstHourLeft){
+        if (!header) return null;
+        let best = null;
+        for (const cell of row) {
+          if (!isIntText(cell.text)) continue;
+          if (cell.cx <= phoneNode.cx + 10) continue;
+          if (Number.isFinite(firstHourLeft) && cell.right >= firstHourLeft - 4) continue;
+          const dx = Math.abs(cell.cx - header.cx);
+          // 헤더와 x좌표가 크게 떨어진 값은 다른 컬럼으로 봅니다.
+          if (dx > Math.max(34, header.width * 2.2)) continue;
+          const score = dx + Math.abs(cell.width - header.width) * 0.05;
+          if (!best || score < best.score) best = {cell, score};
+        }
+        return best ? toInt(best.cell.text) : null;
+      }
 
       // 시간 헤더를 20개 이상 못 찾으면 기존 파서가 처리하도록 raw lines로 반환
       if (hours.length < 20) {
-        const phoneNodes = nodes.filter(n => phoneRe.test(n.text));
+        const phoneNodes = nodes.filter(n => exactPhoneRe.test(n.text));
         for (const p of phoneNodes) {
-          const key = (p.text.match(phoneRe)?.[0] || '').replace(/\s/g,'');
-          if (!key || seen.has(key)) continue;
-          seen.add(key);
+          const key = phoneKey(p.text.match(phoneRe)?.[0] || '');
+          if (!key) continue;
+          // 여기서 seen 처리하지 않습니다.
+          // 잘못 잡힌 푸터/약관 행이 먼저 나오면 같은 전화번호의 실제 기사행이 스킵되는 문제가 있었습니다.
           const rowNodes = nodes.filter(x => Math.abs(x.cy - p.cy) <= 12 && x.height > 0 && x.height <= 80 && x.text.length <= 40)
                               .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
           out.push({__raw: rowNodes.map(x=>x.text)});
@@ -302,13 +336,11 @@ def read_dom_rows(page):
         return out;
       }
 
-      const phoneNodes = nodes.filter(n => phoneRe.test(n.text));
+      const phoneNodes = nodes.filter(n => exactPhoneRe.test(n.text));
       for (const phoneNode of phoneNodes) {
         const phone = phoneNode.text.match(phoneRe)?.[0];
         if (!phone) continue;
-        const key = phone.replace(/\s/g,'');
-        if (seen.has(key)) continue;
-        seen.add(key);
+        const key = phoneKey(phone);
 
         const row = nodes.filter(x => Math.abs(x.cy - phoneNode.cy) <= 13 && x.height > 0 && x.height <= 80 && x.text.length <= 50)
                          .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
@@ -323,56 +355,64 @@ def read_dom_rows(page):
           if (!t || phoneRe.test(t) || /^\d+$/.test(t) || t.includes('운행') || t.includes('휴대폰') || t.includes('이름')) continue;
           name = t; break;
         }
-        if (!name || badLegalNames.has(name)) continue;
+        if (!name || badLegalNames.has(name)) {
+          // 이름이 약관/푸터 문구로 잘못 잡힌 경우, 같은 줄의 다른 이름 후보를 한 번 더 찾습니다.
+          const candidates = row
+            .filter(x => x.cx < phoneNode.cx && x.text && !phoneRe.test(x.text))
+            .map(x => x.text)
+            .filter(t => !badLegalNames.has(t) && !/^\d+$/.test(t) && !t.includes('운행') && !t.includes('휴대폰') && !t.includes('이름'));
+          name = candidates.reverse().find(t => /^[가-힣]{2,6}$/.test(t)) || '';
+        }
+        if (!name || badLegalNames.has(name)) {
+          out.push({__debugSkip:true, reason:'bad_name', phone, raw:texts});
+          continue;
+        }
+        // 정상 기사로 확정된 뒤에만 전화번호 기준 중복 제거합니다.
+        // phoneNode를 '정확히 전화번호만 적힌 셀'로 제한했기 때문에,
+        // 푸터/상위 컨테이너가 전화번호를 선점하는 문제는 발생하지 않습니다.
+        if (seen.has(key)) {
+          out.push({__debugSkip:true, reason:'duplicate_phone', name, phone, raw:texts});
+          continue;
+        }
+        seen.add(key);
 
         const rightNums = row.filter(x => x.cx > phoneNode.cx + 10 && isIntText(x.text));
 
-        // 핵심: 요약 실적 숫자는 00~23시 시간대 컬럼 앞에 있는 숫자만 사용합니다.
-        // 이전 버전은 오른쪽 숫자를 전부 섞어서 00시/01시/02시 값을 완료·거절로 오인했습니다.
+        // 배민비즈 현재 화면 구조:
+        // 완료[푸드,B마트,배민스토어,합계] → 거절[푸드,B마트,배민스토어,합계]
+        // → 배차취소[푸드,B마트,배민스토어,합계]
+        // → 배달취소(라이더귀책)[푸드,B마트,배민스토어,합계]
+        // → 피크/시간대 컬럼 순서입니다.
+        // 따라서 수락률 실패값은 위치 인덱스로 정확히 푸드 컬럼만 읽습니다.
         const firstHourLeft = Math.min(...hours.map(h => h.left));
+        const periodLefts = [metricHeaders.morningPeriod, metricHeaders.afternoonPeriod, metricHeaders.eveningPeriod, metricHeaders.midnightPeriod]
+          .filter(Boolean).map(h => h.left);
+        const firstPeriodLeft = periodLefts.length ? Math.min(...periodLefts) : firstHourLeft;
+
         let metricCells = row
-          .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstHourLeft - 4 && isIntText(x.text))
+          .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstPeriodLeft - 4 && isIntText(x.text))
           .sort((a,b) => a.left - b.left);
 
-        // 배민 화면 폭/고정열 때문에 firstHourLeft 기준이 실패할 때만 전체 오른쪽 숫자 앞부분으로 fallback
-        if (metricCells.length < 7) {
-          metricCells = rightNums.slice(0, 7);
+        // 가로 스크롤/렌더링 때문에 피크 헤더 위치를 못 잡은 경우에만 시간대 앞 숫자를 fallback으로 씁니다.
+        if (metricCells.length < 16) {
+          metricCells = row
+            .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstHourLeft - 4 && isIntText(x.text))
+            .sort((a,b) => a.left - b.left)
+            .slice(0, 16);
         }
 
-        // 배민비즈 도출 기준:
-        // 완료 = 푸드 완료 + B마트 완료 + 배민스토어 완료 (또는 배민의 전체 완료 칸)
-        // 수락률 실패값 = 푸드 거절 + 푸드 취소 + 라이더귀책만 사용
-        // B마트/배민스토어 거절·취소는 반영하지 않습니다.
         const metricNums = metricCells.map(x => toInt(x.text));
-        // 배민비즈 현재 컬럼은 서비스별로 묶여 있습니다.
-        // [푸드 완료, 푸드 거절, 푸드 취소, B마트 완료, B마트 거절, B마트 취소, 배민스토어 완료, ...]
-        // 수락률 실패값은 반드시 푸드 거절/푸드 취소만 사용해야 하므로 1,2번을 사용합니다.
-        // 배민비즈 현재 화면은 시간대 컬럼 앞 요약 숫자가 보통
-        // [푸드완료, B마트완료, 배민스토어완료, 전체완료, 기타/예약, 푸드거절, 푸드취소, 라이더귀책 ...]
-        // 순서로 잡힙니다. 이전 버전은 1,2번을 거절/취소로 읽어서 기사카드와 total reject/cancel이 0으로 올라갔습니다.
+
+        // 인덱스 기준:
+        // 0 푸드완료, 1 B마트완료, 2 배민스토어완료, 3 완료합계
+        // 4 푸드거절, 5 B마트거절, 6 배민스토어거절, 7 거절합계
+        // 8 푸드배차취소, 9 B마트배차취소, 10 배민스토어배차취소, 11 배차취소합계
+        // 12 푸드배달취소(라이더귀책), 13 B마트, 14 배민스토어, 15 라이더귀책합계
         const foodComplete = metricNums[0] || 0;
-        const bmartComplete = metricNums[1] || 0;
-        const storeComplete = metricNums[2] || 0;
-        let complete = metricNums[3] || (foodComplete + bmartComplete + storeComplete);
-
-        // 수락률 실패값은 푸드 거절/푸드 취소만 사용합니다.
-        // 우선 검증된 위치(5,6)를 사용하고, 예전/다른 레이아웃 fallback으로 (1,2)를 사용합니다.
-        let reject = metricNums[5] || 0;
-        let cancel = metricNums[6] || 0;
-        let riderFault = metricNums[7] || metricNums[8] || 0;
-
-        if (reject === 0 && cancel === 0 && metricNums.length >= 3) {
-          // 구형 레이아웃 fallback: [푸드완료, 푸드거절, 푸드취소, ...]
-          const altReject = metricNums[1] || 0;
-          const altCancel = metricNums[2] || 0;
-          const altComplete = metricNums[0] || 0;
-          // 1,2번이 B마트/스토어 완료처럼 보이지 않는 경우에만 fallback 적용
-          if ((altReject + altCancel) > 0 && (altReject + altCancel) <= Math.max(altComplete * 2, 20)) {
-            reject = altReject;
-            cancel = altCancel;
-            riderFault = metricNums[3] || riderFault;
-          }
-        }
+        let complete = metricNums[3] || foodComplete;
+        let reject = metricNums[4] || 0;
+        let cancel = metricNums[8] || 0;
+        let riderFault = metricNums[12] || 0;
 
         const hourly = Array(24).fill(0);
         for (const hh of hours) {
@@ -445,18 +485,19 @@ def parse_row_lines(row_lines):
     if phone_idx + 35 >= len(lines):
         return None
 
+    # 현재 배민비즈 순서:
+    # 완료 4칸, 거절 4칸, 배차취소 4칸, 배달취소(라이더귀책) 4칸, 피크 4칸, 시간대
     food_complete = to_int(lines[phone_idx + 1])
-    bmart_complete = to_int(lines[phone_idx + 2])
-    store_complete = to_int(lines[phone_idx + 3])
-    complete = to_int(lines[phone_idx + 4])
+    complete = to_int(lines[phone_idx + 4]) or food_complete
 
-    reject = to_int(lines[phone_idx + 5])
-    cancel = to_int(lines[phone_idx + 6])
-    rider_fault = to_int(lines[phone_idx + 7])
+    reject = to_int(lines[phone_idx + 5])      # 푸드 거절
+    cancel = to_int(lines[phone_idx + 9])      # 푸드 배차취소
+    rider_fault = to_int(lines[phone_idx + 13]) # 푸드 배달취소(라이더귀책)
 
     hourly = []
+    hour_start = phone_idx + 21
     for h in range(24):
-        hourly.append(to_int(lines[phone_idx + 12 + h]))
+        hourly.append(to_int(lines[hour_start + h] if hour_start + h < len(lines) else 0))
 
     sla = split_hourly_by_sla(hourly)
     morning = sla["morning"]
@@ -501,6 +542,8 @@ def parse_row_lines(row_lines):
 def parse_dom_rows(row_groups):
     riders = []
     for group in row_groups:
+        if isinstance(group, dict) and group.get("__debugSkip"):
+            continue
         if isinstance(group, dict) and group.get("__raw") and not group.get("hourly"):
             rider = parse_row_lines(group.get("__raw") or [])
         elif isinstance(group, dict):
@@ -540,7 +583,12 @@ def parse_dom_rows(row_groups):
     return riders
 
 def collect_all_pages_by_dom(page):
-    base_url = page.url
+    # 로그인/리다이렉트 URL이 기준이 되면 page 파라미터가 sign-in에 붙는 문제가 있어
+    # 항상 배민비즈 기사 실적 URL을 기준으로 페이지를 이동합니다.
+    if "/delivery/history" in page.url:
+        base_url = page.url
+    else:
+        base_url = "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
     all_riders = []
     seen = set()
 
@@ -563,7 +611,14 @@ def collect_all_pages_by_dom(page):
         riders = parse_dom_rows(row_groups)
 
         print(f"{page_no + 1}페이지 DOM 행 수: {len(row_groups)}")
+        debug_skips = [g for g in row_groups if isinstance(g, dict) and g.get('__debugSkip')]
+        if debug_skips:
+            print(f"{page_no + 1}페이지 스킵 후보 행 수: {len(debug_skips)}")
+            for ds in debug_skips[:10]:
+                print('스킵행:', ds.get('reason'), ds.get('name', ''), ds.get('phone', ''), ds.get('raw', [])[:12])
         print(f"{page_no + 1}페이지 읽은 기사 수: {len(riders)}")
+        if riders:
+            print(f"{page_no + 1}페이지 첫/끝 기사: {riders[0]['name']} / {riders[-1]['name']}")
 
         if page_no == 0 and len(riders) == 0:
             print("DOM 샘플:")
@@ -576,11 +631,13 @@ def collect_all_pages_by_dom(page):
 
         new_count = 0
         for r in riders:
-            key = r["name"] + "_" + r["phone"]
+            key = normalize_phone(r.get("phone", "")) or (norm(r.get("name", "")) + "_" + norm(r.get("phone", "")))
             if key not in seen:
                 seen.add(key)
                 all_riders.append(r)
                 new_count += 1
+            else:
+                print(f"중복 기사 제외: {r.get('name')} / {r.get('phone')} / {r.get('status')}")
 
         print(f"{page_no + 1}페이지 신규 기사 수: {new_count}")
 
@@ -589,8 +646,10 @@ def collect_all_pages_by_dom(page):
             break
 
     print(f"전체 수집 기사 수: {len(all_riders)}")
+    phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
+    if len(phones) != len(set(phones)):
+        print("중복 휴대폰 감지:", [p for p in sorted(set(phones)) if phones.count(p) > 1])
     return all_riders
-
 
 def summary(rows):
     complete = sum(r["complete"] for r in rows)
