@@ -1,0 +1,81 @@
+[
+  {
+    "businessDate": "2026-06-29",
+    "closedAt": "2026-06-29 23:56:33",
+    "totalComplete": 914,
+    "totalReject": 68,
+    "totalCancel": 41,
+    "riderFault": 0,
+    "morning": 207,
+    "afternoon": 203,
+    "evening": 263,
+    "midnight": 208,
+    "morningExcluded": 33,
+    "midnightExcluded": 0,
+    "excluded": 33,
+    "periodTargets": {
+      "morning": 154,
+      "afternoon": 147,
+      "evening": 224,
+      "midnight": 175
+    },
+    "acceptRate": 89.3,
+    "spareRejects": 119,
+    "teams": {
+      "성공드림팀": {
+        "summary": {
+          "complete": 417,
+          "reject": 39,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 107,
+          "afternoon": 116,
+          "evening": 96,
+          "midnight": 84,
+          "morningExcluded": 14,
+          "midnightExcluded": 0,
+          "excluded": 14,
+          "count": 46,
+          "onlineCount": 3,
+          "acceptRate": 89.9,
+          "spareRejects": 57
+        },
+        "targets": {
+          "morning": 88,
+          "afternoon": 84,
+          "evening": 128,
+          "midnight": 100,
+          "total": 400,
+          "sets": 4
+        }
+      },
+      "연합팀": {
+        "summary": {
+          "complete": 497,
+          "reject": 29,
+          "cancel": 33,
+          "riderFault": 0,
+          "morning": 100,
+          "afternoon": 87,
+          "evening": 167,
+          "midnight": 124,
+          "morningExcluded": 19,
+          "midnightExcluded": 0,
+          "excluded": 19,
+          "count": 97,
+          "onlineCount": 6,
+          "acceptRate": 88.9,
+          "spareRejects": 62
+        },
+        "targets": {
+          "morning": 66,
+          "afternoon": 63,
+          "evening": 96,
+          "midnight": 75,
+          "total": 300,
+          "sets": 3
+        }
+      }
+    }
+  }
+]
