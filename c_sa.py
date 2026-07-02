@@ -85,15 +85,18 @@ SUCCESSDREAM_TEAM_RIDERS = [
     '이지환',
     '문용덕',
     '안다빈',
+    '명제규',
 ]
 
-TEAM_ORDER = ["성공드림팀", "연합팀"]
+TEAM_ORDER = ["성공", "BM", "서구", "룰랄"]
 
 # 팀 세트 수는 고객 최종 계약/목표 확인 후 여기만 조정하면 됩니다.
 AREA_CONFIG = {
     "성공드림": {
-        "성공드림팀": 4,
-        "연합팀": 3,
+        "성공": 4,
+        "BM": 1,
+        "서구": 1,
+        "룰랄": 1,
     }
 }
 
@@ -201,11 +204,15 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
 
 
 TEAM_MAP_CACHE = None
+TEAM_MAP_PHONE_CACHE = None
+TEAM_MAP_USERID_CACHE = None
 
-def team_of(name):
-    global TEAM_MAP_CACHE
+def team_of(name, phone=None, user_id=None):
+    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
 
     name = norm(name)
+    phone_key = normalize_phone(phone)
+    user_id = norm(user_id)
 
     if TEAM_MAP_CACHE is None:
         try:
@@ -214,22 +221,41 @@ def team_of(name):
                 db.reference("/settings/successdream/teamMap").get()
                 or {}
             )
+            TEAM_MAP_PHONE_CACHE = (
+                db.reference("/settings/successdream/teamMapPhone").get()
+                or {}
+            )
+            TEAM_MAP_USERID_CACHE = (
+                db.reference("/settings/successdream/teamMapUserId").get()
+                or {}
+            )
             TEAM_MAP_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_CACHE.items()}
-            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+            TEAM_MAP_PHONE_CACHE = {normalize_phone(k): norm(v) for k, v in TEAM_MAP_PHONE_CACHE.items()}
+            TEAM_MAP_USERID_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_USERID_CACHE.items()}
+            print(f"teamMap 로드 완료: 이름 {len(TEAM_MAP_CACHE)}명 / 전화 {len(TEAM_MAP_PHONE_CACHE)}명 / ID {len(TEAM_MAP_USERID_CACHE)}명")
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
+            TEAM_MAP_PHONE_CACHE = {}
+            TEAM_MAP_USERID_CACHE = {}
 
-    mapped = TEAM_MAP_CACHE.get(name)
+    mapped = None
+    if phone_key:
+        mapped = TEAM_MAP_PHONE_CACHE.get(phone_key)
+    if mapped not in TEAM_ORDER and user_id:
+        mapped = TEAM_MAP_USERID_CACHE.get(user_id)
+    if mapped not in TEAM_ORDER:
+        mapped = TEAM_MAP_CACHE.get(name)
     if mapped in TEAM_ORDER:
         return mapped
 
-    # 성공드림 명단에 있는 기사만 성공드림팀으로 분류합니다.
-    # 명단에 없는 현재 수집 기사는 모두 연합팀으로 집계합니다.
+    # Firebase 팀맵 누락/로드 실패 시 기존 성공드림 명단은 성공팀으로 유지합니다.
     if name in {norm(x) for x in SUCCESSDREAM_TEAM_RIDERS}:
-        return "성공드림팀"
+        return "성공"
 
-    return "연합팀"
+    # 명단에 없는 신규/외부 기사는 기본 성공팀으로 집계합니다.
+    # 이후 UI의 기사관리에서 BM/서구/룰랄로 이동하면 다음 수집부터 반영됩니다.
+    return "성공"
 
 def to_int(value):
     try:
@@ -576,7 +602,7 @@ def parse_row_lines(row_lines):
         "name": name,
         "phone": phone,
         "userId": user_id,
-        "team": team_of(name),
+        "team": team_of(name, phone, user_id),
         "status": "운행중" if is_online else "운행 종료",
         "isOnline": is_online,
         "complete": complete,
@@ -615,7 +641,7 @@ def parse_dom_rows(row_groups):
                 "name": group.get("name", ""),
                 "phone": group.get("phone", ""),
                 "userId": group.get("userId", ""),
-                "team": team_of(group.get("name", "")),
+                "team": team_of(group.get("name", ""), group.get("phone", ""), group.get("userId", "")),
                 "status": "운행중" if is_online else "운행 종료",
                 "isOnline": is_online,
                 "complete": complete,
@@ -1037,7 +1063,7 @@ def run_update(page):
     print(f"업로드 완료: {data['updatedAt']}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
-    print(f"성공드림팀 접속중: {data['teams']['성공드림팀']['summary']['onlineCount']}")
+    print("팀별 접속중:", " / ".join(f"{team} {data['teams'][team]['summary']['onlineCount']}" for team in TEAM_ORDER))
     print(f"전체 완료: {data['total']['complete']}")
     print(f"전체 거절: {data['total']['reject']}")
     print(f"전체 취소: {data['total']['cancel']}")
@@ -1045,7 +1071,7 @@ def run_update(page):
 
 
 def main():
-    global TEAM_MAP_CACHE
+    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
     print("SUPERSONIC 성공드림 DOM 자동 수집기")
 
     with sync_playwright() as p:
@@ -1070,6 +1096,8 @@ def main():
 
         while True:
             TEAM_MAP_CACHE = None
+            TEAM_MAP_PHONE_CACHE = None
+            TEAM_MAP_USERID_CACHE = None
 
             print("")
             print("===================================")
