@@ -23,27 +23,85 @@ HTML_FILE = BASE_DIR / "index.html"
 WEEKLY_FILE = BASE_DIR / "weekly_dalseoa.json"
 
 AREA_NAME = "달서A"
+TEAM_ORDER = []
+AREA_CONFIG = {}
+TEAM_MAP_PATH = ""
+LIVE_PATH = ""
+WEEKLY_PATH = ""
+CURRENT_SLUG = ""
+REQUIRED_TEAM_RIDERS = {}
+TEAM_MAP_CACHE = None
 
-DALSEO_TEAM_RIDERS = [
-    '김민승', '윤창근', '김병국', '신호준', '김영빈',
-    '김용우', '박지원', '김탁기', '김병철', '정영훈',
-    '김태광', '배재현', '김형민', '문승수', '이상민',
-    '정성훈', '이주철', '박기홍', '정판호', '나미영',
-    '황호용', '김영철', '남승훈', '남수현', '김민서',
-    '신진관', '임선미', '여재환', '정주현', '김기현',
-    '김범준', '이윤석', '양혜진', '김민우', '김혜성',
-    '김기헌', '조대영', '정승덕', '임상완', '김우진',
-    '신민규', '김진현', '김재석', '서청만',
-]
-
-TEAM_ORDER = ["소닉팀", "달서팀"]
-
-AREA_CONFIG = {
-    "달서A": {
-        "소닉팀": 5,
-        "달서팀": 1,
-    }
-}
+CENTER_CONFIGS = [{'area': '달서A',
+  'slug': 'dalseoa',
+  'aliases': ['대구달서7M(DP2506234693)', '대구달서7M (DP2506234693)', '대구달서7M', 'DP2506234693'],
+  'team_order': ['소닉팀', '달서팀'],
+  'area_config': {'소닉팀': 5, '달서팀': 1},
+  'team_map_path': '/settings/dalseoa/teamMap',
+  'live_path': '/live/dalseoa',
+  'weekly_path': '/weekly/dalseoa',
+  'required_team_riders': {'달서팀': ['김민승',
+                                   '윤창근',
+                                   '김병국',
+                                   '신호준',
+                                   '김영빈',
+                                   '김용우',
+                                   '박지원',
+                                   '김탁기',
+                                   '김병철',
+                                   '정영훈',
+                                   '김태광',
+                                   '배재현',
+                                   '김형민',
+                                   '문승수',
+                                   '이상민',
+                                   '정성훈',
+                                   '이주철',
+                                   '박기홍',
+                                   '정판호',
+                                   '나미영',
+                                   '황호용',
+                                   '김영철',
+                                   '남승훈',
+                                   '남수현',
+                                   '김민서',
+                                   '신진관',
+                                   '임선미',
+                                   '여재환',
+                                   '정주현',
+                                   '김기현',
+                                   '김범준',
+                                   '이윤석',
+                                   '양혜진',
+                                   '김민우',
+                                   '김혜성',
+                                   '김기헌',
+                                   '조대영',
+                                   '정승덕',
+                                   '임상완',
+                                   '김우진',
+                                   '신민규',
+                                   '김진현',
+                                   '김재석',
+                                   '서청만']}},
+ {'area': '달서B',
+  'slug': 'dalseob',
+  'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
+  'team_order': ['소닉팀', '넘버팀', '마음팀'],
+  'area_config': {'소닉팀': 2, '넘버팀': 5, '마음팀': 5},
+  'team_map_path': '/settings/dalseob/teamMap',
+  'live_path': '/live/dalseob',
+  'weekly_path': '/weekly/dalseob',
+  'required_team_riders': {}},
+ {'area': '중구A',
+  'slug': 'junggua',
+  'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
+  'team_order': ['소닉팀', '넘버팀', '마음팀'],
+  'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 3},
+  'team_map_path': '/settings/junggua/teamMap',
+  'live_path': '/live/junggua',
+  'weekly_path': '/weekly/junggua',
+  'required_team_riders': {}}]
 
 DAY_TARGETS = {
     0: [22, 21, 32, 25],
@@ -148,43 +206,26 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
     return max_bad_total - bad_total
 
 
-TEAM_MAP_CACHE = None
 
 def team_of(name):
     global TEAM_MAP_CACHE
-
     name = norm(name)
-
     if TEAM_MAP_CACHE is None:
         try:
             init_firebase()
-            TEAM_MAP_CACHE = (
-                db.reference("/settings/dalseoa/teamMap").get()
-                or {}
-            )
-            # Firebase 값도 공백/제로폭문자 때문에 매칭이 흔들리지 않게 정규화
+            TEAM_MAP_CACHE = db.reference(TEAM_MAP_PATH).get() or {}
             TEAM_MAP_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_CACHE.items()}
             print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
-            print("이주철 현재 팀:", TEAM_MAP_CACHE.get("이주철"))
-            print("김경오 현재 팀:", TEAM_MAP_CACHE.get("김경오"))
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
-
-    # 1순위: Firebase 수동 팀맵
     mapped = TEAM_MAP_CACHE.get(name)
     if mapped in TEAM_ORDER:
         return mapped
-
-    # 2순위: 코드에 포함된 달서팀 고정 명단
-    # 기존 코드에는 명단이 있었지만 실제 fallback으로 사용되지 않아
-    # 팀맵 누락/로드 실패 시 달서팀 기사가 전부 소닉팀으로 빠질 수 있었습니다.
-    if name in {norm(x) for x in DALSEO_TEAM_RIDERS}:
-        return "달서팀"
-
-    # 3순위: 기본값
-    return "소닉팀"
-
+    for team, names in REQUIRED_TEAM_RIDERS.items():
+        if name in {norm(x) for x in names}:
+            return team
+    return TEAM_ORDER[0] if TEAM_ORDER else "소닉팀"
 
 def to_int(value):
     try:
@@ -623,24 +664,17 @@ def empty_rider_card(name, team):
 
 
 def ensure_required_rider_cards(riders):
-    """
-    배민비즈 페이지에서 운행 종료/실적 0 기사 일부가 페이지네이션 또는 화면 로딩 문제로
-    DOM에 안 잡히는 경우가 있어도, 관제판 카드에서는 달서팀 고정 명단을 빠뜨리지 않습니다.
-    실적은 0으로 보강하고, 실제 수집된 기사는 절대 덮어쓰지 않습니다.
-    """
     existing_names = {norm(r.get("name", "")) for r in riders if r.get("name")}
     added = []
-
-    for name in DALSEO_TEAM_RIDERS:
-        clean_name = norm(name)
-        if clean_name and clean_name not in existing_names:
-            riders.append(empty_rider_card(clean_name, "달서팀"))
-            added.append(clean_name)
-            existing_names.add(clean_name)
-
+    for team, names in REQUIRED_TEAM_RIDERS.items():
+        for name in names:
+            clean_name = norm(name)
+            if clean_name and clean_name not in existing_names:
+                riders.append(empty_rider_card(clean_name, team))
+                added.append(clean_name)
+                existing_names.add(clean_name)
     if added:
         print("카드 보강 추가 기사:", ", ".join(added))
-
     return riders
 
 def collect_all_pages_by_dom(page):
@@ -967,15 +1001,14 @@ def make_data(riders):
 def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-
     try:
-        upload_json("data_dalseoa.json", "/live/dalseoa")
-        upload_json("weekly_dalseoa.json", "/weekly/dalseoa")
-        print("Firebase 업로드 완료")
+        upload_json(DATA_FILE.name, LIVE_PATH)
+        upload_json(WEEKLY_FILE.name, WEEKLY_PATH)
+        print(f"Firebase 업로드 완료: {LIVE_PATH}")
+        print(f"Firebase 업로드 완료: {WEEKLY_PATH}")
     except Exception as e:
         print("Firebase 업로드 실패")
         print(e)
-
 
 def save_html():
     return
@@ -1014,74 +1047,327 @@ def git_push():
 
 def run_update(page):
     riders = collect_all_pages_by_dom(page)
-
     if len(riders) == 0:
-        print("기사 데이터를 못 읽었습니다.")
-        return
-
+        raise RuntimeError("기사 데이터를 못 읽었습니다.")
     data = make_data(riders)
     save_weekly_if_close(data)
     weekly = load_weekly()
     data["weekly"] = weekly
     data["weeklySummary"] = weekly_summary(weekly, datetime.now())
-
     save_json(data)
-    save_html()
-    git_push()
-
     print(f"업로드 완료: {data['updatedAt']}")
+    print(f"권역: {AREA_NAME}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
-    print(f"소닉팀 접속중: {data['teams']['소닉팀']['summary']['onlineCount']}")
-    print(f"달서팀 접속중: {data['teams']['달서팀']['summary']['onlineCount']}")
+    for team in TEAM_ORDER:
+        print(f"{team} 접속중: {data['teams'][team]['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"전체 거절: {data['total']['reject']}")
     print(f"전체 취소: {data['total']['cancel']}")
     print(f"수락률: {data['total']['acceptRate']}%")
+    return data
 
+def activate_center(config):
+    global AREA_NAME, TEAM_ORDER, AREA_CONFIG, TEAM_MAP_PATH
+    global LIVE_PATH, WEEKLY_PATH, CURRENT_SLUG, DATA_FILE, WEEKLY_FILE
+    global REQUIRED_TEAM_RIDERS, TEAM_MAP_CACHE
+    AREA_NAME = config["area"]
+    CURRENT_SLUG = config["slug"]
+    TEAM_ORDER = list(config["team_order"])
+    AREA_CONFIG = {AREA_NAME: dict(config["area_config"])}
+    TEAM_MAP_PATH = config["team_map_path"]
+    LIVE_PATH = config["live_path"]
+    WEEKLY_PATH = config["weekly_path"]
+    REQUIRED_TEAM_RIDERS = dict(config.get("required_team_riders") or {})
+    DATA_FILE = BASE_DIR / f"data_{CURRENT_SLUG}.json"
+    WEEKLY_FILE = BASE_DIR / f"weekly_{CURRENT_SLUG}.json"
+    TEAM_MAP_CACHE = None
+
+
+def _visible(locator):
+    try:
+        return locator.count() > 0 and locator.first.is_visible()
+    except Exception:
+        return False
+
+
+def change_center(page, config):
+    """배민 협력사 변경 페이지의 커스텀 드롭다운을 열어 권역을 변경합니다.
+
+    핵심은 상단 헤더의 현재 협력사명이 아니라,
+    '협력사를 선택해주세요.' 아래쪽에 있는 실제 선택 박스를 좌표로 골라 클릭하는 것입니다.
+    """
+    print(f"협력사 변경 시도: {config['area']}")
+
+    target_code = norm(config.get("center_code", ""))
+    aliases = [norm(x) for x in config.get("aliases", []) if norm(x)]
+    if target_code and target_code not in aliases:
+        aliases.append(target_code)
+
+    page.goto("https://deliverycenter.baemin.com/center/change")
+    page.wait_for_load_state("domcontentloaded")
+    time.sleep(1.5)
+
+    # 현재 권역이 이미 목표 권역이면 선택 작업 없이 그대로 사용합니다.
+    current_center = page.evaluate(r"""
+    () => {
+      const visible = el => {
+        const r = el.getBoundingClientRect();
+        const s = getComputedStyle(el);
+        return r.width > 0 && r.height > 0 && s.display !== 'none' &&
+               s.visibility !== 'hidden' && s.opacity !== '0';
+      };
+      const compact = s => (s || '').replace(/\s+/g, '');
+      const prompt = Array.from(document.querySelectorAll('body *'))
+        .filter(visible)
+        .find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
+      const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
+      const items = Array.from(document.querySelectorAll('body *'))
+        .filter(visible)
+        .filter(el => /DP\d+/.test(compact(el.textContent)))
+        .map(el => ({
+          text: (el.textContent || '').trim(),
+          compact: compact(el.textContent),
+          y: el.getBoundingClientRect().top,
+          area: el.getBoundingClientRect().width * el.getBoundingClientRect().height
+        }))
+        .filter(x => x.y >= promptY - 5)
+        .sort((a,b) => a.compact.length - b.compact.length || a.area - b.area);
+      return items.length ? items[0].text : '';
+    }
+    """)
+
+    compact_current = norm(current_center).replace(" ", "")
+    compact_targets = [a.replace(" ", "") for a in aliases]
+    if current_center and any(a and (a in compact_current or compact_current in a) for a in compact_targets):
+        print(f"현재 협력사 이미 일치: {config['area']} / {current_center}")
+    else:
+        # 안내문구 아래 실제 드롭다운(현재 선택값)을 클릭합니다.
+        opened = page.evaluate(r"""
+        () => {
+          const visible = el => {
+            const r = el.getBoundingClientRect();
+            const s = getComputedStyle(el);
+            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
+                   s.visibility !== 'hidden' && s.opacity !== '0';
+          };
+          const compact = s => (s || '').replace(/\s+/g, '');
+          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
+          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
+          if (!prompt) return {ok:false, reason:'prompt_not_found'};
+          const promptBox = prompt.getBoundingClientRect();
+
+          // 상단 헤더에 있는 협력사명은 제외하고, 안내문구 아래의 현재값만 고릅니다.
+          let values = all.filter(el => {
+            const t = compact(el.textContent);
+            const r = el.getBoundingClientRect();
+            return /DP\d+/.test(t) && r.top >= promptBox.bottom - 8;
+          });
+          values.sort((a,b) => {
+            const at = compact(a.textContent), bt = compact(b.textContent);
+            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+            return at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
+          });
+          if (!values.length) return {ok:false, reason:'value_not_found'};
+
+          const value = values[0];
+          let cur = value;
+          for (let i=0; i<10 && cur; i++, cur=cur.parentElement) {
+            const r = cur.getBoundingClientRect();
+            const role = cur.getAttribute && cur.getAttribute('role');
+            const tag = (cur.tagName || '').toLowerCase();
+            const aria = cur.getAttribute && cur.getAttribute('aria-haspopup');
+            const expanded = cur.getAttribute && cur.getAttribute('aria-expanded');
+            const style = getComputedStyle(cur);
+            const reasonable = r.width >= value.getBoundingClientRect().width && r.width < 900 && r.height < 140;
+            const clickable = tag === 'button' || role === 'combobox' || role === 'button' ||
+                              aria === 'listbox' || aria === 'true' || expanded !== null ||
+                              cur.tabIndex >= 0 || style.cursor === 'pointer';
+            if (reasonable && clickable) {
+              cur.scrollIntoView({block:'center'});
+              cur.click();
+              return {ok:true, text:(value.textContent||'').trim(), tag, role:role||''};
+            }
+          }
+
+          // 클릭 가능한 부모를 못 찾으면 실제 현재값 중앙 좌표를 클릭합니다.
+          const r = value.getBoundingClientRect();
+          const x = r.left + r.width / 2;
+          const y = r.top + r.height / 2;
+          value.scrollIntoView({block:'center'});
+          const topEl = document.elementFromPoint(x, y) || value;
+          topEl.dispatchEvent(new MouseEvent('mousedown',{bubbles:true,clientX:x,clientY:y}));
+          topEl.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:x,clientY:y}));
+          topEl.click();
+          return {ok:true, text:(value.textContent||'').trim(), tag:'coordinate', role:''};
+        }
+        """)
+        if not opened.get("ok"):
+            raise RuntimeError(f"협력사 드롭다운을 열지 못했습니다: {opened}")
+
+        time.sleep(1.0)
+
+        # 목록에서 DP코드 또는 정확한 권역명을 찾아 클릭합니다.
+        selected_text = page.evaluate(r"""
+        (aliases) => {
+          const visible = el => {
+            const r = el.getBoundingClientRect();
+            const s = getComputedStyle(el);
+            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
+                   s.visibility !== 'hidden' && s.opacity !== '0';
+          };
+          const compact = s => (s || '').replace(/\s+/g, '');
+          const targets = aliases.map(compact).filter(Boolean);
+          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
+          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
+          const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
+
+          let matches = all.filter(el => {
+            const t = compact(el.textContent);
+            const r = el.getBoundingClientRect();
+            return r.top >= promptY - 10 && t && targets.some(a => t === a || t.includes(a));
+          });
+
+          matches.sort((a,b) => {
+            const at = compact(a.textContent), bt = compact(b.textContent);
+            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+            const roleA = a.getAttribute && a.getAttribute('role');
+            const roleB = b.getAttribute && b.getAttribute('role');
+            const bonusA = (roleA === 'option' ? 2000 : 0) + ((a.tagName||'').toLowerCase()==='li' ? 1000 : 0);
+            const bonusB = (roleB === 'option' ? 2000 : 0) + ((b.tagName||'').toLowerCase()==='li' ? 1000 : 0);
+            return bonusB - bonusA || at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
+          });
+
+          for (const el of matches) {
+            let cur = el;
+            for (let i=0; i<8 && cur; i++, cur=cur.parentElement) {
+              const role = cur.getAttribute && cur.getAttribute('role');
+              const tag = (cur.tagName || '').toLowerCase();
+              const style = getComputedStyle(cur);
+              const r = cur.getBoundingClientRect();
+              if (r.height < 120 && (role === 'option' || tag === 'li' || tag === 'button' || style.cursor === 'pointer')) {
+                cur.scrollIntoView({block:'center'});
+                cur.click();
+                return (el.textContent || '').trim();
+              }
+            }
+            el.scrollIntoView({block:'center'});
+            el.click();
+            return (el.textContent || '').trim();
+          }
+          return '';
+        }
+        """, aliases)
+
+        if not selected_text:
+            # 드롭다운이 첫 클릭에서 열리지 않은 경우 한 번만 다시 클릭 후 재시도합니다.
+            page.keyboard.press("Escape")
+            time.sleep(0.3)
+            retry = page.evaluate(r"""
+            () => {
+              const visible = el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; };
+              const compact=s=>(s||'').replace(/\s+/g,'');
+              const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+              const prompt=all.find(el=>compact(el.textContent)===compact('협력사를 선택해주세요.'));
+              if(!prompt) return false;
+              const py=prompt.getBoundingClientRect().bottom;
+              const vals=all.filter(el=>/DP\d+/.test(compact(el.textContent))&&el.getBoundingClientRect().top>=py-8)
+                .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
+              if(!vals[0]) return false;
+              const r=vals[0].getBoundingClientRect();
+              vals[0].scrollIntoView({block:'center'});
+              const el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)||vals[0];
+              el.click(); return true;
+            }
+            """)
+            if retry:
+                time.sleep(1.0)
+                selected_text = page.evaluate(r"""
+                (aliases) => {
+                  const visible=el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden';};
+                  const compact=s=>(s||'').replace(/\s+/g,'');
+                  const targets=aliases.map(compact).filter(Boolean);
+                  const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+                  const matches=all.filter(el=>{const t=compact(el.textContent);return t&&targets.some(a=>t===a||t.includes(a));})
+                    .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
+                  for(const el of matches){const role=el.getAttribute&&el.getAttribute('role');if(role==='option'||(el.tagName||'').toLowerCase()==='li'){el.click();return (el.textContent||'').trim();}}
+                  if(matches[0]){matches[0].click();return (matches[0].textContent||'').trim();}
+                  return '';
+                }
+                """, aliases)
+
+        if not selected_text:
+            visible_texts = page.evaluate(r"""
+            () => Array.from(document.querySelectorAll('body *'))
+              .filter(el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; })
+              .map(el => (el.textContent||'').replace(/\s+/g,' ').trim())
+              .filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i)
+              .filter(v => /DP\d+|달서|중A|협력사/.test(v)).slice(0,100)
+            """)
+            raise RuntimeError(f"{config['area']} 선택 항목을 찾지 못했습니다. 보이는 후보: {visible_texts}")
+
+        print(f"협력사 항목 선택 완료: {config['area']} / {selected_text}")
+        time.sleep(0.6)
+
+        done = page.get_by_text("선택 완료", exact=True)
+        if done.count() == 0:
+            done = page.get_by_text("선택 완료", exact=False)
+        if done.count() == 0:
+            raise RuntimeError("선택 완료 버튼을 찾지 못했습니다.")
+        done.first.click(force=True)
+
+        try:
+            page.wait_for_url(lambda url: "/center/change" not in url, timeout=15000)
+        except Exception:
+            pass
+        page.wait_for_load_state("domcontentloaded")
+        time.sleep(1.5)
+
+    history_url = (
+        "https://deliverycenter.baemin.com/delivery/history"
+        "?page=0&size=100&orderName=name&orderBy=asc"
+        "&name=&userId=&phoneNumber=&riderStatus="
+    )
+    page.goto(history_url)
+    page.wait_for_load_state("networkidle")
+    time.sleep(1.2)
+    print(f"협력사 변경 완료: {config['area']}")
 
 def main():
-    global TEAM_MAP_CACHE
-    print("SUPERSONIC 달서A DOM 자동 수집기")
-
+    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 s6")
+    print("대상 권역:", ", ".join(c["area"] for c in CENTER_CONFIGS))
     with sync_playwright() as p:
-        browser = p.chromium.launch_persistent_context(
-            user_data_dir=str(BASE_DIR / "chrome_profile_dalseoa"),
-            headless=False,
-            viewport={"width": 1400, "height": 900},
-        )
-
-        page = browser.pages[0]
-
-        page.goto(
-            "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
-        )
-
-        print("1. 열린 배민비즈 창에서 로그인하세요.")
-        print("2. 달서A 기사 실적 페이지로 이동하세요.")
-        print("3. 100개 보기로 맞추세요.")
-        print("4. 준비되면 CMD에서 Enter 누르세요.")
-
+        browser = p.chromium.launch_persistent_context(user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"), headless=False, viewport={"width": 1400, "height": 900}, args=["--disable-gpu", "--disable-dev-shm-usage", "--disable-extensions", "--mute-audio"])
+        page = browser.pages[0] if browser.pages else browser.new_page()
+        page.goto("https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=")
+        print("1. 열린 배민비즈 창에서 슈퍼소닉 계정으로 로그인하세요.")
+        print("2. 기사 실적 페이지가 열리는지 확인하세요.")
+        print("3. 준비되면 CMD에서 Enter를 누르세요.")
         input("Enter 대기 중...")
-
         while True:
-            TEAM_MAP_CACHE = None
-
-            print("")
-            print("===================================")
-            print("자동 수집 시작")
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-            try:
-                run_update(page)
-            except Exception as e:
-                print("오류 발생:")
-                print(e)
-
-            print(f"{REFRESH_SECONDS}초 후 다시 자동 수집합니다.")
+            cycle_started = datetime.now()
+            print("\n" + "=" * 60)
+            print("통합 자동 수집 시작:", cycle_started.strftime("%Y-%m-%d %H:%M:%S"))
+            success_count = 0
+            for config in CENTER_CONFIGS:
+                print("\n" + "-" * 60)
+                print(f"[{config['area']}] 수집 시작")
+                try:
+                    activate_center(config)
+                    change_center(page, config)
+                    run_update(page)
+                    success_count += 1
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    print(f"[{config['area']}] 오류 발생: {e}")
+                    import traceback; traceback.print_exc()
+            elapsed = int((datetime.now() - cycle_started).total_seconds())
+            print("\n" + "=" * 60)
+            print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
+            print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
             time.sleep(REFRESH_SECONDS)
 
 
 if __name__ == "__main__":
     main()
-

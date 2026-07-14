@@ -24,17 +24,14 @@ WEEKLY_FILE = BASE_DIR / "weekly_haneul.json"
 
 AREA_NAME = "하늘"
 
-HANEUL_TEAM_RIDERS = [
-    # 하늘팀 기사 명단을 받으면 여기에 이름을 추가하세요.
-]
+HANEUL_TEAM_RIDERS = []  # 하늘은 명단 구분 없이 전체 기사 = 하늘팀
 
-TEAM_ORDER = ["하늘팀", "연합팀"]
+TEAM_ORDER = ["하늘팀"]
 
-# 팀 세트 수는 고객 최종 계약/목표 확인 후 여기만 조정하면 됩니다.
+# 하늘은 단독 업체 2세트입니다.
 AREA_CONFIG = {
     "하늘": {
-        "하늘팀": 4,
-        "연합팀": 3,
+        "하늘팀": 2,
     }
 }
 
@@ -144,33 +141,7 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
 TEAM_MAP_CACHE = None
 
 def team_of(name):
-    global TEAM_MAP_CACHE
-
-    name = norm(name)
-
-    if TEAM_MAP_CACHE is None:
-        try:
-            init_firebase()
-            TEAM_MAP_CACHE = (
-                db.reference("/settings/haneul/teamMap").get()
-                or {}
-            )
-            TEAM_MAP_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_CACHE.items()}
-            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
-        except Exception as e:
-            print("teamMap 로드 실패:", e)
-            TEAM_MAP_CACHE = {}
-
-    mapped = TEAM_MAP_CACHE.get(name)
-    if mapped in TEAM_ORDER:
-        return mapped
-
-    # 명단이 등록되면: 명단 기사 = 하늘팀, 명단 외 = 연합팀
-    # 명단이 아직 없으면: 수집된 기사를 기본 하늘팀으로 분류합니다.
-    haneul_names = {norm(x) for x in HANEUL_TEAM_RIDERS}
-    if haneul_names:
-        return "하늘팀" if name in haneul_names else "연합팀"
-
+    # 하늘은 전체 기사 모두를 하나의 업체로 집계합니다.
     return "하늘팀"
 
 def to_int(value):
@@ -915,9 +886,17 @@ def save_json(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
+    # weekly 파일이 아직 없으면 빈 배열로 먼저 생성합니다.
+    if not WEEKLY_FILE.exists():
+        with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
+            json.dump([], f, ensure_ascii=False, indent=2)
+
     try:
+        init_firebase()
         upload_json("data_haneul.json", "/live/haneul")
+        print("Firebase 업로드 완료: /live/haneul")
         upload_json("weekly_haneul.json", "/weekly/haneul")
+        print("Firebase 업로드 완료: /weekly/haneul")
         print("Firebase 업로드 완료")
     except Exception as e:
         print("Firebase 업로드 실패")

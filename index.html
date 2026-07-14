@@ -15,6 +15,75 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
 @media(max-width:540px){.wrap{padding:16px 24px 60px}.top-actions{margin:0 46px 12px}.move,.mode{padding:13px 15px;font-size:16px}.logo-img{width:88px}.brand{font-size:34px}.sub{font-size:18px}.area{font-size:20px}.top-update{font-size:17px}.area-menu{left:24px;top:66px}.summary{border-radius:22px}.sum{min-height:102px;padding:20px 2px 15px}.sum-title{font-size:15px}.sum-val{font-size:29px}.weekly-grid{grid-template-columns:1fr 1fr;gap:12px}.day-card{padding:20px 14px}.day-label{font-size:31px}.period-row{font-size:16px}.period-grid{grid-template-columns:1fr}.period-card{padding:24px}.riders{grid-template-columns:1fr}.controls{flex-direction:column;align-items:stretch}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.filters button{min-width:0;padding:10px 4px}.sort{justify-content:flex-end}.mission-form{grid-template-columns:1fr}.mission-form .field:first-child{grid-column:auto}.mission-result{grid-template-columns:1fr 1fr 1fr}.mission-stat{padding:10px 4px}.mission-stat b{font-size:19px}}
 
 .excluded-note{margin-top:10px;color:#b15b00;font-size:14px;font-weight:1000;line-height:1.45}body.dark .excluded-note{color:#ffbf66}.excluded-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.excluded-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:var(--soft);font-size:14px;font-weight:1000}.excluded-chip::before{content:'';display:inline-block;width:9px;height:9px;border-radius:999px;background:#999}.excluded-chip.sonic::before{background:var(--red)}.excluded-chip.number::before{background:var(--blue)}.excluded-chip.maeum::before,.excluded-chip.dalseo::before{background:var(--purple)}.period-excluded{margin-top:6px;color:#b15b00;font-size:14px;font-weight:1000}.stat b .miss{color:#b15b00;font-size:.82em;letter-spacing:-.5px}.stat small .miss-label{color:#b15b00}.rider .stat:first-child b{line-height:1.18}body.dark .stat b .miss,body.dark .stat small .miss-label{color:#ffbf66}
+
+.settlement-wrap{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 16px;margin-bottom:26px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.settlement-title{text-align:center;font-size:34px;font-weight:1000;letter-spacing:-1.5px;margin:2px 0 4px}.settlement-range{text-align:center;font-size:17px;margin-bottom:18px}
+.settlement-selectors{display:flex;gap:10px;margin-bottom:14px}.settlement-selectors select{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:13px;padding:12px 10px;font-size:14px;font-weight:1000}
+.settlement-team-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:4px 0 22px}.settlement-team-btn{border:1px solid var(--red);background:var(--card);color:var(--red);border-radius:14px;padding:14px 8px;font-size:20px;font-weight:1000;cursor:pointer}.settlement-team-btn.active{background:var(--red);color:#fff}
+.settlement-table{width:100%;border-collapse:collapse;table-layout:fixed}.settlement-table th{background:var(--red);color:#fff;border-right:5px solid var(--card);border-radius:999px;padding:6px 2px;font-size:12px}.settlement-table th:first-child{background:transparent}.settlement-table td{padding:17px 2px;text-align:center;border-bottom:1px solid rgba(230,0,18,.35);font-size:15px;font-weight:1000}.settlement-table tr:last-child td{border-bottom:0}.settlement-table td.day{font-size:25px;text-align:left;width:42px}.settlement-table td.bonus{font-size:14px}.settlement-table .future{color:var(--muted)}
+.settlement-status{margin:16px 0 10px;border-radius:14px;padding:12px 14px;text-align:center;font-size:14px;font-weight:1000}.settlement-status.ok{background:#e8fff2;color:#008a43}.settlement-status.fail{background:#fff0f0;color:var(--red)}.settlement-status.wait{background:#f4f4f4;color:#666}
+.settlement-total{text-align:center;margin:24px 0 14px}.settlement-total small{display:block;font-size:15px;color:var(--muted);margin-bottom:6px}.settlement-total strong{font-size:32px;color:var(--red);letter-spacing:-1px}
+.settlement-money{border-top:2px solid var(--text);padding-top:12px}.settlement-money-row{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;font-size:15px}.settlement-money-row span{color:var(--muted)}.settlement-money-row b{text-align:right}.settlement-money-row.grand{margin-top:6px;padding-top:14px;border-top:1px solid var(--line);font-size:18px}.settlement-money-row.grand span,.settlement-money-row.grand b{color:var(--text)}
+.settlement-note{margin-top:13px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center}
+@media(max-width:540px){.settlement-wrap{padding:18px 10px}.settlement-title{font-size:31px}.settlement-table th{font-size:11px;border-right:3px solid var(--card)}.settlement-table td{font-size:13px;padding:15px 1px}.settlement-table td.day{font-size:23px;width:36px}.settlement-table td.bonus{font-size:12px}.settlement-selectors{flex-direction:column}.settlement-total strong{font-size:29px}}
+
+/* 버튼/제목 크기만 축소 — 기능 및 스크립트 변경 없음 */
+.section-title{
+  margin:18px 0 8px !important;
+  gap:8px !important;
+  font-size:22px !important;
+  letter-spacing:-0.5px !important;
+}
+.section-title .icon{
+  width:7px !important;
+  height:24px !important;
+}
+.section-title small{
+  font-size:14px !important;
+}
+.toggle-btn{
+  border-radius:10px !important;
+  font-size:15px !important;
+  padding:10px 12px !important;
+  margin:4px 0 12px !important;
+  box-shadow:0 4px 9px rgba(230,0,18,.16) !important;
+}
+@media(max-width:760px){
+  .section-title{
+    margin:16px 0 7px !important;
+    font-size:20px !important;
+  }
+  .section-title small{
+    font-size:13px !important;
+  }
+  .toggle-btn{
+    font-size:14px !important;
+    padding:9px 10px !important;
+    margin:4px 0 10px !important;
+  }
+}
+
+
+/* 단체 문자 */
+.sms-box{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;margin-bottom:18px}
+.sms-team-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.sms-team-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:11px 6px;font-size:15px;font-weight:1000;cursor:pointer}
+.sms-team-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.sms-message{width:100%;min-height:120px;resize:vertical;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:14px;padding:14px;font-size:16px;font-weight:800;line-height:1.5}
+.sms-summary{margin:12px 0;color:var(--muted);font-size:14px;font-weight:1000}
+.sms-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sms-group{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft)}
+.sms-group-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}
+.sms-group-head b{font-size:16px}.sms-group-head span{color:var(--red);font-size:14px}
+.sms-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sms-actions button{border:0;border-radius:10px;padding:10px 6px;font-size:14px;font-weight:1000;cursor:pointer}
+.sms-send{background:var(--red);color:#fff}.sms-copy{background:var(--card);color:var(--text);border:1px solid var(--line)!important}
+.sms-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.5;text-align:center}
+@media(max-width:540px){
+  .sms-team-tabs{grid-template-columns:repeat(2,1fr)}
+  .sms-groups{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -48,6 +117,15 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
   <button class="toggle-btn" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
   <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
 
+
+  <div id="settlementSection">
+    <div class="section-title"><span class="icon"></span>주간 정산 <small>달서A</small></div>
+    <button class="toggle-btn" onclick="togglePanel('settlementPanel','settlementToggle')" id="settlementToggle">주간 정산 보기 ▾</button>
+    <div class="panel" id="settlementPanel">
+      <div class="settlement-wrap" id="settlementBox"></div>
+    </div>
+  </div>
+
   <div class="section-title"><span class="icon"></span>기사관리</div>
 <button class="toggle-btn" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
 <div class="panel" id="managePanel">
@@ -75,6 +153,19 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
     </div>
   </div>
 
+
+  <div class="section-title"><span class="icon"></span>단체 문자</div>
+  <button class="toggle-btn" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
+  <div class="panel" id="smsPanel">
+    <div class="sms-box">
+      <div class="sms-team-tabs" id="smsTeamTabs"></div>
+      <textarea id="smsMessage" class="sms-message" placeholder="보낼 문자 내용을 입력하세요." oninput="saveSmsDraft()"></textarea>
+      <div class="sms-summary" id="smsSummary">팀을 선택하면 그룹이 표시됩니다.</div>
+      <div class="sms-groups" id="smsGroups"></div>
+      <div class="sms-note">전화번호는 중복 제거 후 팀별로 최대 99명씩 나눕니다. 문자 앱이 열리면 수신자와 내용을 확인한 뒤 직접 전송하세요.</div>
+    </div>
+  </div>
+
   <div class="section-title"><span class="icon"></span>구간별 실적 <small>(완료 / 발주량)</small></div>
   <div class="period-grid" id="periodCards"></div>
   <div class="controls"><div class="filters" id="filters"></div><div class="sort">정렬:<select id="sortSelect" onchange="render()"><option value="complete">완료순</option><option value="name">가나다순</option></select></div></div>
@@ -83,9 +174,9 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
 <script>
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
-  "달서A":{key:"dalseoa",file:"/live/dalseoa",weekly:"/weekly/dalseoa",teams:["소닉팀","달서팀"],labels:{"소닉팀":"소닉","달서팀":"달서"},classes:{"소닉팀":"sonic","달서팀":"dalseo"},missionTeam:null},
-  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀"},
-  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀"}
+  "달서A":{key:"dalseoa",file:"/live/dalseoa",weekly:"/weekly/dalseoa",teams:["소닉팀","달서팀"],labels:{"소닉팀":"소닉","달서팀":"달서"},classes:{"소닉팀":"sonic","달서팀":"dalseo"},missionTeam:null,settlementUnit:250},
+  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀",settlementUnit:250},
+  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀",settlementUnit:350}
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 function initialArea(){
@@ -95,29 +186,65 @@ function initialArea(){
   if(AREAS[saved]) return saved;
   return '달서A';
 }
-let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체';
+let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='';
 function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return r.morningExcluded!=null?Number(r.morningExcluded||0):hsum(r,6,10)}function midnightExcluded(r){return r.midnightExcluded!=null?Number(r.midnightExcluded||0):hsum(r,0,6)}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
 function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
 function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
 async function fetchJson(path){
   const url=FIREBASE_BASE+path+".json?v="+Date.now();
-  const r=await fetch(url,{
-  cache:'no-store',
-  headers:{
-    'Cache-Control':'no-cache',
-    'Pragma':'no-cache'
-  }
-});
+  const r=await fetch(url,{cache:'no-store'});
   if(!r.ok)throw new Error(path);
   const data=await r.json();
   if(data===null||data===undefined)throw new Error(path+" empty");
   return data;
 }
-async function loadData(){renderAreaMenu();try{DATA=await fetchJson(areaCfg().file);try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}document.getElementById('errorBox').innerHTML='';render()}catch(e){DATA=null;document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 데이터를 읽지 못했습니다.<br>${e.message||''}<br>Firebase 업로드와 Realtime Database 상태를 확인하세요.</div>`}}
+async function loadData(){
+  renderAreaMenu();
+  try{
+    DATA=await fetchJson(areaCfg().file);
+  }catch(e){
+    DATA=null;
+    document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 실시간 데이터를 읽지 못했습니다.<br>${e.message||''}<br>Firebase 경로를 확인하세요.</div>`;
+    return;
+  }
+  try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}
+  document.getElementById('errorBox').innerHTML='';
+  try{render()}catch(e){
+    console.error('화면 렌더링 오류',e);
+    document.getElementById('errorBox').innerHTML=`<div class="error">데이터는 읽었지만 화면 계산 중 오류가 발생했습니다.<br>${e.message||''}</div>`;
+  }
+}
 function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
 let totals={complete:0,bad:0,spare:0,excluded:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),excluded=Number(r.excluded||r.totalExcluded||0),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;totals.excluded+=excluded;return{label:labels[i]||'',date:dk,has,complete,bad,excluded,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);if(!totals.excluded&&DATA&&DATA.total&&DATA.total.excluded!=null)totals.excluded=Number(DATA.total.excluded||0);return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
-function render(){const d=DATA;if(!d)return;const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';document.getElementById('areaText').innerText=d.area||CURRENT;document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;document.getElementById('weekComplete').innerText=n(ws.complete);document.getElementById('weekBad').innerText=n(ws.bad);document.getElementById('weekRate').innerText=ws.rate+'%';document.getElementById('weekSpare').innerText=n(ws.spare);document.getElementById('dayComplete').innerText=n(d.total.complete);document.getElementById('dayOrder').innerText=n(totalOrder);document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';document.getElementById('daySpare').innerText=n(d.total.spareRejects);document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');renderWeekly(ws);renderPeriods();renderFiltersAndRiders();renderMission();renderManageList();}
+function render(){
+  const d=DATA;if(!d)return;
+  const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();
+  document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';
+  document.getElementById('areaText').innerText=d.area||CURRENT;
+  document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');
+  document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');
+  document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;
+  document.getElementById('weekComplete').innerText=n(ws.complete);
+  document.getElementById('weekBad').innerText=n(ws.bad);
+  document.getElementById('weekRate').innerText=ws.rate+'%';
+  document.getElementById('weekSpare').innerText=n(ws.spare);
+  document.getElementById('dayComplete').innerText=n(d.total.complete);
+  document.getElementById('dayOrder').innerText=n(totalOrder);
+  document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';
+  document.getElementById('daySpare').innerText=n(d.total.spareRejects);
+  document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';
+  document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';
+  document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');
+  const safe=(name,fn)=>{try{fn()}catch(e){console.error(name,e)}};
+  safe('주간실적',()=>renderWeekly(ws));
+  safe('정산',renderSettlement);
+  safe('구간실적',renderPeriods);
+  safe('기사카드',renderFiltersAndRiders);
+  safe('미션',renderMission);
+  safe('팀관리',renderManageList);
+  safe('단체문자',renderSms);
+}
 function renderWeekly(ws){
   let failed=ws.days.filter(x=>x.has&&!x.ok);
   const cfg=areaCfg(),teams=cfg.teams;
@@ -133,6 +260,317 @@ function periodIncludedDone(team,key){
   // d_a.py에서 이미 SLA 포함 구간만 summary[key]에 저장합니다.
   // 여기서 미포함을 다시 빼면 게이지가 이중 차감됩니다.
   return Number(teamObj(team).summary[key]||0);
+}
+
+
+function dateAdd(dateStr,days){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  dt.setDate(dt.getDate()+Number(days||0));
+  const yy=dt.getFullYear();
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  return `${yy}-${mm}-${dd}`;
+}
+function weekStartFor(dateStr){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  const diff=(dt.getDay()-3+7)%7;
+  dt.setDate(dt.getDate()-diff);
+  const yy=dt.getFullYear();
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  return `${yy}-${mm}-${dd}`;
+}
+function settlementWeeks(){
+  const now=new Date();
+  const today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const currentStart=weekStartFor(today);
+  return [
+    currentStart,
+    dateAdd(currentStart,-7),
+    dateAdd(currentStart,-14),
+    dateAdd(currentStart,-21)
+  ];
+}
+function settlementRows(start){const end=dateAdd(start,6);return (Array.isArray(WEEKLY)?WEEKLY:[]).filter(r=>r.businessDate>=start&&r.businessDate<=end)}
+const OVERTIME_UNIT=100;
+function teamDailyRecord(row,team,key){
+  if(!row||!row.teams||!row.teams[team]) return {has:false,done:0,goal:0};
+  const t=row.teams[team]||{};
+  const sm=t.summary||t||{};
+  const tg=t.targets||{};
+  return {has:true,done:Number(sm[key]||0),goal:Number(tg[key]||0)};
+}
+function slotBonus(done,goal,unit){
+  done=Math.floor(Number(done||0));
+  goal=Math.floor(Number(goal||0));
+  unit=Number(unit||0);
+
+  if(goal<=0||done<=goal||unit<=0)return 0;
+
+  // 100% 초과분부터 150%까지만 인정합니다.
+  // 각 10% 구간은 실제 정수 물량 경계로 분리합니다.
+  // 예: 목표 110건이면 각 구간은 정확히 11건씩 배분됩니다.
+  const boundaries=[
+    goal,
+    Math.floor(goal*1.10),
+    Math.floor(goal*1.20),
+    Math.floor(goal*1.30),
+    Math.floor(goal*1.40),
+    Math.floor(goal*1.50)
+  ];
+
+  const rates=[0.90,0.80,0.70,0.60,0.50];
+  const paidDone=Math.min(done,boundaries[5]);
+  let remaining=Math.max(0,paidDone-goal);
+  let total=0;
+
+  for(let i=0;i<5;i++){
+    const bandCapacity=Math.max(0,boundaries[i+1]-boundaries[i]);
+    const bandCount=Math.min(remaining,bandCapacity);
+    total+=bandCount*unit*rates[i];
+    remaining-=bandCount;
+    if(remaining<=0)break;
+  }
+
+  return Math.round(total);
+}
+function calcTeamSettlement(start,team){
+  const rows=settlementRows(start);
+  const unit=Number(areaCfg()?.settlementUnit||0);
+  const slots=[];
+  let complete=0,bad=0,excluded=0;
+  let sets=0;
+
+  rows.forEach(r=>{
+    const t=r?.teams?.[team];
+    const sm=t?.summary||t||{};
+    const tg=t?.targets||{};
+
+    if(t){
+      complete+=Number(sm.complete||0);
+      bad+=Number(sm.reject||0)+Number(sm.cancel||0)+Number(sm.riderFault||0);
+      excluded+=Number(sm.excluded||0);
+
+      // 해당 주차 JSON에 저장된 실제 세트 수를 기준으로 합니다.
+      if(Number(tg.sets||0)>0){
+        sets=Number(tg.sets||0);
+      }
+    }
+
+    PERIODS.forEach(([key,,label])=>{
+      const done=Number(sm[key]||0);
+      const goal=Number(tg[key]||0);
+
+      // 각 날짜·팀·구간의 목표값도 JSON 값을 그대로 사용합니다.
+      if(goal>0){
+        slots.push({
+          date:r.businessDate,
+          key,
+          label,
+          done,
+          goal,
+          rate:done/goal,
+          excessBonus:slotBonus(done,goal,unit)
+        });
+      }
+    });
+  });
+
+  // 새 주차라 아직 weekly 팀 기록이 없을 때만 현재 실시간 JSON의 sets를 보조값으로 사용합니다.
+  if(sets<=0){
+    sets=Number(DATA?.teams?.[team]?.targets?.sets||0);
+  }
+
+  const fixedVolume=750*sets;
+  const base=fixedVolume*300;
+  const gradeBase=fixedVolume*unit;
+  const excess=slots.reduce((s,x)=>s+Number(x.excessBonus||0),0);
+  const overtime=excluded*OVERTIME_UNIT;
+  const achieved=slots.filter(x=>x.done>=x.goal).length;
+  const rate=acceptRate(complete,bad);
+
+  return {
+    rows,
+    slots,
+    complete,
+    bad,
+    excluded,
+    achieved,
+    sets,
+    rate,
+    base,
+    gradeBase,
+    excess,
+    overtime,
+    unit,
+    total:base+gradeBase+excess+overtime
+  };
+}
+
+function setSettlementWeek(v){localStorage.setItem('settlementWeek',v);renderSettlement()}
+function setSettlementTeam(v){localStorage.setItem('settlementTeam',v);renderSettlement()}
+function renderSettlement(){
+  const sec=document.getElementById('settlementSection'),box=document.getElementById('settlementBox');
+  if(!sec||!box)return;
+  sec.style.display='block';
+
+  const cfg=areaCfg(),weeks=settlementWeeks();
+  if(!weeks.length){
+    box.innerHTML='<div class="settlement-status wait">주간 기록이 아직 없습니다.</div>';
+    return;
+  }
+
+  let week=localStorage.getItem('settlementWeek');
+  if(!weeks.includes(week))week=weeks[0];
+
+  let team=localStorage.getItem('settlementTeam');
+  if(!cfg.teams.includes(team))team=cfg.teams[0];
+
+  const end=dateAdd(week,6),c=calcTeamSettlement(week,team),rows=settlementRows(week);
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  let dayRows='';
+
+  for(let i=0;i<7;i++){
+    const date=dateAdd(week,i),r=byDate[date],cells=[],bonuses=[];
+    PERIODS.forEach(([key])=>{
+      const rec=teamDailyRecord(r,team,key);
+      cells.push(rec.has&&rec.goal>0?`${Math.floor(rec.done/rec.goal*100)}%`:'-');
+      bonuses.push(rec.has&&rec.goal>0?slotBonus(rec.done,rec.goal,c.unit):0);
+    });
+    dayRows+=`<tr><td class="day">${labels[i]}</td>${cells.map(v=>`<td class="${v==='-'?'future':''}">${v}</td>`).join('')}<td class="bonus">${won(bonuses.reduce((a,b)=>a+b,0))}</td></tr>`;
+  }
+
+  box.innerHTML=`<div class="settlement-title">주간정산</div>
+  <div class="settlement-range">${week.replaceAll('-','.')} ~ ${end.replaceAll('-','.')}</div>
+  <div class="settlement-selectors">
+    <select onchange="setSettlementWeek(this.value)">${weeks.map(w=>`<option value="${w}" ${w===week?'selected':''}>${w} ~ ${dateAdd(w,6)}</option>`).join('')}</select>
+    <div style="flex:1;border:1px solid var(--line);border-radius:13px;padding:12px 10px;font-size:14px;text-align:center;background:var(--soft)">권역 보너스 단가 ${n(c.unit)}원</div>
+  </div>
+  <div class="settlement-team-tabs">${cfg.teams.map(t=>`<button class="settlement-team-btn ${t===team?'active':''}" onclick="setSettlementTeam('${t}')">${cfg.labels[t]}</button>`).join('')}</div>
+  <table class="settlement-table">
+    <thead><tr><th></th><th>오전</th><th>오후</th><th>저녁</th><th>심야</th><th>초과 관리비</th></tr></thead>
+    <tbody>${dayRows}</tbody>
+  </table>
+  <div class="settlement-status wait">${cfg.labels[team]}팀 ${c.sets}세트 · 기록 슬롯 ${c.slots.length}/28 · 달성 슬롯 ${c.achieved}/28</div>
+  <div class="settlement-total"><small>${cfg.labels[team]}팀 현재 총 관리비</small><strong>${won(c.total)}</strong></div>
+  <div class="settlement-money">
+    <div class="settlement-money-row"><span>기본 관리비<br><small>750건 × ${n(c.sets)}세트 × 300원</small></span><b>${won(c.base)}</b></div>
+    <div class="settlement-money-row"><span>보너스 관리비<br><small>750건 × ${n(c.sets)}세트 × ${n(c.unit)}원</small></span><b>${won(c.gradeBase)}</b></div>
+    <div class="settlement-money-row"><span>초과 관리비<br><small>주간 슬롯별 100~150% 구간 요율 합산</small></span><b>${won(c.excess)}</b></div>
+    <div class="settlement-money-row"><span>시간외 관리비<br><small>${n(c.excluded)}건 × ${n(OVERTIME_UNIT)}원</small></span><b>${won(c.overtime)}</b></div>
+    <div class="settlement-money-row grand"><span>총 관리비</span><b>${won(c.total)}</b></div>
+  </div>
+  <div class="settlement-note">기본·보너스 관리비는 해당 주차 JSON에 저장된 세트 수를 기준으로 계산합니다.<br>각 슬롯 목표도 날짜별 팀 JSON 목표값을 그대로 사용합니다.<br>초과 관리비와 시간외 관리비만 실적에 따라 변동되며, 150% 초과분은 제외합니다.</div>`;
+}
+
+
+function normalizeSmsPhone(v){
+  const digits=String(v||'').replace(/\D/g,'');
+  if(!digits.startsWith('010')||digits.length!==11)return '';
+  return digits;
+}
+function smsRecipientsByTeam(team){
+  const seen=new Set();
+  return ((DATA&&DATA.riders)||[])
+    .filter(r=>r.team===team)
+    .map(r=>normalizeSmsPhone(r.phone))
+    .filter(phone=>{
+      if(!phone||seen.has(phone))return false;
+      seen.add(phone);
+      return true;
+    });
+}
+function chunk99(items){
+  const groups=[];
+  for(let i=0;i<items.length;i+=99)groups.push(items.slice(i,i+99));
+  return groups;
+}
+function setSmsTeam(team){
+  SMS_TEAM=team;
+  localStorage.setItem('smsTeam_'+areaCfg().key,team);
+  renderSms();
+}
+function saveSmsDraft(){
+  const el=document.getElementById('smsMessage');
+  if(el)localStorage.setItem('smsDraft_'+areaCfg().key,el.value);
+}
+async function copySmsRecipients(index){
+  const groups=chunk99(smsRecipientsByTeam(SMS_TEAM));
+  const group=groups[index]||[];
+  if(!group.length)return;
+  const value=group.join(',');
+  try{
+    await navigator.clipboard.writeText(value);
+    alert(`수신번호 ${group.length}개를 복사했습니다.`);
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=value;
+    ta.style.position='fixed';
+    ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    alert(`수신번호 ${group.length}개를 복사했습니다.`);
+  }
+}
+function openSmsGroup(index){
+  const groups=chunk99(smsRecipientsByTeam(SMS_TEAM));
+  const group=groups[index]||[];
+  if(!group.length)return;
+  const message=(document.getElementById('smsMessage')?.value||'').trim();
+
+  // 대부분의 모바일 문자 앱에서 쉼표로 여러 수신자를 인식합니다.
+  const recipients=group.join(',');
+  const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  const separator=isiOS?'&':'?';
+  const body=message?`${separator}body=${encodeURIComponent(message)}`:'';
+  location.href=`sms:${recipients}${body}`;
+}
+function renderSms(){
+  const tabs=document.getElementById('smsTeamTabs');
+  const groupsEl=document.getElementById('smsGroups');
+  const summary=document.getElementById('smsSummary');
+  const message=document.getElementById('smsMessage');
+  if(!tabs||!groupsEl||!summary||!message||!DATA)return;
+
+  const cfg=areaCfg();
+  const saved=localStorage.getItem('smsTeam_'+cfg.key);
+  if(!SMS_TEAM||!cfg.teams.includes(SMS_TEAM)){
+    SMS_TEAM=cfg.teams.includes(saved)?saved:cfg.teams[0];
+  }
+
+  const draftKey='smsDraft_'+cfg.key;
+  if(message.dataset.area!==cfg.key){
+    message.value=localStorage.getItem(draftKey)||'';
+    message.dataset.area=cfg.key;
+  }
+
+  tabs.innerHTML=cfg.teams.map(team=>`
+    <button class="sms-team-btn ${team===SMS_TEAM?'active':''}" onclick="setSmsTeam('${team}')">
+      ${cfg.labels[team]||team}
+    </button>
+  `).join('');
+
+  const recipients=smsRecipientsByTeam(SMS_TEAM);
+  const groups=chunk99(recipients);
+  summary.innerText=`${cfg.labels[SMS_TEAM]||SMS_TEAM}팀 · 유효 전화번호 ${n(recipients.length)}명 · ${n(groups.length)}개 그룹`;
+
+  groupsEl.innerHTML=groups.length?groups.map((group,index)=>`
+    <div class="sms-group">
+      <div class="sms-group-head">
+        <b>${cfg.labels[SMS_TEAM]||SMS_TEAM} ${index+1}그룹</b>
+        <span>${n(group.length)}명</span>
+      </div>
+      <div class="sms-actions">
+        <button class="sms-send" onclick="openSmsGroup(${index})">문자 앱 열기</button>
+        <button class="sms-copy" onclick="copySmsRecipients(${index})">번호 복사</button>
+      </div>
+    </div>
+  `).join(''):'<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:16px">유효한 010 전화번호가 없습니다.</div>';
 }
 
 function renderPeriods(){
