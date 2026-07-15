@@ -175,7 +175,75 @@ function filteredRiders(){let q=document.getElementById('riderSearch')?.value?.t
 function renderRiders(){document.getElementById('riderGrid').innerHTML=filteredRiders().map(r=>`<div class="rider ${r.isOnline?'online':''}"><div class="rider-top"><div class="rider-name">${r.name} <span class="muted" style="font-size:12px">${r.team||''}</span></div><span class="status">${r.isOnline?'접속중':'운행종료'}</span></div><div class="rider-stats"><div class="rstat"><small>완료</small><b>${n(r.complete)}</b></div><div class="rstat"><small>거절</small><b>${n(r.reject)}</b></div><div class="rstat"><small>취소</small><b>${n(r.cancel)}</b></div><div class="rstat"><small>수락률</small><b>${r.acceptRate}%</b></div></div></div>`).join('')||'<div class="muted">검색 결과가 없습니다.</div>'}
 function setManageFilter(team){MANAGE_FILTER=team;renderManage()}
 function renderManage(){const filters=document.getElementById('manageFilters');if(filters){filters.innerHTML=['전체',...TEAM_ORDER].map(t=>`<button class="${MANAGE_FILTER===t?'active':''}" onclick="setManageFilter('${t}')">${t}</button>`).join('')}let list=[...riders()];if(MANAGE_FILTER!=='전체')list=list.filter(r=>r.team===MANAGE_FILTER);list.sort((a,b)=>String(a.name).localeCompare(String(b.name),'ko'));document.getElementById('manageList').innerHTML=list.map(r=>`<div class="manage-row"><b>${r.name}<span class="muted" style="font-size:12px"> · ${r.userId||''}</span></b><select data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}">${TEAM_ORDER.map(t=>`<option value="${t}" ${r.team===t?'selected':''}>${t}</option>`).join('')}</select></div>`).join('')||'<div class="muted">기사 데이터가 없습니다.</div>'}
-async function saveTeamMap(){const selects=document.querySelectorAll('#manageList select');const changes={};selects.forEach(sel=>{const name=sel.getAttribute('data-rider-name');if(name&&sel.value)changes[name]=sel.value});try{const res=await fetch('/api/save-teammap',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({area:AREA_KEY,changes})});let result={};try{result=await res.json()}catch(e){}if(res.ok&&(result.ok!==false)){alert('팀 변경 저장 완료');loadData()}else{alert('저장 실패: '+(result.error||res.status))}}catch(e){alert('저장 오류: '+e.message+'\n서버에 /api/save-teammap 연결이 필요합니다.')}}
+const TEAMMAP_API='https://dalseo-a-live.vercel.app/api/save-teammap';
+
+async function saveTeamMap(){
+  const selects=document.querySelectorAll('#manageList select');
+  const changes={};
+  selects.forEach(sel=>{
+    const name=sel.getAttribute('data-rider-name');
+    if(name&&sel.value)changes[name]=sel.value;
+  });
+
+  if(!Object.keys(changes).length){
+    alert('저장할 기사 정보가 없습니다.');
+    return;
+  }
+
+  const saveButton=document.querySelector('.manage-save');
+  const originalText=saveButton?.textContent||'팀 변경 저장';
+
+  try{
+    if(saveButton){
+      saveButton.disabled=true;
+      saveButton.textContent='저장 중...';
+    }
+
+    const res=await fetch(TEAMMAP_API,{
+      method:'POST',
+      mode:'cors',
+      headers:{
+        'Content-Type':'application/json',
+        'Accept':'application/json'
+      },
+      body:JSON.stringify({
+        area:AREA_KEY,
+        changes
+      })
+    });
+
+    const responseText=await res.text();
+    let result={};
+    try{
+      result=responseText?JSON.parse(responseText):{};
+    }catch(e){
+      result={error:responseText||'서버 응답을 해석하지 못했습니다.'};
+    }
+
+    if(!res.ok||result.ok===false){
+      throw new Error(result.error||`HTTP ${res.status}`);
+    }
+
+    riders().forEach(r=>{
+      if(changes[r.name])r.team=changes[r.name];
+    });
+
+    alert(`팀 변경 저장 완료 (${Object.keys(changes).length}명)`);
+    renderAll();
+    setTimeout(loadData,1500);
+  }catch(e){
+    alert(
+      '저장 오류: '+e.message+
+      '\nVercel API 연결과 CORS 설정을 확인해주세요.'+
+      '\n요청 주소: '+TEAMMAP_API
+    );
+  }finally{
+    if(saveButton){
+      saveButton.disabled=false;
+      saveButton.textContent=originalText;
+    }
+  }
+}
 function smsGroupHtml(teamName,list){let html=`<div class="sms-team"><h3 style="margin:0 0 10px">${teamName} (${list.length}명)</h3>`;for(let i=0;i<list.length;i+=99){const g=list.slice(i,i+99),label=String.fromCharCode(65+i/99),phones=g.map(x=>x.phone).join(',');html+=`<div class="sms-group"><b>${label}그룹 (${g.length}명)</b><div class="phone-list">${g.map(x=>`${x.name} ${x.phone}`).join(' · ')}</div><div class="sms-actions"><button onclick="copyText('${phones}')">번호 복사</button><a href="sms:${phones}">문자앱 열기</a></div></div>`}return html+'</div>'}
 function openSmsModal(){const base=filteredRiders().filter(r=>r.phone).map(r=>({team:r.team,name:r.name,phone:String(r.phone).replace(/\D/g,'')}));let html=TEAM_ORDER.map(t=>smsGroupHtml(t,base.filter(x=>x.team===t))).join('');document.getElementById('smsGroups').innerHTML=html;document.getElementById('smsModal').classList.add('show')}
 function closeSmsModal(){document.getElementById('smsModal').classList.remove('show')}function copyText(t){navigator.clipboard?.writeText(t);alert('복사했습니다.')}
