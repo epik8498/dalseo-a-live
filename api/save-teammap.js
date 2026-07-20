@@ -57,69 +57,45 @@ module.exports = async function handler(req, res) {
       `/settings/${area}/teamMapPhone`
     );
 
-    const userIdRef = database.ref(
-      `/settings/${area}/teamMapUserId`
-    );
-
     const liveRef = database.ref(
       `/live/${area}/riders`
     );
 
-    // 이름 기준 팀맵 저장
-    await nameRef.update(changes);
-
     const ridersSnap = await liveRef.get();
 
-    const liveUpdates = {};
     const phoneUpdates = {};
-    const userIdUpdates = {};
+    const liveUpdates = {};
 
     if (ridersSnap.exists()) {
       const riderList = ridersSnap.val() || {};
 
       Object.entries(riderList).forEach(([index, rider]) => {
-        if (!rider || !rider.name) {
-          return;
-        }
+        if (!rider || !rider.name) return;
 
         const newTeam = changes[rider.name];
+        if (!newTeam) return;
 
-        if (!newTeam) {
-          return;
-        }
-
-        // 현재 실시간 기사 팀도 즉시 변경
+        // 현재 화면 데이터 즉시 변경
         liveUpdates[`${index}/team`] = newTeam;
 
-        // 전화번호 팀맵 저장
+        // 전화번호 기준 팀맵 변경
         const phone = normalizePhone(rider.phone);
 
         if (phone) {
           phoneUpdates[phone] = newTeam;
         }
-
-        // 기사 아이디 팀맵 저장
-        const userId = String(
-          rider.userId ||
-          rider.userid ||
-          rider.userID ||
-          ""
-        ).trim();
-
-        if (userId) {
-          userIdUpdates[userId] = newTeam;
-        }
       });
     }
 
+    // 이름 기준 팀맵
+    await nameRef.update(changes);
+
+    // 전화번호 기준 팀맵
     if (Object.keys(phoneUpdates).length > 0) {
       await phoneRef.update(phoneUpdates);
     }
 
-    if (Object.keys(userIdUpdates).length > 0) {
-      await userIdRef.update(userIdUpdates);
-    }
-
+    // 실시간 기사 데이터
     if (Object.keys(liveUpdates).length > 0) {
       await liveRef.update(liveUpdates);
     }
@@ -129,9 +105,9 @@ module.exports = async function handler(req, res) {
       area,
       namesUpdated: Object.keys(changes).length,
       phonesUpdated: Object.keys(phoneUpdates).length,
-      userIdsUpdated: Object.keys(userIdUpdates).length,
       liveUpdated: Object.keys(liveUpdates).length
     });
+
   } catch (e) {
     console.error("save-teammap error:", e);
 
