@@ -16,14 +16,13 @@ AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
-WEEKLY_HISTORY_DAYS = 730  # 주간/정산 조회용 약 2년 보관
 
 BASE_DIR = Path(__file__).parent
-DATA_FILE = BASE_DIR / "data_dalseoa.json"
+DATA_FILE = BASE_DIR / "data_maeuma.json"
 HTML_FILE = BASE_DIR / "index.html"
-WEEKLY_FILE = BASE_DIR / "weekly_dalseoa.json"
+WEEKLY_FILE = BASE_DIR / "weekly_maeuma.json"
 
-AREA_NAME = "달서A"
+AREA_NAME = "마음 달서A"
 TEAM_ORDER = []
 AREA_CONFIG = {}
 TEAM_MAP_PATH = ""
@@ -33,76 +32,358 @@ CURRENT_SLUG = ""
 REQUIRED_TEAM_RIDERS = {}
 TEAM_MAP_CACHE = None
 
-CENTER_CONFIGS = [{'area': '달서A',
-  'slug': 'dalseoa',
-  'aliases': ['대구달서7M(DP2506234693)', '대구달서7M (DP2506234693)', '대구달서7M', 'DP2506234693'],
-  'team_order': ['소닉팀', '달서팀'],
-  'area_config': {'소닉팀': 5, '달서팀': 1},
-  'team_map_path': '/settings/dalseoa/teamMap',
-  'live_path': '/live/dalseoa',
-  'weekly_path': '/weekly/dalseoa',
-  'required_team_riders': {'달서팀': ['김민승',
-                                   '윤창근',
-                                   '김병국',
-                                   '신호준',
-                                   '김영빈',
-                                   '김용우',
-                                   '박지원',
-                                   '김탁기',
-                                   '김병철',
-                                   '정영훈',
-                                   '김태광',
-                                   '배재현',
-                                   '김형민',
-                                   '문승수',
-                                   '이상민',
-                                   '정성훈',
-                                   '이주철',
-                                   '박기홍',
-                                   '정판호',
-                                   '나미영',
-                                   '황호용',
-                                   '김영철',
-                                   '남승훈',
-                                   '남수현',
-                                   '김민서',
-                                   '신진관',
-                                   '임선미',
-                                   '여재환',
-                                   '정주현',
-                                   '김기현',
-                                   '김범준',
-                                   '이윤석',
-                                   '양혜진',
-                                   '김민우',
-                                   '김혜성',
-                                   '김기헌',
-                                   '조대영',
-                                   '정승덕',
-                                   '임상완',
-                                   '김우진',
-                                   '신민규',
-                                   '김진현',
-                                   '김재석',
-                                   '서청만']}},
+CENTER_CONFIGS = [{'area': '마음 달서A',
+  'slug': 'maeuma',
+  'aliases': ['대구달서온나A(DP2509199364)', '대구달서온나A (DP2509199364)', '대구달서온나A', 'DP2509199364'],
+  'center_code': 'DP2509199364',
+  'team_order': ['마음1', '마음3'],
+  'area_config': {'마음1': 5.5, '마음3': 4.5},
+  'team_map_path': '/settings/maeuma/teamMap',
+  'live_path': '/live/maeuma',
+  'weekly_path': '/weekly/maeuma',
+  'required_team_riders': {'마음3': ['김리현',
+                                   '김민웅',
+                                   '김원제',
+                                   '김익한',
+                                   '김재준',
+                                   '남현우',
+                                   '문재훈',
+                                   '박명규',
+                                   '박정현',
+                                   '성동훈',
+                                   '오세원',
+                                   '윤종홍',
+                                   '이우훈',
+                                   '이정석',
+                                   '이정호',
+                                   '전재욱',
+                                   '정은경',
+                                   '정장훈',
+                                   '정재균',
+                                   '최영섭',
+                                   '최종광',
+                                   '최홍석',
+                                   '추진태',
+                                   '함영국',
+                                   '현승희',
+                                   '전재옥',
+                                   '김래현',
+                                   '김제헌',
+                                   '이낙철']}},
  {'area': '달서B',
-  'slug': 'dalseob',
+  'slug': 'maeum_dalseob',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
+  'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
   'area_config': {'소닉팀': 2, '넘버팀': 5, '마음팀': 5},
-  'team_map_path': '/settings/dalseob/teamMap',
-  'live_path': '/live/dalseob',
-  'weekly_path': '/weekly/dalseob',
-  'required_team_riders': {}},
+  'team_map_path': '/settings/maeum_dalseob/teamMap',
+  'live_path': '/live/maeum_dalseob',
+  'weekly_path': '/weekly/maeum_dalseob',
+  'required_team_riders': {'소닉팀': ['최경민',
+                                   '윤규범',
+                                   '신성욱',
+                                   '박무성',
+                                   '송득근',
+                                   '정우혁',
+                                   '김경섭',
+                                   '장근영',
+                                   '조윤환',
+                                   '조승래',
+                                   '정기정',
+                                   '정규태',
+                                   '장재근',
+                                   '최지나',
+                                   '이종필',
+                                   '이정민',
+                                   '이재상',
+                                   '이재관',
+                                   '윤철훈',
+                                   '유영멸',
+                                   '엄정철',
+                                   '심재득',
+                                   '신진학',
+                                   '배준호',
+                                   '박정민',
+                                   '김주동',
+                                   '김재현',
+                                   '김상엽',
+                                   '김동규',
+                                   '권휘재',
+                                   '최지용',
+                                   '김종찬',
+                                   '이상엽',
+                                   '노우현',
+                                   '박성우',
+                                   '배재현',
+                                   '신정훈',
+                                   '최현준',
+                                   '이부관'],
+                           '넘버팀': ['유호성',
+                                   '박세창',
+                                   '강명원',
+                                   '김수진',
+                                   '배서후',
+                                   '김요한',
+                                   '김정근',
+                                   '남승호',
+                                   '이현재',
+                                   '이윤재',
+                                   '정수영',
+                                   '장정석',
+                                   '최영진',
+                                   '임현석',
+                                   '임승범',
+                                   '이태훈',
+                                   '이철우',
+                                   '이재현',
+                                   '이은성',
+                                   '이영희',
+                                   '이선노',
+                                   '이동석',
+                                   '우효상',
+                                   '서강원',
+                                   '한동훈',
+                                   '마경민',
+                                   '노재권',
+                                   '남윤정',
+                                   '남동욱',
+                                   '김현준',
+                                   '김태하',
+                                   '김종희',
+                                   '김용운',
+                                   '김영천',
+                                   '김명수',
+                                   '김명한',
+                                   '김동국',
+                                   '권오현',
+                                   '황홍섭',
+                                   '강지은',
+                                   '최윤호',
+                                   '신명섭',
+                                   '윤민석',
+                                   '김애선',
+                                   '이대겸',
+                                   '김대운',
+                                   '이헌재',
+                                   '김병수',
+                                   '이재헌',
+                                   '한창목'],
+                           '마음팀': ['임용우',
+                                   '김강호',
+                                   '김영우',
+                                   '강지우',
+                                   '이승훈',
+                                   '박성림',
+                                   '이영민',
+                                   '손성곤',
+                                   '구상훈',
+                                   '박한울',
+                                   '신가희',
+                                   '박연호',
+                                   '김형택',
+                                   '김낙훈',
+                                   '권영남',
+                                   '이진복',
+                                   '김석원',
+                                   '길태빈',
+                                   '김창범',
+                                   '박광용',
+                                   '성영길',
+                                   '박원희',
+                                   '최영우',
+                                   '이전필',
+                                   '이재현',
+                                   '이강현',
+                                   '김대한',
+                                   '여세동',
+                                   '신정하',
+                                   '임지훈',
+                                   '장민서',
+                                   '임종현',
+                                   '윤동근',
+                                   '도수현',
+                                   '김동현',
+                                   '정동진',
+                                   '정동수',
+                                   '전한',
+                                   '전하경',
+                                   '전승욱',
+                                   '전대명',
+                                   '장예환',
+                                   '장대웅',
+                                   '임재백',
+                                   '이진욱',
+                                   '이진승',
+                                   '이승준',
+                                   '이경태',
+                                   '전현',
+                                   '최현주',
+                                   '안호식',
+                                   '신원순',
+                                   '서봉용',
+                                   '박호일',
+                                   '도인환',
+                                   '노지훈',
+                                   '김현진',
+                                   '김지성',
+                                   '김재훈',
+                                   '황유경',
+                                   '김성현',
+                                   '김서현',
+                                   '문영신',
+                                   '곽봉수',
+                                   '장민규',
+                                   '김효겸',
+                                   '송인섭',
+                                   '김종서',
+                                   '김종호',
+                                   '남재화',
+                                   '박남아',
+                                   '구용태',
+                                   '한대성',
+                                   '윤정원',
+                                   '손지수',
+                                   '김숙자',
+                                   '김현숙',
+                                   '최종현',
+                                   '김인수',
+                                   '김일식',
+                                   '신인호',
+                                   '구자돈',
+                                   '차무길',
+                                   '차성원',
+                                   '박지홍',
+                                   '이예준',
+                                   '위석훈',
+                                   '피우덕',
+                                   '소귀숙',
+                                   '피우정',
+                                   '백창열',
+                                   '하태수',
+                                   '명재규',
+                                   '한희숙',
+                                   '김동욱',
+                                   '김도형',
+                                   '김대환',
+                                   '김임식',
+                                   '명제규',
+                                   '박성립',
+                                   '신정학',
+                                   '신원준',
+                                   '임종헌',
+                                   '전승옥']}},
  {'area': '중구A',
-  'slug': 'junggua',
+  'slug': 'maeum_junggua',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
+  'center_code': 'DP2511170481',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
   'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 3},
-  'team_map_path': '/settings/junggua/teamMap',
-  'live_path': '/live/junggua',
-  'weekly_path': '/weekly/junggua',
-  'required_team_riders': {}}]
+  'team_map_path': '/settings/maeum_junggua/teamMap',
+  'live_path': '/live/maeum_junggua',
+  'weekly_path': '/weekly/maeum_junggua',
+  'required_team_riders': {'넘버팀': ['한창목',
+                                   '구민성',
+                                   '석윤미',
+                                   '조영웅',
+                                   '류창우',
+                                   '이경은',
+                                   '이경림',
+                                   '김광미',
+                                   '정용운',
+                                   '지덕곤',
+                                   '김우중',
+                                   '김시곤',
+                                   '천재원',
+                                   '조정래',
+                                   '이금형',
+                                   '최종용',
+                                   '최문호',
+                                   '이정미',
+                                   '염용범',
+                                   '김성주',
+                                   '이창원',
+                                   '채기후',
+                                   '손성기',
+                                   '박진수',
+                                   '김병찬',
+                                   '지덕근',
+                                   '최중용']}},
+ {'area': '수성C',
+  'slug': 'maeum_suseongc',
+  'aliases': ['대구수성C온나(DP2606010723)', '대구수성C온나 (DP2606010723)', '대구수성C온나', 'DP2606010723'],
+  'center_code': 'DP2606010723',
+  'team_order': ['마음팀', 'BDMJ팀'],
+  'area_config': {'마음팀': 1, 'BDMJ팀': 3},
+  'team_map_path': '/settings/maeum_suseongc/teamMap',
+  'live_path': '/live/maeum_suseongc',
+  'weekly_path': '/weekly/maeum_suseongc',
+  'required_team_riders': {'BDMJ팀': ['정병준',
+                                     '정을갑',
+                                     '석정균',
+                                     '황재상',
+                                     '정철민',
+                                     '홍찬윤',
+                                     '임미영',
+                                     '강상기',
+                                     '오명준',
+                                     '김용철',
+                                     '이동수',
+                                     '김근식',
+                                     '이태원',
+                                     '신정현',
+                                     '정성원',
+                                     '강현기',
+                                     '김기억',
+                                     '김경훈',
+                                     '김영철',
+                                     '신순미',
+                                     '송윤미',
+                                     '이승재',
+                                     '김도식',
+                                     '이슬기',
+                                     '손영빈',
+                                     '이상구',
+                                     '강석진',
+                                     '김성우',
+                                     '조정민',
+                                     '장재근',
+                                     '이재정',
+                                     '오세현',
+                                     '송한솔',
+                                     '황호진',
+                                     '손효상',
+                                     '천기준',
+                                     '김형민',
+                                     '박민욱',
+                                     '강성모',
+                                     '김초혜',
+                                     '정인기',
+                                     '김준상',
+                                     '김경환',
+                                     '이현동',
+                                     '김동현',
+                                     '김효용',
+                                     '오세출',
+                                     '정병철',
+                                     '손자수',
+                                     '한용규',
+                                     '장대식',
+                                     '김민찬',
+                                     '오강식',
+                                     '이준원',
+                                     '이상철',
+                                     '이상운',
+                                     '이동협',
+                                     '우상수',
+                                     '송정자',
+                                     '박준민',
+                                     '김진흥',
+                                     '김우주',
+                                     '김상훈',
+                                     '김복룡',
+                                     '김명현',
+                                     '김명일',
+                                     '강철구']}}]
 
 DAY_TARGETS = {
     0: [22, 21, 32, 25],
@@ -811,28 +1092,20 @@ def target_total_by_period_for_date(date_value):
     return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
 
 
-def _weekly_row_total(row):
-    """신규/구형 weekly 구조를 모두 읽을 수 있게 총합 데이터를 정규화합니다."""
-    total = row.get("total") or {}
-    return {
-        "complete": to_int(total.get("complete", row.get("totalComplete", 0))),
-        "reject": to_int(total.get("reject", row.get("totalReject", 0))),
-        "cancel": to_int(total.get("cancel", row.get("totalCancel", 0))),
-        "riderFault": to_int(total.get("riderFault", row.get("riderFault", 0))),
-        "morning": to_int(total.get("morning", row.get("morning", 0))),
-        "afternoon": to_int(total.get("afternoon", row.get("afternoon", 0))),
-        "evening": to_int(total.get("evening", row.get("evening", 0))),
-        "midnight": to_int(total.get("midnight", row.get("midnight", 0))),
-        "morningExcluded": to_int(total.get("morningExcluded", row.get("morningExcluded", 0))),
-        "midnightExcluded": to_int(total.get("midnightExcluded", row.get("midnightExcluded", 0))),
-        "excluded": to_int(total.get("excluded", row.get("excluded", row.get("totalExcluded", 0)))),
+
+def weekly_summary(weekly_rows, now, config=None):
+    """현재 수~화 주차의 권역 전체 및 팀별 합계를 계산합니다.
+
+    예전 weekly 행(teams 필드 없음)도 그대로 읽을 수 있도록 호환성을 유지합니다.
+    """
+    config = config or {
+        "area": AREA_NAME,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
     }
-
-
-def weekly_summary(weekly_rows, now):
     week_dates = current_week_dates(now)
     date_keys = [str(d) for d in week_dates]
-    by_date = {x.get("businessDate"): x for x in weekly_rows if x.get("businessDate")}
+    by_date = {x.get("businessDate"): x for x in weekly_rows if isinstance(x, dict)}
 
     days = []
     total_complete = 0
@@ -846,11 +1119,19 @@ def weekly_summary(weekly_rows, now):
     total_midnight_excluded = 0
 
     team_totals = {}
-    for team in TEAM_ORDER:
+    for team in config.get("team_order", []):
         team_totals[team] = {
-            "complete": 0, "reject": 0, "cancel": 0, "riderFault": 0,
-            "morning": 0, "afternoon": 0, "evening": 0, "midnight": 0,
-            "morningExcluded": 0, "midnightExcluded": 0, "excluded": 0,
+            "complete": 0,
+            "reject": 0,
+            "cancel": 0,
+            "riderFault": 0,
+            "morning": 0,
+            "afternoon": 0,
+            "evening": 0,
+            "midnight": 0,
+            "morningExcluded": 0,
+            "midnightExcluded": 0,
+            "excluded": 0,
             "periodTargets": {p: 0 for p in PERIODS},
             "days": [],
         }
@@ -865,20 +1146,22 @@ def weekly_summary(weekly_rows, now):
 
     for label, date_value, date_key in zip(labels, week_dates, date_keys):
         row = by_date.get(date_key, {})
-        total = _weekly_row_total(row)
-        complete = total["complete"]
-        reject = total["reject"]
-        cancel = total["cancel"]
-        rider_fault = total["riderFault"]
+        complete = to_int(row.get("totalComplete", row.get("total", {}).get("complete", 0)))
+        reject = to_int(row.get("totalReject", row.get("total", {}).get("reject", 0)))
+        cancel = to_int(row.get("totalCancel", row.get("total", {}).get("cancel", 0)))
+        rider_fault = to_int(row.get("riderFault", row.get("total", {}).get("riderFault", 0)))
         bad_total = reject + cancel + rider_fault
-        morning_excluded = total["morningExcluded"]
-        midnight_excluded = total["midnightExcluded"]
-        excluded = total["excluded"] or (morning_excluded + midnight_excluded)
+        morning_excluded = to_int(row.get("morningExcluded", row.get("total", {}).get("morningExcluded", 0)))
+        midnight_excluded = to_int(row.get("midnightExcluded", row.get("total", {}).get("midnightExcluded", 0)))
+        excluded = to_int(row.get(
+            "excluded",
+            row.get("totalExcluded", row.get("total", {}).get("excluded", morning_excluded + midnight_excluded))
+        ))
         period_targets = row.get("periodTargets") or target_total_by_period_for_date(date_value)
 
         period_rows = []
         for p in PERIODS:
-            done = total[p]
+            done = to_int(row.get(p, row.get("total", {}).get(p, 0)))
             goal = to_int(period_targets.get(p, 0))
             failed = bool(row) and goal > 0 and done < goal
             total_periods[p] += done
@@ -899,7 +1182,7 @@ def weekly_summary(weekly_rows, now):
         total_morning_excluded += morning_excluded
         total_midnight_excluded += midnight_excluded
 
-        days.append({
+        day_obj = {
             "label": label,
             "businessDate": date_key,
             "complete": complete,
@@ -915,39 +1198,54 @@ def weekly_summary(weekly_rows, now):
             "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
             "hasData": bool(row),
-        })
+        }
+        days.append(day_obj)
 
-        row_teams = row.get("teams") or {}
-        for team in TEAM_ORDER:
-            t = row_teams.get(team) or {}
-            t_summary = t.get("summary") or t
-            t_targets = t.get("targets") or {}
-            day_team = {
+        stored_teams = row.get("teams") or {}
+        for team in config.get("team_order", []):
+            stored = stored_teams.get(team) or {}
+            s = stored.get("summary") if isinstance(stored, dict) and isinstance(stored.get("summary"), dict) else stored
+            s = s if isinstance(s, dict) else {}
+            t = stored.get("targets") if isinstance(stored, dict) and isinstance(stored.get("targets"), dict) else {}
+            team_day = {
+                "label": label,
                 "businessDate": date_key,
-                "hasData": bool(t),
-                "complete": to_int(t_summary.get("complete", 0)),
-                "reject": to_int(t_summary.get("reject", 0)),
-                "cancel": to_int(t_summary.get("cancel", 0)),
-                "riderFault": to_int(t_summary.get("riderFault", 0)),
-                "morning": to_int(t_summary.get("morning", 0)),
-                "afternoon": to_int(t_summary.get("afternoon", 0)),
-                "evening": to_int(t_summary.get("evening", 0)),
-                "midnight": to_int(t_summary.get("midnight", 0)),
-                "morningExcluded": to_int(t_summary.get("morningExcluded", 0)),
-                "midnightExcluded": to_int(t_summary.get("midnightExcluded", 0)),
-                "excluded": to_int(t_summary.get("excluded", 0)),
-                "targets": {p: to_int(t_targets.get(p, 0)) for p in PERIODS},
+                "hasData": bool(s),
+                "complete": to_int(s.get("complete", 0)),
+                "reject": to_int(s.get("reject", 0)),
+                "cancel": to_int(s.get("cancel", 0)),
+                "riderFault": to_int(s.get("riderFault", 0)),
+                "morning": to_int(s.get("morning", 0)),
+                "afternoon": to_int(s.get("afternoon", 0)),
+                "evening": to_int(s.get("evening", 0)),
+                "midnight": to_int(s.get("midnight", 0)),
+                "morningExcluded": to_int(s.get("morningExcluded", 0)),
+                "midnightExcluded": to_int(s.get("midnightExcluded", 0)),
+                "excluded": to_int(s.get("excluded", 0)),
+                "targets": {p: to_int(t.get(p, 0)) for p in PERIODS},
             }
-            for key in ["complete", "reject", "cancel", "riderFault", "morning", "afternoon", "evening", "midnight", "morningExcluded", "midnightExcluded", "excluded"]:
-                team_totals[team][key] += day_team[key]
+            team_day["acceptRate"] = calc_accept_rate(
+                team_day["complete"], team_day["reject"], team_day["cancel"], team_day["riderFault"]
+            )
+            team_totals[team]["days"].append(team_day)
+            for key in [
+                "complete", "reject", "cancel", "riderFault",
+                "morning", "afternoon", "evening", "midnight",
+                "morningExcluded", "midnightExcluded", "excluded",
+            ]:
+                team_totals[team][key] += team_day[key]
             for p in PERIODS:
-                team_totals[team]["periodTargets"][p] += day_team["targets"][p]
-            team_totals[team]["days"].append(day_team)
+                team_totals[team]["periodTargets"][p] += team_day["targets"][p]
 
-    for team, item in team_totals.items():
-        item["badTotal"] = item["reject"] + item["cancel"] + item["riderFault"]
-        item["acceptRate"] = calc_accept_rate(item["complete"], item["reject"], item["cancel"], item["riderFault"])
-        item["spareRejects"] = spare_rejects(item["complete"], item["reject"], item["cancel"], item["riderFault"])
+    for team, value in team_totals.items():
+        value["acceptRate"] = calc_accept_rate(
+            value["complete"], value["reject"], value["cancel"], value["riderFault"]
+        )
+        value["spareRejects"] = spare_rejects(
+            value["complete"], value["reject"], value["cancel"], value["riderFault"]
+        )
+        value["periodTotals"] = {p: value[p] for p in PERIODS}
+        value["sets"] = to_int(config.get("area_config", {}).get(team, 0))
 
     return {
         "startDate": date_keys[0],
@@ -964,151 +1262,118 @@ def weekly_summary(weekly_rows, now):
         "morningExcluded": total_morning_excluded,
         "midnightExcluded": total_midnight_excluded,
         "excluded": total_excluded,
-        "teams": team_totals,
         "days": days,
+        "teams": team_totals,
     }
 
 
-def available_week_ranges(weekly_rows):
-    """HTML 주차 선택용 목록. 데이터가 있는 주차를 최신순으로 반환합니다."""
-    starts = {}
-    for row in weekly_rows:
-        date_text = row.get("businessDate")
-        if not date_text:
-            continue
-        try:
-            d = datetime.strptime(date_text, "%Y-%m-%d").date()
-        except Exception:
-            continue
-        start = week_start_wednesday(d)
-        end = start + timedelta(days=6)
-        key = str(start)
-        starts[key] = {"startDate": key, "endDate": str(end)}
-    return [starts[k] for k in sorted(starts.keys(), reverse=True)]
+def save_weekly_if_close(data, config=None):
+    """오늘 권역 전체 및 팀별 실적을 weekly 파일에 갱신합니다.
 
-def save_weekly_if_close(data):
-    """매일 권역 전체 + 팀별 실적을 저장합니다.
-
-    같은 날짜는 최신값으로 갱신하고, 날짜가 바뀌면 실적이 같더라도 반드시 새 행을 만듭니다.
+    같은 날짜는 최신값으로 덮어쓰고, 날짜가 다르면 수치가 같아도 새 행으로 보존합니다.
     """
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+    }
     weekly = load_weekly()
+    if not isinstance(weekly, list):
+        weekly = []
+
     today_key = data["businessDate"]
     target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
+    period_targets = target_total_by_period_for_date(target_date)
     week_start = week_start_wednesday(target_date)
     week_end = week_start + timedelta(days=6)
-    period_targets = target_total_by_period_for_date(target_date)
 
     team_rows = {}
-    for team in TEAM_ORDER:
-        team_data = data.get("teams", {}).get(team, {})
-        team_summary = dict(team_data.get("summary") or {})
-        team_target = dict(team_data.get("targets") or {})
+    for team in config.get("team_order", []):
+        current = data.get("teams", {}).get(team, {})
         team_rows[team] = {
-            "summary": {
-                "complete": to_int(team_summary.get("complete", 0)),
-                "reject": to_int(team_summary.get("reject", 0)),
-                "cancel": to_int(team_summary.get("cancel", 0)),
-                "riderFault": to_int(team_summary.get("riderFault", 0)),
-                "morning": to_int(team_summary.get("morning", 0)),
-                "afternoon": to_int(team_summary.get("afternoon", 0)),
-                "evening": to_int(team_summary.get("evening", 0)),
-                "midnight": to_int(team_summary.get("midnight", 0)),
-                "morningExcluded": to_int(team_summary.get("morningExcluded", 0)),
-                "midnightExcluded": to_int(team_summary.get("midnightExcluded", 0)),
-                "excluded": to_int(team_summary.get("excluded", 0)),
-                "acceptRate": team_summary.get("acceptRate", 100),
-                "spareRejects": to_int(team_summary.get("spareRejects", 0)),
-                "count": to_int(team_summary.get("count", 0)),
-                "onlineCount": to_int(team_summary.get("onlineCount", 0)),
-            },
-            "targets": {
-                "morning": to_int(team_target.get("morning", 0)),
-                "afternoon": to_int(team_target.get("afternoon", 0)),
-                "evening": to_int(team_target.get("evening", 0)),
-                "midnight": to_int(team_target.get("midnight", 0)),
-                "total": to_int(team_target.get("total", 0)),
-                "sets": to_int(team_target.get("sets", 0)),
-            },
+            "summary": dict(current.get("summary") or {}),
+            "targets": dict(current.get("targets") or {}),
         }
 
-    total = data["total"]
     row = {
-        "schemaVersion": 2,
-        "area": AREA_NAME,
+        "area": config["area"],
+        "slug": config["slug"],
         "businessDate": today_key,
         "weekStart": str(week_start),
         "weekEnd": str(week_end),
         "closedAt": data["updatedAt"],
-        "total": {
-            "complete": total["complete"],
-            "reject": total["reject"],
-            "cancel": total["cancel"],
-            "riderFault": total["riderFault"],
-            "morning": total["morning"],
-            "afternoon": total["afternoon"],
-            "evening": total["evening"],
-            "midnight": total["midnight"],
-            "morningExcluded": total.get("morningExcluded", 0),
-            "midnightExcluded": total.get("midnightExcluded", 0),
-            "excluded": total.get("excluded", 0),
-            "acceptRate": total["acceptRate"],
-            "spareRejects": total["spareRejects"],
-            "count": total.get("count", 0),
-            "onlineCount": total.get("onlineCount", 0),
-        },
-        "teams": team_rows,
-        "periodTargets": period_targets,
 
-        # 기존 HTML과의 호환을 위해 구형 필드도 유지합니다.
-        "totalComplete": total["complete"],
-        "totalReject": total["reject"],
-        "totalCancel": total["cancel"],
-        "riderFault": total["riderFault"],
-        "morning": total["morning"],
-        "afternoon": total["afternoon"],
-        "evening": total["evening"],
-        "midnight": total["midnight"],
-        "morningExcluded": total.get("morningExcluded", 0),
-        "midnightExcluded": total.get("midnightExcluded", 0),
-        "excluded": total.get("excluded", 0),
-        "acceptRate": total["acceptRate"],
-        "spareRejects": total["spareRejects"],
+        # 기존 HTML 호환 필드
+        "totalComplete": data["total"]["complete"],
+        "totalReject": data["total"]["reject"],
+        "totalCancel": data["total"]["cancel"],
+        "riderFault": data["total"]["riderFault"],
+        "morning": data["total"]["morning"],
+        "afternoon": data["total"]["afternoon"],
+        "evening": data["total"]["evening"],
+        "midnight": data["total"]["midnight"],
+        "morningExcluded": data["total"].get("morningExcluded", 0),
+        "midnightExcluded": data["total"].get("midnightExcluded", 0),
+        "excluded": data["total"].get("excluded", 0),
+        "periodTargets": period_targets,
+        "acceptRate": data["total"]["acceptRate"],
+        "spareRejects": data["total"]["spareRejects"],
+
+        # 신규 장기 정산용 구조
+        "total": dict(data["total"]),
+        "teams": team_rows,
     }
 
-    replaced = False
+    found = False
     for i, old in enumerate(weekly):
-        if old.get("businessDate") == today_key:
+        if isinstance(old, dict) and old.get("businessDate") == today_key:
             weekly[i] = row
-            replaced = True
+            found = True
             break
-    if not replaced:
+
+    if not found:
         weekly.append(row)
 
-    cutoff = target_date - timedelta(days=WEEKLY_HISTORY_DAYS - 1)
-    kept = []
+    # 날짜 중복을 제거하면서 최신 행을 우선 보존
+    dedup = {}
     for item in weekly:
-        try:
-            item_date = datetime.strptime(item.get("businessDate", ""), "%Y-%m-%d").date()
-        except Exception:
-            continue
-        if item_date >= cutoff:
-            kept.append(item)
-    weekly = sorted(kept, key=lambda x: x.get("businessDate", ""))
+        if isinstance(item, dict) and item.get("businessDate"):
+            dedup[item["businessDate"]] = item
+    weekly = sorted(dedup.values(), key=lambda x: x.get("businessDate", ""))[-730:]
 
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
 
-    action = "갱신" if replaced else "신규 저장"
-    print(f"weekly 팀별 일일실적 {action}: {today_key} / {len(weekly)}일 보관")
 
-def make_data(riders):
+def available_weeks(weekly_rows):
+    weeks = {}
+    for row in weekly_rows:
+        if not isinstance(row, dict) or not row.get("businessDate"):
+            continue
+        try:
+            d = datetime.strptime(row["businessDate"], "%Y-%m-%d").date()
+        except Exception:
+            continue
+        start = row.get("weekStart") or str(week_start_wednesday(d))
+        end = row.get("weekEnd") or str(week_start_wednesday(d) + timedelta(days=6))
+        weeks[start] = {"startDate": start, "endDate": end}
+    return [weeks[k] for k in sorted(weeks.keys(), reverse=True)]
+
+
+def make_data(riders, config=None):
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
+    }
     now = datetime.now()
     riders.sort(key=lambda x: (not x["isOnline"], x["name"]))
 
     targets = team_targets(now)
     teams = {}
 
-    for team in TEAM_ORDER:
+    for team in config["team_order"]:
         rows = [r for r in riders if r["team"] == team]
         teams[team] = {
             "summary": summary(rows),
@@ -1119,9 +1384,10 @@ def make_data(riders):
     weekly = load_weekly()
 
     return {
-        "area": AREA_NAME,
-        "areas": ["달서A", "달서B", "중구A"],
-        "teamOrder": TEAM_ORDER,
+        "area": config["area"],
+        "slug": config["slug"],
+        "areas": [c["area"] for c in CENTER_CONFIGS],
+        "teamOrder": list(config["team_order"]),
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
         "currentPeriod": current_period(now),
@@ -1131,22 +1397,53 @@ def make_data(riders):
         "teams": teams,
         "riders": riders,
         "weekly": weekly,
-        "weeklySummary": weekly_summary(weekly, now),
-        "availableWeeks": available_week_ranges(weekly),
-        "weeklySchemaVersion": 2,
+        "availableWeeks": available_weeks(weekly),
+        "weeklySummary": weekly_summary(weekly, now, config),
     }
 
-def save_json(data):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
+
+def save_json(data, config=None):
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "live_path": LIVE_PATH,
+        "weekly_path": WEEKLY_PATH,
+    }
+    expected_data_file = BASE_DIR / f"data_{config['slug']}.json"
+    expected_weekly_file = BASE_DIR / f"weekly_{config['slug']}.json"
+
+    # 권역 혼선 방지: 업로드 전에 세 값을 모두 검증합니다.
+    if data.get("area") != config["area"]:
+        raise RuntimeError(
+            f"권역 검증 실패: data.area={data.get('area')} / config.area={config['area']}"
+        )
+    if data.get("slug") != config["slug"]:
+        raise RuntimeError(
+            f"slug 검증 실패: data.slug={data.get('slug')} / config.slug={config['slug']}"
+        )
+    if DATA_FILE.resolve() != expected_data_file.resolve() or WEEKLY_FILE.resolve() != expected_weekly_file.resolve():
+        raise RuntimeError(
+            f"파일 경로 검증 실패: DATA_FILE={DATA_FILE.name}, WEEKLY_FILE={WEEKLY_FILE.name}, "
+            f"예상={expected_data_file.name}, {expected_weekly_file.name}"
+        )
+
+    with open(expected_data_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+    # 방금 저장한 로컬 JSON을 다시 읽어 최종 확인합니다.
+    with open(expected_data_file, "r", encoding="utf-8") as f:
+        verify = json.load(f)
+    if verify.get("area") != config["area"] or verify.get("slug") != config["slug"]:
+        raise RuntimeError(f"저장 후 권역 검증 실패: {expected_data_file.name}")
+
     try:
-        upload_json(DATA_FILE.name, LIVE_PATH)
-        upload_json(WEEKLY_FILE.name, WEEKLY_PATH)
-        print(f"Firebase 업로드 완료: {LIVE_PATH}")
-        print(f"Firebase 업로드 완료: {WEEKLY_PATH}")
+        upload_json(expected_data_file.name, config["live_path"])
+        upload_json(expected_weekly_file.name, config["weekly_path"])
+        print(f"Firebase 업로드 완료: {config['live_path']} ← {expected_data_file.name}")
+        print(f"Firebase 업로드 완료: {config['weekly_path']} ← {expected_weekly_file.name}")
     except Exception as e:
         print("Firebase 업로드 실패")
-        print(e)
+        raise
 
 def save_html():
     return
@@ -1183,23 +1480,41 @@ def git_push():
     print(push.stderr)
 
 
-def run_update(page):
+
+def run_update(page, config=None):
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
+        "live_path": LIVE_PATH,
+        "weekly_path": WEEKLY_PATH,
+    }
     riders = collect_all_pages_by_dom(page)
     if len(riders) == 0:
         raise RuntimeError("기사 데이터를 못 읽었습니다.")
-    data = make_data(riders)
-    save_weekly_if_close(data)
+
+    data = make_data(riders, config)
+
+    # 수집 직후부터 권역값을 검증하여 다른 권역 덮어쓰기를 차단합니다.
+    if data.get("area") != config["area"] or data.get("slug") != config["slug"]:
+        raise RuntimeError(
+            f"수집 권역 불일치: {data.get('area')}/{data.get('slug')} "
+            f"!= {config['area']}/{config['slug']}"
+        )
+
+    save_weekly_if_close(data, config)
     weekly = load_weekly()
     data["weekly"] = weekly
-    data["weeklySummary"] = weekly_summary(weekly, datetime.now())
-    data["availableWeeks"] = available_week_ranges(weekly)
-    data["weeklySchemaVersion"] = 2
-    save_json(data)
+    data["availableWeeks"] = available_weeks(weekly)
+    data["weeklySummary"] = weekly_summary(weekly, datetime.now(), config)
+    save_json(data, config)
+
     print(f"업로드 완료: {data['updatedAt']}")
-    print(f"권역: {AREA_NAME}")
+    print(f"권역: {config['area']} / slug: {config['slug']}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
-    for team in TEAM_ORDER:
+    for team in config["team_order"]:
         print(f"{team} 접속중: {data['teams'][team]['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"전체 거절: {data['total']['reject']}")
@@ -1232,11 +1547,7 @@ def _visible(locator):
 
 
 def change_center(page, config):
-    """배민 협력사 변경 페이지의 커스텀 드롭다운을 열어 권역을 변경합니다.
-
-    핵심은 상단 헤더의 현재 협력사명이 아니라,
-    '협력사를 선택해주세요.' 아래쪽에 있는 실제 선택 박스를 좌표로 골라 클릭하는 것입니다.
-    """
+    """협력사 선택 박스를 열고 DP코드 기준으로 권역을 변경합니다."""
     print(f"협력사 변경 시도: {config['area']}")
 
     target_code = norm(config.get("center_code", ""))
@@ -1246,222 +1557,190 @@ def change_center(page, config):
 
     page.goto("https://deliverycenter.baemin.com/center/change")
     page.wait_for_load_state("domcontentloaded")
-    time.sleep(1.5)
+    time.sleep(2.0)
 
-    # 현재 권역이 이미 목표 권역이면 선택 작업 없이 그대로 사용합니다.
-    current_center = page.evaluate(r"""
+    # 안내 문구는 반드시 '자기 자신의 텍스트'가 정확히 일치하는 가장 작은 요소를 사용합니다.
+    prompt_info = page.evaluate(r"""
     () => {
       const visible = el => {
-        const r = el.getBoundingClientRect();
-        const s = getComputedStyle(el);
-        return r.width > 0 && r.height > 0 && s.display !== 'none' &&
-               s.visibility !== 'hidden' && s.opacity !== '0';
+        const r=el.getBoundingClientRect();
+        const s=getComputedStyle(el);
+        return r.width>0 && r.height>0 && s.display!=='none' &&
+               s.visibility!=='hidden' && s.opacity!=='0';
       };
-      const compact = s => (s || '').replace(/\s+/g, '');
-      const prompt = Array.from(document.querySelectorAll('body *'))
-        .filter(visible)
-        .find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-      const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
-      const items = Array.from(document.querySelectorAll('body *'))
-        .filter(visible)
-        .filter(el => /DP\d+/.test(compact(el.textContent)))
-        .map(el => ({
-          text: (el.textContent || '').trim(),
-          compact: compact(el.textContent),
-          y: el.getBoundingClientRect().top,
-          area: el.getBoundingClientRect().width * el.getBoundingClientRect().height
-        }))
-        .filter(x => x.y >= promptY - 5)
-        .sort((a,b) => a.compact.length - b.compact.length || a.area - b.area);
-      return items.length ? items[0].text : '';
+      const compact=s=>(s||'').replace(/\s+/g,'');
+      const wanted=compact('협력사를 선택해주세요.');
+      const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+      const exact=all.filter(el=>compact(el.textContent)===wanted)
+        .sort((a,b)=>(a.children.length-b.children.length) ||
+                     ((a.getBoundingClientRect().width*a.getBoundingClientRect().height) -
+                      (b.getBoundingClientRect().width*b.getBoundingClientRect().height)));
+      if(!exact.length) return {ok:false, reason:'exact_prompt_not_found'};
+      const el=exact[0], r=el.getBoundingClientRect();
+      return {ok:true, x:r.left, y:r.top, right:r.right, bottom:r.bottom, width:r.width, height:r.height, tag:el.tagName};
     }
     """)
 
-    compact_current = norm(current_center).replace(" ", "")
-    compact_targets = [a.replace(" ", "") for a in aliases]
-    if current_center and any(a and (a in compact_current or compact_current in a) for a in compact_targets):
-        print(f"현재 협력사 이미 일치: {config['area']} / {current_center}")
-    else:
-        # 안내문구 아래 실제 드롭다운(현재 선택값)을 클릭합니다.
-        opened = page.evaluate(r"""
-        () => {
-          const visible = el => {
-            const r = el.getBoundingClientRect();
-            const s = getComputedStyle(el);
-            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
-                   s.visibility !== 'hidden' && s.opacity !== '0';
-          };
-          const compact = s => (s || '').replace(/\s+/g, '');
-          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
-          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-          if (!prompt) return {ok:false, reason:'prompt_not_found'};
-          const promptBox = prompt.getBoundingClientRect();
+    if not prompt_info.get("ok"):
+        body_sample = norm(page.locator("body").inner_text())[:1200]
+        raise RuntimeError(f"정확한 협력사 안내문구를 찾지 못했습니다. 화면 일부: {body_sample}")
 
-          // 상단 헤더에 있는 협력사명은 제외하고, 안내문구 아래의 현재값만 고릅니다.
-          let values = all.filter(el => {
-            const t = compact(el.textContent);
-            const r = el.getBoundingClientRect();
-            return /DP\d+/.test(t) && r.top >= promptBox.bottom - 8;
-          });
-          values.sort((a,b) => {
-            const at = compact(a.textContent), bt = compact(b.textContent);
-            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
-            return at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
-          });
-          if (!values.length) return {ok:false, reason:'value_not_found'};
+    # 실제 선택 박스는 안내문구 주변의 다음 형제/부모 형제/combobox를 폭넓게 탐색합니다.
+    opened = page.evaluate(r"""
+    (promptBox) => {
+      const visible = el => {
+        const r=el.getBoundingClientRect();
+        const s=getComputedStyle(el);
+        return r.width>0 && r.height>0 && s.display!=='none' &&
+               s.visibility!=='hidden' && s.opacity!=='0';
+      };
+      const compact=s=>(s||'').replace(/\s+/g,'');
+      const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+      const wanted=compact('협력사를 선택해주세요.');
+      const prompt=all.filter(el=>compact(el.textContent)===wanted)
+        .sort((a,b)=>(a.children.length-b.children.length) ||
+                     ((a.getBoundingClientRect().width*a.getBoundingClientRect().height) -
+                      (b.getBoundingClientRect().width*b.getBoundingClientRect().height)))[0];
+      if(!prompt) return {ok:false,reason:'prompt_lost'};
 
-          const value = values[0];
-          let cur = value;
-          for (let i=0; i<10 && cur; i++, cur=cur.parentElement) {
-            const r = cur.getBoundingClientRect();
-            const role = cur.getAttribute && cur.getAttribute('role');
-            const tag = (cur.tagName || '').toLowerCase();
-            const aria = cur.getAttribute && cur.getAttribute('aria-haspopup');
-            const expanded = cur.getAttribute && cur.getAttribute('aria-expanded');
-            const style = getComputedStyle(cur);
-            const reasonable = r.width >= value.getBoundingClientRect().width && r.width < 900 && r.height < 140;
-            const clickable = tag === 'button' || role === 'combobox' || role === 'button' ||
-                              aria === 'listbox' || aria === 'true' || expanded !== null ||
-                              cur.tabIndex >= 0 || style.cursor === 'pointer';
-            if (reasonable && clickable) {
-              cur.scrollIntoView({block:'center'});
-              cur.click();
-              return {ok:true, text:(value.textContent||'').trim(), tag, role:role||''};
-            }
-          }
+      const candidates=[];
+      const add=(el,score,why)=>{
+        if(!el||!visible(el))return;
+        const r=el.getBoundingClientRect();
+        if(r.width<100||r.height<25||r.height>160)return;
+        candidates.push({el,score,why,r});
+      };
 
-          // 클릭 가능한 부모를 못 찾으면 실제 현재값 중앙 좌표를 클릭합니다.
-          const r = value.getBoundingClientRect();
-          const x = r.left + r.width / 2;
-          const y = r.top + r.height / 2;
-          value.scrollIntoView({block:'center'});
-          const topEl = document.elementFromPoint(x, y) || value;
-          topEl.dispatchEvent(new MouseEvent('mousedown',{bubbles:true,clientX:x,clientY:y}));
-          topEl.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:x,clientY:y}));
-          topEl.click();
-          return {ok:true, text:(value.textContent||'').trim(), tag:'coordinate', role:''};
+      // 1. 안내문구의 다음 형제와 부모의 다음 형제
+      let cur=prompt;
+      for(let depth=0; depth<8 && cur; depth++,cur=cur.parentElement){
+        let sib=cur.nextElementSibling;
+        for(let i=0;i<5&&sib;i++,sib=sib.nextElementSibling){
+          add(sib,1000-depth*40-i*10,'next-sibling');
+          Array.from(sib.querySelectorAll('button,[role="combobox"],[role="button"],select,input,[aria-haspopup]'))
+            .forEach((el,j)=>add(el,1500-depth*40-j,'sibling-control'));
         }
-        """)
-        if not opened.get("ok"):
-            raise RuntimeError(f"협력사 드롭다운을 열지 못했습니다: {opened}")
+        Array.from(cur.querySelectorAll('button,[role="combobox"],[role="button"],select,input,[aria-haspopup]'))
+          .forEach((el,j)=>add(el,1300-depth*30-j,'ancestor-control'));
+      }
 
-        time.sleep(1.0)
+      // 2. 안내문구 바로 아래의 화면 요소
+      const pr=prompt.getBoundingClientRect();
+      all.forEach(el=>{
+        const r=el.getBoundingClientRect();
+        const tag=(el.tagName||'').toLowerCase();
+        const role=el.getAttribute&&el.getAttribute('role');
+        const popup=el.getAttribute&&el.getAttribute('aria-haspopup');
+        const nearY=r.top>=pr.bottom-20 && r.top<=pr.bottom+220;
+        const horizontal=r.right>=pr.left-150 && r.left<=pr.right+500;
+        if(!nearY||!horizontal)return;
+        let score=500-(r.top-pr.bottom);
+        if(tag==='button'||tag==='select'||role==='combobox'||role==='button'||popup)score+=700;
+        if(/DP\d+/.test(compact(el.textContent)))score+=300;
+        add(el,score,'nearby');
+      });
 
-        # 목록에서 DP코드 또는 정확한 권역명을 찾아 클릭합니다.
-        selected_text = page.evaluate(r"""
-        (aliases) => {
-          const visible = el => {
-            const r = el.getBoundingClientRect();
-            const s = getComputedStyle(el);
-            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
-                   s.visibility !== 'hidden' && s.opacity !== '0';
-          };
-          const compact = s => (s || '').replace(/\s+/g, '');
-          const targets = aliases.map(compact).filter(Boolean);
-          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
-          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-          const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
+      candidates.sort((a,b)=>b.score-a.score || a.r.top-b.r.top || b.r.width-a.r.width);
+      const unique=[];
+      const seen=new Set();
+      for(const c of candidates){
+        if(seen.has(c.el))continue;
+        seen.add(c.el); unique.push(c);
+      }
 
-          let matches = all.filter(el => {
-            const t = compact(el.textContent);
-            const r = el.getBoundingClientRect();
-            return r.top >= promptY - 10 && t && targets.some(a => t === a || t.includes(a));
-          });
+      for(const c of unique.slice(0,30)){
+        try{
+          c.el.scrollIntoView({block:'center'});
+          const r=c.el.getBoundingClientRect();
+          const x=r.left+r.width/2, y=r.top+r.height/2;
+          const top=document.elementFromPoint(x,y)||c.el;
+          top.dispatchEvent(new MouseEvent('mousedown',{bubbles:true,clientX:x,clientY:y}));
+          top.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:x,clientY:y}));
+          top.click();
+          return {ok:true,method:c.why,tag:(c.el.tagName||'').toLowerCase(),
+                  role:c.el.getAttribute&&c.el.getAttribute('role')||'',
+                  text:(c.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,160)};
+        }catch(e){}
+      }
+      return {ok:false,reason:'no_click_candidate',
+        candidates:unique.slice(0,20).map(c=>({why:c.why,score:c.score,tag:(c.el.tagName||'').toLowerCase(),
+          role:c.el.getAttribute&&c.el.getAttribute('role')||'',text:(c.el.textContent||'').replace(/\s+/g,' ').trim().slice(0,100),
+          top:Math.round(c.r.top),left:Math.round(c.r.left),w:Math.round(c.r.width),h:Math.round(c.r.height)}))};
+    }
+    """, prompt_info)
 
-          matches.sort((a,b) => {
-            const at = compact(a.textContent), bt = compact(b.textContent);
-            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
-            const roleA = a.getAttribute && a.getAttribute('role');
-            const roleB = b.getAttribute && b.getAttribute('role');
-            const bonusA = (roleA === 'option' ? 2000 : 0) + ((a.tagName||'').toLowerCase()==='li' ? 1000 : 0);
-            const bonusB = (roleB === 'option' ? 2000 : 0) + ((b.tagName||'').toLowerCase()==='li' ? 1000 : 0);
-            return bonusB - bonusA || at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
-          });
-
-          for (const el of matches) {
-            let cur = el;
-            for (let i=0; i<8 && cur; i++, cur=cur.parentElement) {
-              const role = cur.getAttribute && cur.getAttribute('role');
-              const tag = (cur.tagName || '').toLowerCase();
-              const style = getComputedStyle(cur);
-              const r = cur.getBoundingClientRect();
-              if (r.height < 120 && (role === 'option' || tag === 'li' || tag === 'button' || style.cursor === 'pointer')) {
-                cur.scrollIntoView({block:'center'});
-                cur.click();
-                return (el.textContent || '').trim();
-              }
-            }
-            el.scrollIntoView({block:'center'});
-            el.click();
-            return (el.textContent || '').trim();
-          }
-          return '';
-        }
-        """, aliases)
-
-        if not selected_text:
-            # 드롭다운이 첫 클릭에서 열리지 않은 경우 한 번만 다시 클릭 후 재시도합니다.
-            page.keyboard.press("Escape")
-            time.sleep(0.3)
-            retry = page.evaluate(r"""
-            () => {
-              const visible = el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; };
-              const compact=s=>(s||'').replace(/\s+/g,'');
-              const all=Array.from(document.querySelectorAll('body *')).filter(visible);
-              const prompt=all.find(el=>compact(el.textContent)===compact('협력사를 선택해주세요.'));
-              if(!prompt) return false;
-              const py=prompt.getBoundingClientRect().bottom;
-              const vals=all.filter(el=>/DP\d+/.test(compact(el.textContent))&&el.getBoundingClientRect().top>=py-8)
-                .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
-              if(!vals[0]) return false;
-              const r=vals[0].getBoundingClientRect();
-              vals[0].scrollIntoView({block:'center'});
-              const el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)||vals[0];
-              el.click(); return true;
-            }
-            """)
-            if retry:
-                time.sleep(1.0)
-                selected_text = page.evaluate(r"""
-                (aliases) => {
-                  const visible=el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden';};
-                  const compact=s=>(s||'').replace(/\s+/g,'');
-                  const targets=aliases.map(compact).filter(Boolean);
-                  const all=Array.from(document.querySelectorAll('body *')).filter(visible);
-                  const matches=all.filter(el=>{const t=compact(el.textContent);return t&&targets.some(a=>t===a||t.includes(a));})
-                    .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
-                  for(const el of matches){const role=el.getAttribute&&el.getAttribute('role');if(role==='option'||(el.tagName||'').toLowerCase()==='li'){el.click();return (el.textContent||'').trim();}}
-                  if(matches[0]){matches[0].click();return (matches[0].textContent||'').trim();}
-                  return '';
-                }
-                """, aliases)
-
-        if not selected_text:
-            visible_texts = page.evaluate(r"""
-            () => Array.from(document.querySelectorAll('body *'))
-              .filter(el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; })
-              .map(el => (el.textContent||'').replace(/\s+/g,' ').trim())
-              .filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i)
-              .filter(v => /DP\d+|달서|중A|협력사/.test(v)).slice(0,100)
-            """)
-            raise RuntimeError(f"{config['area']} 선택 항목을 찾지 못했습니다. 보이는 후보: {visible_texts}")
-
-        print(f"협력사 항목 선택 완료: {config['area']} / {selected_text}")
-        time.sleep(0.6)
-
-        done = page.get_by_text("선택 완료", exact=True)
-        if done.count() == 0:
-            done = page.get_by_text("선택 완료", exact=False)
-        if done.count() == 0:
-            raise RuntimeError("선택 완료 버튼을 찾지 못했습니다.")
-        done.first.click(force=True)
-
+    if not opened.get("ok"):
+        shot = BASE_DIR / f"center_fail_{config['slug']}.png"
         try:
-            page.wait_for_url(lambda url: "/center/change" not in url, timeout=15000)
+            page.screenshot(path=str(shot), full_page=True)
         except Exception:
             pass
-        page.wait_for_load_state("domcontentloaded")
-        time.sleep(1.5)
+        raise RuntimeError(f"협력사 드롭다운을 열지 못했습니다: {opened} / 캡처: {shot.name}")
+
+    print(f"협력사 드롭다운 열기 완료: {opened.get('method')} / {opened.get('text','')}")
+    time.sleep(1.2)
+
+    selected_text = page.evaluate(r"""
+    (aliases) => {
+      const visible=el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);
+        return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'&&s.opacity!=='0';};
+      const compact=s=>(s||'').replace(/\s+/g,'');
+      const targets=aliases.map(compact).filter(Boolean);
+      const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+      const matches=all.filter(el=>{
+        const t=compact(el.textContent);
+        return t&&targets.some(a=>t===a||t.includes(a));
+      }).sort((a,b)=>{
+        const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+        const roleA=a.getAttribute&&a.getAttribute('role'),roleB=b.getAttribute&&b.getAttribute('role');
+        const tagA=(a.tagName||'').toLowerCase(),tagB=(b.tagName||'').toLowerCase();
+        const sA=(roleA==='option'?5000:0)+(tagA==='li'?3000:0)+(tagA==='button'?2000:0)-compact(a.textContent).length;
+        const sB=(roleB==='option'?5000:0)+(tagB==='li'?3000:0)+(tagB==='button'?2000:0)-compact(b.textContent).length;
+        return sB-sA || ar.width*ar.height-br.width*br.height;
+      });
+      for(const el of matches){
+        let cur=el;
+        for(let i=0;i<8&&cur;i++,cur=cur.parentElement){
+          const r=cur.getBoundingClientRect();
+          const role=cur.getAttribute&&cur.getAttribute('role');
+          const tag=(cur.tagName||'').toLowerCase();
+          const style=getComputedStyle(cur);
+          if(r.height<140&&(role==='option'||tag==='li'||tag==='button'||style.cursor==='pointer')){
+            cur.scrollIntoView({block:'center'});cur.click();return (el.textContent||'').trim();
+          }
+        }
+        el.scrollIntoView({block:'center'});el.click();return (el.textContent||'').trim();
+      }
+      return '';
+    }
+    """, aliases)
+
+    if not selected_text:
+        shot = BASE_DIR / f"center_list_fail_{config['slug']}.png"
+        try:
+            page.screenshot(path=str(shot), full_page=True)
+        except Exception:
+            pass
+        visible_texts = page.evaluate(r"""
+        () => Array.from(document.querySelectorAll('body *'))
+          .filter(el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);
+            return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden';})
+          .map(el=>(el.textContent||'').replace(/\s+/g,' ').trim())
+          .filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i)
+          .filter(v=>/DP\d+|달서|중A|수성|협력사/.test(v)).slice(0,120)
+        """)
+        raise RuntimeError(f"{config['area']} 선택 항목을 찾지 못했습니다. 후보: {visible_texts} / 캡처: {shot.name}")
+
+    print(f"협력사 항목 선택 완료: {config['area']} / {selected_text}")
+    time.sleep(0.7)
+
+    done = page.get_by_text("선택 완료", exact=True)
+    if done.count() == 0:
+        done = page.get_by_text("선택 완료", exact=False)
+    if done.count() == 0:
+        raise RuntimeError("선택 완료 버튼을 찾지 못했습니다.")
+    done.first.click(force=True)
+    time.sleep(1.5)
 
     history_url = (
         "https://deliverycenter.baemin.com/delivery/history"
@@ -1474,13 +1753,13 @@ def change_center(page, config):
     print(f"협력사 변경 완료: {config['area']}")
 
 def main():
-    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 s7")
+    print("MAEUM 통합 다권역 DOM 자동 수집기 m4")
     print("대상 권역:", ", ".join(c["area"] for c in CENTER_CONFIGS))
     with sync_playwright() as p:
-        browser = p.chromium.launch_persistent_context(user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"), headless=False, viewport={"width": 1400, "height": 900}, args=["--disable-gpu", "--disable-dev-shm-usage", "--disable-extensions", "--mute-audio"])
+        browser = p.chromium.launch_persistent_context(user_data_dir=str(BASE_DIR / "chrome_profile_maeum"), headless=False, viewport={"width": 1400, "height": 900}, args=["--disable-gpu", "--disable-dev-shm-usage", "--disable-extensions", "--mute-audio"])
         page = browser.pages[0] if browser.pages else browser.new_page()
         page.goto("https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=")
-        print("1. 열린 배민비즈 창에서 슈퍼소닉 계정으로 로그인하세요.")
+        print("1. 열린 배민비즈 창에서 마음 계정으로 로그인하세요.")
         print("2. 기사 실적 페이지가 열리는지 확인하세요.")
         print("3. 준비되면 CMD에서 Enter를 누르세요.")
         input("Enter 대기 중...")
@@ -1495,7 +1774,7 @@ def main():
                 try:
                     activate_center(config)
                     change_center(page, config)
-                    run_update(page)
+                    run_update(page, config)
                     success_count += 1
                 except KeyboardInterrupt:
                     raise
@@ -1505,7 +1784,7 @@ def main():
             elapsed = int((datetime.now() - cycle_started).total_seconds())
             print("\n" + "=" * 60)
             print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
-            print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
+            print(f"{REFRESH_SECONDS}초 후 다시 마음 달서A부터 수집합니다.")
             time.sleep(REFRESH_SECONDS)
 
 

@@ -657,26 +657,103 @@
     "spareRejects": 48
   },
   {
+    "area": "수성C",
+    "slug": "suseongc",
     "businessDate": "2026-07-14",
-    "closedAt": "2026-07-14 20:31:22",
-    "totalComplete": 326,
-    "totalReject": 51,
-    "totalCancel": 9,
+    "weekStart": "2026-07-08",
+    "weekEnd": "2026-07-14",
+    "closedAt": "2026-07-15 01:38:08",
+    "totalComplete": 459,
+    "totalReject": 59,
+    "totalCancel": 10,
     "riderFault": 0,
     "morning": 80,
     "afternoon": 66,
     "evening": 166,
-    "midnight": 9,
+    "midnight": 133,
     "morningExcluded": 5,
-    "midnightExcluded": 0,
-    "excluded": 5,
+    "midnightExcluded": 9,
+    "excluded": 14,
     "periodTargets": {
       "morning": 88,
       "afternoon": 84,
       "evening": 128,
       "midnight": 100
     },
-    "acceptRate": 84.5,
-    "spareRejects": 21
+    "acceptRate": 86.9,
+    "spareRejects": 45,
+    "total": {
+      "complete": 459,
+      "reject": 59,
+      "cancel": 10,
+      "riderFault": 0,
+      "morning": 80,
+      "afternoon": 66,
+      "evening": 166,
+      "midnight": 133,
+      "morningExcluded": 5,
+      "midnightExcluded": 9,
+      "excluded": 14,
+      "count": 77,
+      "onlineCount": 3,
+      "acceptRate": 86.9,
+      "spareRejects": 45
+    },
+    "teams": {
+      "마음팀": {
+        "summary": {
+          "complete": 123,
+          "reject": 16,
+          "cancel": 4,
+          "riderFault": 0,
+          "morning": 6,
+          "afternoon": 22,
+          "evening": 66,
+          "midnight": 29,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 13,
+          "onlineCount": 0,
+          "acceptRate": 86.0,
+          "spareRejects": 10
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      },
+      "BDMJ팀": {
+        "summary": {
+          "complete": 336,
+          "reject": 43,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 74,
+          "afternoon": 44,
+          "evening": 100,
+          "midnight": 104,
+          "morningExcluded": 5,
+          "midnightExcluded": 9,
+          "excluded": 14,
+          "count": 64,
+          "onlineCount": 3,
+          "acceptRate": 87.3,
+          "spareRejects": 35
+        },
+        "targets": {
+          "morning": 66,
+          "afternoon": 63,
+          "evening": 96,
+          "midnight": 75,
+          "total": 300,
+          "sets": 3
+        }
+      }
+    }
   }
 ]

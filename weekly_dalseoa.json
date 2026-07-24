@@ -662,8 +662,8 @@
     "businessDate": "2026-07-14",
     "weekStart": "2026-07-08",
     "weekEnd": "2026-07-14",
-    "closedAt": "2026-07-15 00:56:20",
-    "totalComplete": 1285,
+    "closedAt": "2026-07-15 05:59:11",
+    "totalComplete": 1308,
     "totalReject": 176,
     "totalCancel": 42,
     "riderFault": 0,
@@ -672,18 +672,18 @@
     "evening": 404,
     "midnight": 247,
     "morningExcluded": 72,
-    "midnightExcluded": 7,
-    "excluded": 79,
+    "midnightExcluded": 30,
+    "excluded": 102,
     "periodTargets": {
       "morning": 132,
       "afternoon": 126,
       "evening": 192,
       "midnight": 150
     },
-    "acceptRate": 85.5,
-    "spareRejects": 103,
+    "acceptRate": 85.7,
+    "spareRejects": 109,
     "total": {
-      "complete": 1285,
+      "complete": 1308,
       "reject": 176,
       "cancel": 42,
       "riderFault": 0,
@@ -692,17 +692,17 @@
       "evening": 404,
       "midnight": 247,
       "morningExcluded": 72,
-      "midnightExcluded": 7,
-      "excluded": 79,
+      "midnightExcluded": 30,
+      "excluded": 102,
       "count": 190,
-      "onlineCount": 3,
-      "acceptRate": 85.5,
-      "spareRejects": 103
+      "onlineCount": 2,
+      "acceptRate": 85.7,
+      "spareRejects": 109
     },
     "teams": {
       "소닉팀": {
         "summary": {
-          "complete": 1083,
+          "complete": 1106,
           "reject": 117,
           "cancel": 29,
           "riderFault": 0,
@@ -711,12 +711,12 @@
           "evening": 369,
           "midnight": 216,
           "morningExcluded": 51,
-          "midnightExcluded": 7,
-          "excluded": 58,
+          "midnightExcluded": 30,
+          "excluded": 81,
           "count": 142,
-          "onlineCount": 3,
-          "acceptRate": 88.1,
-          "spareRejects": 124
+          "onlineCount": 1,
+          "acceptRate": 88.3,
+          "spareRejects": 130
         },
         "targets": {
           "morning": 110,
@@ -741,7 +741,7 @@
           "midnightExcluded": 0,
           "excluded": 21,
           "count": 48,
-          "onlineCount": 0,
+          "onlineCount": 1,
           "acceptRate": 73.7,
           "spareRejects": -22
         },
@@ -751,6 +751,1006 @@
           "evening": 32,
           "midnight": 25,
           "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-15",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-16 05:59:27",
+    "totalComplete": 1514,
+    "totalReject": 179,
+    "totalCancel": 53,
+    "riderFault": 0,
+    "morning": 270,
+    "afternoon": 374,
+    "evening": 542,
+    "midnight": 259,
+    "morningExcluded": 53,
+    "midnightExcluded": 12,
+    "excluded": 65,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 86.7,
+    "spareRejects": 146,
+    "total": {
+      "complete": 1514,
+      "reject": 179,
+      "cancel": 53,
+      "riderFault": 0,
+      "morning": 270,
+      "afternoon": 374,
+      "evening": 542,
+      "midnight": 259,
+      "morningExcluded": 53,
+      "midnightExcluded": 12,
+      "excluded": 65,
+      "count": 192,
+      "onlineCount": 1,
+      "acceptRate": 86.7,
+      "spareRejects": 146
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1268,
+          "reject": 145,
+          "cancel": 43,
+          "riderFault": 0,
+          "morning": 231,
+          "afternoon": 312,
+          "evening": 455,
+          "midnight": 221,
+          "morningExcluded": 35,
+          "midnightExcluded": 12,
+          "excluded": 47,
+          "count": 144,
+          "onlineCount": 0,
+          "acceptRate": 87.1,
+          "spareRejects": 129
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 246,
+          "reject": 34,
+          "cancel": 10,
+          "riderFault": 0,
+          "morning": 39,
+          "afternoon": 62,
+          "evening": 87,
+          "midnight": 38,
+          "morningExcluded": 18,
+          "midnightExcluded": 0,
+          "excluded": 18,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 84.8,
+          "spareRejects": 17
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-16",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-17 05:59:41",
+    "totalComplete": 1707,
+    "totalReject": 214,
+    "totalCancel": 91,
+    "riderFault": 0,
+    "morning": 305,
+    "afternoon": 349,
+    "evening": 595,
+    "midnight": 385,
+    "morningExcluded": 61,
+    "midnightExcluded": 8,
+    "excluded": 69,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 84.8,
+    "spareRejects": 121,
+    "total": {
+      "complete": 1707,
+      "reject": 214,
+      "cancel": 91,
+      "riderFault": 0,
+      "morning": 305,
+      "afternoon": 349,
+      "evening": 595,
+      "midnight": 385,
+      "morningExcluded": 61,
+      "midnightExcluded": 8,
+      "excluded": 69,
+      "count": 193,
+      "onlineCount": 2,
+      "acceptRate": 84.8,
+      "spareRejects": 121
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1325,
+          "reject": 144,
+          "cancel": 65,
+          "riderFault": 0,
+          "morning": 231,
+          "afternoon": 273,
+          "evening": 452,
+          "midnight": 312,
+          "morningExcluded": 47,
+          "midnightExcluded": 8,
+          "excluded": 55,
+          "count": 145,
+          "onlineCount": 1,
+          "acceptRate": 86.4,
+          "spareRejects": 122
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 382,
+          "reject": 70,
+          "cancel": 26,
+          "riderFault": 0,
+          "morning": 74,
+          "afternoon": 76,
+          "evening": 143,
+          "midnight": 73,
+          "morningExcluded": 14,
+          "midnightExcluded": 0,
+          "excluded": 14,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 79.9,
+          "spareRejects": -1
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-17",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-18 05:59:44",
+    "totalComplete": 1763,
+    "totalReject": 471,
+    "totalCancel": 143,
+    "riderFault": 0,
+    "morning": 430,
+    "afternoon": 457,
+    "evening": 494,
+    "midnight": 260,
+    "morningExcluded": 98,
+    "midnightExcluded": 24,
+    "excluded": 122,
+    "periodTargets": {
+      "morning": 192,
+      "afternoon": 144,
+      "evening": 222,
+      "midnight": 162
+    },
+    "acceptRate": 74.2,
+    "spareRejects": -174,
+    "total": {
+      "complete": 1763,
+      "reject": 471,
+      "cancel": 143,
+      "riderFault": 0,
+      "morning": 430,
+      "afternoon": 457,
+      "evening": 494,
+      "midnight": 260,
+      "morningExcluded": 98,
+      "midnightExcluded": 24,
+      "excluded": 122,
+      "count": 194,
+      "onlineCount": 2,
+      "acceptRate": 74.2,
+      "spareRejects": -174
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1296,
+          "reject": 245,
+          "cancel": 84,
+          "riderFault": 0,
+          "morning": 338,
+          "afternoon": 333,
+          "evening": 345,
+          "midnight": 183,
+          "morningExcluded": 74,
+          "midnightExcluded": 23,
+          "excluded": 97,
+          "count": 146,
+          "onlineCount": 1,
+          "acceptRate": 79.8,
+          "spareRejects": -5
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 467,
+          "reject": 226,
+          "cancel": 59,
+          "riderFault": 0,
+          "morning": 92,
+          "afternoon": 124,
+          "evening": 149,
+          "midnight": 77,
+          "morningExcluded": 24,
+          "midnightExcluded": 1,
+          "excluded": 25,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 62.1,
+          "spareRejects": -169
+        },
+        "targets": {
+          "morning": 32,
+          "afternoon": 24,
+          "evening": 37,
+          "midnight": 27,
+          "total": 120,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-18",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-19 05:58:11",
+    "totalComplete": 1612,
+    "totalReject": 272,
+    "totalCancel": 80,
+    "riderFault": 0,
+    "morning": 420,
+    "afternoon": 284,
+    "evening": 567,
+    "midnight": 283,
+    "morningExcluded": 51,
+    "midnightExcluded": 5,
+    "excluded": 56,
+    "periodTargets": {
+      "morning": 186,
+      "afternoon": 138,
+      "evening": 228,
+      "midnight": 168
+    },
+    "acceptRate": 82.1,
+    "spareRejects": 51,
+    "total": {
+      "complete": 1612,
+      "reject": 272,
+      "cancel": 80,
+      "riderFault": 0,
+      "morning": 420,
+      "afternoon": 284,
+      "evening": 567,
+      "midnight": 283,
+      "morningExcluded": 51,
+      "midnightExcluded": 5,
+      "excluded": 56,
+      "count": 194,
+      "onlineCount": 1,
+      "acceptRate": 82.1,
+      "spareRejects": 51
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1222,
+          "reject": 186,
+          "cancel": 43,
+          "riderFault": 0,
+          "morning": 315,
+          "afternoon": 230,
+          "evening": 431,
+          "midnight": 198,
+          "morningExcluded": 41,
+          "midnightExcluded": 5,
+          "excluded": 46,
+          "count": 146,
+          "onlineCount": 1,
+          "acceptRate": 84.2,
+          "spareRejects": 76
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 390,
+          "reject": 86,
+          "cancel": 37,
+          "riderFault": 0,
+          "morning": 105,
+          "afternoon": 54,
+          "evening": 136,
+          "midnight": 85,
+          "morningExcluded": 10,
+          "midnightExcluded": 0,
+          "excluded": 10,
+          "count": 48,
+          "onlineCount": 0,
+          "acceptRate": 76.0,
+          "spareRejects": -26
+        },
+        "targets": {
+          "morning": 31,
+          "afternoon": 23,
+          "evening": 38,
+          "midnight": 28,
+          "total": 120,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-19",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-20 05:58:03",
+    "totalComplete": 1850,
+    "totalReject": 353,
+    "totalCancel": 110,
+    "riderFault": 0,
+    "morning": 568,
+    "afternoon": 442,
+    "evening": 467,
+    "midnight": 279,
+    "morningExcluded": 46,
+    "midnightExcluded": 46,
+    "excluded": 92,
+    "periodTargets": {
+      "morning": 192,
+      "afternoon": 144,
+      "evening": 222,
+      "midnight": 162
+    },
+    "acceptRate": 80.0,
+    "spareRejects": -1,
+    "total": {
+      "complete": 1850,
+      "reject": 353,
+      "cancel": 110,
+      "riderFault": 0,
+      "morning": 568,
+      "afternoon": 442,
+      "evening": 467,
+      "midnight": 279,
+      "morningExcluded": 46,
+      "midnightExcluded": 46,
+      "excluded": 92,
+      "count": 194,
+      "onlineCount": 1,
+      "acceptRate": 80.0,
+      "spareRejects": -1
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1520,
+          "reject": 227,
+          "cancel": 54,
+          "riderFault": 0,
+          "morning": 450,
+          "afternoon": 353,
+          "evening": 388,
+          "midnight": 248,
+          "morningExcluded": 35,
+          "midnightExcluded": 46,
+          "excluded": 81,
+          "count": 146,
+          "onlineCount": 0,
+          "acceptRate": 84.4,
+          "spareRejects": 99
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 330,
+          "reject": 126,
+          "cancel": 56,
+          "riderFault": 0,
+          "morning": 118,
+          "afternoon": 89,
+          "evening": 79,
+          "midnight": 31,
+          "morningExcluded": 11,
+          "midnightExcluded": 0,
+          "excluded": 11,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 64.5,
+          "spareRejects": -100
+        },
+        "targets": {
+          "morning": 32,
+          "afternoon": 24,
+          "evening": 37,
+          "midnight": 27,
+          "total": 120,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-20",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-21 05:59:49",
+    "totalComplete": 1286,
+    "totalReject": 165,
+    "totalCancel": 36,
+    "riderFault": 0,
+    "morning": 285,
+    "afternoon": 289,
+    "evening": 403,
+    "midnight": 243,
+    "morningExcluded": 41,
+    "midnightExcluded": 21,
+    "excluded": 62,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 86.5,
+    "spareRejects": 120,
+    "total": {
+      "complete": 1286,
+      "reject": 165,
+      "cancel": 36,
+      "riderFault": 0,
+      "morning": 285,
+      "afternoon": 289,
+      "evening": 403,
+      "midnight": 243,
+      "morningExcluded": 41,
+      "midnightExcluded": 21,
+      "excluded": 62,
+      "count": 193,
+      "onlineCount": 1,
+      "acceptRate": 86.5,
+      "spareRejects": 120
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1021,
+          "reject": 123,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 221,
+          "afternoon": 234,
+          "evening": 324,
+          "midnight": 187,
+          "morningExcluded": 32,
+          "midnightExcluded": 21,
+          "excluded": 53,
+          "count": 145,
+          "onlineCount": 1,
+          "acceptRate": 87.3,
+          "spareRejects": 107
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 265,
+          "reject": 42,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 64,
+          "afternoon": 55,
+          "evening": 79,
+          "midnight": 56,
+          "morningExcluded": 9,
+          "midnightExcluded": 0,
+          "excluded": 9,
+          "count": 48,
+          "onlineCount": 0,
+          "acceptRate": 83.3,
+          "spareRejects": 13
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-21",
+    "weekStart": "2026-07-15",
+    "weekEnd": "2026-07-21",
+    "closedAt": "2026-07-22 05:58:58",
+    "totalComplete": 1191,
+    "totalReject": 121,
+    "totalCancel": 45,
+    "riderFault": 0,
+    "morning": 302,
+    "afternoon": 270,
+    "evening": 345,
+    "midnight": 214,
+    "morningExcluded": 50,
+    "midnightExcluded": 6,
+    "excluded": 56,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 87.8,
+    "spareRejects": 131,
+    "total": {
+      "complete": 1191,
+      "reject": 121,
+      "cancel": 45,
+      "riderFault": 0,
+      "morning": 302,
+      "afternoon": 270,
+      "evening": 345,
+      "midnight": 214,
+      "morningExcluded": 50,
+      "midnightExcluded": 6,
+      "excluded": 56,
+      "count": 193,
+      "onlineCount": 2,
+      "acceptRate": 87.8,
+      "spareRejects": 131
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1005,
+          "reject": 98,
+          "cancel": 36,
+          "riderFault": 0,
+          "morning": 258,
+          "afternoon": 224,
+          "evening": 295,
+          "midnight": 187,
+          "morningExcluded": 33,
+          "midnightExcluded": 6,
+          "excluded": 39,
+          "count": 145,
+          "onlineCount": 1,
+          "acceptRate": 88.2,
+          "spareRejects": 117
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 186,
+          "reject": 23,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 44,
+          "afternoon": 46,
+          "evening": 50,
+          "midnight": 27,
+          "morningExcluded": 17,
+          "midnightExcluded": 0,
+          "excluded": 17,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 85.3,
+          "spareRejects": 14
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-22",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-23 05:58:15",
+    "totalComplete": 1041,
+    "totalReject": 138,
+    "totalCancel": 43,
+    "riderFault": 2,
+    "morning": 232,
+    "afternoon": 229,
+    "evening": 308,
+    "midnight": 196,
+    "morningExcluded": 61,
+    "midnightExcluded": 11,
+    "excluded": 72,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 85.0,
+    "spareRejects": 77,
+    "total": {
+      "complete": 1041,
+      "reject": 138,
+      "cancel": 43,
+      "riderFault": 2,
+      "morning": 232,
+      "afternoon": 229,
+      "evening": 308,
+      "midnight": 196,
+      "morningExcluded": 61,
+      "midnightExcluded": 11,
+      "excluded": 72,
+      "count": 194,
+      "onlineCount": 2,
+      "acceptRate": 85.0,
+      "spareRejects": 77
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 842,
+          "reject": 109,
+          "cancel": 33,
+          "riderFault": 1,
+          "morning": 174,
+          "afternoon": 193,
+          "evening": 266,
+          "midnight": 157,
+          "morningExcluded": 39,
+          "midnightExcluded": 11,
+          "excluded": 50,
+          "count": 146,
+          "onlineCount": 1,
+          "acceptRate": 85.5,
+          "spareRejects": 67
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 199,
+          "reject": 29,
+          "cancel": 10,
+          "riderFault": 1,
+          "morning": 58,
+          "afternoon": 36,
+          "evening": 42,
+          "midnight": 39,
+          "morningExcluded": 22,
+          "midnightExcluded": 0,
+          "excluded": 22,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 83.3,
+          "spareRejects": 9
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-23",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-24 05:58:39",
+    "totalComplete": 1362,
+    "totalReject": 150,
+    "totalCancel": 46,
+    "riderFault": 0,
+    "morning": 299,
+    "afternoon": 270,
+    "evening": 439,
+    "midnight": 270,
+    "morningExcluded": 67,
+    "midnightExcluded": 13,
+    "excluded": 80,
+    "periodTargets": {
+      "morning": 132,
+      "afternoon": 126,
+      "evening": 192,
+      "midnight": 150
+    },
+    "acceptRate": 87.4,
+    "spareRejects": 144,
+    "total": {
+      "complete": 1362,
+      "reject": 150,
+      "cancel": 46,
+      "riderFault": 0,
+      "morning": 299,
+      "afternoon": 270,
+      "evening": 439,
+      "midnight": 270,
+      "morningExcluded": 67,
+      "midnightExcluded": 13,
+      "excluded": 80,
+      "count": 193,
+      "onlineCount": 1,
+      "acceptRate": 87.4,
+      "spareRejects": 144
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1098,
+          "reject": 114,
+          "cancel": 29,
+          "riderFault": 0,
+          "morning": 243,
+          "afternoon": 217,
+          "evening": 355,
+          "midnight": 221,
+          "morningExcluded": 47,
+          "midnightExcluded": 13,
+          "excluded": 60,
+          "count": 145,
+          "onlineCount": 0,
+          "acceptRate": 88.5,
+          "spareRejects": 131
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 264,
+          "reject": 36,
+          "cancel": 17,
+          "riderFault": 0,
+          "morning": 56,
+          "afternoon": 53,
+          "evening": 84,
+          "midnight": 49,
+          "morningExcluded": 20,
+          "midnightExcluded": 0,
+          "excluded": 20,
+          "count": 48,
+          "onlineCount": 1,
+          "acceptRate": 83.3,
+          "spareRejects": 13
+        },
+        "targets": {
+          "morning": 22,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 25,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "달서A",
+    "slug": "dalseoa",
+    "businessDate": "2026-07-24",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-24 15:05:38",
+    "totalComplete": 564,
+    "totalReject": 25,
+    "totalCancel": 19,
+    "riderFault": 0,
+    "morning": 337,
+    "afternoon": 155,
+    "evening": 0,
+    "midnight": 0,
+    "morningExcluded": 68,
+    "midnightExcluded": 0,
+    "excluded": 68,
+    "periodTargets": {
+      "morning": 150,
+      "afternoon": 132,
+      "evening": 204,
+      "midnight": 174
+    },
+    "acceptRate": 92.8,
+    "spareRejects": 97,
+    "total": {
+      "complete": 564,
+      "reject": 25,
+      "cancel": 19,
+      "riderFault": 0,
+      "morning": 337,
+      "afternoon": 155,
+      "evening": 0,
+      "midnight": 0,
+      "morningExcluded": 68,
+      "midnightExcluded": 0,
+      "excluded": 68,
+      "count": 193,
+      "onlineCount": 19,
+      "acceptRate": 92.8,
+      "spareRejects": 97
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 459,
+          "reject": 19,
+          "cancel": 5,
+          "riderFault": 0,
+          "morning": 276,
+          "afternoon": 131,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 50,
+          "midnightExcluded": 0,
+          "excluded": 50,
+          "count": 145,
+          "onlineCount": 16,
+          "acceptRate": 95.0,
+          "spareRejects": 90
+        },
+        "targets": {
+          "morning": 125,
+          "afternoon": 110,
+          "evening": 170,
+          "midnight": 145,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "달서팀": {
+        "summary": {
+          "complete": 105,
+          "reject": 6,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 61,
+          "afternoon": 24,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 18,
+          "midnightExcluded": 0,
+          "excluded": 18,
+          "count": 48,
+          "onlineCount": 3,
+          "acceptRate": 84.0,
+          "spareRejects": 6
+        },
+        "targets": {
+          "morning": 25,
+          "afternoon": 22,
+          "evening": 34,
+          "midnight": 29,
+          "total": 110,
           "sets": 1
         }
       }

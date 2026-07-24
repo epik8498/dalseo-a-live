@@ -17,6 +17,17 @@ REFRESH_SECONDS = 60
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
+BACKGROUND_SAFE_ARGS = [
+    "--disable-gpu",
+    "--disable-dev-shm-usage",
+    "--disable-extensions",
+    "--mute-audio",
+    "--disable-background-timer-throttling",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-renderer-backgrounding",
+    "--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling,MemorySaverMode",
+]
+
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_vic.json"
 HTML_FILE = BASE_DIR / "vic.html"
@@ -115,6 +126,7 @@ DAY_TARGETS = {
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
+    "2026-07-17": 6,
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
@@ -125,6 +137,55 @@ PERIOD_LABELS = {
     "midnight": "심야논피크",
 }
 
+
+
+def keep_chrome_rendering(context, page):
+    """Chrome을 최소화하지 않고 화면 밖 정상 창 상태로 유지합니다."""
+    try:
+        page.bring_to_front()
+    except Exception:
+        pass
+
+    try:
+        session = context.new_cdp_session(page)
+        try:
+            info = session.send("Browser.getWindowForTarget")
+            window_id = info.get("windowId")
+            if window_id is not None:
+                session.send("Browser.setWindowBounds", {
+                    "windowId": window_id,
+                    "bounds": {
+                        "left": -1800,
+                        "top": 20,
+                        "width": 1400,
+                        "height": 900,
+                        "windowState": "normal",
+                    },
+                })
+        except Exception:
+            pass
+
+        try:
+            session.send("Page.setWebLifecycleState", {"state": "active"})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setFocusEmulationEnabled", {"enabled": True})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setIdleOverride", {
+                "isUserActive": True,
+                "isScreenUnlocked": True,
+            })
+        except Exception:
+            pass
+        try:
+            session.detach()
+        except Exception:
+            pass
+    except Exception:
+        pass
 
 def split_hourly_by_sla(hourly, date_value=None):
     h = list(hourly or [])[:24]
@@ -1653,6 +1714,15 @@ def git_push():
 
 
 def run_update(page):
+    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
+
+    # 기사이동으로 변경된 Firebase 팀맵을 매 수집마다 다시 불러옵니다.
+    # 기존 캐시를 비운 뒤 첫 기사 분류 시 /settings/vic/* 팀맵을 새로 읽습니다.
+    TEAM_MAP_CACHE = None
+    TEAM_MAP_PHONE_CACHE = None
+    TEAM_MAP_USERID_CACHE = None
+    print("Firebase 팀맵 캐시 초기화 완료 - 최신 기사이동 정보 재조회")
+
     riders = collect_all_pages_by_dom(page)
 
     if len(riders) == 0:
@@ -1691,47 +1761,61 @@ def run_update(page):
 
 
 def main():
-    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
-    print("VIC 성공드림 독립 DOM 자동 수집기")
+    print("VIC 성공드림 독립 DOM 자동 수집기 - 화면 밖 백그라운드 모드")
 
     with sync_playwright() as p:
         browser = p.chromium.launch_persistent_context(
             user_data_dir=str(BASE_DIR / "chrome_profile_vic"),
             headless=False,
             viewport={"width": 1400, "height": 900},
+            args=BACKGROUND_SAFE_ARGS,
         )
-
-        page = browser.pages[0]
+        page = browser.pages[0] if browser.pages else browser.new_page()
+        page.set_default_timeout(30000)
+        page.set_default_navigation_timeout(45000)
 
         page.goto(
-            "https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus="
+            "https://deliverycenter.baemin.com/delivery/history"
+            "?page=0&size=100&orderName=name&orderBy=asc"
+            "&name=&userId=&phoneNumber=&riderStatus="
         )
 
-        print("1. 열린 배민비즈 창에서 로그인하세요.")
-        print("2. 성공드림 기사 실적 페이지로 이동하세요.")
-        print("3. 100개 보기로 맞추세요.")
-        print("4. 준비되면 CMD에서 Enter 누르세요.")
-
+        print("1. 열린 배민비즈 창에서 성공드림 계정으로 로그인하세요.")
+        print("2. 기사 실적 페이지가 열리는지 확인하세요.")
+        print("3. 준비되면 CMD에서 Enter를 누르세요.")
+        print("4. Enter 후 Chrome 창은 최소화되지 않고 화면 바깥으로 이동합니다.")
         input("Enter 대기 중...")
 
-        while True:
-            TEAM_MAP_CACHE = None
-            TEAM_MAP_PHONE_CACHE = None
-            TEAM_MAP_USERID_CACHE = None
+        keep_chrome_rendering(browser, page)
+        print("Chrome 창을 화면 밖으로 이동했습니다.")
+        print("CMD 창은 최소화해도 됩니다. Chrome은 작업표시줄에서 최소화하지 마세요.")
 
-            print("")
-            print("===================================")
-            print("자동 수집 시작")
-            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        try:
+            while True:
+                started = datetime.now()
+                print("\n" + "=" * 60)
+                print("VIC 자동 수집 시작:", started.strftime("%Y-%m-%d %H:%M:%S"))
 
+                try:
+                    keep_chrome_rendering(browser, page)
+                    run_update(page)
+                    print("VIC 수집 성공")
+                except KeyboardInterrupt:
+                    raise
+                except Exception as e:
+                    print(f"VIC 오류 발생: {e}")
+                    import traceback
+                    traceback.print_exc()
+
+                elapsed = int((datetime.now() - started).total_seconds())
+                print(f"한 바퀴 완료, 소요 {elapsed}초")
+                print(f"{REFRESH_SECONDS}초 후 다시 수집합니다.")
+                time.sleep(REFRESH_SECONDS)
+        finally:
             try:
-                run_update(page)
-            except Exception as e:
-                print("오류 발생:")
-                print(e)
-
-            print(f"{REFRESH_SECONDS}초 후 다시 자동 수집합니다.")
-            time.sleep(REFRESH_SECONDS)
+                browser.close()
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":

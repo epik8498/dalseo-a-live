@@ -17,6 +17,23 @@ REFRESH_SECONDS = 60
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
+BACKGROUND_ARGS = [
+    "--disable-gpu",
+    "--disable-dev-shm-usage",
+    "--disable-extensions",
+    "--mute-audio",
+    "--disable-background-timer-throttling",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-renderer-backgrounding",
+    "--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling,MemorySaverMode",
+]
+
+HISTORY_URL = (
+    "https://deliverycenter.baemin.com/delivery/history"
+    "?page=0&size=100&orderName=name&orderBy=asc"
+    "&name=&userId=&phoneNumber=&riderStatus="
+)
+
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_dalseoa.json"
 HTML_FILE = BASE_DIR / "index.html"
@@ -31,10 +48,12 @@ WEEKLY_PATH = ""
 CURRENT_SLUG = ""
 REQUIRED_TEAM_RIDERS = {}
 TEAM_MAP_CACHE = None
+VERIFIED_CENTER_CODE = None
 
 CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'dalseoa',
   'aliases': ['대구달서7M(DP2506234693)', '대구달서7M (DP2506234693)', '대구달서7M', 'DP2506234693'],
+  'center_code': 'DP2506234693',
   'team_order': ['소닉팀', '달서팀'],
   'area_config': {'소닉팀': 5, '달서팀': 1},
   'team_map_path': '/settings/dalseoa/teamMap',
@@ -87,6 +106,7 @@ CENTER_CONFIGS = [{'area': '달서A',
  {'area': '달서B',
   'slug': 'dalseob',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
+  'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
   'area_config': {'소닉팀': 2, '넘버팀': 5, '마음팀': 5},
   'team_map_path': '/settings/dalseob/teamMap',
@@ -96,8 +116,9 @@ CENTER_CONFIGS = [{'area': '달서A',
  {'area': '중구A',
   'slug': 'junggua',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
+  'center_code': 'DP2511170481',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 3},
+  'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 2},
   'team_map_path': '/settings/junggua/teamMap',
   'live_path': '/live/junggua',
   'weekly_path': '/weekly/junggua',
@@ -126,6 +147,50 @@ PERIOD_LABELS = {
     "midnight": "심야논피크",
 }
 
+
+
+def keep_page_active(context, page):
+    try:
+        page.bring_to_front()
+    except Exception:
+        pass
+    try:
+        session = context.new_cdp_session(page)
+        try:
+            session.send("Page.setWebLifecycleState", {"state": "active"})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setFocusEmulationEnabled", {"enabled": True})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setIdleOverride", {
+                "isUserActive": True,
+                "isScreenUnlocked": True,
+            })
+        except Exception:
+            pass
+        try:
+            session.detach()
+        except Exception:
+            pass
+    except Exception:
+        pass
+
+
+def open_background_context(playwright):
+    context = playwright.chromium.launch_persistent_context(
+        user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"),
+        headless=True,
+        viewport={"width": 1400, "height": 900},
+        args=BACKGROUND_ARGS,
+    )
+    page = context.pages[0] if context.pages else context.new_page()
+    page.set_default_timeout(30000)
+    page.set_default_navigation_timeout(45000)
+    keep_page_active(context, page)
+    return context, page
 
 def split_hourly_by_sla(hourly, date_value=None):
     h = list(hourly or [])[:24]
@@ -810,10 +875,20 @@ def target_total_by_period_for_date(date_value):
     return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
 
 
-def weekly_summary(weekly_rows, now):
+
+def weekly_summary(weekly_rows, now, config=None):
+    """현재 수~화 주차의 권역 전체 및 팀별 합계를 계산합니다.
+
+    예전 weekly 행(teams 필드 없음)도 그대로 읽을 수 있도록 호환성을 유지합니다.
+    """
+    config = config or {
+        "area": AREA_NAME,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
+    }
     week_dates = current_week_dates(now)
     date_keys = [str(d) for d in week_dates]
-    by_date = {x.get("businessDate"): x for x in weekly_rows}
+    by_date = {x.get("businessDate"): x for x in weekly_rows if isinstance(x, dict)}
 
     days = []
     total_complete = 0
@@ -826,6 +901,24 @@ def weekly_summary(weekly_rows, now):
     total_morning_excluded = 0
     total_midnight_excluded = 0
 
+    team_totals = {}
+    for team in config.get("team_order", []):
+        team_totals[team] = {
+            "complete": 0,
+            "reject": 0,
+            "cancel": 0,
+            "riderFault": 0,
+            "morning": 0,
+            "afternoon": 0,
+            "evening": 0,
+            "midnight": 0,
+            "morningExcluded": 0,
+            "midnightExcluded": 0,
+            "excluded": 0,
+            "periodTargets": {p: 0 for p in PERIODS},
+            "days": [],
+        }
+
     labels = ["수", "목", "금", "토", "일", "월", "화"]
     period_names = {
         "morning": "오전피크",
@@ -836,19 +929,22 @@ def weekly_summary(weekly_rows, now):
 
     for label, date_value, date_key in zip(labels, week_dates, date_keys):
         row = by_date.get(date_key, {})
-        complete = to_int(row.get("totalComplete", 0))
-        reject = to_int(row.get("totalReject", 0))
-        cancel = to_int(row.get("totalCancel", 0))
-        rider_fault = to_int(row.get("riderFault", 0))
+        complete = to_int(row.get("totalComplete", row.get("total", {}).get("complete", 0)))
+        reject = to_int(row.get("totalReject", row.get("total", {}).get("reject", 0)))
+        cancel = to_int(row.get("totalCancel", row.get("total", {}).get("cancel", 0)))
+        rider_fault = to_int(row.get("riderFault", row.get("total", {}).get("riderFault", 0)))
         bad_total = reject + cancel + rider_fault
-        morning_excluded = to_int(row.get("morningExcluded", 0))
-        midnight_excluded = to_int(row.get("midnightExcluded", 0))
-        excluded = to_int(row.get("excluded", row.get("totalExcluded", morning_excluded + midnight_excluded)))
+        morning_excluded = to_int(row.get("morningExcluded", row.get("total", {}).get("morningExcluded", 0)))
+        midnight_excluded = to_int(row.get("midnightExcluded", row.get("total", {}).get("midnightExcluded", 0)))
+        excluded = to_int(row.get(
+            "excluded",
+            row.get("totalExcluded", row.get("total", {}).get("excluded", morning_excluded + midnight_excluded))
+        ))
         period_targets = row.get("periodTargets") or target_total_by_period_for_date(date_value)
 
         period_rows = []
         for p in PERIODS:
-            done = to_int(row.get(p, 0))
+            done = to_int(row.get(p, row.get("total", {}).get(p, 0)))
             goal = to_int(period_targets.get(p, 0))
             failed = bool(row) and goal > 0 and done < goal
             total_periods[p] += done
@@ -869,7 +965,7 @@ def weekly_summary(weekly_rows, now):
         total_morning_excluded += morning_excluded
         total_midnight_excluded += midnight_excluded
 
-        days.append({
+        day_obj = {
             "label": label,
             "businessDate": date_key,
             "complete": complete,
@@ -885,7 +981,54 @@ def weekly_summary(weekly_rows, now):
             "periods": period_rows,
             "closedAt": row.get("closedAt", ""),
             "hasData": bool(row),
-        })
+        }
+        days.append(day_obj)
+
+        stored_teams = row.get("teams") or {}
+        for team in config.get("team_order", []):
+            stored = stored_teams.get(team) or {}
+            s = stored.get("summary") if isinstance(stored, dict) and isinstance(stored.get("summary"), dict) else stored
+            s = s if isinstance(s, dict) else {}
+            t = stored.get("targets") if isinstance(stored, dict) and isinstance(stored.get("targets"), dict) else {}
+            team_day = {
+                "label": label,
+                "businessDate": date_key,
+                "hasData": bool(s),
+                "complete": to_int(s.get("complete", 0)),
+                "reject": to_int(s.get("reject", 0)),
+                "cancel": to_int(s.get("cancel", 0)),
+                "riderFault": to_int(s.get("riderFault", 0)),
+                "morning": to_int(s.get("morning", 0)),
+                "afternoon": to_int(s.get("afternoon", 0)),
+                "evening": to_int(s.get("evening", 0)),
+                "midnight": to_int(s.get("midnight", 0)),
+                "morningExcluded": to_int(s.get("morningExcluded", 0)),
+                "midnightExcluded": to_int(s.get("midnightExcluded", 0)),
+                "excluded": to_int(s.get("excluded", 0)),
+                "targets": {p: to_int(t.get(p, 0)) for p in PERIODS},
+            }
+            team_day["acceptRate"] = calc_accept_rate(
+                team_day["complete"], team_day["reject"], team_day["cancel"], team_day["riderFault"]
+            )
+            team_totals[team]["days"].append(team_day)
+            for key in [
+                "complete", "reject", "cancel", "riderFault",
+                "morning", "afternoon", "evening", "midnight",
+                "morningExcluded", "midnightExcluded", "excluded",
+            ]:
+                team_totals[team][key] += team_day[key]
+            for p in PERIODS:
+                team_totals[team]["periodTargets"][p] += team_day["targets"][p]
+
+    for team, value in team_totals.items():
+        value["acceptRate"] = calc_accept_rate(
+            value["complete"], value["reject"], value["cancel"], value["riderFault"]
+        )
+        value["spareRejects"] = spare_rejects(
+            value["complete"], value["reject"], value["cancel"], value["riderFault"]
+        )
+        value["periodTotals"] = {p: value[p] for p in PERIODS}
+        value["sets"] = to_int(config.get("area_config", {}).get(team, 0))
 
     return {
         "startDate": date_keys[0],
@@ -903,19 +1046,47 @@ def weekly_summary(weekly_rows, now):
         "midnightExcluded": total_midnight_excluded,
         "excluded": total_excluded,
         "days": days,
+        "teams": team_totals,
     }
 
 
-def save_weekly_if_close(data):
-    weekly = load_weekly()
-    today_key = data["businessDate"]
+def save_weekly_if_close(data, config=None):
+    """오늘 권역 전체 및 팀별 실적을 weekly 파일에 갱신합니다.
 
+    같은 날짜는 최신값으로 덮어쓰고, 날짜가 다르면 수치가 같아도 새 행으로 보존합니다.
+    """
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+    }
+    weekly = load_weekly()
+    if not isinstance(weekly, list):
+        weekly = []
+
+    today_key = data["businessDate"]
     target_date = datetime.strptime(today_key, "%Y-%m-%d").date()
     period_targets = target_total_by_period_for_date(target_date)
+    week_start = week_start_wednesday(target_date)
+    week_end = week_start + timedelta(days=6)
+
+    team_rows = {}
+    for team in config.get("team_order", []):
+        current = data.get("teams", {}).get(team, {})
+        team_rows[team] = {
+            "summary": dict(current.get("summary") or {}),
+            "targets": dict(current.get("targets") or {}),
+        }
 
     row = {
+        "area": config["area"],
+        "slug": config["slug"],
         "businessDate": today_key,
+        "weekStart": str(week_start),
+        "weekEnd": str(week_end),
         "closedAt": data["updatedAt"],
+
+        # 기존 HTML 호환 필드
         "totalComplete": data["total"]["complete"],
         "totalReject": data["total"]["reject"],
         "totalCancel": data["total"]["cancel"],
@@ -930,49 +1101,62 @@ def save_weekly_if_close(data):
         "periodTargets": period_targets,
         "acceptRate": data["total"]["acceptRate"],
         "spareRejects": data["total"]["spareRejects"],
+
+        # 신규 장기 정산용 구조
+        "total": dict(data["total"]),
+        "teams": team_rows,
     }
 
-    def same_stats(a, b):
-        return (
-            to_int(a.get("totalComplete", 0)) == to_int(b.get("totalComplete", 0)) and
-            to_int(a.get("totalReject", 0)) == to_int(b.get("totalReject", 0)) and
-            to_int(a.get("totalCancel", 0)) == to_int(b.get("totalCancel", 0)) and
-            to_int(a.get("riderFault", 0)) == to_int(b.get("riderFault", 0)) and
-            to_int(a.get("morning", 0)) == to_int(b.get("morning", 0)) and
-            to_int(a.get("afternoon", 0)) == to_int(b.get("afternoon", 0)) and
-            to_int(a.get("evening", 0)) == to_int(b.get("evening", 0)) and
-            to_int(a.get("midnight", 0)) == to_int(b.get("midnight", 0)) and
-            to_int(a.get("excluded", 0)) == to_int(b.get("excluded", 0))
-        )
-
     found = False
-
     for i, old in enumerate(weekly):
-        if old.get("businessDate") == today_key:
+        if isinstance(old, dict) and old.get("businessDate") == today_key:
             weekly[i] = row
             found = True
             break
 
     if not found:
-        if weekly and same_stats(weekly[-1], row):
-            print("전날 데이터와 동일해서 weekly 새 날짜 저장 건너뜀")
-        else:
-            weekly.append(row)
+        weekly.append(row)
 
-    weekly = sorted(weekly, key=lambda x: x.get("businessDate", ""))[-31:]
+    # 날짜 중복을 제거하면서 최신 행을 우선 보존
+    dedup = {}
+    for item in weekly:
+        if isinstance(item, dict) and item.get("businessDate"):
+            dedup[item["businessDate"]] = item
+    weekly = sorted(dedup.values(), key=lambda x: x.get("businessDate", ""))[-730:]
 
     with open(WEEKLY_FILE, "w", encoding="utf-8") as f:
         json.dump(weekly, f, ensure_ascii=False, indent=2)
 
 
-def make_data(riders):
+def available_weeks(weekly_rows):
+    weeks = {}
+    for row in weekly_rows:
+        if not isinstance(row, dict) or not row.get("businessDate"):
+            continue
+        try:
+            d = datetime.strptime(row["businessDate"], "%Y-%m-%d").date()
+        except Exception:
+            continue
+        start = row.get("weekStart") or str(week_start_wednesday(d))
+        end = row.get("weekEnd") or str(week_start_wednesday(d) + timedelta(days=6))
+        weeks[start] = {"startDate": start, "endDate": end}
+    return [weeks[k] for k in sorted(weeks.keys(), reverse=True)]
+
+
+def make_data(riders, config=None):
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
+    }
     now = datetime.now()
     riders.sort(key=lambda x: (not x["isOnline"], x["name"]))
 
     targets = team_targets(now)
     teams = {}
 
-    for team in TEAM_ORDER:
+    for team in config["team_order"]:
         rows = [r for r in riders if r["team"] == team]
         teams[team] = {
             "summary": summary(rows),
@@ -983,9 +1167,10 @@ def make_data(riders):
     weekly = load_weekly()
 
     return {
-        "area": AREA_NAME,
+        "area": config["area"],
+        "slug": config["slug"],
         "areas": ["달서A", "달서B", "중구A"],
-        "teamOrder": TEAM_ORDER,
+        "teamOrder": list(config["team_order"]),
         "updatedAt": now.strftime("%Y-%m-%d %H:%M:%S"),
         "businessDate": str(business_date(now)),
         "currentPeriod": current_period(now),
@@ -995,20 +1180,53 @@ def make_data(riders):
         "teams": teams,
         "riders": riders,
         "weekly": weekly,
-        "weeklySummary": weekly_summary(weekly, now),
+        "availableWeeks": available_weeks(weekly),
+        "weeklySummary": weekly_summary(weekly, now, config),
     }
 
-def save_json(data):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
+
+def save_json(data, config=None):
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "live_path": LIVE_PATH,
+        "weekly_path": WEEKLY_PATH,
+    }
+    expected_data_file = BASE_DIR / f"data_{config['slug']}.json"
+    expected_weekly_file = BASE_DIR / f"weekly_{config['slug']}.json"
+
+    # 권역 혼선 방지: 업로드 전에 세 값을 모두 검증합니다.
+    if data.get("area") != config["area"]:
+        raise RuntimeError(
+            f"권역 검증 실패: data.area={data.get('area')} / config.area={config['area']}"
+        )
+    if data.get("slug") != config["slug"]:
+        raise RuntimeError(
+            f"slug 검증 실패: data.slug={data.get('slug')} / config.slug={config['slug']}"
+        )
+    if DATA_FILE.resolve() != expected_data_file.resolve() or WEEKLY_FILE.resolve() != expected_weekly_file.resolve():
+        raise RuntimeError(
+            f"파일 경로 검증 실패: DATA_FILE={DATA_FILE.name}, WEEKLY_FILE={WEEKLY_FILE.name}, "
+            f"예상={expected_data_file.name}, {expected_weekly_file.name}"
+        )
+
+    with open(expected_data_file, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+
+    # 방금 저장한 로컬 JSON을 다시 읽어 최종 확인합니다.
+    with open(expected_data_file, "r", encoding="utf-8") as f:
+        verify = json.load(f)
+    if verify.get("area") != config["area"] or verify.get("slug") != config["slug"]:
+        raise RuntimeError(f"저장 후 권역 검증 실패: {expected_data_file.name}")
+
     try:
-        upload_json(DATA_FILE.name, LIVE_PATH)
-        upload_json(WEEKLY_FILE.name, WEEKLY_PATH)
-        print(f"Firebase 업로드 완료: {LIVE_PATH}")
-        print(f"Firebase 업로드 완료: {WEEKLY_PATH}")
+        upload_json(expected_data_file.name, config["live_path"])
+        upload_json(expected_weekly_file.name, config["weekly_path"])
+        print(f"Firebase 업로드 완료: {config['live_path']} ← {expected_data_file.name}")
+        print(f"Firebase 업로드 완료: {config['weekly_path']} ← {expected_weekly_file.name}")
     except Exception as e:
         print("Firebase 업로드 실패")
-        print(e)
+        raise
 
 def save_html():
     return
@@ -1045,21 +1263,48 @@ def git_push():
     print(push.stderr)
 
 
-def run_update(page):
+
+def run_update(page, config=None):
+    global VERIFIED_CENTER_CODE
+    config = config or {
+        "area": AREA_NAME,
+        "slug": CURRENT_SLUG,
+        "team_order": TEAM_ORDER,
+        "area_config": AREA_CONFIG.get(AREA_NAME, {}),
+        "live_path": LIVE_PATH,
+        "weekly_path": WEEKLY_PATH,
+    }
+    expected_code = norm(config.get("center_code", ""))
+    if VERIFIED_CENTER_CODE != expected_code:
+        raise RuntimeError(
+            f"업로드 차단: 검증된 협력사={VERIFIED_CENTER_CODE!r}, 예상={expected_code!r}"
+        )
+
     riders = collect_all_pages_by_dom(page)
     if len(riders) == 0:
         raise RuntimeError("기사 데이터를 못 읽었습니다.")
-    data = make_data(riders)
-    save_weekly_if_close(data)
+
+    data = make_data(riders, config)
+
+    # 수집 직후부터 권역값을 검증하여 다른 권역 덮어쓰기를 차단합니다.
+    if data.get("area") != config["area"] or data.get("slug") != config["slug"]:
+        raise RuntimeError(
+            f"수집 권역 불일치: {data.get('area')}/{data.get('slug')} "
+            f"!= {config['area']}/{config['slug']}"
+        )
+
+    save_weekly_if_close(data, config)
     weekly = load_weekly()
     data["weekly"] = weekly
-    data["weeklySummary"] = weekly_summary(weekly, datetime.now())
-    save_json(data)
+    data["availableWeeks"] = available_weeks(weekly)
+    data["weeklySummary"] = weekly_summary(weekly, datetime.now(), config)
+    save_json(data, config)
+
     print(f"업로드 완료: {data['updatedAt']}")
-    print(f"권역: {AREA_NAME}")
+    print(f"권역: {config['area']} / slug: {config['slug']}")
     print(f"전체 기사 수: {data['total']['count']}")
     print(f"접속중 기사 수: {data['total']['onlineCount']}")
-    for team in TEAM_ORDER:
+    for team in config["team_order"]:
         print(f"{team} 접속중: {data['teams'][team]['summary']['onlineCount']}")
     print(f"전체 완료: {data['total']['complete']}")
     print(f"전체 거절: {data['total']['reject']}")
@@ -1070,7 +1315,8 @@ def run_update(page):
 def activate_center(config):
     global AREA_NAME, TEAM_ORDER, AREA_CONFIG, TEAM_MAP_PATH
     global LIVE_PATH, WEEKLY_PATH, CURRENT_SLUG, DATA_FILE, WEEKLY_FILE
-    global REQUIRED_TEAM_RIDERS, TEAM_MAP_CACHE
+    global REQUIRED_TEAM_RIDERS, TEAM_MAP_CACHE, VERIFIED_CENTER_CODE
+    VERIFIED_CENTER_CODE = None
     AREA_NAME = config["area"]
     CURRENT_SLUG = config["slug"]
     TEAM_ORDER = list(config["team_order"])
@@ -1091,25 +1337,9 @@ def _visible(locator):
         return False
 
 
-def change_center(page, config):
-    """배민 협력사 변경 페이지의 커스텀 드롭다운을 열어 권역을 변경합니다.
-
-    핵심은 상단 헤더의 현재 협력사명이 아니라,
-    '협력사를 선택해주세요.' 아래쪽에 있는 실제 선택 박스를 좌표로 골라 클릭하는 것입니다.
-    """
-    print(f"협력사 변경 시도: {config['area']}")
-
-    target_code = norm(config.get("center_code", ""))
-    aliases = [norm(x) for x in config.get("aliases", []) if norm(x)]
-    if target_code and target_code not in aliases:
-        aliases.append(target_code)
-
-    page.goto("https://deliverycenter.baemin.com/center/change")
-    page.wait_for_load_state("domcontentloaded")
-    time.sleep(1.5)
-
-    # 현재 권역이 이미 목표 권역이면 선택 작업 없이 그대로 사용합니다.
-    current_center = page.evaluate(r"""
+def _selected_center_code_on_change_page(page):
+    """협력사 변경 화면의 선택 박스에 표시된 현재 DP코드를 반환합니다."""
+    return page.evaluate(r"""
     () => {
       const visible = el => {
         const r = el.getBoundingClientRect();
@@ -1117,211 +1347,148 @@ def change_center(page, config):
         return r.width > 0 && r.height > 0 && s.display !== 'none' &&
                s.visibility !== 'hidden' && s.opacity !== '0';
       };
-      const compact = s => (s || '').replace(/\s+/g, '');
-      const prompt = Array.from(document.querySelectorAll('body *'))
-        .filter(visible)
-        .find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-      const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
-      const items = Array.from(document.querySelectorAll('body *'))
-        .filter(visible)
-        .filter(el => /DP\d+/.test(compact(el.textContent)))
-        .map(el => ({
-          text: (el.textContent || '').trim(),
-          compact: compact(el.textContent),
-          y: el.getBoundingClientRect().top,
-          area: el.getBoundingClientRect().width * el.getBoundingClientRect().height
-        }))
-        .filter(x => x.y >= promptY - 5)
-        .sort((a,b) => a.compact.length - b.compact.length || a.area - b.area);
-      return items.length ? items[0].text : '';
+      const compact = s => String(s || '').replace(/\s+/g, '');
+      const all = Array.from(document.querySelectorAll('body *')).filter(visible);
+      const prompt = all
+        .filter(el => compact(el.textContent) === compact('협력사를 선택해주세요.'))
+        .sort((a,b) => a.children.length - b.children.length)[0];
+      if (!prompt) return '';
+      const py = prompt.getBoundingClientRect().bottom;
+      const candidates = all
+        .filter(el => {
+          const r = el.getBoundingClientRect();
+          const txt = compact(el.textContent);
+          return r.top >= py - 8 && /DP\d+/.test(txt) && txt.length < 80;
+        })
+        .sort((a,b) => {
+          const at = compact(a.textContent), bt = compact(b.textContent);
+          const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
+          return at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
+        });
+      if (!candidates.length) return '';
+      const m = compact(candidates[0].textContent).match(/DP\d+/);
+      return m ? m[0] : '';
     }
     """)
 
-    compact_current = norm(current_center).replace(" ", "")
-    compact_targets = [a.replace(" ", "") for a in aliases]
-    if current_center and any(a and (a in compact_current or compact_current in a) for a in compact_targets):
-        print(f"현재 협력사 이미 일치: {config['area']} / {current_center}")
-    else:
-        # 안내문구 아래 실제 드롭다운(현재 선택값)을 클릭합니다.
+
+def change_center(page, config):
+    """DP코드가 실제로 바뀐 경우에만 다음 수집 단계로 진행합니다."""
+    global VERIFIED_CENTER_CODE
+    VERIFIED_CENTER_CODE = None
+
+    target_code = norm(config.get("center_code", ""))
+    if not re.fullmatch(r"DP\d+", target_code):
+        raise RuntimeError(f"{config['area']} center_code 설정 오류: {target_code!r}")
+
+    print(f"협력사 변경 시도: {config['area']} / {target_code}")
+    change_url = "https://deliverycenter.baemin.com/center/change"
+
+    page.goto(change_url)
+    page.wait_for_load_state("domcontentloaded")
+    time.sleep(2.0)
+
+    current_code = _selected_center_code_on_change_page(page)
+    print(f"변경 전 실제 협력사: {current_code or '확인 실패'}")
+
+    if current_code != target_code:
         opened = page.evaluate(r"""
         () => {
           const visible = el => {
-            const r = el.getBoundingClientRect();
-            const s = getComputedStyle(el);
-            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
-                   s.visibility !== 'hidden' && s.opacity !== '0';
+            const r=el.getBoundingClientRect(), s=getComputedStyle(el);
+            return r.width>0 && r.height>0 && s.display!=='none' &&
+                   s.visibility!=='hidden' && s.opacity!=='0';
           };
-          const compact = s => (s || '').replace(/\s+/g, '');
-          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
-          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-          if (!prompt) return {ok:false, reason:'prompt_not_found'};
-          const promptBox = prompt.getBoundingClientRect();
-
-          // 상단 헤더에 있는 협력사명은 제외하고, 안내문구 아래의 현재값만 고릅니다.
-          let values = all.filter(el => {
-            const t = compact(el.textContent);
-            const r = el.getBoundingClientRect();
-            return /DP\d+/.test(t) && r.top >= promptBox.bottom - 8;
+          const compact=s=>String(s||'').replace(/\s+/g,'');
+          const all=Array.from(document.querySelectorAll('body *')).filter(visible);
+          const prompt=all.filter(el=>compact(el.textContent)===compact('협력사를 선택해주세요.'))
+                          .sort((a,b)=>a.children.length-b.children.length)[0];
+          if(!prompt) return false;
+          const py=prompt.getBoundingClientRect().bottom;
+          const vals=all.filter(el=>{
+            const r=el.getBoundingClientRect(), txt=compact(el.textContent);
+            return r.top>=py-8 && /DP\d+/.test(txt) && txt.length<80;
+          }).sort((a,b)=>{
+            const at=compact(a.textContent),bt=compact(b.textContent);
+            const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+            return at.length-bt.length || (ar.width*ar.height)-(br.width*br.height);
           });
-          values.sort((a,b) => {
-            const at = compact(a.textContent), bt = compact(b.textContent);
-            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
-            return at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
-          });
-          if (!values.length) return {ok:false, reason:'value_not_found'};
-
-          const value = values[0];
-          let cur = value;
-          for (let i=0; i<10 && cur; i++, cur=cur.parentElement) {
-            const r = cur.getBoundingClientRect();
-            const role = cur.getAttribute && cur.getAttribute('role');
-            const tag = (cur.tagName || '').toLowerCase();
-            const aria = cur.getAttribute && cur.getAttribute('aria-haspopup');
-            const expanded = cur.getAttribute && cur.getAttribute('aria-expanded');
-            const style = getComputedStyle(cur);
-            const reasonable = r.width >= value.getBoundingClientRect().width && r.width < 900 && r.height < 140;
-            const clickable = tag === 'button' || role === 'combobox' || role === 'button' ||
-                              aria === 'listbox' || aria === 'true' || expanded !== null ||
-                              cur.tabIndex >= 0 || style.cursor === 'pointer';
-            if (reasonable && clickable) {
-              cur.scrollIntoView({block:'center'});
-              cur.click();
-              return {ok:true, text:(value.textContent||'').trim(), tag, role:role||''};
-            }
-          }
-
-          // 클릭 가능한 부모를 못 찾으면 실제 현재값 중앙 좌표를 클릭합니다.
-          const r = value.getBoundingClientRect();
-          const x = r.left + r.width / 2;
-          const y = r.top + r.height / 2;
-          value.scrollIntoView({block:'center'});
-          const topEl = document.elementFromPoint(x, y) || value;
-          topEl.dispatchEvent(new MouseEvent('mousedown',{bubbles:true,clientX:x,clientY:y}));
-          topEl.dispatchEvent(new MouseEvent('mouseup',{bubbles:true,clientX:x,clientY:y}));
-          topEl.click();
-          return {ok:true, text:(value.textContent||'').trim(), tag:'coordinate', role:''};
-        }
-        """)
-        if not opened.get("ok"):
-            raise RuntimeError(f"협력사 드롭다운을 열지 못했습니다: {opened}")
-
-        time.sleep(1.0)
-
-        # 목록에서 DP코드 또는 정확한 권역명을 찾아 클릭합니다.
-        selected_text = page.evaluate(r"""
-        (aliases) => {
-          const visible = el => {
-            const r = el.getBoundingClientRect();
-            const s = getComputedStyle(el);
-            return r.width > 0 && r.height > 0 && s.display !== 'none' &&
-                   s.visibility !== 'hidden' && s.opacity !== '0';
-          };
-          const compact = s => (s || '').replace(/\s+/g, '');
-          const targets = aliases.map(compact).filter(Boolean);
-          const all = Array.from(document.querySelectorAll('body *')).filter(visible);
-          const prompt = all.find(el => compact(el.textContent) === compact('협력사를 선택해주세요.'));
-          const promptY = prompt ? prompt.getBoundingClientRect().bottom : 0;
-
-          let matches = all.filter(el => {
-            const t = compact(el.textContent);
-            const r = el.getBoundingClientRect();
-            return r.top >= promptY - 10 && t && targets.some(a => t === a || t.includes(a));
-          });
-
-          matches.sort((a,b) => {
-            const at = compact(a.textContent), bt = compact(b.textContent);
-            const ar = a.getBoundingClientRect(), br = b.getBoundingClientRect();
-            const roleA = a.getAttribute && a.getAttribute('role');
-            const roleB = b.getAttribute && b.getAttribute('role');
-            const bonusA = (roleA === 'option' ? 2000 : 0) + ((a.tagName||'').toLowerCase()==='li' ? 1000 : 0);
-            const bonusB = (roleB === 'option' ? 2000 : 0) + ((b.tagName||'').toLowerCase()==='li' ? 1000 : 0);
-            return bonusB - bonusA || at.length - bt.length || (ar.width*ar.height) - (br.width*br.height);
-          });
-
-          for (const el of matches) {
-            let cur = el;
-            for (let i=0; i<8 && cur; i++, cur=cur.parentElement) {
-              const role = cur.getAttribute && cur.getAttribute('role');
-              const tag = (cur.tagName || '').toLowerCase();
-              const style = getComputedStyle(cur);
-              const r = cur.getBoundingClientRect();
-              if (r.height < 120 && (role === 'option' || tag === 'li' || tag === 'button' || style.cursor === 'pointer')) {
-                cur.scrollIntoView({block:'center'});
-                cur.click();
-                return (el.textContent || '').trim();
-              }
-            }
-            el.scrollIntoView({block:'center'});
-            el.click();
-            return (el.textContent || '').trim();
-          }
-          return '';
-        }
-        """, aliases)
-
-        if not selected_text:
-            # 드롭다운이 첫 클릭에서 열리지 않은 경우 한 번만 다시 클릭 후 재시도합니다.
-            page.keyboard.press("Escape")
-            time.sleep(0.3)
-            retry = page.evaluate(r"""
-            () => {
-              const visible = el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; };
-              const compact=s=>(s||'').replace(/\s+/g,'');
-              const all=Array.from(document.querySelectorAll('body *')).filter(visible);
-              const prompt=all.find(el=>compact(el.textContent)===compact('협력사를 선택해주세요.'));
-              if(!prompt) return false;
-              const py=prompt.getBoundingClientRect().bottom;
-              const vals=all.filter(el=>/DP\d+/.test(compact(el.textContent))&&el.getBoundingClientRect().top>=py-8)
-                .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
-              if(!vals[0]) return false;
-              const r=vals[0].getBoundingClientRect();
-              vals[0].scrollIntoView({block:'center'});
-              const el=document.elementFromPoint(r.left+r.width/2,r.top+r.height/2)||vals[0];
+          if(!vals.length) return false;
+          let el=vals[0];
+          for(let i=0;i<6&&el;i++,el=el.parentElement){
+            const r=el.getBoundingClientRect();
+            const role=el.getAttribute&&el.getAttribute('role');
+            const tag=(el.tagName||'').toLowerCase();
+            if(r.height<140&&(tag==='button'||role==='button'||role==='combobox'||el.tabIndex>=0)){
               el.click(); return true;
             }
-            """)
-            if retry:
-                time.sleep(1.0)
-                selected_text = page.evaluate(r"""
-                (aliases) => {
-                  const visible=el=>{const r=el.getBoundingClientRect();const s=getComputedStyle(el);return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden';};
-                  const compact=s=>(s||'').replace(/\s+/g,'');
-                  const targets=aliases.map(compact).filter(Boolean);
-                  const all=Array.from(document.querySelectorAll('body *')).filter(visible);
-                  const matches=all.filter(el=>{const t=compact(el.textContent);return t&&targets.some(a=>t===a||t.includes(a));})
-                    .sort((a,b)=>compact(a.textContent).length-compact(b.textContent).length);
-                  for(const el of matches){const role=el.getAttribute&&el.getAttribute('role');if(role==='option'||(el.tagName||'').toLowerCase()==='li'){el.click();return (el.textContent||'').trim();}}
-                  if(matches[0]){matches[0].click();return (matches[0].textContent||'').trim();}
-                  return '';
-                }
-                """, aliases)
+          }
+          vals[0].click(); return true;
+        }
+        """)
+        if not opened:
+            raise RuntimeError("협력사 선택 박스를 열지 못했습니다.")
+        time.sleep(1.2)
 
-        if not selected_text:
-            visible_texts = page.evaluate(r"""
-            () => Array.from(document.querySelectorAll('body *'))
-              .filter(el => { const r=el.getBoundingClientRect(); const s=getComputedStyle(el); return r.width>0&&r.height>0&&s.display!=='none'&&s.visibility!=='hidden'; })
-              .map(el => (el.textContent||'').replace(/\s+/g,' ').trim())
-              .filter(Boolean).filter((v,i,a)=>a.indexOf(v)===i)
-              .filter(v => /DP\d+|달서|중A|협력사/.test(v)).slice(0,100)
-            """)
-            raise RuntimeError(f"{config['area']} 선택 항목을 찾지 못했습니다. 보이는 후보: {visible_texts}")
-
-        print(f"협력사 항목 선택 완료: {config['area']} / {selected_text}")
-        time.sleep(0.6)
+        selected = page.evaluate(r"""
+        (targetCode) => {
+          const visible = el => {
+            const r=el.getBoundingClientRect(), s=getComputedStyle(el);
+            return r.width>0 && r.height>0 && s.display!=='none' &&
+                   s.visibility!=='hidden' && s.opacity!=='0';
+          };
+          const compact=s=>String(s||'').replace(/\s+/g,'');
+          const matches=Array.from(document.querySelectorAll('body *'))
+            .filter(visible)
+            .filter(el=>{
+              const txt=compact(el.textContent);
+              return txt.includes(targetCode) && txt.length<100;
+            })
+            .sort((a,b)=>{
+              const roleA=a.getAttribute&&a.getAttribute('role');
+              const roleB=b.getAttribute&&b.getAttribute('role');
+              const bonusA=(roleA==='option'?1000:0)+((a.tagName||'').toLowerCase()==='li'?500:0);
+              const bonusB=(roleB==='option'?1000:0)+((b.tagName||'').toLowerCase()==='li'?500:0);
+              const at=compact(a.textContent),bt=compact(b.textContent);
+              const ar=a.getBoundingClientRect(),br=b.getBoundingClientRect();
+              return bonusB-bonusA || at.length-bt.length ||
+                     (ar.width*ar.height)-(br.width*br.height);
+            });
+          if(!matches.length) return '';
+          let el=matches[0];
+          for(let i=0;i<6&&el;i++,el=el.parentElement){
+            const r=el.getBoundingClientRect();
+            const role=el.getAttribute&&el.getAttribute('role');
+            const tag=(el.tagName||'').toLowerCase();
+            if(r.height<140&&(role==='option'||tag==='li'||tag==='button')){
+              el.click(); return compact(matches[0].textContent);
+            }
+          }
+          matches[0].click();
+          return compact(matches[0].textContent);
+        }
+        """, target_code)
+        if not selected:
+            raise RuntimeError(f"{config['area']}({target_code}) 옵션을 찾지 못했습니다.")
 
         done = page.get_by_text("선택 완료", exact=True)
-        if done.count() == 0:
-            done = page.get_by_text("선택 완료", exact=False)
-        if done.count() == 0:
+        if done.count() == 0 or not done.first.is_visible():
             raise RuntimeError("선택 완료 버튼을 찾지 못했습니다.")
-        done.first.click(force=True)
+        done.first.click()
+        time.sleep(2.0)
 
-        try:
-            page.wait_for_url(lambda url: "/center/change" not in url, timeout=15000)
-        except Exception:
-            pass
-        page.wait_for_load_state("domcontentloaded")
-        time.sleep(1.5)
+    page.goto(change_url)
+    page.wait_for_load_state("domcontentloaded")
+    time.sleep(1.8)
+    verified_code = _selected_center_code_on_change_page(page)
+    if verified_code != target_code:
+        raise RuntimeError(
+            f"협력사 전환 검증 실패: 목표={target_code}, 실제={verified_code or '확인 실패'}; "
+            "Firebase 업로드를 차단합니다."
+        )
+
+    VERIFIED_CENTER_CODE = verified_code
+    print(f"협력사 변경 검증 성공: {config['area']} / {verified_code}")
 
     history_url = (
         "https://deliverycenter.baemin.com/delivery/history"
@@ -1330,43 +1497,84 @@ def change_center(page, config):
     )
     page.goto(history_url)
     page.wait_for_load_state("networkidle")
-    time.sleep(1.2)
-    print(f"협력사 변경 완료: {config['area']}")
-
+    time.sleep(1.5)
 def main():
-    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 s6")
+    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 - 완전 백그라운드 모드")
     print("대상 권역:", ", ".join(c["area"] for c in CENTER_CONFIGS))
+
     with sync_playwright() as p:
-        browser = p.chromium.launch_persistent_context(user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"), headless=False, viewport={"width": 1400, "height": 900}, args=["--disable-gpu", "--disable-dev-shm-usage", "--disable-extensions", "--mute-audio"])
-        page = browser.pages[0] if browser.pages else browser.new_page()
-        page.goto("https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=")
+        login_browser = p.chromium.launch_persistent_context(
+            user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"),
+            headless=False,
+            viewport={"width": 1400, "height": 900},
+            args=BACKGROUND_ARGS,
+        )
+        login_page = login_browser.pages[0] if login_browser.pages else login_browser.new_page()
+        login_page.set_default_timeout(30000)
+        login_page.set_default_navigation_timeout(45000)
+        login_page.goto(HISTORY_URL)
+
         print("1. 열린 배민비즈 창에서 슈퍼소닉 계정으로 로그인하세요.")
         print("2. 기사 실적 페이지가 열리는지 확인하세요.")
         print("3. 준비되면 CMD에서 Enter를 누르세요.")
+        print("4. Enter 후 로그인용 크롬은 닫히고 화면 없는 백그라운드 모드로 전환됩니다.")
         input("Enter 대기 중...")
-        while True:
-            cycle_started = datetime.now()
-            print("\n" + "=" * 60)
-            print("통합 자동 수집 시작:", cycle_started.strftime("%Y-%m-%d %H:%M:%S"))
-            success_count = 0
-            for config in CENTER_CONFIGS:
-                print("\n" + "-" * 60)
-                print(f"[{config['area']}] 수집 시작")
-                try:
-                    activate_center(config)
-                    change_center(page, config)
-                    run_update(page)
-                    success_count += 1
-                except KeyboardInterrupt:
-                    raise
-                except Exception as e:
-                    print(f"[{config['area']}] 오류 발생: {e}")
-                    import traceback; traceback.print_exc()
-            elapsed = int((datetime.now() - cycle_started).total_seconds())
-            print("\n" + "=" * 60)
-            print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
-            print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
-            time.sleep(REFRESH_SECONDS)
+
+        try:
+            login_page.wait_for_timeout(1000)
+        except Exception:
+            pass
+        login_browser.close()
+        time.sleep(1.5)
+
+        browser, page = open_background_context(p)
+        try:
+            page.goto(HISTORY_URL)
+            page.wait_for_load_state("domcontentloaded")
+            keep_page_active(browser, page)
+
+            if "/login" in page.url.lower():
+                raise RuntimeError(
+                    "백그라운드 재실행 후 로그인 세션을 확인하지 못했습니다. "
+                    "프로그램을 다시 실행해 로그인 후 Enter를 눌러주세요."
+                )
+
+            print("백그라운드 전환 완료: 이제 크롬 창 없이 수집합니다.")
+            print("CMD 창은 최소화해도 됩니다.")
+
+            while True:
+                cycle_started = datetime.now()
+                print("\n" + "=" * 60)
+                print("통합 자동 수집 시작:", cycle_started.strftime("%Y-%m-%d %H:%M:%S"))
+                success_count = 0
+
+                for config in CENTER_CONFIGS:
+                    print("\n" + "-" * 60)
+                    print(f"[{config['area']}] 수집 시작")
+                    try:
+                        keep_page_active(browser, page)
+                        activate_center(config)
+                        change_center(page, config)
+                        keep_page_active(browser, page)
+                        run_update(page, config)
+                        success_count += 1
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        print(f"[{config['area']}] 오류 발생: {e}")
+                        import traceback
+                        traceback.print_exc()
+
+                elapsed = int((datetime.now() - cycle_started).total_seconds())
+                print("\n" + "=" * 60)
+                print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
+                print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
+                time.sleep(REFRESH_SECONDS)
+        finally:
+            try:
+                browser.close()
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":
