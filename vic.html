@@ -27,6 +27,78 @@
 .settlement-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center}
 @media(max-width:760px){.settlement-kpis{grid-template-columns:1fr 1fr}.settlement-controls{flex-direction:column}}
 
+
+/* 모바일 상단 권역 버튼 찌그러짐 방지 */
+@media(max-width:760px){
+  .hero{padding:10px 0 10px}
+  .hero-inner{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:10px;
+    align-items:stretch;
+  }
+  .brand{
+    min-width:0;
+    width:100%;
+  }
+  .brand>div:last-child{
+    min-width:0;
+  }
+  .brand h1{
+    font-size:18px;
+    line-height:1.25;
+    white-space:normal;
+    word-break:keep-all;
+  }
+  .brand p{
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .logo{
+    width:42px;
+    height:42px;
+    min-width:42px;
+    border-radius:14px;
+    font-size:20px;
+  }
+  .region-tabs{
+    width:100%;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+    padding:4px;
+    border-radius:14px;
+  }
+  .area-tab{
+    width:100%;
+    min-width:0;
+    padding:11px 6px;
+    font-size:14px;
+    line-height:1;
+    white-space:nowrap;
+    word-break:keep-all;
+    text-align:center;
+  }
+  .section-head{
+    align-items:center;
+    gap:8px;
+  }
+  .section-title{
+    min-width:0;
+    font-size:18px;
+    line-height:1.25;
+  }
+  .toggle{
+    flex:0 0 auto;
+    min-width:72px;
+    padding:10px 11px;
+    font-size:13px;
+    white-space:nowrap;
+  }
+}
+
 </style>
 </head>
 <body>
