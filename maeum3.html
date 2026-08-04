@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>마음3팀 달서A 관제판</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<style>
+:root{--red:#e60012;--red2:#c90016;--blue:#006fd6;--green:#00bf63;--purple:#7c3aed;--orange:#ff9f00;--text:#111;--muted:#767676;--line:#e4e4e4;--card:#fff;--bg:#fff;--soft:#fafafa}
+body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--soft:#111}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,'Noto Sans KR',sans-serif;font-weight:800}button,input,select{font-family:inherit}body.dark{background:linear-gradient(135deg,rgba(0,0,0,.94),rgba(15,15,15,.96)),url('logo.png') right 60px top 90px / 380px auto no-repeat}.wrap{max-width:820px;margin:0 auto;padding:18px 14px 48px}.top{position:relative;text-align:center;padding-top:8px}.top-actions{display:flex;justify-content:space-between;align-items:center;margin:0 48px 12px 48px}.move,.mode{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:14px;padding:13px 18px;font-size:16px;font-weight:1000;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer}.logo-img{width:92px;min-height:54px;object-fit:contain}.brand{color:var(--red);font-size:34px;font-weight:1000;font-style:italic;line-height:1;margin-top:8px}.sub{font-size:18px;font-weight:1000;margin-top:10px}.area{margin:22px 0 12px;text-align:center;font-size:20px;font-weight:1000}.area b{color:var(--red)}.top-update{margin:0 0 24px;font-size:17px;font-weight:1000;color:var(--muted);text-align:center}.area-menu{display:none;position:absolute;left:60px;top:64px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.16);z-index:10;overflow:hidden;min-width:160px}.area-menu.show{display:block}.area-menu button{display:block;width:100%;padding:14px 18px;border:0;border-bottom:1px solid var(--line);background:var(--card);color:var(--text);font-size:16px;font-weight:1000;text-align:left;cursor:pointer}.area-menu button.active{background:var(--red);color:#fff}.error{border:2px solid var(--red);border-radius:18px;padding:18px;text-align:center;font-weight:1000;color:var(--red);background:#fff3f3;margin-bottom:18px}body.dark .error{background:#220000}.summary{border:2.5px solid var(--red2);border-radius:24px;background:rgba(255,255,255,.92);overflow:hidden;margin-bottom:30px}body.dark .summary{background:rgba(15,15,15,.82)}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr)}.sum{min-height:118px;padding:25px 8px 20px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.sum:nth-child(3n){border-right:0}.sum:nth-last-child(-n+3){border-bottom:0}.sum-title{font-size:17px;font-weight:1000;line-height:1.3}.sum-val{margin-top:13px;font-size:32px;font-weight:1000;letter-spacing:-1px}.sum-val.red{color:var(--red)}.sum-val.green{color:var(--green)}.section-title{margin:28px 0 14px;display:flex;align-items:center;gap:12px;font-size:30px;font-weight:1000;letter-spacing:-1px}.section-title .icon{display:inline-block;width:11px;height:34px;background:var(--red);border-radius:2px}.section-title small{font-size:18px;color:var(--muted);font-weight:1000}.toggle-btn{width:100%;border:0;border-radius:16px;background:var(--red);color:#fff;font-size:19px;font-weight:1000;padding:20px 16px;margin:8px 0 22px;box-shadow:0 10px 18px rgba(230,0,18,.22);cursor:pointer}.panel{display:none}.panel.show{display:block}.weekly-status{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px}.status-line{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:17px;font-weight:1000}.badge{display:inline-block;border-radius:999px;padding:7px 12px;font-size:14px;font-weight:1000}.badge.ok{background:#e8fff2;color:#008a43}.badge.fail{background:#fff0f0;color:var(--red)}.badge.wait{background:#f1f1f1;color:#666}.weekly-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:26px}.day-card{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:22px 18px;box-shadow:0 3px 10px rgba(0,0,0,.03)}body.dark .day-card{background:rgba(18,18,18,.92);box-shadow:none}.day-head{text-align:center}.day-label{font-size:34px;color:var(--red);font-weight:1000;line-height:1}.day-date{font-size:16px;color:var(--muted);font-weight:1000;margin-top:9px}.period-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:10px 0;font-size:18px}.period-row .pname{color:var(--muted);font-weight:1000}.period-row.fail .pval{color:var(--red)}.period-row.ok .pval{color:var(--text)}.day-line{height:1px;background:var(--line);margin:16px 0}.day-total{text-align:center;font-size:18px;line-height:1.6}.day-result{text-align:center;margin-top:12px}.period-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:26px}.period-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 4px 14px rgba(0,0,0,.04)}body.dark .period-card{box-shadow:none;background:rgba(20,20,20,.9)}.period-head{font-size:25px;font-weight:1000;margin-bottom:12px}.period-sub{font-size:16px;color:var(--muted);font-weight:1000}.period-total{margin:24px 0 18px;text-align:center;font-size:32px;font-weight:1000}.period-total span:first-child{color:var(--red)}.total-bar{height:18px;background:#e9e9e9;border-radius:999px;overflow:hidden;margin-bottom:18px}body.dark .total-bar{background:#333}.total-fill{height:100%;background:var(--red);border-radius:999px}.team-line{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;font-size:16px;font-weight:1000;margin:12px 0}.team-name{font-size:17px}.team-num .done{color:var(--red)}.team-num .goal{color:var(--blue)}.small-bar{height:14px;background:#ececec;border-radius:999px;overflow:hidden}body.dark .small-bar{background:#333}.small-fill.sonic{height:100%;background:var(--red)}.small-fill.number{height:100%;background:var(--blue)}.small-fill.maeum,.small-fill.dalseo{height:100%;background:var(--purple)}.mission-box{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;margin-bottom:18px}.mission-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.field label{display:block;font-size:14px;color:var(--muted);font-weight:1000;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:13px 12px;font-size:16px;font-weight:1000}.mission-result{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.mission-stat{border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}.mission-stat small{display:block;color:var(--muted);font-size:13px}.mission-stat b{display:block;margin-top:6px;font-size:22px;color:var(--red)}.mission-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.mission-rider{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft);display:flex;justify-content:space-between;gap:8px}.mission-rider b{font-size:17px}.mission-rider span{font-size:15px;color:var(--red);font-weight:1000}.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 14px}.filters{display:flex;gap:10px;flex-wrap:wrap}.filters button{min-width:82px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:12px 15px;font-weight:1000;cursor:pointer}.filters button.active{background:var(--red);border-color:var(--red);color:#fff}.sort{display:flex;align-items:center;gap:8px;font-weight:1000}.sort select{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:12px 16px;font-weight:1000}.riders{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rider{background:var(--card);border:1.5px solid #222;border-radius:16px;padding:15px 16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}body.dark .rider{background:rgba(18,18,18,.92);box-shadow:none;border-color:#777}.rider.active{background:#eafff1;border:2.5px solid var(--green);color:#111}body.dark .rider.active{background:#063b1d;border:2.5px solid var(--green);color:#fff}.rider-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.rider-name{font-size:22px;font-weight:1000}.dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#bbb;margin-right:8px}.rider.active .dot{background:var(--green)}.status{font-size:11px;font-weight:1000;padding:5px 8px;border-radius:999px;background:#eee;color:#555}.rider.active .status{background:#d9ffe8;color:#006b2c}.warn{color:var(--orange);font-size:12px;font-weight:1000;margin-left:4px}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;text-align:center}.stat{border-right:1px solid var(--line)}.stat:last-child{border-right:0}.stat small{display:block;font-size:12px;font-weight:1000}.stat b{display:block;margin-top:4px;font-size:18px}.stat b.red{color:var(--red)}.times{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:12px;padding-top:10px;text-align:center}.times div{border-right:1px solid var(--line);font-size:12px;font-weight:1000}.times div:last-child{border-right:0}.times b{display:block;color:var(--red);font-size:16px;margin-top:3px}.footer{text-align:center;color:var(--muted);font-weight:1000;padding:24px 0 4px;display:none}
+@media(max-width:760px){.wrap{padding:16px 24px 60px}.top-actions{margin:0 46px 12px}.summary-grid{grid-template-columns:repeat(3,1fr)}.sum{min-height:106px;padding:22px 4px 16px}.sum-title{font-size:16px}.sum-val{font-size:31px}.period-grid{grid-template-columns:1fr}.weekly-grid{grid-template-columns:1fr 1fr}.section-title{font-size:28px}.mission-form{grid-template-columns:1fr 1fr}.mission-form .field:first-child{grid-column:1/3}.mission-list{grid-template-columns:1fr}}
+@media(max-width:540px){.wrap{padding:16px 24px 60px}.top-actions{margin:0 46px 12px}.move,.mode{padding:13px 15px;font-size:16px}.logo-img{width:88px}.brand{font-size:34px}.sub{font-size:18px}.area{font-size:20px}.top-update{font-size:17px}.area-menu{left:24px;top:66px}.summary{border-radius:22px}.sum{min-height:102px;padding:20px 2px 15px}.sum-title{font-size:15px}.sum-val{font-size:29px}.weekly-grid{grid-template-columns:1fr 1fr;gap:12px}.day-card{padding:20px 14px}.day-label{font-size:31px}.period-row{font-size:16px}.period-grid{grid-template-columns:1fr}.period-card{padding:24px}.riders{grid-template-columns:1fr}.controls{flex-direction:column;align-items:stretch}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.filters button{min-width:0;padding:10px 4px}.sort{justify-content:flex-end}.mission-form{grid-template-columns:1fr}.mission-form .field:first-child{grid-column:auto}.mission-result{grid-template-columns:1fr 1fr 1fr}.mission-stat{padding:10px 4px}.mission-stat b{font-size:19px}}
+.excluded-note{margin-top:10px;color:#b15b00;font-size:14px;font-weight:1000;line-height:1.45}body.dark .excluded-note{color:#ffbf66}.excluded-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.excluded-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:var(--soft);font-size:14px;font-weight:1000}.excluded-chip::before{content:'';display:inline-block;width:9px;height:9px;border-radius:999px;background:#999}.excluded-chip.sonic::before{background:var(--red)}.excluded-chip.number::before{background:var(--blue)}.excluded-chip.maeum::before,.excluded-chip.dalseo::before{background:var(--purple)}.period-excluded{margin-top:6px;color:#b15b00;font-size:14px;font-weight:1000}.stat b .miss{color:#b15b00;font-size:.82em;letter-spacing:-.5px}.stat small .miss-label{color:#b15b00}.rider .stat:first-child b{line-height:1.18}body.dark .stat b .miss,body.dark .stat small .miss-label{color:#ffbf66}
+
+/* 주간 정산 */
+.settlement-wrap{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 16px;margin-bottom:26px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.settlement-title{text-align:center;font-size:34px;font-weight:1000;letter-spacing:-1.5px;margin:2px 0 4px}
+.settlement-range{text-align:center;font-size:17px;margin-bottom:18px}
+.settlement-selectors{display:flex;gap:10px;margin-bottom:14px}
+.settlement-selectors select{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:13px;padding:12px 10px;font-size:14px;font-weight:1000}
+.settlement-team-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 22px}
+.settlement-team-btn{border:1px solid var(--red);background:var(--card);color:var(--red);border-radius:14px;padding:13px 8px;font-size:18px;font-weight:1000;cursor:pointer}
+.settlement-team-btn.active{background:var(--red);color:#fff}
+.settlement-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.settlement-table th{background:var(--red);color:#fff;border-right:4px solid var(--card);border-radius:999px;padding:6px 2px;font-size:12px}
+.settlement-table th:first-child{background:transparent}
+.settlement-table td{padding:16px 2px;text-align:center;border-bottom:1px solid rgba(230,0,18,.35);font-size:14px;font-weight:1000}
+.settlement-table tr:last-child td{border-bottom:0}
+.settlement-table td.day{font-size:24px;text-align:left;width:40px}
+.settlement-table td.bonus{font-size:13px}
+.settlement-table .future{color:var(--muted)}
+.settlement-status{margin:16px 0 10px;border-radius:14px;padding:12px 14px;text-align:center;font-size:14px;font-weight:1000}
+.settlement-status.wait{background:#f4f4f4;color:#666}
+.settlement-total{text-align:center;margin:24px 0 14px}
+.settlement-total small{display:block;font-size:15px;color:var(--muted);margin-bottom:6px}
+.settlement-total strong{font-size:32px;color:var(--red);letter-spacing:-1px}
+.settlement-money{border-top:2px solid var(--text);padding-top:12px}
+.settlement-money-row{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;font-size:15px}
+.settlement-money-row span{color:var(--muted)}
+.settlement-money-row b{text-align:right}
+.settlement-money-row.grand{margin-top:6px;padding-top:14px;border-top:1px solid var(--line);font-size:18px}
+.settlement-money-row.grand span,.settlement-money-row.grand b{color:var(--text)}
+.settlement-note{margin-top:13px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center}
+
+/* 단체 문자 */
+.sms-box{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;margin-bottom:18px}
+.sms-team-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.sms-team-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:11px 6px;font-size:15px;font-weight:1000;cursor:pointer}
+.sms-team-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.sms-message{width:100%;min-height:120px;resize:vertical;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:14px;padding:14px;font-size:16px;font-weight:800;line-height:1.5}
+.sms-summary{margin:12px 0;color:var(--muted);font-size:14px;font-weight:1000}
+.sms-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sms-group{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft)}
+.sms-group-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}
+.sms-group-head b{font-size:16px}.sms-group-head span{color:var(--red);font-size:14px}
+.sms-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sms-actions button{border:0;border-radius:10px;padding:10px 6px;font-size:14px;font-weight:1000;cursor:pointer}
+.sms-send{background:var(--red);color:#fff}
+.sms-copy{background:var(--card);color:var(--text);border:1px solid var(--line)!important}
+.sms-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.5;text-align:center}
+@media(max-width:540px){
+  .settlement-wrap{padding:18px 10px}.settlement-title{font-size:31px}
+  .settlement-table th{font-size:11px;border-right:3px solid var(--card)}
+  .settlement-table td{font-size:12px;padding:14px 1px}
+  .settlement-table td.day{font-size:22px;width:34px}
+  .settlement-selectors{flex-direction:column}
+  .settlement-total strong{font-size:29px}
+  .sms-team-tabs{grid-template-columns:repeat(2,1fr)}
+  .sms-groups{grid-template-columns:1fr}
+}
+
+
+/* 마음3팀 달서A 전용 */
+.maeum3-actions{justify-content:flex-end}
+.area-menu{display:none!important}
+@media(max-width:540px){.maeum3-actions{margin:0 24px 12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="top-actions maeum3-actions"><div></div><button class="mode" onclick="toggleMode()" id="modeBtn">🌙 다크 모드</button></div>
+    <img src="logo.png" class="logo-img" onerror="this.style.display='none'">
+    <div class="brand">MAEUM 3</div><div class="sub">마음3팀 · 달서A 관제</div>
+    <div class="area">현재 권역 : <b id="areaText">-</b></div>
+    <div class="top-update" id="topUpdateTime">↻ 마지막 업데이트 : -</div>
+  </div>
+  <div id="errorBox"></div>
+  <div class="summary"><div class="summary-grid">
+    <div class="sum"><div class="sum-title">주간 완료</div><div class="sum-val red" id="weekComplete">0</div></div>
+    <div class="sum"><div class="sum-title">주간 거절합계</div><div class="sum-val" id="weekBad">0</div></div>
+    <div class="sum"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weekRate">0%</div></div>
+    <div class="sum"><div class="sum-title">주간 여유거절</div><div class="sum-val green" id="weekSpare">0</div></div>
+    <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val green" id="onlineCount">0명</div></div>
+    <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
+    <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
+    <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="dayRate">0%</div></div>
+    <div class="sum"><div class="sum-title">당일 여유거절</div><div class="sum-val red" id="daySpare">0</div></div>
+    <div class="sum"><div class="sum-title" id="teamCountTitle">접속중</div><div class="sum-val red" id="teamCount">0</div></div>
+  </div></div>
+
+  <div class="section-title"><span class="icon"></span>주간실적 <small id="weekRange">-</small></div>
+  <button class="toggle-btn" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
+  <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
+
+  <div class="section-title"><span class="icon"></span>주간 정산</div>
+  <button class="toggle-btn" onclick="togglePanel('settlementPanel','settlementToggle')" id="settlementToggle">주간 정산 보기 ▾</button>
+  <div class="panel" id="settlementPanel">
+    <div class="settlement-wrap" id="settlementBox"></div>
+  </div>
+
+<div class="section-title"><span class="icon"></span>기사관리</div>
+<button class="toggle-btn" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
+<div class="panel" id="managePanel">
+  <div class="mission-box">
+    <div id="manageList">기사 목록 로딩중...</div>
+  </div>
+</div>
+
+  <div class="section-title"><span class="icon"></span>미션비 집계</div>
+  <button class="toggle-btn" onclick="togglePanel('missionPanel','missionToggle')" id="missionToggle">미션비 집계 보기 ▾</button>
+  <div class="panel" id="missionPanel">
+    <div class="mission-box">
+      <div class="mission-form">
+        <div class="field"><label>구간 선택</label><select id="missionPeriod" onchange="renderMission()"><option value="morning">오전피크</option><option value="afternoon">오후논피크</option><option value="evening">저녁피크</option><option value="midnight">심야논피크</option></select></div>
+        <div class="field"><label>목표 건수</label><input id="missionCount" type="number" inputmode="numeric" min="0" placeholder="예: 10" oninput="renderMission()"></div>
+        <div class="field"><label>미션비</label><input id="missionPrice" type="number" inputmode="numeric" min="0" placeholder="예: 5000" oninput="renderMission()"></div>
+      </div>
+      <div class="mission-result">
+        <div class="mission-stat"><small>대상 기사</small><b id="missionTarget">0명</b></div>
+        <div class="mission-stat"><small>성공 기사</small><b id="missionSuccess">0명</b></div>
+        <div class="mission-stat"><small>총 미션비</small><b id="missionTotal">0원</b></div>
+      </div>
+      <div class="mission-list" id="missionList"></div>
+    </div>
+  </div>
+
+
+  <div class="section-title"><span class="icon"></span>단체 문자</div>
+  <button class="toggle-btn" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
+  <div class="panel" id="smsPanel">
+    <div class="sms-box">
+      <div class="sms-team-tabs" id="smsTeamTabs"></div>
+      <textarea id="smsMessage" class="sms-message" placeholder="보낼 문자 내용을 입력하세요." oninput="saveSmsDraft()"></textarea>
+      <div class="sms-summary" id="smsSummary">팀을 선택하면 그룹이 표시됩니다.</div>
+      <div class="sms-groups" id="smsGroups"></div>
+      <div class="sms-note">중복 번호를 제거하고 팀별로 최대 99명씩 자동 분할합니다. 문자 앱에서 수신자와 내용을 확인한 뒤 직접 전송하세요.</div>
+    </div>
+  </div>
+
+  <div class="section-title"><span class="icon"></span>구간별 실적 <small>(완료 / 발주량)</small></div>
+  <div class="period-grid" id="periodCards"></div>
+  <div class="controls"><div class="filters" id="filters"></div><div class="sort">정렬:<select id="sortSelect" onchange="render()"><option value="complete">완료순</option><option value="name">가나다순</option></select></div></div>
+  <div class="riders" id="riderGrid"></div><div class="footer" id="footerTime">마지막 업데이트 : -</div>
+</div>
+<script>
+const PAGE_PASSWORD = "4242";
+
+if (sessionStorage.getItem("page_ok") !== "yes") {
+  const input = prompt("비밀번호를 입력하세요");
+  if (input !== PAGE_PASSWORD) {
+    document.body.innerHTML = "<h2 style='text-align:center;margin-top:80px'>접근이 제한되었습니다.</h2>";
+    throw new Error("password blocked");
+  }
+  sessionStorage.setItem("page_ok", "yes");
+}
+const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
+const AREAS={
+  "마음 달서A":{
+    key:"maeuma",
+    file:"/live/maeuma",
+    weekly:"/weekly/maeuma",
+    teams:["마음1","마음3"],
+    labels:{"마음1":"마음1","마음3":"마음3"},
+    classes:{"마음1":"sonic","마음3":"maeum"},
+    missionTeam:null,
+    settlementUnit:250
+  }
+};
+const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
+let DATA=null,WEEKLY=[],CURRENT='마음 달서A',FILTER='전체',SMS_TEAM='';
+function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return Number(r.morningExcluded!=null?r.morningExcluded:hsum(r,6,10))}function midnightExcluded(r){return Number(r.midnightExcluded!=null?r.midnightExcluded:hsum(r,0,6))}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamMorningExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.morningExcluded!=null)return Number(obj.summary.morningExcluded||0);return (obj.riders||[]).reduce((s,r)=>s+morningExcluded(r),0)}function teamMidnightExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.midnightExcluded!=null)return Number(obj.summary.midnightExcluded||0);return (obj.riders||[]).reduce((s,r)=>s+midnightExcluded(r),0)}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return teamMorningExcluded(team)+teamMidnightExcluded(team)}function totalMorningExcluded(){if(DATA&&DATA.total&&DATA.total.morningExcluded!=null)return Number(DATA.total.morningExcluded||0);return ((DATA&&DATA.riders)||[]).reduce((s,r)=>s+morningExcluded(r),0)}function totalMidnightExcluded(){if(DATA&&DATA.total&&DATA.total.midnightExcluded!=null)return Number(DATA.total.midnightExcluded||0);return ((DATA&&DATA.riders)||[]).reduce((s,r)=>s+midnightExcluded(r),0)}function totalExcluded(){if(DATA&&DATA.total&&DATA.total.excluded!=null)return Number(DATA.total.excluded||0);return totalMorningExcluded()+totalMidnightExcluded()}function periodExcluded(key){if(key==='morning')return totalMorningExcluded();if(key==='midnight')return totalMidnightExcluded();return 0}
+function toggleAreaMenu(){}function selectArea(){CURRENT='마음 달서A';FILTER='전체';loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
+function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
+function renderAreaMenu(){}
+async function fetchJson(path){
+  const url=FIREBASE_BASE+path+".json?v="+Date.now();
+  const r=await fetch(url,{cache:'no-store'});
+  if(!r.ok)throw new Error(path);
+  const data=await r.json();
+  if(data===null||data===undefined)throw new Error(path+" empty");
+  return data;
+}
+async function loadData(){renderAreaMenu();try{DATA=await fetchJson(areaCfg().file);try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}document.getElementById('errorBox').innerHTML='';render()}catch(e){DATA=null;document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 데이터를 읽지 못했습니다.<br>Firebase 업로드와 Realtime Database 상태를 확인하세요.</div>`}}
+function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
+let totals={complete:0,bad:0,spare:0,excluded:0,morningExcluded:0,midnightExcluded:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),morningMiss=Number(r.morningExcluded||0),midnightMiss=Number(r.midnightExcluded||0),excluded=Number(r.excluded||r.totalExcluded||(morningMiss+midnightMiss)||0),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;totals.excluded+=excluded;totals.morningExcluded+=morningMiss;totals.midnightExcluded+=midnightMiss;return{label:labels[i]||'',date:dk,has,complete,bad,excluded,morningExcluded:morningMiss,midnightExcluded:midnightMiss,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);if(!totals.morningExcluded)totals.morningExcluded=totalMorningExcluded();if(!totals.midnightExcluded)totals.midnightExcluded=totalMidnightExcluded();if(!totals.excluded)totals.excluded=totalExcluded();return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
+function render(){const d=DATA;if(!d)return;const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';document.getElementById('areaText').innerText='마음 달서A';document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;document.getElementById('weekComplete').innerText=n(ws.complete);document.getElementById('weekBad').innerText=n(ws.bad);document.getElementById('weekRate').innerText=ws.rate+'%';document.getElementById('weekSpare').innerText=n(ws.spare);document.getElementById('dayComplete').innerText=n(d.total.complete);document.getElementById('dayOrder').innerText=n(totalOrder);document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';document.getElementById('daySpare').innerText=n(d.total.spareRejects);document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');renderWeekly(ws);renderSettlement();renderPeriods();renderFiltersAndRiders();renderMission();renderManageList();renderSms()}
+function renderWeekly(ws){
+  let failed=ws.days.filter(x=>x.has&&!x.ok);
+  const cfg=areaCfg(),teams=cfg.teams;
+  const morningMiss=totalMorningExcluded(), midnightMiss=totalMidnightExcluded(), excludedTotal=morningMiss+midnightMiss;
+  const teamChips=teams.map(t=>`<span class="excluded-chip ${cfg.classes[t]}">${cfg.labels[t]} ${n(teamExcluded(t))}건</span>`).join('');
+
+  document.getElementById('weeklyStatus').innerHTML=`<div class="weekly-status"><div class="status-line"><span>주간 미션 결과</span>${failed.length?`<span class="badge fail">실패 ${failed.length}일</span>`:`<span class="badge ok">전체 성공</span>`}</div>${failed.length?`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">실패일: ${failed.map(d=>d.label+'('+d.failPeriods.map(p=>p.label).join('/')+')').join(', ')}</div>`:`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">기록된 모든 날짜가 구간 목표를 달성했습니다.</div>`}<div class="excluded-note">실적 미포함건 총 ${n(excludedTotal)}건<br>오전 미포함 ${n(morningMiss)}건 / 심야 미포함 ${n(midnightMiss)}건</div><div class="excluded-chips">${teamChips}</div></div>`;
+
+  document.getElementById('weeklyGrid').innerHTML=ws.days.map(day=>`<div class="day-card"><div class="day-head"><div class="day-label">${day.label}</div><div class="day-date">${day.date}</div></div>${day.periods.map(p=>`<div class="period-row ${p.fail?'fail':p.ok?'ok':''}"><div class="pname">${p.label}</div><div class="pval">${n(p.done)} / ${n(p.goal)}</div></div>`).join('')}${day.excluded?`<div class="period-row"><div class="pname">오전 미포함</div><div class="pval" style="color:#b15b00">${n(day.morningExcluded)}건</div></div><div class="period-row"><div class="pname">심야 미포함</div><div class="pval" style="color:#b15b00">${n(day.midnightExcluded)}건</div></div>`:''}<div class="day-line"></div><div class="day-total"><b>완료 ${n(day.complete)}</b><br><b>거절합계 ${n(day.bad)}</b><br><b>수락률 ${day.rate}%</b>${day.excluded?`<div style="margin-top:8px;color:#b15b00;font-size:14px;font-weight:1000;line-height:1.45">미포함 실적 ${n(day.excluded)}건</div>`:''}</div><div class="day-result">${!day.has?'<span class="badge wait">기록없음</span>':day.ok?'<span class="badge ok">성공</span>':`<span class="badge fail">실패: ${day.failPeriods.map(p=>p.label).join(', ')}</span>`}</div></div>`).join('');
+}
+
+function periodIncludedDone(team,key){return Number(teamObj(team).summary[key]||0)}
+
+
+function dateAdd(dateStr,days){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  dt.setDate(dt.getDate()+Number(days||0));
+  return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+}
+function weekStartFor(dateStr){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  const diff=(dt.getDay()-3+7)%7;
+  dt.setDate(dt.getDate()-diff);
+  return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+}
+function settlementWeeks(){
+  const now=new Date();
+  const today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const currentStart=weekStartFor(today);
+  return [currentStart,dateAdd(currentStart,-7),dateAdd(currentStart,-14),dateAdd(currentStart,-21)];
+}
+function settlementRows(start){
+  const end=dateAdd(start,6);
+  return (Array.isArray(WEEKLY)?WEEKLY:[]).filter(r=>r.businessDate>=start&&r.businessDate<=end);
+}
+const OVERTIME_UNIT=100;
+function teamDailyRecord(row,team,key){
+  if(!row||!row.teams||!row.teams[team])return {has:false,done:0,goal:0};
+  const t=row.teams[team]||{},sm=t.summary||t||{},tg=t.targets||{};
+  return {has:true,done:Number(sm[key]||0),goal:Number(tg[key]||0)};
+}
+function slotBonus(done,goal,unit){
+  done=Math.floor(Number(done||0));goal=Math.floor(Number(goal||0));unit=Number(unit||0);
+  if(goal<=0||done<=goal||unit<=0)return 0;
+  const boundaries=[goal,Math.floor(goal*1.10),Math.floor(goal*1.20),Math.floor(goal*1.30),Math.floor(goal*1.40),Math.floor(goal*1.50)];
+  const rates=[0.90,0.80,0.70,0.60,0.50];
+  const paidDone=Math.min(done,boundaries[5]);
+  let remaining=Math.max(0,paidDone-goal),total=0;
+  for(let i=0;i<5;i++){
+    const cap=Math.max(0,boundaries[i+1]-boundaries[i]);
+    const count=Math.min(remaining,cap);
+    total+=count*unit*rates[i];
+    remaining-=count;
+    if(remaining<=0)break;
+  }
+  return Math.round(total);
+}
+function calcTeamSettlement(start,team){
+  const rows=settlementRows(start),unit=Number(areaCfg()?.settlementUnit||0),slots=[];
+  let complete=0,bad=0,excluded=0,sets=0;
+  rows.forEach(r=>{
+    const t=r?.teams?.[team],sm=t?.summary||t||{},tg=t?.targets||{};
+    if(t){
+      complete+=Number(sm.complete||0);
+      bad+=Number(sm.reject||0)+Number(sm.cancel||0)+Number(sm.riderFault||0);
+      excluded+=Number(sm.excluded||0);
+      if(Number(tg.sets||0)>0)sets=Number(tg.sets||0);
+    }
+    PERIODS.forEach(([key,,label])=>{
+      const done=Number(sm[key]||0),goal=Number(tg[key]||0);
+      if(goal>0)slots.push({date:r.businessDate,key,label,done,goal,excessBonus:slotBonus(done,goal,unit)});
+    });
+  });
+  if(sets<=0)sets=Number(DATA?.teams?.[team]?.targets?.sets||0);
+  const fixedVolume=750*sets;
+  const base=fixedVolume*300;
+  const gradeBase=fixedVolume*unit;
+  const excess=slots.reduce((s,x)=>s+Number(x.excessBonus||0),0);
+  const overtime=excluded*OVERTIME_UNIT;
+  return {rows,slots,complete,bad,excluded,sets,unit,base,gradeBase,excess,overtime,
+    achieved:slots.filter(x=>x.done>=x.goal).length,total:base+gradeBase+excess+overtime};
+}
+function setSettlementWeek(v){localStorage.setItem('settlementWeek_maeum',v);renderSettlement()}
+function setSettlementTeam(v){localStorage.setItem('settlementTeam_maeum',v);renderSettlement()}
+function renderSettlement(){
+  const box=document.getElementById('settlementBox');
+  if(!box||!DATA)return;
+  const cfg=areaCfg(),weeks=settlementWeeks();
+  let week=localStorage.getItem('settlementWeek_maeum');
+  if(!weeks.includes(week))week=weeks[0];
+  let team=localStorage.getItem('settlementTeam_maeum');
+  if(!cfg.teams.includes(team))team=cfg.teams[0];
+
+  const end=dateAdd(week,6),c=calcTeamSettlement(week,team),rows=settlementRows(week);
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  let dayRows='';
+  for(let i=0;i<7;i++){
+    const date=dateAdd(week,i),r=byDate[date],cells=[],bonuses=[];
+    PERIODS.forEach(([key])=>{
+      const rec=teamDailyRecord(r,team,key);
+      cells.push(rec.has&&rec.goal>0?`${Math.floor(rec.done/rec.goal*100)}%`:'-');
+      bonuses.push(rec.has&&rec.goal>0?slotBonus(rec.done,rec.goal,c.unit):0);
+    });
+    dayRows+=`<tr><td class="day">${labels[i]}</td>${cells.map(v=>`<td class="${v==='-'?'future':''}">${v}</td>`).join('')}<td class="bonus">${won(bonuses.reduce((a,b)=>a+b,0))}</td></tr>`;
+  }
+
+  const unitReady=c.unit>0;
+  box.innerHTML=`<div class="settlement-title">주간정산</div>
+    <div class="settlement-range">${week.replaceAll('-','.')} ~ ${end.replaceAll('-','.')}</div>
+    <div class="settlement-selectors">
+      <select onchange="setSettlementWeek(this.value)">${weeks.map(w=>`<option value="${w}" ${w===week?'selected':''}>${w} ~ ${dateAdd(w,6)}</option>`).join('')}</select>
+      <div style="flex:1;border:1px solid var(--line);border-radius:13px;padding:12px 10px;font-size:14px;text-align:center;background:var(--soft)">
+        ${unitReady?`권역 보너스 단가 ${n(c.unit)}원`:'권역 보너스 단가 미설정'}
+      </div>
+    </div>
+    <div class="settlement-team-tabs">${cfg.teams.map(t=>`<button class="settlement-team-btn ${t===team?'active':''}" onclick="setSettlementTeam('${t}')">${cfg.labels[t]}</button>`).join('')}</div>
+    <table class="settlement-table"><thead><tr><th></th><th>오전</th><th>오후</th><th>저녁</th><th>심야</th><th>초과 관리비</th></tr></thead><tbody>${dayRows}</tbody></table>
+    <div class="settlement-status wait">${cfg.labels[team]}팀 ${c.sets}세트 · 기록 슬롯 ${c.slots.length}/28 · 달성 슬롯 ${c.achieved}/28</div>
+    <div class="settlement-total"><small>${cfg.labels[team]}팀 현재 총 관리비</small><strong>${won(c.total)}</strong></div>
+    <div class="settlement-money">
+      <div class="settlement-money-row"><span>기본 관리비<br><small>750건 × ${n(c.sets)}세트 × 300원</small></span><b>${won(c.base)}</b></div>
+      <div class="settlement-money-row"><span>보너스 관리비<br><small>${unitReady?`750건 × ${n(c.sets)}세트 × ${n(c.unit)}원`:'권역 단가 확인 필요'}</small></span><b>${won(c.gradeBase)}</b></div>
+      <div class="settlement-money-row"><span>초과 관리비<br><small>주간 슬롯별 100~150% 구간 요율 합산</small></span><b>${won(c.excess)}</b></div>
+      <div class="settlement-money-row"><span>시간외 관리비<br><small>${n(c.excluded)}건 × ${n(OVERTIME_UNIT)}원</small></span><b>${won(c.overtime)}</b></div>
+      <div class="settlement-money-row grand"><span>총 관리비</span><b>${won(c.total)}</b></div>
+    </div>
+    <div class="settlement-note">세트 수와 슬롯 목표는 해당 주차 JSON 값을 사용합니다.<br>150% 초과 실적은 초과 관리비 계산에서 제외합니다.</div>`;
+}
+
+/* 단체 문자 */
+function normalizeSmsPhone(v){
+  const digits=String(v||'').replace(/\D/g,'');
+  return digits.startsWith('010')&&digits.length===11?digits:'';
+}
+function smsRecipientsByTeam(team){
+  const seen=new Set();
+  return ((DATA&&DATA.riders)||[]).filter(r=>r.team===team).map(r=>normalizeSmsPhone(r.phone)).filter(p=>{
+    if(!p||seen.has(p))return false;seen.add(p);return true;
+  });
+}
+function chunk99(items){const groups=[];for(let i=0;i<items.length;i+=99)groups.push(items.slice(i,i+99));return groups}
+function setSmsTeam(team){SMS_TEAM=team;localStorage.setItem('smsTeam_'+areaCfg().key,team);renderSms()}
+function saveSmsDraft(){const el=document.getElementById('smsMessage');if(el)localStorage.setItem('smsDraft_'+areaCfg().key,el.value)}
+async function copySmsRecipients(index){
+  const group=chunk99(smsRecipientsByTeam(SMS_TEAM))[index]||[];if(!group.length)return;
+  const value=group.join(',');
+  try{await navigator.clipboard.writeText(value)}catch(e){
+    const ta=document.createElement('textarea');ta.value=value;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+  }
+  alert(`수신번호 ${group.length}개를 복사했습니다.`);
+}
+function openSmsGroup(index){
+  const group=chunk99(smsRecipientsByTeam(SMS_TEAM))[index]||[];if(!group.length)return;
+  const message=(document.getElementById('smsMessage')?.value||'').trim();
+  const recipients=group.join(',');
+  const sep=/iPad|iPhone|iPod/.test(navigator.userAgent)?'&':'?';
+  location.href=`sms:${recipients}${message?`${sep}body=${encodeURIComponent(message)}`:''}`;
+}
+function renderSms(){
+  const tabs=document.getElementById('smsTeamTabs'),groupsEl=document.getElementById('smsGroups'),
+        summary=document.getElementById('smsSummary'),message=document.getElementById('smsMessage');
+  if(!tabs||!groupsEl||!summary||!message||!DATA)return;
+  const cfg=areaCfg(),saved=localStorage.getItem('smsTeam_'+cfg.key);
+  if(!SMS_TEAM||!cfg.teams.includes(SMS_TEAM))SMS_TEAM=cfg.teams.includes(saved)?saved:cfg.teams[0];
+  if(message.dataset.area!==cfg.key){
+    message.value=localStorage.getItem('smsDraft_'+cfg.key)||'';message.dataset.area=cfg.key;
+  }
+  tabs.innerHTML=cfg.teams.map(t=>`<button class="sms-team-btn ${t===SMS_TEAM?'active':''}" onclick="setSmsTeam('${t}')">${cfg.labels[t]}</button>`).join('');
+  const recipients=smsRecipientsByTeam(SMS_TEAM),groups=chunk99(recipients);
+  summary.innerText=`${cfg.labels[SMS_TEAM]}팀 · 유효 전화번호 ${n(recipients.length)}명 · ${n(groups.length)}개 그룹`;
+  groupsEl.innerHTML=groups.length?groups.map((g,i)=>`<div class="sms-group"><div class="sms-group-head"><b>${cfg.labels[SMS_TEAM]} ${i+1}그룹</b><span>${n(g.length)}명</span></div><div class="sms-actions"><button class="sms-send" onclick="openSmsGroup(${i})">문자 앱 열기</button><button class="sms-copy" onclick="copySmsRecipients(${i})">번호 복사</button></div></div>`).join(''):'<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:16px">유효한 010 전화번호가 없습니다.</div>';
+}
+
+function renderPeriods(){
+  const cfg=areaCfg(),teams=cfg.teams;
+
+  document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
+    const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0),
+          totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0),
+          miss=periodExcluded(key);
+
+    return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div>${miss?`<div class="period-excluded">${key==='morning'?'오전 미포함':key==='midnight'?'심야 미포함':'미포함'} - ${n(miss)}건</div>`:''}<div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=periodIncludedDone(t,key),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`;
+  }).join('');
+}
+function renderFiltersAndRiders(){const cfg=areaCfg(),teams=cfg.teams;document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');let riders=[...(DATA.riders||[])];if(FILTER!=='전체')riders=riders.filter(r=>r.team===FILTER);let sort=document.getElementById('sortSelect').value;if(sort==='name'){riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return a.name.localeCompare(b.name,'ko')})}else{riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return Number(b.complete||0)-Number(a.complete||0)})}document.getElementById('riderGrid').innerHTML=riders.map(r=>{const miss=riderExcluded(r);return `<div class="rider ${r.isOnline?'active':''}"><div class="rider-top"><div class="rider-name"><span class="dot"></span>${r.name}</div><div><span class="status">${r.isOnline?'접속중':'운행종료'}</span>${r.warning?'<span class="warn">80%↓</span>':''}</div></div><div class="stats"><div class="stat"><small>완료<span class="miss-label">/미포함</span></small><b class="red">${n(r.complete)}<span class="miss"> / ${n(miss)}건</span></b></div><div class="stat"><small>오전/심야 미포함</small><b><span class="miss">${n(morningExcluded(r))} / ${n(midnightExcluded(r))}</span></b></div><div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div></div><div class="times"><div>오전<b>${n(r.morning)}</b></div><div>오후<b>${n(r.afternoon)}</b></div><div>저녁<b>${n(r.evening)}</b></div><div>심야<b>${n(r.midnight)}</b></div></div></div>`}).join('')}
+function renderMission(){if(!DATA)return;const cfg=areaCfg(),period=document.getElementById('missionPeriod').value,need=Number(document.getElementById('missionCount').value||0),price=Number(document.getElementById('missionPrice').value||0);let riders=[...(DATA.riders||[])];if(cfg.missionTeam)riders=riders.filter(r=>r.team===cfg.missionTeam);let success=need>0?riders.filter(r=>Number(r[period]||0)>=need):[];success.sort((a,b)=>Number(b[period]||0)-Number(a[period]||0));document.getElementById('missionTarget').innerText=n(riders.length)+'명';document.getElementById('missionSuccess').innerText=n(success.length)+'명';document.getElementById('missionTotal').innerText=won(success.length*price);document.getElementById('missionList').innerHTML=need>0?success.map(r=>`<div class="mission-rider"><b>${r.name}</b><span>${n(r[period])}건 / ${won(price)}</span></div>`).join(''):`<div style="grid-column:1/-1;color:var(--muted);font-weight:1000;text-align:center;padding:16px">목표 건수를 입력하면 성공기사가 표시됩니다.</div>`}
+function renderManageList(){
+  if(!DATA || !DATA.riders){
+    document.getElementById('manageList').innerHTML='기사 데이터가 없습니다.';
+    return;
+  }
+
+  const teams=areaCfg().teams;
+  let riders=[...DATA.riders];
+
+  if(window.manageFilter && window.manageFilter!=='전체'){
+    riders=riders.filter(r=>r.team===window.manageFilter);
+  }
+
+  document.getElementById('manageList').innerHTML=`
+    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <button class="move" onclick="setManageFilter('전체')">전체</button>
+      ${teams.map(t=>`
+        <button class="move" onclick="setManageFilter('${t}')">${t}</button>
+      `).join('')}
+    </div>
+
+    <button class="toggle-btn" onclick="saveTeamMap()">팀 변경 저장</button>
+
+    ${riders.map(r=>`
+      <div class="mission-rider">
+        <b>${r.name}</b>
+        <select data-rider-name="${r.name}" style="border:1px solid var(--line);border-radius:10px;padding:8px;font-weight:1000">
+          ${teams.map(t=>`
+            <option value="${t}" ${r.team===t?'selected':''}>${t}</option>
+          `).join('')}
+        </select>
+      </div>
+    `).join('')}
+  `;
+}
+
+function setManageFilter(team){
+  window.manageFilter=team;
+  renderManageList();
+}
+
+async function saveTeamMap(){
+  const selects=document.querySelectorAll('#manageList select');
+  const changes={};
+
+  selects.forEach(sel=>{
+    const name=sel.getAttribute('data-rider-name');
+    const team=sel.value;
+    if(name && team){
+      changes[name]=team;
+    }
+  });
+
+  try{
+    const res=await fetch('https://dalseo-a-live.vercel.app/api/save-teammap',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        area:areaCfg().key,
+        changes:changes
+      })
+    });
+
+    const result=await res.json();
+
+    if(result.ok){
+      alert('팀 변경 저장 완료');
+      loadData();
+    }else{
+      alert('저장 실패: '+result.error);
+    }
+  }catch(e){
+    alert('저장 오류: '+e.message);
+  }
+}
+loadData();setInterval(loadData,120000);
+</script>
+</body>
+</html>
