@@ -410,7 +410,6 @@ DAY_TARGETS = {
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
-    "2026-07-17": 6,
 }
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
