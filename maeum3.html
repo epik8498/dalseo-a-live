@@ -278,7 +278,7 @@ function calcTeamSettlement(start,team){
     });
   });
   if(sets<=0)sets=Number(DATA?.teams?.[team]?.targets?.sets||0);
-  const fixedVolume=750*sets;
+  const fixedVolume=680*sets;
   const base=fixedVolume*300;
   const gradeBase=fixedVolume*unit;
   const excess=slots.reduce((s,x)=>s+Number(x.excessBonus||0),0);
@@ -325,8 +325,8 @@ function renderSettlement(){
     <div class="settlement-status wait">${cfg.labels[team]}팀 ${c.sets}세트 · 기록 슬롯 ${c.slots.length}/28 · 달성 슬롯 ${c.achieved}/28</div>
     <div class="settlement-total"><small>${cfg.labels[team]}팀 현재 총 관리비</small><strong>${won(c.total)}</strong></div>
     <div class="settlement-money">
-      <div class="settlement-money-row"><span>기본 관리비<br><small>750건 × ${n(c.sets)}세트 × 300원</small></span><b>${won(c.base)}</b></div>
-      <div class="settlement-money-row"><span>보너스 관리비<br><small>${unitReady?`750건 × ${n(c.sets)}세트 × ${n(c.unit)}원`:'권역 단가 확인 필요'}</small></span><b>${won(c.gradeBase)}</b></div>
+      <div class="settlement-money-row"><span>기본 관리비<br><small>680건 × ${n(c.sets)}세트 × 300원</small></span><b>${won(c.base)}</b></div>
+      <div class="settlement-money-row"><span>보너스 관리비<br><small>${unitReady?`680건 × ${n(c.sets)}세트 × ${n(c.unit)}원`:'권역 단가 확인 필요'}</small></span><b>${won(c.gradeBase)}</b></div>
       <div class="settlement-money-row"><span>초과 관리비<br><small>주간 슬롯별 100~150% 구간 요율 합산</small></span><b>${won(c.excess)}</b></div>
       <div class="settlement-money-row"><span>시간외 관리비<br><small>${n(c.excluded)}건 × ${n(OVERTIME_UNIT)}원</small></span><b>${won(c.overtime)}</b></div>
       <div class="settlement-money-row grand"><span>총 관리비</span><b>${won(c.total)}</b></div>

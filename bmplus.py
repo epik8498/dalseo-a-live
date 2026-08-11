@@ -40,21 +40,21 @@ TEAM_ORDER = ["1팀", "2팀", "3팀", "미분류"]
 # 배민플러스 운영 세트: 1팀 3세트 / 2팀 3세트 / 3팀 2세트
 AREA_CONFIG = {
     "배민플러스": {
-        "1팀": 3,
-        "2팀": 3,
+        "1팀": 2,
+        "2팀": 5,
         "3팀": 2,
         "미분류": 0,
     }
 }
 
 DAY_TARGETS = {
-    0: [22, 21, 32, 25],
-    1: [22, 21, 32, 25],
-    2: [22, 21, 32, 25],
-    3: [22, 21, 32, 25],
-    4: [25, 22, 34, 29],
-    5: [31, 23, 38, 28],
-    6: [32, 24, 37, 27],
+    0: [19, 18, 30, 23],
+    1: [19, 18, 30, 23],
+    2: [19, 18, 30, 23],
+    3: [19, 18, 30, 23],
+    4: [21, 21, 32, 26],
+    5: [27, 22, 36, 25],
+    6: [29, 22, 35, 24],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
@@ -69,6 +69,7 @@ PERIOD_LABELS = {
     "afternoon": "오후논피크",
     "evening": "저녁피크",
     "midnight": "심야논피크",
+    "excluded": "미포함시간",
 }
 
 
@@ -130,14 +131,14 @@ def split_hourly_by_sla(hourly, date_value=None):
     weekend = date_value.weekday() >= 5
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
-    morning_excluded = sum(h[6:10])       # 06,07,08,09
+    morning_excluded = sum(h[6:9])        # 06,07,08
     midnight_excluded = sum(h[0:6])      # 00,01,02,03,04,05
 
     if weekend:
-        morning = sum(h[10:14])          # 토일 10,11,12,13
+        morning = sum(h[9:14])           # 토일 09,10,11,12,13
         afternoon = sum(h[14:17])        # 토일 14,15,16
     else:
-        morning = sum(h[10:13])          # 평일 10,11,12
+        morning = sum(h[9:13])           # 평일 09,10,11,12
         afternoon = sum(h[13:17])        # 평일 13,14,15,16
 
     evening = sum(h[17:20])              # 17,18,19
@@ -165,14 +166,17 @@ def current_period(now):
     weekend = now.weekday() >= 5
 
     # SLA 포함 구간 기준입니다.
-    # 06~09, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    if 0 <= h < 9:
+        return "excluded"
+
     if weekend:
-        if 10 <= h < 14:
+        if 9 <= h < 14:
             return "morning"
         if 14 <= h < 17:
             return "afternoon"
     else:
-        if 10 <= h < 13:
+        if 9 <= h < 13:
             return "morning"
         if 13 <= h < 17:
             return "afternoon"
@@ -1216,4 +1220,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -49,7 +49,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구달서온나A(DP2509199364)', '대구달서온나A (DP2509199364)', '대구달서온나A', 'DP2509199364'],
   'center_code': 'DP2509199364',
   'team_order': ['마음1', '마음3'],
-  'area_config': {'마음1': 5.5, '마음3': 4.5},
+  'area_config': {'마음1': 7, '마음3': 4},
   'team_map_path': '/settings/maeuma/teamMap',
   'live_path': '/live/maeuma',
   'weekly_path': '/weekly/maeuma',
@@ -87,7 +87,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
   'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 2, '넘버팀': 5, '마음팀': 5},
+  'area_config': {'소닉팀': 3, '넘버팀': 5.5, '마음팀': 4.5},
   'team_map_path': '/settings/maeum_dalseob/teamMap',
   'live_path': '/live/maeum_dalseob',
   'weekly_path': '/weekly/maeum_dalseob',
@@ -289,7 +289,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
   'center_code': 'DP2511170481',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 3},
+  'area_config': {'소닉팀': 3.4, '넘버팀': 1.2, '마음팀': 3.4},
   'team_map_path': '/settings/maeum_junggua/teamMap',
   'live_path': '/live/maeum_junggua',
   'weekly_path': '/weekly/maeum_junggua',
@@ -398,13 +398,13 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
                                      '강철구']}}]
 
 DAY_TARGETS = {
-    0: [22, 21, 32, 25],
-    1: [22, 21, 32, 25],
-    2: [22, 21, 32, 25],
-    3: [22, 21, 32, 25],
-    4: [25, 22, 34, 29],
-    5: [31, 23, 38, 28],
-    6: [32, 24, 37, 27],
+    0: [19, 18, 30, 23],
+    1: [19, 18, 30, 23],
+    2: [19, 18, 30, 23],
+    3: [19, 18, 30, 23],
+    4: [21, 21, 32, 26],
+    5: [27, 22, 36, 25],
+    6: [29, 22, 35, 24],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
@@ -418,6 +418,7 @@ PERIOD_LABELS = {
     "afternoon": "오후논피크",
     "evening": "저녁피크",
     "midnight": "심야논피크",
+    "excluded": "미포함시간",
 }
 
 
@@ -477,15 +478,15 @@ def split_hourly_by_sla(hourly, date_value=None):
     weekend = date_value.weekday() >= 5
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
-    morning_excluded = sum(h[6:10])       # 06,07,08,09
-    midnight_excluded = sum(h[0:6])      # 00,01,02,03,04,05
+    morning_excluded = sum(h[6:9])        # 06,07,08
+    midnight_excluded = sum(h[0:6])       # 00,01,02,03,04,05
 
     if weekend:
-        morning = sum(h[10:14])          # 토일 10,11,12,13
-        afternoon = sum(h[14:17])        # 토일 14,15,16
+        morning = sum(h[9:14])            # 토일 09,10,11,12,13
+        afternoon = sum(h[14:17])         # 토일 14,15,16
     else:
-        morning = sum(h[10:13])          # 평일 10,11,12
-        afternoon = sum(h[13:17])        # 평일 13,14,15,16
+        morning = sum(h[9:13])            # 평일 09,10,11,12
+        afternoon = sum(h[13:17])         # 평일 13,14,15,16
 
     evening = sum(h[17:20])              # 17,18,19
     midnight = sum(h[20:24])             # 20,21,22,23
@@ -512,14 +513,17 @@ def current_period(now):
     weekend = now.weekday() >= 5
 
     # SLA 포함 구간 기준입니다.
-    # 06~09, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    if 0 <= h < 9:
+        return "excluded"
+
     if weekend:
-        if 10 <= h < 14:
+        if 9 <= h < 14:
             return "morning"
         if 14 <= h < 17:
             return "afternoon"
     else:
-        if 10 <= h < 13:
+        if 9 <= h < 13:
             return "morning"
         if 13 <= h < 17:
             return "afternoon"
