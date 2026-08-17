@@ -48,8 +48,8 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'slug': 'maeuma',
   'aliases': ['대구달서온나A(DP2509199364)', '대구달서온나A (DP2509199364)', '대구달서온나A', 'DP2509199364'],
   'center_code': 'DP2509199364',
-  'team_order': ['마음1', '마음3'],
-  'area_config': {'마음1': 7, '마음3': 4},
+  'team_order': ['마음1', '마음3', '마음4'],
+  'area_config': {'마음1': 7, '마음3': 4, '마음4': 0},
   'team_map_path': '/settings/maeuma/teamMap',
   'live_path': '/live/maeuma',
   'weekly_path': '/weekly/maeuma',
@@ -411,7 +411,20 @@ DAY_TARGETS = {
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
+    "2026-08-17": 6,
+    
 }
+
+def effective_weekday(date_value):
+    """Special Day가 지정된 날짜는 실제 요일 대신 지정 요일 기준을 사용합니다."""
+    if hasattr(date_value, "strftime"):
+        key = date_value.strftime("%Y-%m-%d")
+    else:
+        key = str(date_value)
+    if key in SPECIAL_DAY_TARGET_WEEKDAY:
+        return int(SPECIAL_DAY_TARGET_WEEKDAY[key])
+    return date_value.weekday()
+
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
 PERIOD_LABELS = {
@@ -476,7 +489,7 @@ def split_hourly_by_sla(hourly, date_value=None):
         h += [0] * (24 - len(h))
     if date_value is None:
         date_value = business_date(datetime.now())
-    weekend = date_value.weekday() >= 5
+    weekend = effective_weekday(date_value) >= 5
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
     morning_excluded = sum(h[6:9])        # 06,07,08
@@ -511,7 +524,7 @@ def business_date(now):
 
 def current_period(now):
     h = now.hour
-    weekend = now.weekday() >= 5
+    weekend = effective_weekday(business_date(now)) >= 5
 
     # SLA 포함 구간 기준입니다.
     # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
@@ -565,13 +578,17 @@ def team_of(name):
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
-    # 명시된 고정명단을 Firebase teamMap보다 우선합니다.
-    for team, names in REQUIRED_TEAM_RIDERS.items():
-        if name in {norm(x) for x in names}:
-            return team
+    # 기사이동에서 저장한 Firebase teamMap을 최우선 적용합니다.
+    # 따라서 고정명단에 있던 기사도 대표가 마음4 등 다른 팀으로 옮기면 저장값을 그대로 따릅니다.
     mapped = TEAM_MAP_CACHE.get(name)
     if mapped in TEAM_ORDER:
         return mapped
+
+    # Firebase에 별도 이동값이 없는 기사만 초기 고정명단을 적용합니다.
+    for team, names in REQUIRED_TEAM_RIDERS.items():
+        if name in {norm(x) for x in names}:
+            return team
+
     return TEAM_ORDER[0] if TEAM_ORDER else "소닉팀"
 
 def to_int(value):
