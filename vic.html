@@ -313,14 +313,144 @@ function renderWeeklySaveStatus(){
 }
 
 function renderSummary(){const total=DATA.total||{},week=buildWeekly();const cards=[['주간완료',week.complete,'red'],['당일완료',total.complete,'red'],['주간수락률',week.acceptRate+'%','blue'],['여유거절수',total.spareRejects,'green'],['전체접속인원',total.onlineCount+'명','green'],['현재시간대',currentPeriodLabel(),'blue'],...TEAM_ORDER.map(t=>[t+' 접속',num(teamSummary(t).onlineCount)+'명','green'])];document.getElementById('summaryGrid').innerHTML=cards.map(c=>`<div class="summary-card ${c[2]||''}"><div class="summary-title">${c[0]||'&nbsp;'}</div><div class="summary-value ${c[2]||''}">${c[1]}</div></div>`).join('')}
-function toggleWeekly(){const p=document.getElementById('weeklyPanel'),b=document.getElementById('weeklyBtn');const open=p.classList.toggle('hidden')===false;b.textContent=open?'닫기 ▴':'보기 ▾'}
+function toggleWeekly(){const p=document.getElementById('weeklyPanel'),b=document.getElementById('weeklyBtn');const open=p.classList.toggle('hidden')===false;b.textContent=open?'닫기 ▴':'보기 ▾';if(open)renderWeekly()}
 function toggleManage(){const p=document.getElementById('managePanel'),b=document.getElementById('manageBtn');const open=p.classList.toggle('hidden')===false;b.textContent=open?'닫기 ▴':'보기 ▾'}
-function dayBase(){return DATA?.weeklySummary?.days?.length?DATA.weeklySummary.days:[]}
-function periodStatusFinal(key,done,goal){const order=['morning','afternoon','evening','midnight'];const cur=DATA?.currentPeriod||'morning';const passed=order.indexOf(key)<order.indexOf(cur);if(passed){return num(done)>=num(goal)?'<span class="badge ok">성공</span>':'<span class="badge fail">실패</span>'}return '<span class="badge wait">진행중</span>'}
-function teamDaySummary(d,team){const ts=d.teams?.[team];if(ts?.summary)return {summary:ts.summary,targets:ts.targets||d.periodTargets||{}};return {summary:{morning:0,afternoon:0,evening:0,midnight:0,complete:0,reject:0,cancel:0,riderFault:0,excluded:0,acceptRate:100},targets:d.periodTargets||{}}}
-function setWeeklyTeam(team){WEEK_TEAM=team;renderWeekly()}
-function weeklyTeamRow(d,team){const x=teamDaySummary(d,team),s=x.summary,t=x.targets;const ps=PERIODS.map(([k])=>({key:k,done:num(s[k]),goal:num(t[k])}));const failKeys=ps.filter(p=>num(p.goal)>0&&num(p.done)<num(p.goal));const result=failKeys.length?`<span class="failtxt">실패 ${failKeys.map(p=>PERIOD_LABEL[p.key]).join(', ')}</span>`:`<span class="oktxt">성공</span>`;return `<tr><td>${d.label||''}<br><span class="muted" style="font-size:12px">${d.businessDate||''}</span></td>${ps.map(p=>`<td class="${p.goal>0&&p.done<p.goal?'failtxt':''}">${n(p.done)} / ${n(p.goal)}</td>`).join('')}<td>${n(s.excluded)}</td><td>${result}</td><td>${s.acceptRate??rate(s.complete,bad(s))}%</td></tr>`}
-function renderWeekly(){const days=dayBase();document.getElementById('weekRange').textContent=DATA?.weeklySummary?`${DATA.weeklySummary.startDate||''} ~ ${DATA.weeklySummary.endDate||''}`:'';const tabs=document.getElementById('weeklyTeamTabs');if(tabs){tabs.innerHTML=TEAM_ORDER.map(t=>`<button class="week-tab ${WEEK_TEAM===t?'active':''}" onclick="setWeeklyTeam('${t}')">${t}</button>`).join('')}if(!days.length){document.getElementById('weeklyTable').innerHTML='<tbody><tr><td>주간 데이터가 아직 없습니다.</td></tr></tbody>';return}document.getElementById('weeklyTable').innerHTML=`<thead><tr><th>${WEEK_TEAM} / 일자</th><th>오전<br>완료/발주</th><th>오후<br>완료/발주</th><th>저녁<br>완료/발주</th><th>심야<br>완료/발주</th><th>미포함</th><th>결과</th><th>수락률</th></tr></thead><tbody>${days.map(d=>weeklyTeamRow(d,WEEK_TEAM)).join('')}</tbody>`}
+function dayBase(){
+  return DATA?.weeklySummary?.days?.length ? DATA.weeklySummary.days : [];
+}
+
+function weeklyTeamDays(team){
+  const fromSummary=DATA?.weeklySummary?.teams?.[team]?.days;
+  if(Array.isArray(fromSummary)&&fromSummary.length)return fromSummary;
+
+  // fallback: Firebase /weekly/vic 원본에서 현재 수~화 주차의 팀 데이터를 직접 구성
+  const current=DATA?.businessDate||isoLocal(new Date());
+  const start=weekStartWed(current),end=dateAdd(start,6);
+  const byDate=new Map(
+    (Array.isArray(WEEKLY)?WEEKLY:[])
+      .filter(r=>r&&r.businessDate>=start&&r.businessDate<=end)
+      .map(r=>[r.businessDate,r])
+  );
+
+  const labels=['수','목','금','토','일','월','화'];
+  return labels.map((label,i)=>{
+    const date=dateAdd(start,i);
+    const row=byDate.get(date)||{};
+    const t=row?.teams?.[team]||{};
+    const s=t.summary||t||{};
+    const g=t.targets||{};
+    return {
+      label,
+      businessDate:date,
+      hasData:Boolean(byDate.get(date)),
+      complete:num(s.complete),
+      reject:num(s.reject),
+      cancel:num(s.cancel),
+      riderFault:num(s.riderFault),
+      morning:num(s.morning),
+      afternoon:num(s.afternoon),
+      evening:num(s.evening),
+      midnight:num(s.midnight),
+      excluded:num(s.excluded),
+      targets:{
+        morning:num(g.morning),
+        afternoon:num(g.afternoon),
+        evening:num(g.evening),
+        midnight:num(g.midnight)
+      },
+      acceptRate:s.acceptRate!=null?num(s.acceptRate):rate(num(s.complete),bad(s))
+    };
+  });
+}
+
+function periodStatusFinal(key,done,goal){
+  const order=['morning','afternoon','evening','midnight'];
+  const cur=DATA?.currentPeriod||'morning';
+  const passed=order.indexOf(key)<order.indexOf(cur);
+  if(passed){
+    return num(done)>=num(goal)
+      ?'<span class="badge ok">성공</span>'
+      :'<span class="badge fail">실패</span>';
+  }
+  return '<span class="badge wait">진행중</span>';
+}
+
+function setWeeklyTeam(team){
+  WEEK_TEAM=team;
+  renderWeekly();
+}
+
+function weeklyTeamRow(d){
+  const s=d||{};
+  const t=s.targets||{};
+  const ps=PERIODS.map(([k])=>({
+    key:k,
+    done:num(s[k]),
+    goal:num(t[k])
+  }));
+
+  if(!s.hasData){
+    return `<tr>
+      <td>${s.label||''}<br><span class="muted" style="font-size:12px">${s.businessDate||''}</span></td>
+      <td colspan="7" class="muted">기록 없음</td>
+    </tr>`;
+  }
+
+  const failKeys=ps.filter(p=>p.goal>0&&p.done<p.goal);
+  const result=failKeys.length
+    ?`<span class="failtxt">실패 ${failKeys.map(p=>PERIOD_LABEL[p.key]).join(', ')}</span>`
+    :`<span class="oktxt">성공</span>`;
+
+  return `<tr>
+    <td>${s.label||''}<br><span class="muted" style="font-size:12px">${s.businessDate||''}</span></td>
+    ${ps.map(p=>`<td class="${p.goal>0&&p.done<p.goal?'failtxt':''}">${n(p.done)} / ${n(p.goal)}</td>`).join('')}
+    <td>${n(s.excluded)}</td>
+    <td>${result}</td>
+    <td>${s.acceptRate!=null?s.acceptRate:rate(s.complete,bad(s))}%</td>
+  </tr>`;
+}
+
+function renderWeekly(){
+  const ws=DATA?.weeklySummary||{};
+  const start=ws.startDate||weekStartWed(DATA?.businessDate||isoLocal(new Date()));
+  const end=ws.endDate||dateAdd(start,6);
+
+  document.getElementById('weekRange').textContent=`${start} ~ ${end}`;
+
+  const tabs=document.getElementById('weeklyTeamTabs');
+  if(tabs){
+    tabs.innerHTML=TEAM_ORDER
+      .filter(t=>t!=='미분류')
+      .map(t=>`<button class="week-tab ${WEEK_TEAM===t?'active':''}" onclick="setWeeklyTeam('${t}')">${t}</button>`)
+      .join('');
+  }
+
+  if(!TEAM_ORDER.includes(WEEK_TEAM)||WEEK_TEAM==='미분류'){
+    WEEK_TEAM=TEAM_ORDER.find(t=>t!=='미분류')||TEAM_ORDER[0];
+  }
+
+  const days=weeklyTeamDays(WEEK_TEAM);
+  const table=document.getElementById('weeklyTable');
+  if(!table)return;
+
+  if(!days.length){
+    table.innerHTML='<tbody><tr><td>주간 데이터가 아직 없습니다.</td></tr></tbody>';
+    return;
+  }
+
+  table.innerHTML=`<thead><tr>
+    <th>${WEEK_TEAM} / 일자</th>
+    <th>오전<br>완료/발주</th>
+    <th>오후<br>완료/발주</th>
+    <th>저녁<br>완료/발주</th>
+    <th>심야<br>완료/발주</th>
+    <th>미포함</th>
+    <th>결과</th>
+    <th>수락률</th>
+  </tr></thead>
+  <tbody>${days.map(weeklyTeamRow).join('')}</tbody>`;
+}
+
 function renderPeriods(){document.getElementById('periodGrid').innerHTML=PERIODS.map(([k])=>{const done=TEAM_ORDER.reduce((sum,t)=>sum+num(teamObj(t).summary?.[k]),0);const goal=TEAM_ORDER.reduce((sum,t)=>sum+num(teamObj(t).targets?.[k]),0);return `<div class="period-card"><div class="period-name">${PERIOD_LABEL[k]}</div><div class="period-main"><span>${n(done)}</span> / ${n(goal)}</div><div class="mini">전체 물량 · 완료 / 발주량</div><div class="progress"><div class="fill" style="width:${pct(done,goal)}%"></div></div><div class="period-result">${periodStatusFinal(k,done,goal)}</div></div>`}).join('')}
 function teamRow(name,list,summary,targets){const badTotal=bad(summary),acc=summary.acceptRate??rate(summary.complete,badTotal);return `<tr><td>${name}<br><span class="muted" style="font-size:12px">${list.length}명 / 접속 ${onlineCount(list)}명</span></td>${PERIODS.map(([k])=>`<td>${n(summary[k])} / ${n(targets[k])}</td>`).join('')}<td>${acc}%</td><td>${n(summary.spareRejects??spare(summary.complete,badTotal))}</td><td>${n(summary.excluded)}</td></tr>`}
 function renderTeams(){document.getElementById('teamTable').innerHTML=`<thead><tr><th>팀명 라이더(접속중)</th><th>오전<br>(완료/발주량)</th><th>오후<br>(완료/발주량)</th><th>저녁<br>(완료/발주량)</th><th>심야<br>(완료/발주량)</th><th>수락률</th><th>여유거절</th><th>미포함</th></tr></thead><tbody>${TEAM_ORDER.map(t=>teamRow(t,teamRiders(t),teamSummary(t),teamObj(t).targets||{})).join('')}</tbody>`}
