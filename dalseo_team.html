@@ -61,6 +61,85 @@ body.dark .top{background:rgba(17,21,28,.92)}
 @media(max-width:760px){.app-shell{grid-template-columns:1fr;gap:10px}.side-nav{position:sticky;top:6px;z-index:15;display:flex;overflow-x:auto;gap:6px;padding:7px;border-radius:14px}.side-nav-title{display:none}.side-nav-btn{flex:0 0 auto;width:auto;white-space:nowrap;padding:9px 12px;margin:0;font-size:12px}}
 @media(max-width:560px){.wrap{padding:10px 10px 54px!important}.top{border-radius:18px;padding:10px 12px 14px!important}.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}.sum{min-height:82px!important;padding:11px 5px!important}.sum-title{font-size:9.5px!important}.sum-val{font-size:18px!important}.weekly-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.period-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.riders{grid-template-columns:1fr!important}.controls{grid-template-columns:1fr!important}.section-title{font-size:17px!important;margin-top:20px!important}}
 
+
+/* ===== 모바일 구간실적 가독성 개선 ===== */
+/* 구간 카드에서는 미포함 실적을 표시하지 않습니다. 주간/기사카드 미포함 표시는 유지됩니다. */
+.period-card .period-excluded{display:none!important}
+
+/* 팀명과 완료/목표 숫자를 더 크게, 게이지는 더 짧고 얇게 */
+.period-card .team-line{
+  grid-template-columns:auto minmax(34px,72px) auto!important;
+  column-gap:9px!important;
+  align-items:center!important;
+}
+.period-card .team-name{
+  min-width:40px;
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+}
+.period-card .team-num{
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+  letter-spacing:-.45px;
+}
+.period-card .team-num .done,
+.period-card .team-num .goal{
+  font-size:15px!important;
+  font-weight:1000!important;
+}
+.period-card .small-bar{
+  width:100%!important;
+  height:6px!important;
+  min-width:34px!important;
+  max-width:72px!important;
+}
+.period-card .period-total{
+  font-weight:1000!important;
+}
+@media(max-width:560px){
+  .period-card{
+    padding:12px 9px!important;
+  }
+  .period-card .period-head{
+    font-size:15px!important;
+    line-height:1.15!important;
+  }
+  .period-card .period-sub{
+    font-size:10px!important;
+  }
+  .period-card .period-total{
+    margin:10px 0 8px!important;
+    font-size:21px!important;
+  }
+  .period-card .total-bar{
+    height:6px!important;
+    margin-bottom:10px!important;
+  }
+  .period-card .team-line{
+    grid-template-columns:auto minmax(28px,52px) auto!important;
+    column-gap:6px!important;
+    margin:8px 0!important;
+  }
+  .period-card .team-name{
+    min-width:32px!important;
+    font-size:13px!important;
+  }
+  .period-card .team-num{
+    font-size:13px!important;
+  }
+  .period-card .team-num .done,
+  .period-card .team-num .goal{
+    font-size:14px!important;
+  }
+  .period-card .small-bar{
+    height:5px!important;
+    min-width:28px!important;
+    max-width:52px!important;
+  }
+}
+
 </style>
 </head>
 <body>

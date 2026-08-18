@@ -242,6 +242,85 @@ body.dark .top{background:rgba(17,21,28,.92)}
 .excluded-chip.newteam::before{background:#6b7280}
 .filters button[data-team-new]{border-style:dashed}
 
+
+/* ===== 모바일 구간실적 가독성 개선 ===== */
+/* 구간 카드에서는 미포함 실적을 표시하지 않습니다. 주간/기사카드 미포함 표시는 유지됩니다. */
+.period-card .period-excluded{display:none!important}
+
+/* 팀명과 완료/목표 숫자를 더 크게, 게이지는 더 짧고 얇게 */
+.period-card .team-line{
+  grid-template-columns:auto minmax(34px,72px) auto!important;
+  column-gap:9px!important;
+  align-items:center!important;
+}
+.period-card .team-name{
+  min-width:40px;
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+}
+.period-card .team-num{
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+  letter-spacing:-.45px;
+}
+.period-card .team-num .done,
+.period-card .team-num .goal{
+  font-size:15px!important;
+  font-weight:1000!important;
+}
+.period-card .small-bar{
+  width:100%!important;
+  height:6px!important;
+  min-width:34px!important;
+  max-width:72px!important;
+}
+.period-card .period-total{
+  font-weight:1000!important;
+}
+@media(max-width:560px){
+  .period-card{
+    padding:12px 9px!important;
+  }
+  .period-card .period-head{
+    font-size:15px!important;
+    line-height:1.15!important;
+  }
+  .period-card .period-sub{
+    font-size:10px!important;
+  }
+  .period-card .period-total{
+    margin:10px 0 8px!important;
+    font-size:21px!important;
+  }
+  .period-card .total-bar{
+    height:6px!important;
+    margin-bottom:10px!important;
+  }
+  .period-card .team-line{
+    grid-template-columns:auto minmax(28px,52px) auto!important;
+    column-gap:6px!important;
+    margin:8px 0!important;
+  }
+  .period-card .team-name{
+    min-width:32px!important;
+    font-size:13px!important;
+  }
+  .period-card .team-num{
+    font-size:13px!important;
+  }
+  .period-card .team-num .done,
+  .period-card .team-num .goal{
+    font-size:14px!important;
+  }
+  .period-card .small-bar{
+    height:5px!important;
+    min-width:28px!important;
+    max-width:52px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -806,7 +885,7 @@ function renderPeriods(){
           totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0),
           miss=periodExcluded(key);
 
-    return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div>${miss?`<div class="period-excluded">미포함 실적 - ${n(miss)}건</div>`:''}<div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=periodIncludedDone(t,key),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`;
+    return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=periodIncludedDone(t,key),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`;
   }).join('');
 }
 function renderFiltersAndRiders(){
