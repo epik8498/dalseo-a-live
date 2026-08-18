@@ -99,6 +99,27 @@
   }
 }
 
+
+/* ===== VIC UI 개선 + 주간기록 상태 ===== */
+:root{
+  --ss-bg:#f4f6f8;--ss-surface:#fff;--ss-surface2:#f8fafc;--ss-text:#111827;
+  --ss-sub:#6b7280;--ss-border:#e5e7eb;--ss-red:#e60012;
+  --ss-shadow:0 8px 28px rgba(17,24,39,.07);--ss-shadow-sm:0 3px 14px rgba(17,24,39,.055)
+}
+body{background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.07),transparent 380px),var(--ss-bg)!important;color:var(--ss-text)!important}
+.wrap{max-width:1080px!important;padding:14px 14px 65px!important}
+.hero{position:relative!important;top:auto!important;background:rgba(255,255,255,.9)!important;border:1px solid var(--ss-border)!important;border-radius:22px!important;padding:14px!important;box-shadow:var(--ss-shadow)!important;margin-bottom:12px!important}
+.summary-grid{gap:8px!important}.summary-card{border:1px solid var(--ss-border)!important;border-radius:17px!important;box-shadow:var(--ss-shadow-sm)!important;min-height:92px!important;padding:13px 11px!important}.summary-card:before{display:none!important}.summary-title{font-size:11px!important}.summary-value{font-size:23px!important;margin-top:8px!important}
+.section{border:1px solid var(--ss-border)!important;border-radius:18px!important;box-shadow:var(--ss-shadow-sm)!important;padding:16px!important;margin:12px 0!important}
+.period-grid{gap:8px!important}.period-card{border-color:var(--ss-border)!important;border-radius:16px!important;padding:13px!important}.progress{height:7px!important}
+.rider-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}.rider{border-color:var(--ss-border)!important;border-radius:16px!important;padding:13px!important;box-shadow:var(--ss-shadow-sm)!important}.rider-name{font-size:17px!important}.rstat{padding:8px 4px!important}.rstat small{font-size:10px!important}.rstat b{font-size:14px!important}
+.weekly-save-ok,.weekly-save-warn{border-radius:13px;padding:10px 12px;margin:0 0 10px;font-size:12px;font-weight:1000}
+.weekly-save-ok{background:#e9fbf2;border:1px solid #b7ead0;color:#087443}
+.weekly-save-warn{background:#fff4e5;border:1px solid #ffd89a;color:#9a5b00}
+@media(max-width:900px){.rider-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:760px){.rider-grid{grid-template-columns:1fr!important}.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.period-grid{grid-template-columns:1fr 1fr!important}}
+@media(max-width:540px){.wrap{padding:9px 9px 55px!important}.summary-card{min-height:84px!important;padding:11px 6px!important}.summary-title{font-size:10px!important}.summary-value{font-size:20px!important}.section{padding:12px!important}.rider-name{font-size:18px!important}.weekly-save-ok,.weekly-save-warn{font-size:11px;padding:9px 10px}}
+
 </style>
 </head>
 <body>
@@ -107,7 +128,7 @@
       <button id="areaBtnVic" class="area-tab active" onclick="switchArea('vic')">중구A</button>
       <button id="areaBtnDalseob" class="area-tab" onclick="switchArea('dalseob_onna')">달서B</button>
     </div></div></header>
-<div id="errorBox"></div>
+<div id="errorBox"></div><div id="weeklySaveStatus"></div>
 <section class="summary-grid" id="summaryGrid"></section>
 <section class="section"><div class="section-head"><div class="section-title"><span class="bar"></span>이번주 현황 <span class="muted" id="weekRange"></span></div><button class="toggle" onclick="toggleWeekly()" id="weeklyBtn">보기 ▾</button></div><div id="weeklyPanel" class="hidden"><div class="week-tabs" id="weeklyTeamTabs"></div><div class="table-wrap"><table class="weekly-table" id="weeklyTable"></table></div></div></section>
 
@@ -186,7 +207,24 @@ function normalizeTeams(){
     f.value=TEAM_ORDER.includes(cur)?cur:'전체';
   }
 }
-function buildWeekly(){let rows=Array.isArray(WEEKLY)?WEEKLY:[];let complete=0,b=0;rows.forEach(r=>{complete+=num(r.totalComplete);b+=bad(r)});return{complete,bad:b,acceptRate:rate(complete,b),spare:spare(complete,b)}}
+function buildWeekly(){
+  const ws=DATA&&DATA.weeklySummary;
+  if(ws&&Array.isArray(ws.days)){
+    return{
+      complete:num(ws.complete),
+      bad:num(ws.badTotal),
+      acceptRate:num(ws.acceptRate),
+      spare:num(ws.spareRejects)
+    };
+  }
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const current=DATA?.businessDate||isoLocal(new Date());
+  const start=weekStartWed(current),end=dateAdd(start,6);
+  const currentRows=rows.filter(r=>r&&r.businessDate>=start&&r.businessDate<=end);
+  let complete=0,b=0;
+  currentRows.forEach(r=>{complete+=num(r.totalComplete);b+=bad(r)});
+  return{complete,bad:b,acceptRate:rate(complete,b),spare:spare(complete,b)};
+}
 
 const SETTLEMENT_UNIT_BY_AREA={vic:350,dalseob_onna:250};
 function settlementUnit(){return num(SETTLEMENT_UNIT_BY_AREA[AREA_KEY] ?? 350);}
@@ -258,6 +296,20 @@ function renderSettlement(){
     <div class="settlement-row grand"><span>총 관리비</span><b>${n(c.total)}원</b></div>
   </div>
   <div class="settlement-note">미분류 기사는 정산에서 제외됩니다. 세트와 목표는 주간 JSON의 팀별 값을 우선 사용합니다.</div>`;
+}
+
+
+function renderWeeklySaveStatus(){
+  const box=document.getElementById('weeklySaveStatus');
+  if(!box||!DATA)return;
+  const date=DATA.businessDate||'-';
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const found=rows.find(r=>r&&r.businessDate===date);
+  if(found){
+    box.innerHTML=`<div class="weekly-save-ok">주간기록 저장됨 · ${date} · 완료 ${n(found.totalComplete)}건</div>`;
+  }else{
+    box.innerHTML=`<div class="weekly-save-warn">현재 날짜 주간기록이 아직 없습니다 · ${date}</div>`;
+  }
 }
 
 function renderSummary(){const total=DATA.total||{},week=buildWeekly();const cards=[['주간완료',week.complete,'red'],['당일완료',total.complete,'red'],['주간수락률',week.acceptRate+'%','blue'],['여유거절수',total.spareRejects,'green'],['전체접속인원',total.onlineCount+'명','green'],['현재시간대',currentPeriodLabel(),'blue'],...TEAM_ORDER.map(t=>[t+' 접속',num(teamSummary(t).onlineCount)+'명','green'])];document.getElementById('summaryGrid').innerHTML=cards.map(c=>`<div class="summary-card ${c[2]||''}"><div class="summary-title">${c[0]||'&nbsp;'}</div><div class="summary-value ${c[2]||''}">${c[1]}</div></div>`).join('')}
