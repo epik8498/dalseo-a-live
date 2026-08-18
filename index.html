@@ -84,6 +84,164 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
   .sms-groups{grid-template-columns:1fr}
 }
 
+
+/* SUPERSONIC UI 2.0 - visual layer only */
+:root{
+  --ss-bg:#f4f6f8;--ss-surface:#fff;--ss-surface2:#f8fafc;--ss-text:#111827;
+  --ss-sub:#6b7280;--ss-border:#e5e7eb;--ss-shadow:0 8px 28px rgba(17,24,39,.07);
+  --ss-shadow-sm:0 3px 14px rgba(17,24,39,.055);--ss-red:#e60012;--ss-red-soft:#fff1f2
+}
+body{background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.07),transparent 380px),var(--ss-bg)!important;color:var(--ss-text)}
+body.dark{--ss-bg:#080b10;--ss-surface:#11151c;--ss-surface2:#171c24;--ss-text:#f9fafb;--ss-sub:#9ca3af;--ss-border:#252c36;background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.12),transparent 380px),var(--ss-bg)!important}
+.wrap{max-width:1080px!important;padding:18px 18px 70px!important}
+.top{background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border:1px solid var(--ss-border);border-radius:24px;padding:14px 18px 18px!important;box-shadow:var(--ss-shadow);margin-bottom:16px}
+body.dark .top{background:rgba(17,21,28,.92)}
+.top-actions{margin:0 0 8px!important}.move,.mode{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;color:var(--ss-text)!important;border-radius:12px!important;padding:10px 14px!important;font-size:14px!important;box-shadow:none!important}
+.logo-img{width:66px!important;min-height:40px!important}.brand{font-size:30px!important;margin-top:4px!important;letter-spacing:-1.5px}.sub{font-size:13px!important;color:var(--ss-sub);margin-top:5px!important}.area{margin:13px 0 5px!important;font-size:18px!important}.area b{display:inline-block;background:var(--ss-red-soft);color:var(--ss-red);border-radius:999px;padding:5px 10px}.top-update{margin:5px 0 0!important;font-size:12px!important;color:var(--ss-sub)!important}
+.summary{border:0!important;background:transparent!important;overflow:visible!important;margin:0 0 22px!important}.summary-grid{grid-template-columns:repeat(5,1fr)!important;gap:10px!important}.sum{min-height:106px!important;padding:16px 12px!important;border:1px solid var(--ss-border)!important;background:var(--ss-surface);border-radius:18px;box-shadow:var(--ss-shadow-sm);display:flex;flex-direction:column;justify-content:center}.sum-title{font-size:12px!important;color:var(--ss-sub)}.sum-val{margin-top:8px!important;font-size:26px!important}.sum-val.red{color:var(--ss-red)!important}.sum-val.green{color:#059669!important}
+.section-title{margin:24px 2px 10px!important;gap:8px!important;font-size:19px!important}.section-title .icon{width:5px!important;height:20px!important;border-radius:999px!important;background:var(--ss-red)!important}.section-title small{font-size:12px!important;color:var(--ss-sub)!important}.toggle-btn{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;color:var(--ss-text)!important;border-radius:14px!important;font-size:13px!important;padding:11px 14px!important;margin:0 0 10px!important;box-shadow:var(--ss-shadow-sm)!important;text-align:left}
+.weekly-status,.mission-box,.sms-box,.settlement-wrap{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;box-shadow:var(--ss-shadow-sm)!important}
+.weekly-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}.day-card{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:16px 14px!important;box-shadow:var(--ss-shadow-sm)!important}.day-label{font-size:25px!important}.day-date{font-size:11px!important}.period-row{font-size:13px!important;margin:8px 0!important}.day-total{font-size:13px!important}
+.period-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}.period-card{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:16px!important;box-shadow:var(--ss-shadow-sm)!important}.period-head{font-size:17px!important;margin-bottom:5px!important}.period-sub{font-size:11px!important}.period-total{margin:14px 0 10px!important;font-size:25px!important}.total-bar{height:9px!important}.team-line{grid-template-columns:45px 1fr auto!important;gap:7px!important;font-size:11px!important;margin:9px 0!important}.team-name{font-size:12px!important}.small-bar{height:8px!important}
+.controls{margin:18px 0 10px!important;padding:10px;background:var(--ss-surface);border:1px solid var(--ss-border);border-radius:16px;box-shadow:var(--ss-shadow-sm)}.filters{gap:6px!important}.filters button{min-width:68px!important;border:1px solid var(--ss-border)!important;background:var(--ss-surface2)!important;color:var(--ss-text)!important;border-radius:10px!important;padding:9px 11px!important;font-size:12px!important}.filters button.active{background:var(--ss-red)!important;border-color:var(--ss-red)!important;color:#fff!important}
+.riders{grid-template-columns:repeat(3,1fr)!important;gap:10px!important}.rider{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:14px!important;box-shadow:var(--ss-shadow-sm)!important}.rider.active{background:linear-gradient(180deg,#f2fff8,#fff)!important;border:1px solid rgba(5,150,105,.38)!important}.rider-name{font-size:17px!important}.status{font-size:10px!important;padding:4px 7px!important}.stats{margin-top:11px!important}.stat small{font-size:10px!important;color:var(--ss-sub)}.stat b{font-size:15px!important}.times{margin-top:10px!important;padding-top:8px!important}.times div{font-size:10px!important;color:var(--ss-sub)}.times b{font-size:14px!important}
+@media(max-width:900px){.summary-grid{grid-template-columns:repeat(3,1fr)!important}.weekly-grid{grid-template-columns:repeat(2,1fr)!important}.period-grid{grid-template-columns:repeat(2,1fr)!important}.riders{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:560px){.wrap{padding:10px 10px 54px!important}.top{border-radius:18px;padding:10px 12px 14px!important}.summary-grid{grid-template-columns:repeat(2,1fr)!important;gap:7px!important}.sum{min-height:86px!important;border-radius:14px!important;padding:12px 8px!important}.sum-title{font-size:10.5px!important}.sum-val{font-size:21px!important}.weekly-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.period-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.riders{grid-template-columns:1fr!important}.section-title{font-size:17px!important;margin-top:20px!important}}
+
+
+/* UI 2.1 - KPI cleanup + rider search */
+.summary-grid{grid-template-columns:repeat(4,1fr)!important}
+.controls{display:grid!important;grid-template-columns:minmax(240px,1fr) auto auto!important;gap:10px!important;align-items:center!important}
+.rider-search-wrap{min-width:0}
+.rider-search{
+  width:100%;height:40px;border:1px solid var(--ss-border);background:var(--ss-surface2);
+  color:var(--ss-text);border-radius:11px;padding:0 13px;font-size:13px;font-weight:900;
+  outline:none;transition:border-color .16s ease,box-shadow .16s ease
+}
+.rider-search:focus{border-color:rgba(230,0,18,.55);box-shadow:0 0 0 3px rgba(230,0,18,.08)}
+.rider-search::placeholder{color:var(--ss-sub);font-weight:800}
+.rider-empty{grid-column:1/-1;text-align:center;color:var(--ss-sub);background:var(--ss-surface);border:1px dashed var(--ss-border);border-radius:16px;padding:28px 16px;font-size:13px}
+@media(max-width:900px){
+  .summary-grid{grid-template-columns:repeat(3,1fr)!important}
+  .controls{grid-template-columns:1fr auto!important}
+  .rider-search-wrap{grid-column:1/-1}
+}
+@media(max-width:560px){
+  .summary-grid{grid-template-columns:repeat(2,1fr)!important}
+  .controls{grid-template-columns:1fr!important}
+  .rider-search-wrap,.filters,.sort{grid-column:1}
+  .sort{justify-content:flex-end}
+  .rider-search{height:42px;font-size:14px}
+}
+
+
+/* UI 2.2 - KPI 3/3/1 + side navigation */
+.summary-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.summary-grid .sum:last-child{
+  grid-column:1 / -1;
+}
+
+.app-shell{
+  display:grid;
+  grid-template-columns:170px minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+}
+.side-nav{
+  position:sticky;
+  top:14px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:18px;
+  padding:10px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.side-nav-title{
+  padding:8px 10px 10px;
+  font-size:11px;
+  color:var(--ss-sub);
+  letter-spacing:.4px;
+}
+.side-nav-btn{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--ss-text);
+  border-radius:11px;
+  padding:11px 12px;
+  margin:2px 0;
+  text-align:left;
+  font-size:13px;
+  font-weight:1000;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.side-nav-btn:hover{background:var(--ss-surface2)}
+.side-nav-btn.active{
+  background:var(--ss-red);
+  color:#fff;
+  box-shadow:0 5px 14px rgba(230,0,18,.18);
+}
+.page-stage{min-width:0}
+.page-view{display:none}
+.page-view.active{display:block;animation:ssPageIn .16s ease-out}
+@keyframes ssPageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.menu-hidden-toggle{display:none!important}
+
+/* sidebar page panels are always visually open */
+.page-view .panel{display:block}
+.page-view .panel.show{display:block}
+
+/* KPI 3/3/full: 7th team card spans all three columns */
+.summary-grid .sum{width:100%}
+
+/* When menu is active, section title starts at top without excessive gap */
+.page-view>.section-title:first-child{margin-top:2px!important}
+
+/* Tablet/mobile: side menu becomes horizontal tabs */
+@media(max-width:760px){
+  .app-shell{grid-template-columns:1fr;gap:10px}
+  .side-nav{
+    position:sticky;
+    top:6px;
+    z-index:15;
+    display:flex;
+    overflow-x:auto;
+    gap:6px;
+    padding:7px;
+    border-radius:14px;
+    scrollbar-width:none;
+  }
+  .side-nav::-webkit-scrollbar{display:none}
+  .side-nav-title{display:none}
+  .side-nav-btn{
+    flex:0 0 auto;
+    width:auto;
+    white-space:nowrap;
+    padding:9px 12px;
+    margin:0;
+    font-size:12px;
+  }
+  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .summary-grid .sum:last-child{grid-column:1 / -1}
+}
+@media(max-width:520px){
+  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .sum{min-width:0!important;padding:11px 5px!important}
+  .sum-title{font-size:9.5px!important}
+  .sum-val{font-size:18px!important}
+}
+
+
+/* 신규 기사 팀 */
+.small-fill.newteam{height:100%;background:#6b7280}
+.excluded-chip.newteam::before{background:#6b7280}
+.filters button[data-team-new]{border-style:dashed}
+
 </style>
 </head>
 <body>
@@ -95,39 +253,55 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
 </div>
     <div class="area-menu" id="areaMenu"></div>
     <img src="logo.png" class="logo-img" onerror="this.style.display='none'">
-    <div class="brand">SUPERSONIC</div><div class="sub">배민 | 쿠팡협력사</div>
+    <div class="brand">SUPERSONIC</div><div class="sub">LIVE OPERATIONS · 배민 | 쿠팡협력사</div>
     <div class="area">현재 권역 : <b id="areaText">-</b></div>
     <div class="top-update" id="topUpdateTime">↻ 마지막 업데이트 : -</div>
   </div>
   <div id="errorBox"></div>
   <div class="summary"><div class="summary-grid">
     <div class="sum"><div class="sum-title">주간 완료</div><div class="sum-val red" id="weekComplete">0</div></div>
-    <div class="sum"><div class="sum-title">주간 거절합계</div><div class="sum-val" id="weekBad">0</div></div>
     <div class="sum"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weekRate">0%</div></div>
     <div class="sum"><div class="sum-title">주간 여유거절</div><div class="sum-val green" id="weekSpare">0</div></div>
     <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val green" id="onlineCount">0명</div></div>
     <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
     <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
-    <div class="sum"><div class="sum-title">당일 수락률</div><div class="sum-val" id="dayRate">0%</div></div>
-    <div class="sum"><div class="sum-title">당일 여유거절</div><div class="sum-val red" id="daySpare">0</div></div>
     <div class="sum"><div class="sum-title" id="teamCountTitle">접속중</div><div class="sum-val red" id="teamCount">0</div></div>
   </div></div>
 
+  <div class="app-shell">
+    <aside class="side-nav">
+      <div class="side-nav-title">운영 메뉴</div>
+      <button class="side-nav-btn active" data-page="overview" onclick="switchPage('overview',this)">운영현황</button>
+      <button class="side-nav-btn" data-page="weekly" onclick="switchPage('weekly',this)">주간실적</button>
+      <button class="side-nav-btn" data-page="settlement" onclick="switchPage('settlement',this)">주간정산</button>
+      <button class="side-nav-btn" data-page="manage" onclick="switchPage('manage',this)">기사관리</button>
+      <button class="side-nav-btn" data-page="mission" onclick="switchPage('mission',this)">미션비 집계</button>
+      <button class="side-nav-btn" data-page="sms" onclick="switchPage('sms',this)">단체문자</button>
+    </aside>
+    <main class="page-stage">
+
+<section class="page-view" id="page-weekly">
   <div class="section-title"><span class="icon"></span>주간실적 <small id="weekRange">-</small></div>
-  <button class="toggle-btn" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
+  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
   <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
 
 
+  </section>
+
+  <section class="page-view" id="page-settlement">
   <div id="settlementSection">
     <div class="section-title"><span class="icon"></span>주간 정산 <small>달서A</small></div>
-    <button class="toggle-btn" onclick="togglePanel('settlementPanel','settlementToggle')" id="settlementToggle">주간 정산 보기 ▾</button>
+    <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('settlementPanel','settlementToggle')" id="settlementToggle">주간 정산 보기 ▾</button>
     <div class="panel" id="settlementPanel">
       <div class="settlement-wrap" id="settlementBox"></div>
     </div>
   </div>
 
+  </section>
+
+  <section class="page-view" id="page-manage">
   <div class="section-title"><span class="icon"></span>기사관리</div>
-<button class="toggle-btn" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
+<button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
 <div class="panel" id="managePanel">
   <div class="mission-box">
     <div id="manageList">
@@ -135,8 +309,11 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
     </div>
   </div>
 </div>
+  </section>
+
+  <section class="page-view" id="page-mission">
   <div class="section-title"><span class="icon"></span>미션비 집계</div>
-  <button class="toggle-btn" onclick="togglePanel('missionPanel','missionToggle')" id="missionToggle">미션비 집계 보기 ▾</button>
+  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('missionPanel','missionToggle')" id="missionToggle">미션비 집계 보기 ▾</button>
   <div class="panel" id="missionPanel">
     <div class="mission-box">
       <div class="mission-form">
@@ -154,8 +331,11 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
   </div>
 
 
+  </section>
+
+  <section class="page-view" id="page-sms">
   <div class="section-title"><span class="icon"></span>단체 문자</div>
-  <button class="toggle-btn" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
+  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
   <div class="panel" id="smsPanel">
     <div class="sms-box">
       <div class="sms-team-tabs" id="smsTeamTabs"></div>
@@ -166,17 +346,31 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
     </div>
   </div>
 
+  </section>
+
+  <section class="page-view active" id="page-overview">
   <div class="section-title"><span class="icon"></span>구간별 실적 <small>(완료 / 발주량)</small></div>
   <div class="period-grid" id="periodCards"></div>
-  <div class="controls"><div class="filters" id="filters"></div><div class="sort">정렬:<select id="sortSelect" onchange="render()"><option value="complete">완료순</option><option value="name">가나다순</option></select></div></div>
+  <div class="controls">
+    <div class="rider-search-wrap">
+      <input id="riderSearch" class="rider-search" type="search" inputmode="search"
+        placeholder="기사명 / 전화번호 / 아이디 검색"
+        autocomplete="off" oninput="setRiderSearch(this.value)">
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="sort">정렬:<select id="sortSelect" onchange="render()"><option value="complete">완료순</option><option value="name">가나다순</option></select></div>
+  </div>
   <div class="riders" id="riderGrid"></div><div class="footer" id="footerTime">마지막 업데이트 : -</div>
+  </section>
+    </main>
+  </div>
 </div>
 <script>
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
-  "달서A":{key:"dalseoa",file:"/live/dalseoa",weekly:"/weekly/dalseoa",teams:["소닉팀","달서팀"],labels:{"소닉팀":"소닉","달서팀":"달서"},classes:{"소닉팀":"sonic","달서팀":"dalseo"},missionTeam:null,settlementUnit:250},
-  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum"},missionTeam:"소닉팀",settlementUnit:250},
-  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["소닉팀","넘버팀","마음팀","나르미팀"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","나르미팀":"나르미"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","나르미팀":"narmi"},missionTeam:"소닉팀",settlementUnit:350}
+  "달서A":{key:"dalseoa",file:"/live/dalseoa",weekly:"/weekly/dalseoa",teams:["소닉팀","달서팀","신규"],labels:{"소닉팀":"소닉","달서팀":"달서","신규":"신규"},classes:{"소닉팀":"sonic","달서팀":"dalseo","신규":"newteam"},missionTeam:null,settlementUnit:250},
+  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀","신규"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","신규":"신규"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","신규":"newteam"},missionTeam:"소닉팀",settlementUnit:250},
+  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["소닉팀","넘버팀","마음팀","나르미팀","신규"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","나르미팀":"나르미","신규":"신규"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","나르미팀":"narmi","신규":"newteam"},missionTeam:"소닉팀",settlementUnit:350}
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 function initialArea(){
@@ -186,9 +380,40 @@ function initialArea(){
   if(AREAS[saved]) return saved;
   return '달서A';
 }
-let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='';
+let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='';
+let CURRENT_PAGE='overview';
+function switchPage(page,btn){
+  CURRENT_PAGE=page;
+  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
+  const target=document.getElementById('page-'+page);
+  if(target)target.classList.add('active');
+
+  document.querySelectorAll('.side-nav-btn').forEach(el=>el.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  else{
+    const found=document.querySelector(`.side-nav-btn[data-page="${page}"]`);
+    if(found)found.classList.add('active');
+  }
+
+  // 페이지형 메뉴에서는 해당 패널을 바로 펼쳐 보여줍니다.
+  const panelMap={
+    weekly:'weeklyPanel',
+    settlement:'settlementPanel',
+    manage:'managePanel',
+    mission:'missionPanel',
+    sms:'smsPanel'
+  };
+  const panelId=panelMap[page];
+  if(panelId){
+    const panel=document.getElementById(panelId);
+    if(panel)panel.classList.add('show');
+  }
+
+  localStorage.setItem('supersonicPage',page);
+}
+
 function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return r.morningExcluded!=null?Number(r.morningExcluded||0):hsum(r,6,9)}function midnightExcluded(r){return r.midnightExcluded!=null?Number(r.midnightExcluded||0):hsum(r,0,6)}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
-function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
+function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';RIDER_SEARCH='';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function setRiderSearch(v){RIDER_SEARCH=String(v||'').trim().toLowerCase();renderFiltersAndRiders()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
 function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
 async function fetchJson(path){
@@ -210,6 +435,8 @@ async function loadData(){
   }
   try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}
   document.getElementById('errorBox').innerHTML='';
+  const savedPage=localStorage.getItem('supersonicPage');
+  if(['overview','weekly','settlement','manage','mission','sms'].includes(savedPage)){switchPage(savedPage)}
   try{render()}catch(e){
     console.error('화면 렌더링 오류',e);
     document.getElementById('errorBox').innerHTML=`<div class="error">데이터는 읽었지만 화면 계산 중 오류가 발생했습니다.<br>${e.message||''}</div>`;
@@ -226,15 +453,12 @@ function render(){
   document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');
   document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;
   document.getElementById('weekComplete').innerText=n(ws.complete);
-  document.getElementById('weekBad').innerText=n(ws.bad);
   document.getElementById('weekRate').innerText=ws.rate+'%';
   document.getElementById('weekSpare').innerText=n(ws.spare);
   document.getElementById('dayComplete').innerText=n(d.total.complete);
   document.getElementById('dayOrder').innerText=n(totalOrder);
-  document.getElementById('dayRate').innerText=(d.total.acceptRate||0)+'%';
-  document.getElementById('daySpare').innerText=n(d.total.spareRejects);
   document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';
-  document.getElementById('teamCountTitle').innerText='접속중('+teams.map(t=>cfg.labels[t]).join('/')+')';
+  document.getElementById('teamCountTitle').innerText='팀 접속 인원';
   document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');
   const safe=(name,fn)=>{try{fn()}catch(e){console.error(name,e)}};
   safe('주간실적',()=>renderWeekly(ws));
@@ -585,7 +809,65 @@ function renderPeriods(){
     return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div>${miss?`<div class="period-excluded">미포함 실적 - ${n(miss)}건</div>`:''}<div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=periodIncludedDone(t,key),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`;
   }).join('');
 }
-function renderFiltersAndRiders(){const cfg=areaCfg(),teams=cfg.teams;document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');let riders=[...(DATA.riders||[])];if(FILTER!=='전체')riders=riders.filter(r=>r.team===FILTER);let sort=document.getElementById('sortSelect').value;if(sort==='name'){riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return a.name.localeCompare(b.name,'ko')})}else{riders.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;return Number(b.complete||0)-Number(a.complete||0)})}document.getElementById('riderGrid').innerHTML=riders.map(r=>{const miss=riderExcluded(r);return `<div class="rider ${r.isOnline?'active':''}"><div class="rider-top"><div class="rider-name"><span class="dot"></span>${r.name}</div><div><span class="status">${r.isOnline?'접속중':'운행종료'}</span>${r.warning?'<span class="warn">80%↓</span>':''}</div></div><div class="stats"><div class="stat"><small>완료<span class="miss-label">/미포함</span></small><b class="red">${n(r.complete)}<span class="miss"> / ${n(miss)}건</span></b></div><div class="stat"><small>거절/취소</small><b>${n(r.reject)} / ${n(r.cancel)}</b></div><div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div></div><div class="times"><div>오전<b>${n(r.morning)}</b></div><div>오후<b>${n(r.afternoon)}</b></div><div>저녁<b>${n(r.evening)}</b></div><div>심야<b>${n(r.midnight)}</b></div></div></div>`}).join('')}
+function renderFiltersAndRiders(){
+  const cfg=areaCfg(),teams=cfg.teams;
+  document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');
+
+  const searchEl=document.getElementById('riderSearch');
+  if(searchEl && document.activeElement!==searchEl && searchEl.value!==RIDER_SEARCH){
+    searchEl.value=RIDER_SEARCH;
+  }
+
+  let riders=[...(DATA.riders||[])];
+
+  if(FILTER!=='전체'){
+    riders=riders.filter(r=>r.team===FILTER);
+  }
+
+  if(RIDER_SEARCH){
+    const q=RIDER_SEARCH.replace(/\s+/g,'');
+    riders=riders.filter(r=>{
+      const name=String(r.name||'').toLowerCase().replace(/\s+/g,'');
+      const phone=String(r.phone||'').toLowerCase().replace(/[\s-]+/g,'');
+      const userId=String(r.userId||'').toLowerCase().replace(/\s+/g,'');
+      return name.includes(q)||phone.includes(q)||userId.includes(q);
+    });
+  }
+
+  let sort=document.getElementById('sortSelect').value;
+  if(sort==='name'){
+    riders.sort((a,b)=>{
+      if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;
+      return a.name.localeCompare(b.name,'ko');
+    });
+  }else{
+    riders.sort((a,b)=>{
+      if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;
+      return Number(b.complete||0)-Number(a.complete||0);
+    });
+  }
+
+  document.getElementById('riderGrid').innerHTML=riders.length?riders.map(r=>{
+    const miss=riderExcluded(r);
+    return `<div class="rider ${r.isOnline?'active':''}">
+      <div class="rider-top">
+        <div class="rider-name"><span class="dot"></span>${r.name}</div>
+        <div><span class="status">${r.isOnline?'접속중':'운행종료'}</span>${r.warning?'<span class="warn">80%↓</span>':''}</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>완료<span class="miss-label">/미포함</span></small><b class="red">${n(r.complete)}<span class="miss"> / ${n(miss)}건</span></b></div>
+        <div class="stat"><small>거절/취소</small><b>${n(r.reject)} / ${n(r.cancel)}</b></div>
+        <div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div>
+      </div>
+      <div class="times">
+        <div>오전<b>${n(r.morning)}</b></div>
+        <div>오후<b>${n(r.afternoon)}</b></div>
+        <div>저녁<b>${n(r.evening)}</b></div>
+        <div>심야<b>${n(r.midnight)}</b></div>
+      </div>
+    </div>`;
+  }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
+}
 function renderMission(){if(!DATA)return;const cfg=areaCfg(),period=document.getElementById('missionPeriod').value,need=Number(document.getElementById('missionCount').value||0),price=Number(document.getElementById('missionPrice').value||0);let riders=[...(DATA.riders||[])];if(cfg.missionTeam)riders=riders.filter(r=>r.team===cfg.missionTeam);let success=need>0?riders.filter(r=>Number(r[period]||0)>=need):[];success.sort((a,b)=>Number(b[period]||0)-Number(a[period]||0));document.getElementById('missionTarget').innerText=n(riders.length)+'명';document.getElementById('missionSuccess').innerText=n(success.length)+'명';document.getElementById('missionTotal').innerText=won(success.length*price);document.getElementById('missionList').innerHTML=need>0?success.map(r=>`<div class="mission-rider"><b>${r.name}</b><span>${n(r[period])}건 / ${won(price)}</span></div>`).join(''):`<div style="grid-column:1/-1;color:var(--muted);font-weight:1000;text-align:center;padding:16px">목표 건수를 입력하면 성공기사가 표시됩니다.</div>`}
 function renderManageList(){
   if(!DATA || !DATA.riders){

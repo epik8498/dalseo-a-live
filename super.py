@@ -17,6 +17,17 @@ REFRESH_SECONDS = 60
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
+BACKGROUND_SAFE_ARGS = [
+    "--disable-gpu",
+    "--disable-dev-shm-usage",
+    "--disable-extensions",
+    "--mute-audio",
+    "--disable-background-timer-throttling",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-renderer-backgrounding",
+    "--disable-features=CalculateNativeWinOcclusion,IntensiveWakeUpThrottling,MemorySaverMode",
+]
+
 BASE_DIR = Path(__file__).parent
 DATA_FILE = BASE_DIR / "data_dalseoa.json"
 HTML_FILE = BASE_DIR / "index.html"
@@ -37,8 +48,8 @@ CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'dalseoa',
   'aliases': ['대구달서7M(DP2506234693)', '대구달서7M (DP2506234693)', '대구달서7M', 'DP2506234693'],
   'center_code': 'DP2506234693',
-  'team_order': ['소닉팀', '달서팀'],
-  'area_config': {'소닉팀': 5, '달서팀': 1},
+  'team_order': ['소닉팀', '달서팀', '신규'],
+  'area_config': {'소닉팀': 6.5, '달서팀': 1.5, '신규': 0},
   'team_map_path': '/settings/dalseoa/teamMap',
   'live_path': '/live/dalseoa',
   'weekly_path': '/weekly/dalseoa',
@@ -90,8 +101,8 @@ CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'dalseob',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
   'center_code': 'DP2602028125',
-  'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 2, '넘버팀': 5, '마음팀': 5},
+  'team_order': ['소닉팀', '넘버팀', '마음팀', '신규'],
+  'area_config': {'소닉팀': 3, '넘버팀': 5.5, '마음팀': 4.5, '신규': 0},
   'team_map_path': '/settings/dalseob/teamMap',
   'live_path': '/live/dalseob',
   'weekly_path': '/weekly/dalseob',
@@ -100,27 +111,39 @@ CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'junggua',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
   'center_code': 'DP2511170481',
-  'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 3, '넘버팀': 1, '마음팀': 2},
+  'team_order': ['소닉팀', '넘버팀', '마음팀', '나르미팀', '신규'],
+  'area_config': {'소닉팀': 3.4, '넘버팀': 1.2, '마음팀': 3.4, '나르미팀': 1, '신규': 0},
   'team_map_path': '/settings/junggua/teamMap',
   'live_path': '/live/junggua',
   'weekly_path': '/weekly/junggua',
-  'required_team_riders': {}}]
+  'required_team_riders': {'나르미팀': ['김주엽', 'TRINH THI KIEU MI', '김경아', '김병길', '김상일', '김상화', '김수만', '김신조', '김영상', '김재범', '김홍종', '나동현', '류일상', '박광수', '박규철', '박중현', '백승엽', '서광직', '손승희', '신용수', '안치성', '윤부용', '윤영식', '이동규', '이만득', '이명훈', '이성호', '이시헌', '이정영', '이종덕', '이주현', '이지훈', '임경석', '정수웅', '정지식', '조재규', '최재민', '최한상']}}]
 
 DAY_TARGETS = {
-    0: [22, 21, 32, 25],
-    1: [22, 21, 32, 25],
-    2: [22, 21, 32, 25],
-    3: [22, 21, 32, 25],
-    4: [25, 22, 34, 29],
-    5: [31, 23, 38, 28],
-    6: [32, 24, 37, 27],
+    0: [19, 18, 30, 23],
+    1: [19, 18, 30, 23],
+    2: [19, 18, 30, 23],
+    3: [19, 18, 30, 23],
+    4: [21, 21, 32, 26],
+    5: [27, 22, 36, 25],
+    6: [29, 22, 35, 24],
 }
 
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
+    "2026-07-17": 6,
+    "2026-08-17": 6,
+    
 }
+
+
+def schedule_weekday(date_value):
+    """특별일은 목표 물량뿐 아니라 SLA 시간 구간도 지정 요일 기준으로 적용합니다."""
+    return SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+
+
+def uses_weekend_schedule(date_value):
+    return schedule_weekday(date_value) >= 5
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
 PERIOD_LABELS = {
@@ -128,8 +151,58 @@ PERIOD_LABELS = {
     "afternoon": "오후논피크",
     "evening": "저녁피크",
     "midnight": "심야논피크",
+    "excluded": "미포함시간",
 }
 
+
+
+def keep_chrome_rendering(context, page):
+    """Chrome 창을 최소화하지 않고 화면 바깥으로 이동해 렌더링을 계속 유지합니다."""
+    try:
+        page.bring_to_front()
+    except Exception:
+        pass
+
+    try:
+        session = context.new_cdp_session(page)
+        try:
+            info = session.send("Browser.getWindowForTarget")
+            window_id = info.get("windowId")
+            if window_id is not None:
+                session.send("Browser.setWindowBounds", {
+                    "windowId": window_id,
+                    "bounds": {
+                        "left": -1800,
+                        "top": 20,
+                        "width": 1400,
+                        "height": 900,
+                        "windowState": "normal",
+                    },
+                })
+        except Exception:
+            pass
+
+        try:
+            session.send("Page.setWebLifecycleState", {"state": "active"})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setFocusEmulationEnabled", {"enabled": True})
+        except Exception:
+            pass
+        try:
+            session.send("Emulation.setIdleOverride", {
+                "isUserActive": True,
+                "isScreenUnlocked": True,
+            })
+        except Exception:
+            pass
+        try:
+            session.detach()
+        except Exception:
+            pass
+    except Exception:
+        pass
 
 def split_hourly_by_sla(hourly, date_value=None):
     h = list(hourly or [])[:24]
@@ -137,17 +210,17 @@ def split_hourly_by_sla(hourly, date_value=None):
         h += [0] * (24 - len(h))
     if date_value is None:
         date_value = business_date(datetime.now())
-    weekend = date_value.weekday() >= 5
+    weekend = uses_weekend_schedule(date_value)
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
-    morning_excluded = sum(h[6:10])       # 06,07,08,09
+    morning_excluded = sum(h[6:9])        # 06,07,08
     midnight_excluded = sum(h[0:6])      # 00,01,02,03,04,05
 
     if weekend:
-        morning = sum(h[10:14])          # 토일 10,11,12,13
+        morning = sum(h[9:14])           # 토일 09,10,11,12,13
         afternoon = sum(h[14:17])        # 토일 14,15,16
     else:
-        morning = sum(h[10:13])          # 평일 10,11,12
+        morning = sum(h[9:13])           # 평일 09,10,11,12
         afternoon = sum(h[13:17])        # 평일 13,14,15,16
 
     evening = sum(h[17:20])              # 17,18,19
@@ -172,17 +245,21 @@ def business_date(now):
 
 def current_period(now):
     h = now.hour
-    weekend = now.weekday() >= 5
+    # business_date 기준으로 특별일의 주말형 SLA 시간표까지 함께 적용합니다.
+    weekend = uses_weekend_schedule(business_date(now))
 
     # SLA 포함 구간 기준입니다.
-    # 06~09, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
+    if 0 <= h < 9:
+        return "excluded"
+
     if weekend:
-        if 10 <= h < 14:
+        if 9 <= h < 14:
             return "morning"
         if 14 <= h < 17:
             return "afternoon"
     else:
-        if 10 <= h < 13:
+        if 9 <= h < 13:
             return "morning"
         if 13 <= h < 17:
             return "afternoon"
@@ -224,12 +301,15 @@ def team_of(name):
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
     mapped = TEAM_MAP_CACHE.get(name)
+    # 대표가 기사관리에서 직접 지정/이동한 팀을 최우선으로 적용합니다.
     if mapped in TEAM_ORDER:
         return mapped
+    # 고정 명단에 포함된 기존 기사는 지정 팀을 유지합니다.
     for team, names in REQUIRED_TEAM_RIDERS.items():
         if name in {norm(x) for x in names}:
             return team
-    return TEAM_ORDER[0] if TEAM_ORDER else "소닉팀"
+    # 어느 팀에도 등록되지 않은 새 기사는 자동으로 신규 팀에 배정합니다.
+    return "신규" if "신규" in TEAM_ORDER else (TEAM_ORDER[0] if TEAM_ORDER else "신규")
 
 def to_int(value):
     try:
@@ -289,8 +369,23 @@ def set_page_number(url, page_no):
 
 def read_dom_rows(page):
     """
-    배민 화면이 div-grid/고정열/가로스크롤로 바뀌어도 헤더의 x좌표를 기준으로
-    00~23시 값을 직접 매칭합니다. offset 추정 금지.
+    2026-08 배민커넥트비즈 신규 배달현황 구조 대응.
+
+    고정 컬럼:
+      이름 → 운행상태 → 아이디 → 휴대폰번호
+
+    실적 컬럼:
+      총 배달완료(1)
+      → SLA 배달완료[푸드, 비마트, 배민스토어, 합계](4)
+      → SLA 거절[푸드, 비마트, 배민스토어, 합계](4)
+      → SLA 배차취소[푸드, 비마트, 배민스토어, 합계](4)
+      → SLA 배달취소(라이더귀책)[푸드, 비마트, 배민스토어, 합계](4)
+      → SLA 슬롯별 배달완료[오전, 오후, 저녁, 심야](4)
+      → SLA 시간외 배달완료(1)
+      → 00~23시 시간대별 완료(24)
+
+    기사 이름과 아이디를 '전화번호 바로 앞 텍스트'로 추정하지 않고,
+    실제 컬럼 헤더의 x좌표와 같은 행의 셀을 직접 매칭합니다.
     """
     return page.evaluate(r"""
     () => {
@@ -307,8 +402,11 @@ def read_dom_rows(page):
       }
       function textOf(el){ return (el.innerText || el.textContent || '').trim(); }
       function norm(t){ return String(t||'').replace(/\u200b|\ufeff/g,'').trim(); }
-      function isIntText(t){ return /^-?\d{1,5}$/.test(String(t||'').replace(/,/g,'').trim()); }
-      function toInt(t){ const n = parseInt(String(t||'0').replace(/,/g,'').trim(),10); return Number.isFinite(n)?n:0; }
+      function isIntText(t){ return /^-?\d{1,7}$/.test(String(t||'').replace(/,/g,'').trim()); }
+      function toInt(t){
+        const n = parseInt(String(t||'0').replace(/,/g,'').trim(),10);
+        return Number.isFinite(n) ? n : 0;
+      }
       function phoneKey(t){ return String(t||'').replace(/\D/g,''); }
 
       function isLeafText(el){
@@ -321,21 +419,54 @@ def read_dom_rows(page):
         return true;
       }
 
-      const badLegalNames = new Set(['개인정보처리방침','이용약관','고객센터','공지사항','회사소개','사업자정보','서비스이용약관','위치기반서비스이용약관']);
+      const badLegalNames = new Set([
+        '개인정보처리방침','이용약관','고객센터','공지사항','회사소개','사업자정보',
+        '서비스이용약관','위치기반서비스이용약관'
+      ]);
 
-      const nodes = Array.from(document.querySelectorAll('body *')).filter(isLeafText).map(el => {
-        const r = el.getBoundingClientRect();
-        return {el, text:norm(textOf(el)), left:r.left, right:r.right, top:r.top, bottom:r.bottom, cx:r.left+r.width/2, cy:r.top+r.height/2, width:r.width, height:r.height};
-      });
+      const nodes = Array.from(document.querySelectorAll('body *'))
+        .filter(isLeafText)
+        .map(el => {
+          const r = el.getBoundingClientRect();
+          return {
+            el,
+            text:norm(textOf(el)),
+            left:r.left, right:r.right, top:r.top, bottom:r.bottom,
+            cx:r.left+r.width/2, cy:r.top+r.height/2,
+            width:r.width, height:r.height
+          };
+        });
 
+      function findHeader(...names){
+        let candidates = nodes.filter(n =>
+          names.some(name =>
+            n.text === name ||
+            n.text.replace(/\s/g,'') === String(name).replace(/\s/g,'')
+          )
+        );
+        // 표의 실제 컬럼 헤더는 필터/메뉴보다 아래쪽에 있으므로 가장 아래 후보를 사용합니다.
+        candidates = candidates
+          .filter(n => n.width > 0 && n.height > 0)
+          .sort((a,b)=>b.top-a.top);
+        return candidates[0] || null;
+      }
+
+      const identityHeaders = {
+        name: findHeader('이름'),
+        status: findHeader('운행상태'),
+        userId: findHeader('아이디'),
+        phone: findHeader('휴대폰번호')
+      };
+
+      const allDayHeader = findHeader('총 배달완료');
+
+      // 00~23시 헤더를 실제 x좌표 기준으로 확보합니다.
       const hourHeaders = [];
       for (const n of nodes) {
-        const m = n.text.match(hourRe);
-        if (!m) continue;
+        if (!hourRe.test(n.text)) continue;
         const h = parseInt(n.text.replace(/\D/g,''),10);
         if (h >= 0 && h <= 23) hourHeaders.push({...n, hour:h});
       }
-      // 같은 시간 헤더가 여러 번 잡히면 실제 기사행 바로 위의 가장 아래쪽 헤더를 사용
       const hourMap = {};
       for (const h of hourHeaders) {
         if (!hourMap[h.hour] || h.top > hourMap[h.hour].top) hourMap[h.hour] = h;
@@ -343,171 +474,207 @@ def read_dom_rows(page):
       const hours = [];
       for (let h=0; h<24; h++) if (hourMap[h]) hours.push(hourMap[h]);
 
-      function findHeader(...names){
-        let candidates = nodes.filter(n => names.some(name => n.text === name || n.text.replace(/\s/g,'') === name.replace(/\s/g,'')));
-        // 너무 위쪽 메뉴/필터가 아니라 기사행 바로 위쪽 실제 컬럼 헤더를 우선 사용
-        candidates = candidates.filter(n => n.width > 0 && n.height > 0).sort((a,b)=>b.top-a.top);
-        return candidates[0] || null;
-      }
-      const metricHeaders = {
-        complete: findHeader('완료'),
-        reject: findHeader('거절'),
-        cancel: findHeader('배차취소', '배달취소'),
-        riderFault: findHeader('배달취소(라이더귀책)', '라이더귀책'),
-        morningPeriod: findHeader('아침점심피크'),
-        afternoonPeriod: findHeader('오후논피크'),
-        eveningPeriod: findHeader('저녁피크'),
-        midnightPeriod: findHeader('심야논피크')
-      };
-
-      function nearestMetricByHeader(row, header, phoneNode, firstHourLeft){
+      function nearestCell(row, header, predicate=null, maxDx=90){
         if (!header) return null;
         let best = null;
         for (const cell of row) {
-          if (!isIntText(cell.text)) continue;
-          if (cell.cx <= phoneNode.cx + 10) continue;
-          if (Number.isFinite(firstHourLeft) && cell.right >= firstHourLeft - 4) continue;
+          if (predicate && !predicate(cell)) continue;
           const dx = Math.abs(cell.cx - header.cx);
-          // 헤더와 x좌표가 크게 떨어진 값은 다른 컬럼으로 봅니다.
-          if (dx > Math.max(34, header.width * 2.2)) continue;
-          const score = dx + Math.abs(cell.width - header.width) * 0.05;
+          if (dx > Math.max(maxDx, header.width * 2.4)) continue;
+          const score = dx + Math.abs(cell.width-header.width)*0.03;
           if (!best || score < best.score) best = {cell, score};
         }
-        return best ? toInt(best.cell.text) : null;
+        return best ? best.cell : null;
       }
 
-      // 시간 헤더를 20개 이상 못 찾으면 기존 파서가 처리하도록 raw lines로 반환
-      if (hours.length < 20) {
-        const phoneNodes = nodes.filter(n => exactPhoneRe.test(n.text));
-        for (const p of phoneNodes) {
-          const key = phoneKey(p.text.match(phoneRe)?.[0] || '');
-          if (!key) continue;
-          // 여기서 seen 처리하지 않습니다.
-          // 잘못 잡힌 푸터/약관 행이 먼저 나오면 같은 전화번호의 실제 기사행이 스킵되는 문제가 있었습니다.
-          const rowNodes = nodes.filter(x => Math.abs(x.cy - p.cy) <= 12 && x.height > 0 && x.height <= 80 && x.text.length <= 40)
-                              .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
-          out.push({__raw: rowNodes.map(x=>x.text)});
-        }
-        return out;
+      function cleanNameCandidate(t){
+        t = norm(t);
+        if (!t || badLegalNames.has(t)) return '';
+        if (phoneRe.test(t) || /^\d+$/.test(t)) return '';
+        if (/^(운행중|운행\s*종료)$/.test(t.replace(/\s+/g,''))) return '';
+        if (['이름','아이디','휴대폰번호','운행상태'].includes(t)) return '';
+        return t;
       }
 
+      // 전화번호는 기사행을 찾는 가장 안정적인 앵커로 사용합니다.
       const phoneNodes = nodes.filter(n => exactPhoneRe.test(n.text));
+
+      // 시간 헤더가 아직 가로 렌더링되지 않은 경우에도 기사 신원정보는 정확히 읽도록 raw 대신
+      // 현재 행 전체를 함께 반환합니다. parse_row_lines가 신규 구조 fallback을 처리합니다.
       for (const phoneNode of phoneNodes) {
         const phone = phoneNode.text.match(phoneRe)?.[0];
         if (!phone) continue;
         const key = phoneKey(phone);
+        if (!key) continue;
 
-        const row = nodes.filter(x => Math.abs(x.cy - phoneNode.cy) <= 13 && x.height > 0 && x.height <= 80 && x.text.length <= 50)
-                         .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
+        const row = nodes
+          .filter(x =>
+            Math.abs(x.cy - phoneNode.cy) <= 14 &&
+            x.height > 0 && x.height <= 90 &&
+            x.text.length <= 80
+          )
+          .sort((a,b)=> Math.abs(a.left-b.left)>2 ? a.left-b.left : a.top-b.top);
 
         const texts = row.map(x=>x.text);
-        let status = texts.some(t => t.replace(/\s/g,'') === '운행중') ? '운행중' : '운행 종료';
 
-        let name = '';
-        const phoneIdx = row.findIndex(x => phoneRe.test(x.text));
-        for (let i = phoneIdx - 1; i >= 0; i--) {
-          const t = row[i].text;
-          if (!t || phoneRe.test(t) || /^\d+$/.test(t) || t.includes('운행') || t.includes('휴대폰') || t.includes('이름')) continue;
-          name = t; break;
+        // 신규 UI 핵심: 이름과 아이디를 헤더 x좌표로 분리합니다.
+        let nameCell = nearestCell(row, identityHeaders.name, c => !!cleanNameCandidate(c.text), 110);
+        let userIdCell = nearestCell(
+          row,
+          identityHeaders.userId,
+          c => c.text && !phoneRe.test(c.text) && !c.text.includes('운행'),
+          110
+        );
+        let statusCell = nearestCell(
+          row,
+          identityHeaders.status,
+          c => /운행\s*(중|종료)/.test(c.text.replace(/\s+/g,'')),
+          110
+        );
+
+        let name = nameCell ? cleanNameCandidate(nameCell.text) : '';
+        let userId = userIdCell ? norm(userIdCell.text) : '';
+        let status = statusCell && statusCell.text.replace(/\s/g,'').includes('운행중')
+          ? '운행중' : '운행 종료';
+
+        const phoneIdx = row.findIndex(x => exactPhoneRe.test(x.text));
+
+        // 헤더가 순간적으로 렌더링되지 않았을 때의 보조 fallback.
+        // 신규 고정열 순서: 이름 → 운행상태 → 아이디 → 휴대폰번호.
+        if ((!name || !userId) && phoneIdx >= 0) {
+          const left = row.slice(0, phoneIdx);
+          const statusIdx = left.findIndex(x => x.text.replace(/\s/g,'') === '운행중' || x.text.replace(/\s/g,'') === '운행종료');
+
+          if (!name) {
+            const candidates = (statusIdx >= 0 ? left.slice(0, statusIdx) : left)
+              .map(x=>cleanNameCandidate(x.text))
+              .filter(Boolean);
+            name = candidates.length ? candidates[candidates.length-1] : '';
+          }
+
+          if (!userId) {
+            const afterStatus = statusIdx >= 0 ? left.slice(statusIdx+1) : left;
+            const candidates = afterStatus
+              .map(x=>norm(x.text))
+              .filter(t => t && t !== name && !phoneRe.test(t) && !/운행/.test(t));
+            userId = candidates.length ? candidates[candidates.length-1] : '';
+          }
+
+          if (statusIdx >= 0) {
+            status = left[statusIdx].text.replace(/\s/g,'').includes('운행중') ? '운행중' : '운행 종료';
+          }
         }
+
+        // 아이디가 이름과 동일하게 잡히는 비정상 케이스를 방지합니다.
+        if (userId === name) userId = '';
+
         if (!name || badLegalNames.has(name)) {
-          // 이름이 약관/푸터 문구로 잘못 잡힌 경우, 같은 줄의 다른 이름 후보를 한 번 더 찾습니다.
-          const candidates = row
-            .filter(x => x.cx < phoneNode.cx && x.text && !phoneRe.test(x.text))
-            .map(x => x.text)
-            .filter(t => !badLegalNames.has(t) && !/^\d+$/.test(t) && !t.includes('운행') && !t.includes('휴대폰') && !t.includes('이름'));
-          name = candidates.reverse().find(t => /^[가-힣]{2,6}$/.test(t)) || '';
-        }
-        if (!name || badLegalNames.has(name)) {
-          out.push({__debugSkip:true, reason:'bad_name', phone, raw:texts});
+          out.push({__debugSkip:true, reason:'bad_name_new_ui', phone, userId, raw:texts});
           continue;
         }
-        // 정상 기사로 확정된 뒤에만 전화번호 기준 중복 제거합니다.
-        // phoneNode를 '정확히 전화번호만 적힌 셀'로 제한했기 때문에,
-        // 푸터/상위 컨테이너가 전화번호를 선점하는 문제는 발생하지 않습니다.
+
         if (seen.has(key)) {
           out.push({__debugSkip:true, reason:'duplicate_phone', name, phone, raw:texts});
           continue;
         }
         seen.add(key);
 
-        const rightNums = row.filter(x => x.cx > phoneNode.cx + 10 && isIntText(x.text));
+        // 시간대 컬럼의 첫 x좌표. 못 찾으면 현재 행의 우측 숫자 전체를 fallback으로 사용합니다.
+        const firstHourLeft = hours.length ? Math.min(...hours.map(h=>h.left)) : Infinity;
 
-        // 배민비즈 현재 화면 구조:
-        // 완료[푸드,B마트,배민스토어,합계] → 거절[푸드,B마트,배민스토어,합계]
-        // → 배차취소[푸드,B마트,배민스토어,합계]
-        // → 배달취소(라이더귀책)[푸드,B마트,배민스토어,합계]
-        // → 피크/시간대 컬럼 순서입니다.
-        // 따라서 수락률 실패값은 위치 인덱스로 정확히 푸드 컬럼만 읽습니다.
-        const firstHourLeft = Math.min(...hours.map(h => h.left));
-        const periodLefts = [metricHeaders.morningPeriod, metricHeaders.afternoonPeriod, metricHeaders.eveningPeriod, metricHeaders.midnightPeriod]
-          .filter(Boolean).map(h => h.left);
-        const firstPeriodLeft = periodLefts.length ? Math.min(...periodLefts) : firstHourLeft;
-
+        // 신규 UI에서 휴대폰번호 다음 숫자 순서:
+        // 0 총 배달완료
+        // 1~4 SLA 배달완료(푸드/비마트/스토어/합계)
+        // 5~8 SLA 거절
+        // 9~12 SLA 배차취소
+        // 13~16 SLA 배달취소(라이더귀책)
+        // 17~20 SLA 슬롯별 완료(오전/오후/저녁/심야)
+        // 21 SLA 시간외 배달완료
         let metricCells = row
-          .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstPeriodLeft - 4 && isIntText(x.text))
-          .sort((a,b) => a.left - b.left);
+          .filter(x =>
+            x.cx > phoneNode.cx + 8 &&
+            x.right < firstHourLeft - 3 &&
+            isIntText(x.text)
+          )
+          .sort((a,b)=>a.left-b.left);
 
-        // 가로 스크롤/렌더링 때문에 피크 헤더 위치를 못 잡은 경우에만 시간대 앞 숫자를 fallback으로 씁니다.
-        if (metricCells.length < 16) {
+        // 일부 브라우저에서 첫 시간 헤더가 아직 안 보이는 경우에는
+        // 전화번호 뒤 숫자 중 신규 UI의 앞 22개 실적셀만 사용합니다.
+        if (!Number.isFinite(firstHourLeft) || metricCells.length < 22) {
           metricCells = row
-            .filter(x => x.cx > phoneNode.cx + 10 && x.right < firstHourLeft - 4 && isIntText(x.text))
-            .sort((a,b) => a.left - b.left)
-            .slice(0, 16);
+            .filter(x => x.cx > phoneNode.cx + 8 && isIntText(x.text))
+            .sort((a,b)=>a.left-b.left)
+            .slice(0,22);
         }
 
-        const metricNums = metricCells.map(x => toInt(x.text));
+        const metricNums = metricCells.map(x=>toInt(x.text));
 
-        // 인덱스 기준:
-        // 0 푸드완료, 1 B마트완료, 2 배민스토어완료, 3 완료합계
-        // 4 푸드거절, 5 B마트거절, 6 배민스토어거절, 7 거절합계
-        // 8 푸드배차취소, 9 B마트배차취소, 10 배민스토어배차취소, 11 배차취소합계
-        // 12 푸드배달취소(라이더귀책), 13 B마트, 14 배민스토어, 15 라이더귀책합계
-        const foodComplete = metricNums[0] || 0;
-        let complete = metricNums[3] || foodComplete;
-        let reject = metricNums[4] || 0;
-        let cancel = metricNums[8] || 0;
-        let riderFault = metricNums[12] || 0;
+        let allDayComplete = metricNums[0] || 0;
+
+        // 총 배달완료 헤더가 정상 렌더링된 경우 x좌표 값을 우선 검증값으로 사용합니다.
+        if (allDayHeader) {
+          const c = nearestCell(row, allDayHeader, x=>isIntText(x.text), 100);
+          if (c) allDayComplete = toInt(c.text);
+        }
+
+        // 기존 수락률 정책을 보존: 푸드 SLA 실패건만 사용.
+        const reject = metricNums[5] || 0;
+        const cancel = metricNums[9] || 0;
+        const riderFault = metricNums[13] || 0;
 
         const hourly = Array(24).fill(0);
-        for (const hh of hours) {
-          // 해당 시간 헤더 x좌표와 가장 가까운 숫자 셀을 같은 행에서 선택
-          let best = null;
-          for (const cell of row) {
-            if (!isIntText(cell.text)) continue;
-            if (cell.cx <= phoneNode.cx) continue;
-            const dx = Math.abs(cell.cx - hh.cx);
-            if (dx > Math.max(28, hh.width * 1.8)) continue;
-            const score = dx + Math.abs(cell.width - hh.width) * 0.05;
-            if (!best || score < best.score) best = {cell, score};
+        if (hours.length >= 20) {
+          for (const hh of hours) {
+            let best = null;
+            for (const cell of row) {
+              if (!isIntText(cell.text)) continue;
+              if (cell.cx <= phoneNode.cx) continue;
+              const dx = Math.abs(cell.cx - hh.cx);
+              if (dx > Math.max(28, hh.width * 1.8)) continue;
+              const score = dx + Math.abs(cell.width-hh.width)*0.05;
+              if (!best || score < best.score) best = {cell, score};
+            }
+            if (best) hourly[hh.hour] = toInt(best.cell.text);
           }
-          if (best) hourly[hh.hour] = toInt(best.cell.text);
+        } else {
+          // 신규 UI 고정 순서 fallback: phone + 23부터 24개 시간대 값.
+          const rightTexts = row.slice(phoneIdx+1).map(x=>x.text);
+          const nums = rightTexts.filter(isIntText).map(toInt);
+          const hourPart = nums.slice(22,46);
+          for (let h=0; h<Math.min(24,hourPart.length); h++) hourly[h] = hourPart[h];
         }
 
-        // 완료 컬럼이 배민 UI 변경으로 잘못 잡히는 경우가 있어
-        // 검증된 00~23시 헤더 x좌표 매칭값의 합계를 완료 기준으로 사용합니다.
-        // 수락률 분모의 완료도 이 값으로 계산됩니다.
-        const hourlyTotal = hourly.reduce((a, b) => a + b, 0);
-        if (hourlyTotal > 0) {
-          complete = hourlyTotal;
-        }
+        const hourlyTotal = hourly.reduce((a,b)=>a+b,0);
 
-        let userId = '';
-        for (let i=row.length-1; i>phoneIdx; i--) {
-          const t = row[i].text;
-          if (!t || isIntText(t) || hourRe.test(t) || t.includes('개인정보')) continue;
-          if (t === phone || t.includes('운행')) continue;
-          userId = t; break;
-        }
+        // 총 배달완료가 화면에 존재하므로 이를 1순위로 사용하고,
+        // 렌더링 누락 시 시간대 합계를 보조값으로 사용합니다.
+        const complete = allDayComplete > 0 ? allDayComplete : hourlyTotal;
 
-        out.push({name, phone, userId, status, complete, reject, cancel, riderFault, hourly, __raw:texts});
+        out.push({
+          name,
+          phone,
+          userId,
+          status,
+          complete,
+          reject,
+          cancel,
+          riderFault,
+          hourly,
+          allDayComplete,
+          __raw:texts
+        });
       }
+
       return out;
     }
     """)
 
-
 def parse_row_lines(row_lines):
+    """
+    read_dom_rows의 정밀 파서가 시간헤더를 충분히 못 읽었을 때 사용하는 신규 UI fallback.
+    신규 고정열 순서: 이름 → 운행상태 → 아이디 → 휴대폰번호.
+    휴대폰 뒤 숫자: 총완료1 + SLA16 + 슬롯4 + 시간외1 + 시간대24.
+    """
     lines = [norm(x) for x in row_lines if norm(x)]
     phone_idx = None
 
@@ -521,55 +688,60 @@ def parse_row_lines(row_lines):
 
     phone = lines[phone_idx]
 
+    # 운행상태
     status = "운행 종료"
-    for item in lines[:phone_idx + 1]:
-        if item.replace(" ", "") == "운행중":
-            status = "운행중"
+    status_idx = None
+    for idx, item in enumerate(lines[:phone_idx]):
+        compact = item.replace(" ", "")
+        if compact in ("운행중", "운행종료"):
+            status_idx = idx
+            status = "운행중" if compact == "운행중" else "운행 종료"
             break
 
+    # 이름: 신규 구조에서는 운행상태 왼쪽이 이름 컬럼.
     name = ""
-    for item in reversed(lines[:phone_idx]):
-        if not is_bad_name(item):
+    name_candidates = lines[:status_idx] if status_idx is not None else lines[:phone_idx]
+    for item in reversed(name_candidates):
+        if not is_bad_name(item) and not is_phone(item):
             name = item
             break
 
-    if not name:
-        return None
-    if is_bad_name(name):
+    if not name or is_bad_name(name):
         return None
 
-    if phone_idx + 35 >= len(lines):
-        return None
-
-    # 현재 배민비즈 순서:
-    # 완료 4칸, 거절 4칸, 배차취소 4칸, 배달취소(라이더귀책) 4칸, 피크 4칸, 시간대
-    food_complete = to_int(lines[phone_idx + 1])
-    complete = to_int(lines[phone_idx + 4]) or food_complete
-
-    reject = to_int(lines[phone_idx + 5])      # 푸드 거절
-    cancel = to_int(lines[phone_idx + 9])      # 푸드 배차취소
-    rider_fault = to_int(lines[phone_idx + 13]) # 푸드 배달취소(라이더귀책)
-
-    hourly = []
-    hour_start = phone_idx + 21
-    for h in range(24):
-        hourly.append(to_int(lines[hour_start + h] if hour_start + h < len(lines) else 0))
-
-    sla = split_hourly_by_sla(hourly)
-    morning = sla["morning"]
-    afternoon = sla["afternoon"]
-    evening = sla["evening"]
-    midnight = sla["midnight"]
-    morning_excluded = sla["morningExcluded"]
-    midnight_excluded = sla["midnightExcluded"]
-    excluded = sla["excluded"]
-
+    # 아이디: 운행상태와 휴대폰번호 사이의 마지막 유효 텍스트.
     user_id = ""
-    for item in reversed(lines[phone_idx + 36:]):
-        if not str(item).isdigit() and not is_bad_name(item):
+    id_candidates = lines[(status_idx + 1 if status_idx is not None else 0):phone_idx]
+    for item in reversed(id_candidates):
+        if item != name and not is_bad_name(item) and not is_phone(item):
             user_id = item
             break
 
+    # 휴대폰번호 뒤의 숫자만 뽑아 신규 UI 순서대로 해석.
+    nums = []
+    for item in lines[phone_idx + 1:]:
+        s = str(item).replace(",", "").strip()
+        if re.fullmatch(r"-?\d{1,7}", s):
+            nums.append(to_int(s))
+
+    # 신규 UI 앞 실적 22칸 + 시간대 24칸이 이상적입니다.
+    if len(nums) < 22:
+        return None
+
+    all_day_complete = nums[0] if len(nums) > 0 else 0
+    reject = nums[5] if len(nums) > 5 else 0
+    cancel = nums[9] if len(nums) > 9 else 0
+    rider_fault = nums[13] if len(nums) > 13 else 0
+
+    hourly = [0] * 24
+    hour_values = nums[22:46]
+    for h, value in enumerate(hour_values[:24]):
+        hourly[h] = value
+
+    hourly_total = sum(hourly)
+    complete = all_day_complete if all_day_complete > 0 else hourly_total
+
+    sla = split_hourly_by_sla(hourly)
     is_online = status_online(status)
 
     return {
@@ -583,18 +755,17 @@ def parse_row_lines(row_lines):
         "reject": reject,
         "cancel": cancel,
         "riderFault": rider_fault,
-        "morning": morning,
-        "afternoon": afternoon,
-        "evening": evening,
-        "midnight": midnight,
-        "morningExcluded": morning_excluded,
-        "midnightExcluded": midnight_excluded,
-        "excluded": excluded,
+        "morning": sla["morning"],
+        "afternoon": sla["afternoon"],
+        "evening": sla["evening"],
+        "midnight": sla["midnight"],
+        "morningExcluded": sla["morningExcluded"],
+        "midnightExcluded": sla["midnightExcluded"],
+        "excluded": sla["excluded"],
         "hourly": hourly,
         "acceptRate": calc_accept_rate(complete, reject, cancel, rider_fault),
         "warning": calc_accept_rate(complete, reject, cancel, rider_fault) < 80,
     }
-
 
 def parse_dom_rows(row_groups):
     riders = []
@@ -774,7 +945,7 @@ def summary(rows):
 
 def team_targets(now):
     bd = business_date(now)
-    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(bd.strftime("%Y-%m-%d"), bd.weekday())
+    target_weekday = schedule_weekday(bd)
     base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     result = {}
 
@@ -808,7 +979,7 @@ def current_week_dates(now):
 
 
 def target_total_by_period_for_date(date_value):
-    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+    target_weekday = schedule_weekday(date_value)
     base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     total_sets = sum(AREA_CONFIG[AREA_NAME].values())
     return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
@@ -1438,39 +1609,70 @@ def change_center(page, config):
     page.wait_for_load_state("networkidle")
     time.sleep(1.5)
 def main():
-    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 s8")
+    print("SUPERSONIC 통합 다권역 DOM 자동 수집기 - 화면 밖 백그라운드 모드")
     print("대상 권역:", ", ".join(c["area"] for c in CENTER_CONFIGS))
+
     with sync_playwright() as p:
-        browser = p.chromium.launch_persistent_context(user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"), headless=False, viewport={"width": 1400, "height": 900}, args=["--disable-gpu", "--disable-dev-shm-usage", "--disable-extensions", "--mute-audio"])
+        browser = p.chromium.launch_persistent_context(
+            user_data_dir=str(BASE_DIR / "chrome_profile_supersonic"),
+            headless=False,
+            viewport={"width": 1400, "height": 900},
+            args=BACKGROUND_SAFE_ARGS,
+        )
         page = browser.pages[0] if browser.pages else browser.new_page()
-        page.goto("https://deliverycenter.baemin.com/delivery/history?page=0&size=100&orderName=name&orderBy=asc&name=&userId=&phoneNumber=&riderStatus=")
+        page.set_default_timeout(30000)
+        page.set_default_navigation_timeout(45000)
+
+        page.goto(
+            "https://deliverycenter.baemin.com/delivery/history"
+            "?page=0&size=100&orderName=name&orderBy=asc"
+            "&name=&userId=&phoneNumber=&riderStatus="
+        )
+
         print("1. 열린 배민비즈 창에서 슈퍼소닉 계정으로 로그인하세요.")
         print("2. 기사 실적 페이지가 열리는지 확인하세요.")
         print("3. 준비되면 CMD에서 Enter를 누르세요.")
+        print("4. Enter 후 Chrome 창은 최소화되지 않고 화면 바깥으로 이동합니다.")
         input("Enter 대기 중...")
-        while True:
-            cycle_started = datetime.now()
-            print("\n" + "=" * 60)
-            print("통합 자동 수집 시작:", cycle_started.strftime("%Y-%m-%d %H:%M:%S"))
-            success_count = 0
-            for config in CENTER_CONFIGS:
-                print("\n" + "-" * 60)
-                print(f"[{config['area']}] 수집 시작")
-                try:
-                    activate_center(config)
-                    change_center(page, config)
-                    run_update(page, config)
-                    success_count += 1
-                except KeyboardInterrupt:
-                    raise
-                except Exception as e:
-                    print(f"[{config['area']}] 오류 발생: {e}")
-                    import traceback; traceback.print_exc()
-            elapsed = int((datetime.now() - cycle_started).total_seconds())
-            print("\n" + "=" * 60)
-            print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
-            print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
-            time.sleep(REFRESH_SECONDS)
+
+        keep_chrome_rendering(browser, page)
+        print("Chrome 창을 화면 밖으로 이동했습니다.")
+        print("CMD 창은 최소화해도 됩니다. Chrome은 작업표시줄에서 최소화하지 마세요.")
+
+        try:
+            while True:
+                cycle_started = datetime.now()
+                print("\n" + "=" * 60)
+                print("통합 자동 수집 시작:", cycle_started.strftime("%Y-%m-%d %H:%M:%S"))
+                success_count = 0
+
+                for config in CENTER_CONFIGS:
+                    print("\n" + "-" * 60)
+                    print(f"[{config['area']}] 수집 시작")
+                    try:
+                        keep_chrome_rendering(browser, page)
+                        activate_center(config)
+                        change_center(page, config)
+                        keep_chrome_rendering(browser, page)
+                        run_update(page, config)
+                        success_count += 1
+                    except KeyboardInterrupt:
+                        raise
+                    except Exception as e:
+                        print(f"[{config['area']}] 오류 발생: {e}")
+                        import traceback
+                        traceback.print_exc()
+
+                elapsed = int((datetime.now() - cycle_started).total_seconds())
+                print("\n" + "=" * 60)
+                print(f"한 바퀴 완료: {success_count}/{len(CENTER_CONFIGS)} 권역 성공, 소요 {elapsed}초")
+                print(f"{REFRESH_SECONDS}초 후 다시 달서A부터 수집합니다.")
+                time.sleep(REFRESH_SECONDS)
+        finally:
+            try:
+                browser.close()
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":
