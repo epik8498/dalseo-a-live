@@ -21,7 +21,7 @@ body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--
 .settlement-range{text-align:center;font-size:17px;margin-bottom:18px}
 .settlement-selectors{display:flex;gap:10px;margin-bottom:14px}
 .settlement-selectors select{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:13px;padding:12px 10px;font-size:14px;font-weight:1000}
-.settlement-team-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 22px}
+.settlement-team-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:4px 0 22px}
 .settlement-team-btn{border:1px solid var(--red);background:var(--card);color:var(--red);border-radius:14px;padding:13px 8px;font-size:18px;font-weight:1000;cursor:pointer}
 .settlement-team-btn.active{background:var(--red);color:#fff}
 .settlement-table{width:100%;border-collapse:collapse;table-layout:fixed}
@@ -173,9 +173,9 @@ const AREAS={
     key:"maeuma",
     file:"/live/maeuma",
     weekly:"/weekly/maeuma",
-    teams:["마음1","마음3","미분류"],
-    labels:{"마음1":"마음1","마음3":"마음3","미분류":"미분류"},
-    classes:{"마음1":"sonic","마음3":"maeum","미분류":"unclassified"},
+    teams:["마음1","마음3","마음4","미분류"],
+    labels:{"마음1":"마음1","마음3":"마음3","마음4":"마음4","미분류":"미분류"},
+    classes:{"마음1":"sonic","마음3":"maeum","마음4":"number","미분류":"unclassified"},
     missionTeam:null,
     settlementUnit:250
   }
