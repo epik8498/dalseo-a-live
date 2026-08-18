@@ -840,6 +840,165 @@ body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
   .manage-team-select{font-size:13px;max-width:120px}
 }
 
+
+/* ===== 팀별 접속 현황: 한 카드 안에서 소속명+인원 직관 표시 ===== */
+.team-count-card{
+  text-align:left!important;
+  justify-content:flex-start!important;
+  padding:14px 16px!important;
+}
+.team-count-card .sum-title{
+  text-align:left!important;
+  margin-bottom:10px!important;
+}
+.team-count-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  width:100%;
+}
+.team-count-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  background:var(--ss-surface2);
+  border:1px solid var(--ss-border);
+  border-radius:12px;
+  padding:10px 12px;
+  min-width:0;
+}
+.team-count-item span{
+  min-width:0;
+  font-size:12px;
+  color:var(--ss-sub);
+  font-weight:1000;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.team-count-item b{
+  flex:0 0 auto;
+  font-size:18px;
+  color:var(--ss-red);
+  font-weight:1000;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .team-count-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .team-count-card{padding:12px!important}
+  .team-count-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .team-count-item{padding:10px 9px}
+  .team-count-item span{font-size:13px}
+  .team-count-item b{font-size:18px}
+}
+
+
+/* 팀별 접속 / 등록 */
+.team-count-item{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-areas:
+    "name values"
+    "label label";
+  row-gap:3px!important;
+}
+.team-count-name{
+  grid-area:name;
+  font-size:13px!important;
+  color:var(--ss-text)!important;
+}
+.team-count-values{
+  grid-area:values;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:4px;
+  white-space:nowrap;
+}
+.team-count-values b{font-size:18px!important}
+.team-count-values .online{color:#059669!important}
+.team-count-values .registered{color:var(--ss-text)!important}
+.team-count-values i{
+  font-style:normal;
+  color:var(--ss-sub);
+  font-size:13px;
+  font-weight:900;
+}
+.team-count-item small{
+  grid-area:label;
+  font-size:9px;
+  color:var(--ss-sub);
+  font-weight:900;
+  text-align:right;
+}
+@media(max-width:560px){
+  .team-count-name{font-size:13px!important}
+  .team-count-values b{font-size:18px!important}
+  .team-count-item small{font-size:9px}
+}
+
+
+/* ===== 신규 기사 알림 ===== */
+#newRiderAlert:empty{display:none}
+.new-rider-alert{
+  width:100%;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(230,0,18,.28);
+  background:#fff7f7;
+  color:var(--ss-text);
+  border-radius:15px;
+  padding:11px 13px;
+  margin:0 0 12px;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:var(--ss-shadow-sm);
+}
+body.dark .new-rider-alert{background:#271014}
+.new-rider-alert-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;height:28px;
+  border-radius:999px;
+  background:var(--ss-red);
+  color:#fff;
+  font-size:16px;
+  font-weight:1000;
+}
+.new-rider-alert-text{min-width:0}
+.new-rider-alert-text b{
+  display:block;
+  font-size:13px;
+  color:var(--ss-red);
+  font-weight:1000;
+}
+.new-rider-alert-text span{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  color:var(--ss-sub);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.new-rider-alert-action{
+  font-size:11px;
+  color:var(--ss-red);
+  font-weight:1000;
+  white-space:nowrap;
+}
+@media(max-width:560px){
+  .new-rider-alert{padding:11px 10px;gap:8px}
+  .new-rider-alert-text b{font-size:13px}
+  .new-rider-alert-action{font-size:10px}
+}
+
 </style>
 </head>
 <body>
@@ -856,6 +1015,7 @@ body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
     <div class="top-update" id="topUpdateTime">↻ 마지막 업데이트 : -</div>
   </div>
   <div id="errorBox"></div>
+  <div id="newRiderAlert"></div>
   <div class="summary"><div class="summary-grid">
     <div class="sum"><div class="sum-title">주간 완료</div><div class="sum-val red" id="weekComplete">0</div></div>
     <div class="sum"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weekRate">0%</div></div>
@@ -863,7 +1023,10 @@ body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
     <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val green" id="onlineCount">0명</div></div>
     <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
     <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
-    <div class="sum"><div class="sum-title" id="teamCountTitle">접속중</div><div class="sum-val red" id="teamCount">0</div></div>
+    <div class="sum team-count-card">
+      <div class="sum-title" id="teamCountTitle">팀별 접속 현황</div>
+      <div class="team-count-grid" id="teamCount">-</div>
+    </div>
   </div></div>
 
   <div class="app-shell">
@@ -1219,6 +1382,39 @@ function safeWeeklySummary(){
   }
 }
 
+
+function renderNewRiderAlert(){
+  const box=document.getElementById('newRiderAlert');
+  if(!box)return;
+
+  const riders=Array.isArray(DATA&&DATA.riders)?DATA.riders:[];
+  const newRiders=riders.filter(r=>r.team==='신규');
+
+  if(!newRiders.length){
+    box.innerHTML='';
+    return;
+  }
+
+  const names=newRiders.slice(0,5).map(r=>r.name||r.userId||'이름없음');
+  const extra=newRiders.length>5?` 외 ${n(newRiders.length-5)}명`:'';
+
+  box.innerHTML=`
+    <button type="button" class="new-rider-alert" onclick="openNewRiderManage()">
+      <div class="new-rider-alert-icon">!</div>
+      <div class="new-rider-alert-text">
+        <b>신규 기사 ${n(newRiders.length)}명 확인 필요</b>
+        <span>${names.join(', ')}${extra}</span>
+      </div>
+      <div class="new-rider-alert-action">기사관리 →</div>
+    </button>`;
+}
+
+function openNewRiderManage(){
+  window.manageFilter='신규';
+  switchPage('manage');
+  if(typeof renderManageList==='function')renderManageList();
+}
+
 function render(){
   const d=DATA;
   if(!d)return;
@@ -1250,8 +1446,26 @@ function render(){
   setText('dayComplete',n(total.complete));
   setText('dayOrder',n(totalOrder));
   setText('onlineCount',n(total.onlineCount)+'명');
-  setText('teamCountTitle','팀 접속 인원');
-  setText('teamCount',teams.map(t=>n((teamObj(t).summary||{}).onlineCount)).join('/'));
+  setText('teamCountTitle','팀별 접속 현황');
+  const teamCountEl=document.getElementById('teamCount');
+  if(teamCountEl){
+    const visibleTeams=teams.filter(t=>t!=='신규');
+    teamCountEl.innerHTML=visibleTeams.map(t=>{
+      const label=cfg.labels&&cfg.labels[t]?cfg.labels[t]:t;
+      const sm=teamObj(t).summary||{};
+      const online=Number(sm.onlineCount||0);
+      const registered=Number(sm.count||0);
+      return `<div class="team-count-item">
+        <span class="team-count-name">${label}</span>
+        <div class="team-count-values">
+          <b class="online">${n(online)}</b>
+          <i>/</i>
+          <b class="registered">${n(registered)}</b>
+        </div>
+        <small>접속 / 등록</small>
+      </div>`;
+    }).join('');
+  }
 
   // 각 화면 기능은 서로 독립적으로 렌더링합니다.
   // 한 기능에 문제가 생겨도 메인 화면 전체가 오류로 바뀌지 않습니다.
@@ -1260,6 +1474,7 @@ function render(){
     catch(e){console.error(name+' 렌더링 오류',e)}
   };
 
+  safe('신규기사알림',renderNewRiderAlert);
   if(typeof renderWeeklyBrowser==='function') safe('주간실적',renderWeeklyBrowser);
   if(typeof renderSettlement==='function') safe('정산',renderSettlement);
   if(typeof renderPeriods==='function') safe('구간실적',renderPeriods);
