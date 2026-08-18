@@ -62,152 +62,29 @@ body.dark .top{background:rgba(17,21,28,.92)}
 @media(max-width:560px){.wrap{padding:10px 10px 54px!important}.top{border-radius:18px;padding:10px 12px 14px!important}.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}.sum{min-height:82px!important;padding:11px 5px!important}.sum-title{font-size:9.5px!important}.sum-val{font-size:18px!important}.weekly-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.period-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.riders{grid-template-columns:1fr!important}.controls{grid-template-columns:1fr!important}.section-title{font-size:17px!important;margin-top:20px!important}}
 
 
-/* ===== 모바일 구간실적 가독성 개선 ===== */
-/* 구간 카드에서는 미포함 실적을 표시하지 않습니다. 주간/기사카드 미포함 표시는 유지됩니다. */
-.period-card .period-excluded{display:none!important}
-
-/* 팀명과 완료/목표 숫자를 더 크게, 게이지는 더 짧고 얇게 */
-.period-card .team-line{
-  grid-template-columns:auto minmax(34px,72px) auto!important;
-  column-gap:9px!important;
-  align-items:center!important;
-}
-.period-card .team-name{
-  min-width:40px;
-  font-size:14px!important;
-  line-height:1.15!important;
-  white-space:nowrap;
-}
-.period-card .team-num{
-  font-size:14px!important;
-  line-height:1.15!important;
-  white-space:nowrap;
-  letter-spacing:-.45px;
-}
-.period-card .team-num .done,
-.period-card .team-num .goal{
-  font-size:15px!important;
-  font-weight:1000!important;
-}
-.period-card .small-bar{
-  width:100%!important;
-  height:6px!important;
-  min-width:34px!important;
-  max-width:72px!important;
-}
-.period-card .period-total{
-  font-weight:1000!important;
-}
+/* ===== 우리 달서팀 최신 모바일 가독성 ===== */
+.dalseo-metric-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.dalseo-metric{border-radius:13px;padding:10px 12px}
+.dalseo-metric small{display:block;font-size:10px;font-weight:1000;margin-bottom:3px}
+.dalseo-metric b{display:block;font-size:27px;line-height:1;font-weight:1000}
+.dalseo-metric.done{background:rgba(230,0,18,.07);border:1px solid rgba(230,0,18,.15);color:var(--ss-red)}
+.dalseo-metric.goal{background:rgba(0,111,214,.065);border:1px solid rgba(0,111,214,.14);color:#006fd6}
+body.dark .dalseo-metric.goal{color:#69b7ff}
+.dalseo-team-row{display:grid;grid-template-columns:1fr auto auto auto;gap:6px;align-items:center;border-top:1px solid var(--ss-border);margin-top:10px;padding-top:10px;font-size:14px;font-weight:1000}
+.dalseo-team-row .done-num{color:var(--ss-red);font-size:16px}
+.dalseo-team-row .goal-num{color:#006fd6;font-size:16px}
+body.dark .dalseo-team-row .goal-num{color:#69b7ff}
+.dalseo-team-row i{font-style:normal;color:var(--ss-sub)}
 @media(max-width:560px){
-  .period-card{
-    padding:12px 9px!important;
-  }
-  .period-card .period-head{
-    font-size:15px!important;
-    line-height:1.15!important;
-  }
-  .period-card .period-sub{
-    font-size:10px!important;
-  }
-  .period-card .period-total{
-    margin:10px 0 8px!important;
-    font-size:21px!important;
-  }
-  .period-card .total-bar{
-    height:6px!important;
-    margin-bottom:10px!important;
-  }
-  .period-card .team-line{
-    grid-template-columns:auto minmax(28px,52px) auto!important;
-    column-gap:6px!important;
-    margin:8px 0!important;
-  }
-  .period-card .team-name{
-    min-width:32px!important;
-    font-size:13px!important;
-  }
-  .period-card .team-num{
-    font-size:13px!important;
-  }
-  .period-card .team-num .done,
-  .period-card .team-num .goal{
-    font-size:14px!important;
-  }
-  .period-card .small-bar{
-    height:5px!important;
-    min-width:28px!important;
-    max-width:52px!important;
-  }
-}
-
-
-/* ===== 모바일 전체 가독성 COMFORT ===== */
-@media(max-width:560px){
-  body{font-size:15px!important}
-  .wrap{padding:10px 9px 54px!important}
-
-  .brand{font-size:27px!important}
-  .sub{font-size:12px!important}
-  .area{font-size:17px!important}
-  .top-update{font-size:11px!important}
-  .mode,.move{font-size:13px!important;padding:9px 11px!important}
-
-  /* KPI: 3열 유지하되 글자를 읽기 좋은 크기로 */
-  .sum{min-height:94px!important;padding:12px 6px!important}
-  .sum-title{font-size:11px!important;line-height:1.25!important}
-  .sum-val{font-size:22px!important;line-height:1.1!important}
-
-  /* 상단 메뉴 */
-  .side-nav-btn{font-size:13px!important;padding:10px 13px!important}
-
-  /* 섹션 */
-  .section-title{font-size:18px!important;line-height:1.2!important}
-  .section-title small{font-size:11px!important}
-
-  /* 구간실적 */
-  .period-card{padding:13px 10px!important}
-  .period-card .period-head{font-size:17px!important}
-  .period-card .period-sub{font-size:11px!important;line-height:1.3!important}
-  .period-card .period-total{font-size:23px!important}
-  .period-card .team-name{font-size:14px!important}
-  .period-card .team-num{font-size:14px!important}
-  .period-card .team-num .done,
-  .period-card .team-num .goal{font-size:15px!important}
-
-  /* 기사 검색 / 정렬 */
-  .rider-search{height:44px!important;font-size:15px!important;padding:0 13px!important}
-  .sort{font-size:13px!important}
-  .sort select{font-size:13px!important;padding:8px 9px!important}
-  .filters button{font-size:13px!important;padding:9px 10px!important}
-
-  /* 기사카드 */
-  .rider{padding:15px 14px!important}
-  .rider-name{font-size:18px!important}
-  .status,.warn{font-size:11px!important}
-  .stat small{font-size:11px!important}
-  .stat b{font-size:16px!important}
-  .times div{font-size:11px!important}
-  .times b{font-size:15px!important}
-  .miss,.miss-label{font-size:10px!important}
-
-  /* 주간실적 */
-  .day-card{padding:14px 11px!important}
-  .day-label{font-size:24px!important}
-  .day-date{font-size:11px!important}
-  .period-row{font-size:13px!important;line-height:1.25!important}
-  .day-total{font-size:13px!important;line-height:1.55!important}
-  .badge{font-size:11px!important}
-  .weekly-status{font-size:13px!important}
-  .weekly-team-tab{font-size:12px!important;padding:9px 6px!important}
-
-  /* 미션 / 정산 / 관리 / 문자 */
-  .field label{font-size:12px!important}
-  .field input,.field select{font-size:14px!important;min-height:42px!important}
-  .mission-stat small,.settle-stat small{font-size:11px!important}
-  .mission-stat b,.settle-stat b{font-size:17px!important}
-  .mission-list,.manage-list,.sms-box,.settlement-wrap{font-size:13px!important}
-  .toggle-btn{font-size:13px!important}
-  button,input,select,textarea{touch-action:manipulation}
+ body{font-size:15px!important}.wrap{padding:10px 9px 54px!important}
+ .brand{font-size:27px!important}.sub{font-size:12px!important}.area{font-size:17px!important}.top-update{font-size:11px!important}
+ .sum{min-height:94px!important;padding:12px 6px!important}.sum-title{font-size:11px!important}.sum-val{font-size:22px!important}
+ .side-nav-btn{font-size:13px!important;padding:10px 13px!important}.section-title{font-size:18px!important}
+ .period-card{padding:13px 10px!important}.period-head{font-size:17px!important}
+ .dalseo-metric b{font-size:25px}.dalseo-team-row{font-size:14px}.dalseo-team-row .done-num,.dalseo-team-row .goal-num{font-size:17px}
+ .rider-search{height:44px!important;font-size:15px!important}.rider{padding:15px 14px!important}.rider-name{font-size:18px!important}
+ .stat b{font-size:16px!important}.times b{font-size:15px!important}
+ .day-label{font-size:24px!important}.period-row{font-size:13px!important}.day-total{font-size:13px!important}
 }
 
 </style>
@@ -237,7 +114,6 @@ body.dark .top{background:rgba(17,21,28,.92)}
       <div class="side-nav-title">우리 달서팀</div>
       <button class="side-nav-btn active" data-page="overview" onclick="switchPage('overview',this)">운영현황</button>
       <button class="side-nav-btn" data-page="weekly" onclick="switchPage('weekly',this)">주간실적</button>
-      <button class="side-nav-btn" data-page="mission" onclick="switchPage('mission',this)">미션비 집계</button>
     </aside>
     <main class="page-stage">
 
@@ -259,23 +135,6 @@ body.dark .top{background:rgba(17,21,28,.92)}
         <div class="section-title"><span class="icon"></span>달서팀 주간실적 <small id="weekRange">-</small></div>
         <div id="weeklyStatus"></div>
         <div class="weekly-grid" id="weeklyGrid"></div>
-      </section>
-
-      <section class="page-view" id="page-mission">
-        <div class="section-title"><span class="icon"></span>미션비 집계</div>
-        <div class="mission-box">
-          <div class="mission-form">
-            <div class="field"><label>구간 선택</label><select id="missionPeriod" onchange="renderMission()"><option value="morning">오전피크</option><option value="afternoon">오후논피크</option><option value="evening">저녁피크</option><option value="midnight">심야논피크</option></select></div>
-            <div class="field"><label>목표 건수</label><input id="missionCount" type="number" inputmode="numeric" min="0" placeholder="예: 10" oninput="renderMission()"></div>
-            <div class="field"><label>미션비</label><input id="missionPrice" type="number" inputmode="numeric" min="0" placeholder="예: 5000" oninput="renderMission()"></div>
-          </div>
-          <div class="mission-result">
-            <div class="mission-stat"><small>대상 기사</small><b id="missionTarget">0명</b></div>
-            <div class="mission-stat"><small>성공 기사</small><b id="missionSuccess">0명</b></div>
-            <div class="mission-stat"><small>총 미션비</small><b id="missionTotal">0원</b></div>
-          </div>
-          <div class="mission-list" id="missionList"></div>
-        </div>
       </section>
 
     </main>
@@ -306,7 +165,7 @@ function switchPage(page,btn){
   const target=document.getElementById('page-'+page);if(target)target.classList.add('active');
   document.querySelectorAll('.side-nav-btn').forEach(el=>el.classList.remove('active'));
   if(btn)btn.classList.add('active');else{const b=document.querySelector(`.side-nav-btn[data-page="${page}"]`);if(b)b.classList.add('active')}
-  localStorage.setItem('dalseoTeamPage',page);
+  
 }function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
 function renderAreaMenu(){}
@@ -379,10 +238,7 @@ function render(){
   renderWeekly(ws);
   renderPeriods();
   renderFiltersAndRiders();
-  renderMission();
-
-  const saved=localStorage.getItem('dalseoTeamPage');
-  if(['overview','weekly','mission'].includes(saved))switchPage(saved);
+  switchPage('overview');
 }
 function renderWeekly(ws){
   const failed=ws.days.filter(x=>x.has&&!x.ok);
@@ -410,10 +266,17 @@ function periodIncludedDone(team,key){
 }
 
 function renderPeriods(){
-  const cfg=areaCfg(),team='달서팀';
+  const team='달서팀';
   document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
     const done=periodIncludedDone(team,key),goal=Number(teamObj(team).targets[key]||0);
-    return `<div class="period-card"><div class="period-head">${icon} ${label}</div><div class="period-sub">달서팀 완료 / 발주량</div><div class="period-total"><span>${n(done)}</span> / <span>${n(goal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(done,goal)}%"></div></div><div class="team-line"><div class="team-name">달서</div><div class="small-bar"><div class="small-fill dalseo" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span></div></div></div>`;
+    return `<div class="period-card dalseo-simple">
+      <div class="period-head">${icon} ${label}</div>
+      <div class="dalseo-metric-pair">
+        <div class="dalseo-metric done"><small>완료</small><b>${n(done)}</b></div>
+        <div class="dalseo-metric goal"><small>발주</small><b>${n(goal)}</b></div>
+      </div>
+      <div class="dalseo-team-row"><span>달서</span><strong class="done-num">${n(done)}</strong><i>/</i><strong class="goal-num">${n(goal)}</strong></div>
+    </div>`;
   }).join('');
 }
 function renderFiltersAndRiders(){

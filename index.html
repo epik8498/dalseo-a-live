@@ -391,6 +391,348 @@ body.dark .top{background:rgba(17,21,28,.92)}
   button,input,select,textarea{touch-action:manipulation}
 }
 
+
+/* ===== 운영 타임라인형 구간실적 ===== */
+.ops-timeline{
+  display:grid;
+  gap:10px;
+}
+.ops-period{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:18px;
+  padding:14px 16px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.ops-period.current{
+  border:2px solid var(--ss-red);
+  box-shadow:0 8px 22px rgba(230,0,18,.10);
+  background:linear-gradient(180deg,rgba(230,0,18,.035),var(--ss-surface));
+}
+.ops-period.done{
+  opacity:.92;
+}
+.ops-period.future{
+  background:var(--ss-surface2);
+}
+.ops-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.ops-title-wrap{min-width:0}
+.ops-title{
+  font-size:18px;
+  font-weight:1000;
+  letter-spacing:-.3px;
+}
+.ops-time{
+  margin-top:3px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-state{
+  flex:0 0 auto;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:1000;
+}
+.ops-state.current{background:#fff0f0;color:var(--ss-red)}
+.ops-state.done{background:#e8fff2;color:#008a43}
+.ops-state.future{background:#eef1f5;color:#6b7280}
+
+.ops-main{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  align-items:end;
+  margin-top:13px;
+}
+.ops-score{
+  font-size:27px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-1px;
+}
+.ops-score .done{color:var(--ss-red)}
+.ops-score .goal{color:var(--ss-text)}
+.ops-need{
+  text-align:right;
+  font-size:13px;
+  font-weight:1000;
+}
+.ops-need strong{font-size:18px}
+.ops-need.ok{color:#008a43}
+.ops-need.warn{color:var(--ss-red)}
+.ops-need.wait{color:var(--ss-sub)}
+
+.ops-team-list{
+  margin-top:12px;
+  border-top:1px solid var(--ss-border);
+  padding-top:8px;
+}
+.ops-team-row{
+  display:grid;
+  grid-template-columns:minmax(48px,.8fr) auto auto;
+  gap:8px;
+  align-items:center;
+  padding:7px 0;
+  font-size:13px;
+  font-weight:1000;
+}
+.ops-team-name{font-size:14px}
+.ops-team-score{white-space:nowrap}
+.ops-team-remain{
+  white-space:nowrap;
+  text-align:right;
+}
+.ops-team-remain.ok{color:#008a43}
+.ops-team-remain.warn{color:var(--ss-red)}
+.ops-team-remain.wait{color:var(--ss-sub)}
+
+.ops-pace{
+  margin-top:10px;
+  padding:10px 11px;
+  border-radius:12px;
+  background:var(--ss-surface2);
+  font-size:12px;
+  line-height:1.55;
+  font-weight:900;
+}
+.ops-pace strong{font-size:13px}
+.ops-pace.good{color:#087443}
+.ops-pace.risk{color:#b42318}
+
+@media(min-width:900px){
+  .ops-timeline{
+    grid-template-columns:1fr 1fr;
+  }
+  .ops-period.current{
+    grid-column:1/-1;
+  }
+}
+@media(max-width:560px){
+  .ops-period{
+    padding:13px 12px;
+    border-radius:16px;
+  }
+  .ops-title{font-size:17px}
+  .ops-time{font-size:11px}
+  .ops-main{margin-top:11px}
+  .ops-score{font-size:25px}
+  .ops-need{font-size:12px}
+  .ops-need strong{font-size:17px}
+  .ops-team-row{
+    grid-template-columns:minmax(42px,.7fr) auto auto;
+    gap:6px;
+    padding:7px 0;
+    font-size:12px;
+  }
+  .ops-team-name{font-size:13px}
+  .ops-team-score{font-size:13px}
+  .ops-team-remain{font-size:13px}
+  .ops-pace{font-size:11px;padding:9px 10px}
+}
+
+
+/* ===== 구간실적 SIMPLE: 완료/목표만 ===== */
+.ops-main.simple{
+  display:block!important;
+  margin-top:14px!important;
+  text-align:left;
+}
+.ops-main.simple .ops-score{
+  font-size:30px!important;
+  line-height:1!important;
+}
+.ops-slash{
+  color:var(--ss-sub);
+  font-weight:700;
+  padding:0 3px;
+}
+.ops-score-caption{
+  margin-top:6px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-team-row.simple{
+  grid-template-columns:1fr auto!important;
+  gap:12px!important;
+}
+.ops-team-row.simple .ops-team-score{
+  font-size:15px!important;
+}
+.ops-team-row.simple .ops-team-score strong{
+  font-size:16px!important;
+  color:var(--ss-text);
+}
+@media(max-width:560px){
+  .ops-main.simple .ops-score{font-size:28px!important}
+  .ops-team-row.simple .ops-team-name{font-size:14px!important}
+  .ops-team-row.simple .ops-team-score{font-size:14px!important}
+  .ops-team-row.simple .ops-team-score strong{font-size:15px!important}
+}
+
+
+/* ===== 주간 기록 브라우저 ===== */
+.weekly-browser{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:15px;
+  padding:10px;
+  margin-bottom:12px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.weekly-browser-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.weekly-browser-row+.weekly-browser-row{margin-top:9px}
+.weekly-browser-label{
+  flex:0 0 58px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:1000;
+}
+.weekly-week-select{
+  min-width:0;
+  flex:1;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:10px;
+  padding:9px 10px;
+  font-size:12px;
+  font-weight:1000;
+}
+.weekly-team-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.weekly-team-tab{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.weekly-team-tab.active{
+  background:var(--ss-red);
+  border-color:var(--ss-red);
+  color:#fff;
+}
+
+/* ===== 구간실적: 완료/발주를 색/블록으로 분리 ===== */
+.ops-metric-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:13px;
+}
+.ops-metric{
+  border-radius:13px;
+  padding:10px 12px;
+}
+.ops-metric span{
+  display:block;
+  font-size:10px;
+  font-weight:1000;
+  margin-bottom:3px;
+}
+.ops-metric strong{
+  display:block;
+  font-size:27px;
+  line-height:1;
+  letter-spacing:-.8px;
+}
+.ops-metric.done{
+  background:rgba(230,0,18,.07);
+  color:var(--ss-red);
+  border:1px solid rgba(230,0,18,.15);
+}
+.ops-metric.goal{
+  background:rgba(0,111,214,.065);
+  color:#006fd6;
+  border:1px solid rgba(0,111,214,.14);
+}
+body.dark .ops-metric.goal{color:#69b7ff}
+
+.ops-team-row.simple{
+  grid-template-columns:1fr auto!important;
+  gap:10px!important;
+}
+.ops-team-metrics{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ops-team-metrics>span{
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  white-space:nowrap;
+}
+.ops-team-metrics small{
+  font-size:9px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-team-metrics b{font-size:14px}
+.ops-team-metrics .team-done b{color:var(--ss-red)}
+.ops-team-metrics .team-goal b{color:#006fd6}
+body.dark .ops-team-metrics .team-goal b{color:#69b7ff}
+
+@media(max-width:560px){
+  .weekly-browser-row{display:block}
+  .weekly-browser-label{margin:0 0 6px 2px}
+  .weekly-week-select{width:100%;font-size:13px}
+  .weekly-team-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:5px;
+  }
+  .weekly-team-tab{font-size:12px;padding:9px 4px}
+  .ops-metric strong{font-size:25px}
+  .ops-team-metrics{gap:8px}
+  .ops-team-metrics b{font-size:15px}
+}
+
+
+/* 팀별 구간실적: 완료=빨강 / 발주=파랑, 숫자만 */
+.ops-team-metrics.simple-color{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:6px;
+  min-width:92px;
+}
+.ops-team-metrics.simple-color .team-done-num{
+  color:var(--ss-red);
+  font-size:16px!important;
+  font-weight:1000;
+}
+.ops-team-metrics.simple-color .team-goal-num{
+  color:#006fd6;
+  font-size:16px!important;
+  font-weight:1000;
+}
+body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
+.ops-team-metrics.simple-color .team-sep{
+  color:var(--ss-sub);
+  font-size:13px;
+  font-weight:900;
+}
+@media(max-width:560px){
+  .ops-team-metrics.simple-color .team-done-num,
+  .ops-team-metrics.simple-color .team-goal-num{font-size:17px!important}
+}
+
+
 </style>
 </head>
 <body>
@@ -424,13 +766,22 @@ body.dark .top{background:rgba(17,21,28,.92)}
       <button class="side-nav-btn" data-page="weekly" onclick="switchPage('weekly',this)">주간실적</button>
       <button class="side-nav-btn" data-page="settlement" onclick="switchPage('settlement',this)">주간정산</button>
       <button class="side-nav-btn" data-page="manage" onclick="switchPage('manage',this)">기사관리</button>
-      <button class="side-nav-btn" data-page="mission" onclick="switchPage('mission',this)">미션비 집계</button>
       <button class="side-nav-btn" data-page="sms" onclick="switchPage('sms',this)">단체문자</button>
     </aside>
     <main class="page-stage">
 
 <section class="page-view" id="page-weekly">
   <div class="section-title"><span class="icon"></span>주간실적 <small id="weekRange">-</small></div>
+  <div class="weekly-browser">
+    <div class="weekly-browser-row">
+      <div class="weekly-browser-label">조회 주차</div>
+      <select id="weeklyWeekSelect" class="weekly-week-select" onchange="setWeeklyWeek(this.value)"></select>
+    </div>
+    <div class="weekly-browser-row weekly-team-row">
+      <div class="weekly-browser-label">팀 선택</div>
+      <div class="weekly-team-tabs" id="weeklyTeamTabs"></div>
+    </div>
+  </div>
   <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
   <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
 
@@ -460,28 +811,6 @@ body.dark .top{background:rgba(17,21,28,.92)}
 </div>
   </section>
 
-  <section class="page-view" id="page-mission">
-  <div class="section-title"><span class="icon"></span>미션비 집계</div>
-  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('missionPanel','missionToggle')" id="missionToggle">미션비 집계 보기 ▾</button>
-  <div class="panel" id="missionPanel">
-    <div class="mission-box">
-      <div class="mission-form">
-        <div class="field"><label>구간 선택</label><select id="missionPeriod" onchange="renderMission()"><option value="morning">오전피크</option><option value="afternoon">오후논피크</option><option value="evening">저녁피크</option><option value="midnight">심야논피크</option></select></div>
-        <div class="field"><label>목표 건수</label><input id="missionCount" type="number" inputmode="numeric" min="0" placeholder="예: 10" oninput="renderMission()"></div>
-        <div class="field"><label>미션비</label><input id="missionPrice" type="number" inputmode="numeric" min="0" placeholder="예: 5000" oninput="renderMission()"></div>
-      </div>
-      <div class="mission-result">
-        <div class="mission-stat"><small>대상 기사</small><b id="missionTarget">0명</b></div>
-        <div class="mission-stat"><small>성공 기사</small><b id="missionSuccess">0명</b></div>
-        <div class="mission-stat"><small>총 미션비</small><b id="missionTotal">0원</b></div>
-      </div>
-      <div class="mission-list" id="missionList"></div>
-    </div>
-  </div>
-
-
-  </section>
-
   <section class="page-view" id="page-sms">
   <div class="section-title"><span class="icon"></span>단체 문자</div>
   <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
@@ -499,7 +828,7 @@ body.dark .top{background:rgba(17,21,28,.92)}
 
   <section class="page-view active" id="page-overview">
   <div class="section-title"><span class="icon"></span>구간별 실적 <small>(완료 / 발주량)</small></div>
-  <div class="period-grid" id="periodCards"></div>
+  <div class="ops-timeline" id="periodCards"></div>
   <div class="controls">
     <div class="rider-search-wrap">
       <input id="riderSearch" class="rider-search" type="search" inputmode="search"
@@ -529,7 +858,7 @@ function initialArea(){
   if(AREAS[saved]) return saved;
   return '달서A';
 }
-let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='';
+let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='',WEEKLY_TEAM='전체',WEEKLY_START='';
 let CURRENT_PAGE='overview';
 function switchPage(page,btn){
   CURRENT_PAGE=page;
@@ -549,7 +878,6 @@ function switchPage(page,btn){
     weekly:'weeklyPanel',
     settlement:'settlementPanel',
     manage:'managePanel',
-    mission:'missionPanel',
     sms:'smsPanel'
   };
   const panelId=panelMap[page];
@@ -558,12 +886,181 @@ function switchPage(page,btn){
     if(panel)panel.classList.add('show');
   }
 
-  localStorage.setItem('supersonicPage',page);
 }
 
 function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return r.morningExcluded!=null?Number(r.morningExcluded||0):hsum(r,6,9)}function midnightExcluded(r){return r.midnightExcluded!=null?Number(r.midnightExcluded||0):hsum(r,0,6)}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
-function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';RIDER_SEARCH='';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function setRiderSearch(v){RIDER_SEARCH=String(v||'').trim().toLowerCase();renderFiltersAndRiders()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
+function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';RIDER_SEARCH='';WEEKLY_TEAM='전체';WEEKLY_START='';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function setRiderSearch(v){RIDER_SEARCH=String(v||'').trim().toLowerCase();renderFiltersAndRiders()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
 function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
+
+function dateYmdLocal(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function addYmd(dateStr,days){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);dt.setDate(dt.getDate()+days);
+  return dateYmdLocal(dt);
+}
+function wedStart(dateStr){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  const diff=(dt.getDay()-3+7)%7;
+  dt.setDate(dt.getDate()-diff);
+  return dateYmdLocal(dt);
+}
+function availableWeeklyStarts(){
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const set=new Set();
+  rows.forEach(r=>{
+    if(!r||!r.businessDate)return;
+    set.add(r.weekStart||wedStart(r.businessDate));
+  });
+  if(DATA&&DATA.businessDate)set.add(wedStart(DATA.businessDate));
+  return [...set].sort().reverse();
+}
+function ensureWeeklySelection(){
+  const cfg=areaCfg();
+  const starts=availableWeeklyStarts();
+
+  const savedTeam=localStorage.getItem('weeklyTeam_'+cfg.key);
+  if(WEEKLY_TEAM==='전체' && savedTeam && (savedTeam==='전체'||cfg.teams.includes(savedTeam))){
+    WEEKLY_TEAM=savedTeam;
+  }
+  if(WEEKLY_TEAM!=='전체'&&!cfg.teams.includes(WEEKLY_TEAM))WEEKLY_TEAM='전체';
+
+  const savedStart=localStorage.getItem('weeklyStart_'+cfg.key);
+  if(!WEEKLY_START){
+    WEEKLY_START=(savedStart&&starts.includes(savedStart))?savedStart:(starts[0]||'');
+  }
+  if(WEEKLY_START&&!starts.includes(WEEKLY_START))WEEKLY_START=starts[0]||'';
+}
+function setWeeklyTeam(team){
+  WEEKLY_TEAM=team;
+  localStorage.setItem('weeklyTeam_'+areaCfg().key,team);
+  renderWeeklyBrowser();
+}
+function setWeeklyWeek(start){
+  WEEKLY_START=start;
+  localStorage.setItem('weeklyStart_'+areaCfg().key,start);
+  renderWeeklyBrowser();
+}
+function renderWeeklyControls(){
+  ensureWeeklySelection();
+  const cfg=areaCfg();
+
+  const teamEl=document.getElementById('weeklyTeamTabs');
+  if(teamEl){
+    const entries=[['전체','전체'],...cfg.teams.map(t=>[t,cfg.labels[t]||t])];
+    teamEl.innerHTML=entries.map(([key,label])=>
+      `<button class="weekly-team-tab ${WEEKLY_TEAM===key?'active':''}" onclick="setWeeklyTeam('${key}')">${label}</button>`
+    ).join('');
+  }
+
+  const weekEl=document.getElementById('weeklyWeekSelect');
+  if(weekEl){
+    const starts=availableWeeklyStarts();
+    weekEl.innerHTML=starts.map(start=>{
+      const end=addYmd(start,6);
+      return `<option value="${start}" ${start===WEEKLY_START?'selected':''}>${start} ~ ${end}</option>`;
+    }).join('');
+  }
+}
+function weeklyView(){
+  ensureWeeklySelection();
+  const cfg=areaCfg();
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  const start=WEEKLY_START||availableWeeklyStarts()[0]||'';
+  const dates=start?Array.from({length:7},(_,i)=>addYmd(start,i)):[];
+  const isAll=WEEKLY_TEAM==='전체';
+
+  const days=dates.map((date,i)=>{
+    const row=byDate[date]||{};
+    let sm={},tg={},has=false;
+
+    if(isAll){
+      has=!!row.businessDate;
+      sm={
+        complete:Number(row.totalComplete||row.total?.complete||0),
+        reject:Number(row.totalReject||row.total?.reject||0),
+        cancel:Number(row.totalCancel||row.total?.cancel||0),
+        riderFault:Number(row.riderFault||row.total?.riderFault||0),
+        morning:Number(row.morning||row.total?.morning||0),
+        afternoon:Number(row.afternoon||row.total?.afternoon||0),
+        evening:Number(row.evening||row.total?.evening||0),
+        midnight:Number(row.midnight||row.total?.midnight||0),
+        excluded:Number(row.excluded||row.totalExcluded||row.total?.excluded||0),
+        acceptRate:row.acceptRate
+      };
+      tg=row.periodTargets||{};
+    }else{
+      const stored=row.teams&&row.teams[WEEKLY_TEAM];
+      if(stored){
+        has=true;
+        sm=(stored.summary&&typeof stored.summary==='object')?stored.summary:stored;
+        tg=(stored.targets&&typeof stored.targets==='object')?stored.targets:{};
+      }
+    }
+
+    const complete=Number(sm.complete||0);
+    const bad=Number(sm.reject||0)+Number(sm.cancel||0)+Number(sm.riderFault||0);
+    const rate=sm.acceptRate!=null?Number(sm.acceptRate):acceptRate(complete,bad);
+    const excluded=Number(sm.excluded||0);
+
+    const periods=PERIODS.map(([key,,label])=>{
+      const done=Number(sm[key]||0),goal=Number(tg[key]||0);
+      return {key,label,done,goal,fail:has&&goal>0&&done<goal,ok:has&&goal>0&&done>=goal};
+    });
+    const failPeriods=periods.filter(p=>p.fail);
+    return {label:labels[i],date,has,complete,bad,rate,excluded,periods,ok:has&&failPeriods.length===0,failPeriods};
+  });
+
+  return {
+    start,
+    end:start?addYmd(start,6):'',
+    days,
+    label:isAll?'전체':(cfg.labels[WEEKLY_TEAM]||WEEKLY_TEAM)
+  };
+}
+function renderWeeklyBrowser(){
+  renderWeeklyControls();
+  const view=weeklyView();
+
+  const range=document.getElementById('weekRange');
+  if(range)range.innerText=view.start&&view.end?`${view.start} ~ ${view.end}`:'-';
+
+  const failed=view.days.filter(d=>d.has&&!d.ok);
+  const status=document.getElementById('weeklyStatus');
+  if(status){
+    status.innerHTML=`<div class="weekly-status">
+      <div class="status-line">
+        <span>${view.label} 주간 실적</span>
+        ${failed.length?`<span class="badge fail">미달 ${failed.length}일</span>`:`<span class="badge ok">기록 확인</span>`}
+      </div>
+    </div>`;
+  }
+
+  const grid=document.getElementById('weeklyGrid');
+  if(grid){
+    grid.innerHTML=view.days.map(day=>`<div class="day-card">
+      <div class="day-head"><div class="day-label">${day.label}</div><div class="day-date">${day.date}</div></div>
+      ${day.periods.map(p=>`<div class="period-row ${p.fail?'fail':p.ok?'ok':''}">
+        <div class="pname">${p.label}</div>
+        <div class="pval">${day.has?n(p.done):'-'} / ${day.has&&p.goal>0?n(p.goal):'-'}</div>
+      </div>`).join('')}
+      <div class="day-line"></div>
+      <div class="day-total">
+        <b>완료 ${day.has?n(day.complete):'-'}</b><br>
+        <b>거절합계 ${day.has?n(day.bad):'-'}</b><br>
+        <b>수락률 ${day.has?day.rate+'%':'-'}</b>
+      </div>
+      <div class="day-result">
+        ${day.has?'<span class="badge ok">저장됨</span>':'<span class="badge wait">기록없음</span>'}
+      </div>
+    </div>`).join('');
+  }
+}
+
 function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
 async function fetchJson(path){
   const url=FIREBASE_BASE+path+".json?v="+Date.now();
@@ -584,51 +1081,85 @@ async function loadData(){
   }
   try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}
   document.getElementById('errorBox').innerHTML='';
-  const savedPage=localStorage.getItem('supersonicPage');
-  if(['overview','weekly','settlement','manage','mission','sms'].includes(savedPage)){switchPage(savedPage)}
+  // 새로 열거나 새로고침할 때는 항상 운영현황부터 시작합니다.
+  localStorage.removeItem('supersonicPage');
+  switchPage('overview');
   try{render()}catch(e){
     console.error('화면 렌더링 오류',e);
-    document.getElementById('errorBox').innerHTML=`<div class="error">데이터는 읽었지만 화면 계산 중 오류가 발생했습니다.<br>${e.message||''}</div>`;
+    console.error('치명적 화면 렌더링 오류',e);
+    const box=document.getElementById('errorBox');
+    if(box)box.innerHTML=`<div class="error">화면 초기화 중 오류가 발생했습니다.<br>${e.message||'알 수 없는 오류'}</div>`;
   }
 }
 function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
 let totals={complete:0,bad:0,spare:0,excluded:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),excluded=Number(r.excluded||r.totalExcluded||0),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;totals.excluded+=excluded;return{label:labels[i]||'',date:dk,has,complete,bad,excluded,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);if(!totals.excluded&&DATA&&DATA.total&&DATA.total.excluded!=null)totals.excluded=Number(DATA.total.excluded||0);return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
+
+function safeWeeklySummary(){
+  try{
+    return buildWeeklySummary();
+  }catch(e){
+    console.error('주간 요약 계산 오류',e);
+    return {
+      days:[],
+      start:'-',
+      end:'-',
+      complete:0,
+      bad:0,
+      spare:0,
+      excluded:0,
+      rate:100
+    };
+  }
+}
+
 function render(){
-  const d=DATA;if(!d)return;
-  const cfg=areaCfg(),teams=cfg.teams,totalOrder=teams.reduce((s,t)=>s+Number(teamObj(t).targets.total||0),0),ws=buildWeeklySummary();
-  document.getElementById('modeBtn').innerText=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';
-  document.getElementById('areaText').innerText=d.area||CURRENT;
-  document.getElementById('topUpdateTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');
-  document.getElementById('footerTime').innerText='↻ 마지막 업데이트 : '+(d.updatedAt||'-');
-  document.getElementById('weekRange').innerText=ws.start+' ~ '+ws.end;
-  document.getElementById('weekComplete').innerText=n(ws.complete);
-  document.getElementById('weekRate').innerText=ws.rate+'%';
-  document.getElementById('weekSpare').innerText=n(ws.spare);
-  document.getElementById('dayComplete').innerText=n(d.total.complete);
-  document.getElementById('dayOrder').innerText=n(totalOrder);
-  document.getElementById('onlineCount').innerText=n(d.total.onlineCount)+'명';
-  document.getElementById('teamCountTitle').innerText='팀 접속 인원';
-  document.getElementById('teamCount').innerText=teams.map(t=>n(teamObj(t).summary.onlineCount)).join('/');
-  const safe=(name,fn)=>{try{fn()}catch(e){console.error(name,e)}};
-  safe('주간실적',()=>renderWeekly(ws));
-  safe('정산',renderSettlement);
-  safe('구간실적',renderPeriods);
-  safe('기사카드',renderFiltersAndRiders);
-  safe('미션',renderMission);
-  safe('팀관리',renderManageList);
-  safe('단체문자',renderSms);
+  const d=DATA;
+  if(!d)return;
+
+  const cfg=areaCfg()||{};
+  const teams=Array.isArray(cfg.teams)?cfg.teams:[];
+  const total=(d.total&&typeof d.total==='object')?d.total:{};
+  const ws=safeWeeklySummary();
+
+  let totalOrder=0;
+  for(const t of teams){
+    const obj=teamObj(t);
+    totalOrder+=Number((obj.targets&&obj.targets.total)||0);
+  }
+
+  const setText=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.innerText=value;
+  };
+
+  setText('modeBtn',document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드');
+  setText('areaText',d.area||CURRENT);
+  setText('topUpdateTime','↻ 마지막 업데이트 : '+(d.updatedAt||'-'));
+  setText('footerTime','↻ 마지막 업데이트 : '+(d.updatedAt||'-'));
+  setText('weekRange',(ws.start||'-')+' ~ '+(ws.end||'-'));
+  setText('weekComplete',n(ws.complete));
+  setText('weekRate',Number(ws.rate||0)+'%');
+  setText('weekSpare',n(ws.spare));
+  setText('dayComplete',n(total.complete));
+  setText('dayOrder',n(totalOrder));
+  setText('onlineCount',n(total.onlineCount)+'명');
+  setText('teamCountTitle','팀 접속 인원');
+  setText('teamCount',teams.map(t=>n((teamObj(t).summary||{}).onlineCount)).join('/'));
+
+  // 각 화면 기능은 서로 독립적으로 렌더링합니다.
+  // 한 기능에 문제가 생겨도 메인 화면 전체가 오류로 바뀌지 않습니다.
+  const safe=(name,fn)=>{
+    try{fn()}
+    catch(e){console.error(name+' 렌더링 오류',e)}
+  };
+
+  if(typeof renderWeeklyBrowser==='function') safe('주간실적',renderWeeklyBrowser);
+  if(typeof renderSettlement==='function') safe('정산',renderSettlement);
+  if(typeof renderPeriods==='function') safe('구간실적',renderPeriods);
+  if(typeof renderFiltersAndRiders==='function') safe('기사카드',renderFiltersAndRiders);
+  if(typeof renderManageList==='function') safe('팀관리',renderManageList);
+  if(typeof renderSms==='function') safe('단체문자',renderSms);
 }
-function renderWeekly(ws){
-  let failed=ws.days.filter(x=>x.has&&!x.ok);
-  const cfg=areaCfg(),teams=cfg.teams;
-  const excludedTotal=DATA&&DATA.total&&DATA.total.excluded!=null?Number(DATA.total.excluded||0):Number(ws.excluded||0);
-  const teamChips=teams.map(t=>`<span class="excluded-chip ${cfg.classes[t]}">${cfg.labels[t]} ${n(teamExcluded(t))}건</span>`).join('');
-
-  document.getElementById('weeklyStatus').innerHTML=`<div class="weekly-status"><div class="status-line"><span>주간 미션 결과</span>${failed.length?`<span class="badge fail">실패 ${failed.length}일</span>`:`<span class="badge ok">전체 성공</span>`}</div>${failed.length?`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">실패일: ${failed.map(d=>d.label+'('+d.failPeriods.map(p=>p.label).join('/')+')').join(', ')}</div>`:`<div style="margin-top:10px;color:var(--muted);font-size:14px;font-weight:1000">기록된 모든 날짜가 구간 목표를 달성했습니다.</div>`}<div class="excluded-note">실적 미포함건 총 ${n(excludedTotal)}건</div><div class="excluded-chips">${teamChips}</div></div>`;
-
-  document.getElementById('weeklyGrid').innerHTML=ws.days.map(day=>`<div class="day-card"><div class="day-head"><div class="day-label">${day.label}</div><div class="day-date">${day.date}</div></div>${day.periods.map(p=>`<div class="period-row ${p.fail?'fail':p.ok?'ok':''}"><div class="pname">${p.label}</div><div class="pval">${n(p.done)} / ${n(p.goal)}</div></div>`).join('')}${day.excluded?`<div class="period-row"><div class="pname">미포함</div><div class="pval" style="color:#b15b00">${n(day.excluded)}건</div></div>`:''}<div class="day-line"></div><div class="day-total"><b>완료 ${n(day.complete)}</b><br><b>거절합계 ${n(day.bad)}</b><br><b>수락률 ${day.rate}%</b>${day.excluded?`<div style="margin-top:8px;color:#b15b00;font-size:14px;font-weight:1000;line-height:1.45">미포함 실적 ${n(day.excluded)}건</div>`:''}</div><div class="day-result">${!day.has?'<span class="badge wait">기록없음</span>':day.ok?'<span class="badge ok">성공</span>':`<span class="badge fail">실패: ${day.failPeriods.map(p=>p.label).join(', ')}</span>`}</div></div>`).join('');
-}
-
 function periodIncludedDone(team,key){
   // d_a.py에서 이미 SLA 포함 구간만 summary[key]에 저장합니다.
   // 여기서 미포함을 다시 빼면 게이지가 이중 차감됩니다.
@@ -947,15 +1478,87 @@ function renderSms(){
   `).join(''):'<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:16px">유효한 010 전화번호가 없습니다.</div>';
 }
 
+
+function periodWindow(key){
+  const bd=DATA&&DATA.businessDate?new Date(DATA.businessDate+'T12:00:00'):new Date();
+  const day=bd.getDay(); // 0 sun, 6 sat
+  const weekend=(day===0||day===6);
+  if(key==='morning')return weekend?[9,14]:[9,13];
+  if(key==='afternoon')return weekend?[14,17]:[13,17];
+  if(key==='evening')return [17,20];
+  return [20,24];
+}
+function currentHourFloat(){
+  const now=new Date();
+  return now.getHours()+now.getMinutes()/60;
+}
+function periodState(key){
+  const [start,end]=periodWindow(key),h=currentHourFloat();
+  if(h<start)return 'future';
+  if(h>=end)return 'done';
+  return 'current';
+}
+function periodTimeLabel(key){
+  const [s,e]=periodWindow(key);
+  const fmt=x=>String(x).padStart(2,'0')+':00';
+  return fmt(s)+' ~ '+fmt(e===24?0:e);
+}
+function paceInfo(done,goal,key){
+  const state=periodState(key);
+  if(state!=='current'||goal<=0)return null;
+  const [start,end]=periodWindow(key),now=currentHourFloat();
+  const elapsed=Math.max(0.01,now-start);
+  const remainTime=Math.max(0.01,end-now);
+  const remain=Math.max(0,goal-done);
+  const currentPace=done/elapsed;
+  const neededPace=remain/remainTime;
+  return {currentPace,neededPace,good:currentPace>=neededPace};
+}
+
 function renderPeriods(){
   const cfg=areaCfg(),teams=cfg.teams.filter(t=>t!=='신규');
 
   document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
-    const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0),
-          totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0),
-          miss=periodExcluded(key);
+    const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0);
+    const totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0);
+    const state=periodState(key);
+    const stateLabel=state==='current'?'● 진행중':state==='done'?'종료':'대기';
 
-    return `<div class="period-card"><div class="period-head">${icon} ${label.replace('피크',' 피크').replace('논피크',' 논피크')}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teams.map(t=>{let done=periodIncludedDone(t,key),goal=Number(teamObj(t).targets[key]||0),fail=goal>0&&done<goal;return `<div class="team-line"><div class="team-name">${cfg.labels[t]}</div><div class="small-bar"><div class="small-fill ${cfg.classes[t]}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span>${fail?' <span style="color:var(--red)">실패</span>':''}</div></div>`}).join('')}</div>`;
+    const teamRows=teams.map(t=>{
+      const done=periodIncludedDone(t,key);
+      const goal=Number(teamObj(t).targets[key]||0);
+      return `<div class="ops-team-row simple">
+        <div class="ops-team-name">${cfg.labels[t]||t}</div>
+        <div class="ops-team-metrics simple-color">
+          <b class="team-done-num">${n(done)}</b>
+          <span class="team-sep">/</span>
+          <b class="team-goal-num">${n(goal)}</b>
+        </div>
+      </div>`;
+    }).join('');
+
+    return `<div class="ops-period ${state}">
+      <div class="ops-head">
+        <div class="ops-title-wrap">
+          <div class="ops-title">${icon} ${label}</div>
+          <div class="ops-time">${periodTimeLabel(key)}</div>
+        </div>
+        <div class="ops-state ${state}">${stateLabel}</div>
+      </div>
+
+      <div class="ops-metric-pair">
+        <div class="ops-metric done">
+          <span>완료</span>
+          <strong>${n(totalDone)}</strong>
+        </div>
+        <div class="ops-metric goal">
+          <span>발주</span>
+          <strong>${n(totalGoal)}</strong>
+        </div>
+      </div>
+
+      <div class="ops-team-list">${teamRows}</div>
+    </div>`;
   }).join('');
 }
 function renderFiltersAndRiders(){
@@ -1016,42 +1619,6 @@ function renderFiltersAndRiders(){
       </div>
     </div>`;
   }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
-}
-function renderMission(){if(!DATA)return;const cfg=areaCfg(),period=document.getElementById('missionPeriod').value,need=Number(document.getElementById('missionCount').value||0),price=Number(document.getElementById('missionPrice').value||0);let riders=[...(DATA.riders||[])];if(cfg.missionTeam)riders=riders.filter(r=>r.team===cfg.missionTeam);let success=need>0?riders.filter(r=>Number(r[period]||0)>=need):[];success.sort((a,b)=>Number(b[period]||0)-Number(a[period]||0));document.getElementById('missionTarget').innerText=n(riders.length)+'명';document.getElementById('missionSuccess').innerText=n(success.length)+'명';document.getElementById('missionTotal').innerText=won(success.length*price);document.getElementById('missionList').innerHTML=need>0?success.map(r=>`<div class="mission-rider"><b>${r.name}</b><span>${n(r[period])}건 / ${won(price)}</span></div>`).join(''):`<div style="grid-column:1/-1;color:var(--muted);font-weight:1000;text-align:center;padding:16px">목표 건수를 입력하면 성공기사가 표시됩니다.</div>`}
-function renderManageList(){
-  if(!DATA || !DATA.riders){
-    document.getElementById('manageList').innerHTML='기사 데이터가 없습니다.';
-    return;
-  }
-
-  const teams=areaCfg().teams;
-  let riders=[...DATA.riders];
-
-  if(window.manageFilter && window.manageFilter!=='전체'){
-    riders=riders.filter(r=>r.team===window.manageFilter);
-  }
-
-  document.getElementById('manageList').innerHTML=`
-    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-      <button class="move" onclick="setManageFilter('전체')">전체</button>
-      ${teams.map(t=>`
-        <button class="move" onclick="setManageFilter('${t}')">${t}</button>
-      `).join('')}
-    </div>
-
-    <button class="toggle-btn" onclick="saveTeamMap()">팀 변경 저장</button>
-
-    ${riders.map(r=>`
-      <div class="mission-rider">
-        <b>${r.name}</b>
-        <select data-rider-name="${r.name}" style="border:1px solid var(--line);border-radius:10px;padding:8px;font-weight:1000">
-          ${teams.map(t=>`
-            <option value="${t}" ${r.team===t?'selected':''}>${t}</option>
-          `).join('')}
-        </select>
-      </div>
-    `).join('')}
-  `;
 }
 function setManageFilter(team){
   window.manageFilter=team;
