@@ -321,6 +321,76 @@ body.dark .top{background:rgba(17,21,28,.92)}
   }
 }
 
+
+/* ===== 모바일 전체 가독성 COMFORT ===== */
+@media(max-width:560px){
+  body{font-size:15px!important}
+  .wrap{padding:10px 9px 54px!important}
+
+  .brand{font-size:27px!important}
+  .sub{font-size:12px!important}
+  .area{font-size:17px!important}
+  .top-update{font-size:11px!important}
+  .mode,.move{font-size:13px!important;padding:9px 11px!important}
+
+  /* KPI: 3열 유지하되 글자를 읽기 좋은 크기로 */
+  .sum{min-height:94px!important;padding:12px 6px!important}
+  .sum-title{font-size:11px!important;line-height:1.25!important}
+  .sum-val{font-size:22px!important;line-height:1.1!important}
+
+  /* 상단 메뉴 */
+  .side-nav-btn{font-size:13px!important;padding:10px 13px!important}
+
+  /* 섹션 */
+  .section-title{font-size:18px!important;line-height:1.2!important}
+  .section-title small{font-size:11px!important}
+
+  /* 구간실적 */
+  .period-card{padding:13px 10px!important}
+  .period-card .period-head{font-size:17px!important}
+  .period-card .period-sub{font-size:11px!important;line-height:1.3!important}
+  .period-card .period-total{font-size:23px!important}
+  .period-card .team-name{font-size:14px!important}
+  .period-card .team-num{font-size:14px!important}
+  .period-card .team-num .done,
+  .period-card .team-num .goal{font-size:15px!important}
+
+  /* 기사 검색 / 정렬 */
+  .rider-search{height:44px!important;font-size:15px!important;padding:0 13px!important}
+  .sort{font-size:13px!important}
+  .sort select{font-size:13px!important;padding:8px 9px!important}
+  .filters button{font-size:13px!important;padding:9px 10px!important}
+
+  /* 기사카드 */
+  .rider{padding:15px 14px!important}
+  .rider-name{font-size:18px!important}
+  .status,.warn{font-size:11px!important}
+  .stat small{font-size:11px!important}
+  .stat b{font-size:16px!important}
+  .times div{font-size:11px!important}
+  .times b{font-size:15px!important}
+  .miss,.miss-label{font-size:10px!important}
+
+  /* 주간실적 */
+  .day-card{padding:14px 11px!important}
+  .day-label{font-size:24px!important}
+  .day-date{font-size:11px!important}
+  .period-row{font-size:13px!important;line-height:1.25!important}
+  .day-total{font-size:13px!important;line-height:1.55!important}
+  .badge{font-size:11px!important}
+  .weekly-status{font-size:13px!important}
+  .weekly-team-tab{font-size:12px!important;padding:9px 6px!important}
+
+  /* 미션 / 정산 / 관리 / 문자 */
+  .field label{font-size:12px!important}
+  .field input,.field select{font-size:14px!important;min-height:42px!important}
+  .mission-stat small,.settle-stat small{font-size:11px!important}
+  .mission-stat b,.settle-stat b{font-size:17px!important}
+  .mission-list,.manage-list,.sms-box,.settlement-wrap{font-size:13px!important}
+  .toggle-btn{font-size:13px!important}
+  button,input,select,textarea{touch-action:manipulation}
+}
+
 </style>
 </head>
 <body>
@@ -878,7 +948,7 @@ function renderSms(){
 }
 
 function renderPeriods(){
-  const cfg=areaCfg(),teams=cfg.teams;
+  const cfg=areaCfg(),teams=cfg.teams.filter(t=>t!=='신규');
 
   document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
     const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0),
