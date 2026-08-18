@@ -733,6 +733,113 @@ body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
 }
 
 
+
+/* ===== 기사관리 복구/모바일 최적화 ===== */
+.manage-toolbar{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.manage-filter-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.manage-filter-btn{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.manage-filter-btn.active{
+  background:var(--ss-red);
+  border-color:var(--ss-red);
+  color:#fff;
+}
+.manage-save-btn{
+  flex:0 0 auto;
+  border:0;
+  background:var(--ss-red);
+  color:#fff;
+  border-radius:10px;
+  padding:10px 13px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.manage-save-btn:disabled{opacity:.55;cursor:wait}
+.manage-count{
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:1000;
+  margin:4px 2px 9px;
+}
+.manage-rider-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.manage-rider-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  border-radius:12px;
+  padding:10px 11px;
+}
+.manage-rider-info{min-width:0}
+.manage-rider-info b{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.manage-rider-info small{
+  display:block;
+  margin-top:3px;
+  color:var(--ss-sub);
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.manage-team-select{
+  flex:0 0 auto;
+  max-width:112px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 7px;
+  font-size:12px;
+  font-weight:1000;
+}
+.manage-empty{
+  grid-column:1/-1;
+  padding:24px 10px;
+  text-align:center;
+  color:var(--ss-sub);
+  font-size:13px;
+}
+@media(max-width:560px){
+  .manage-toolbar{display:block}
+  .manage-save-btn{width:100%;margin-top:9px;font-size:14px;padding:11px}
+  .manage-filter-btn{font-size:13px;padding:9px 10px}
+  .manage-rider-list{grid-template-columns:1fr}
+  .manage-rider-row{padding:11px}
+  .manage-rider-info b{font-size:15px}
+  .manage-team-select{font-size:13px;max-width:120px}
+}
+
 </style>
 </head>
 <body>
@@ -1620,43 +1727,127 @@ function renderFiltersAndRiders(){
     </div>`;
   }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
 }
+function renderManageList(){
+  const box=document.getElementById('manageList');
+  if(!box)return;
+
+  if(!DATA || !Array.isArray(DATA.riders)){
+    box.innerHTML='<div class="manage-empty">기사 데이터가 없습니다.</div>';
+    return;
+  }
+
+  const cfg=areaCfg();
+  const teams=Array.isArray(cfg.teams)?cfg.teams:[];
+  if(!window.manageFilter || !(window.manageFilter==='전체' || teams.includes(window.manageFilter))){
+    window.manageFilter='전체';
+  }
+
+  let riders=[...DATA.riders];
+  if(window.manageFilter!=='전체'){
+    riders=riders.filter(r=>r.team===window.manageFilter);
+  }
+
+  riders.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ko'));
+
+  box.innerHTML=`
+    <div class="manage-toolbar">
+      <div class="manage-filter-tabs">
+        ${['전체',...teams].map(t=>`
+          <button type="button"
+            class="manage-filter-btn ${window.manageFilter===t?'active':''}"
+            onclick="setManageFilter('${t}')">
+            ${t==='전체'?'전체':(cfg.labels[t]||t)}
+          </button>
+        `).join('')}
+      </div>
+      <button type="button" class="manage-save-btn" onclick="saveTeamMap()">팀 변경 저장</button>
+    </div>
+
+    <div class="manage-count">표시 기사 ${n(riders.length)}명</div>
+
+    <div class="manage-rider-list">
+      ${riders.length?riders.map(r=>`
+        <div class="manage-rider-row">
+          <div class="manage-rider-info">
+            <b>${r.name||'-'}</b>
+            <small>${r.phone||r.userId||''}</small>
+          </div>
+          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}">
+            ${teams.map(t=>`
+              <option value="${t}" ${r.team===t?'selected':''}>${cfg.labels[t]||t}</option>
+            `).join('')}
+          </select>
+        </div>
+      `).join(''):'<div class="manage-empty">해당 팀의 기사가 없습니다.</div>'}
+    </div>
+  `;
+}
+
 function setManageFilter(team){
   window.manageFilter=team;
   renderManageList();
 }
 
 async function saveTeamMap(){
-  const selects=document.querySelectorAll('#manageList select');
-  const changes={};
+  const selects=[...document.querySelectorAll('#manageList .manage-team-select')];
+  if(!selects.length){
+    alert('저장할 기사 정보가 없습니다.');
+    return;
+  }
 
+  const changes={};
   selects.forEach(sel=>{
     const name=sel.getAttribute('data-rider-name');
     const team=sel.value;
-    if(name && team){
-      changes[name]=team;
-    }
+    if(name && team)changes[name]=team;
   });
+
+  const btn=document.querySelector('#manageList .manage-save-btn');
+  if(btn){
+    btn.disabled=true;
+    btn.innerText='저장중...';
+  }
 
   try{
     const res=await fetch('/api/save-teammap',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-  area: areaCfg().key,
-  changes: changes
-})
+        area:areaCfg().key,
+        changes
+      })
     });
 
-    const result=await res.json();
+    const text=await res.text();
+    let result={};
+    try{ result=text?JSON.parse(text):{}; }catch(e){}
 
-    if(result.ok){
-      alert('팀 변경 저장 완료');
-      loadData();
-    }else{
-      alert('저장 실패: '+result.error);
+    if(!res.ok){
+      throw new Error(result.error||text||('HTTP '+res.status));
     }
-   }catch(e){
-    alert('저장 오류: '+e.message);
+    if(result.ok===false){
+      throw new Error(result.error||'저장 실패');
+    }
+
+    // 서버 응답 직후 화면에도 우선 반영
+    (DATA.riders||[]).forEach(r=>{
+      if(changes[r.name])r.team=changes[r.name];
+    });
+
+    alert('팀 변경 저장 완료');
+
+    // 최신 Firebase 데이터를 다시 읽고 기사관리 화면 유지
+    await loadData();
+    switchPage('manage');
+    renderManageList();
+  }catch(e){
+    console.error('기사 팀 변경 저장 오류',e);
+    alert('저장 오류: '+(e.message||e));
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      btn.innerText='팀 변경 저장';
+    }
   }
 }
 
