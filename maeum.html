@@ -1034,9 +1034,44 @@ body.dark .rider .times div{border-color:#374151!important}
 body.dark .rider .miss,
 body.dark .rider .miss-label{color:#ffc36a!important}
 
+
+/* ===== 비밀번호 잠금 화면 ===== */
+#pwGate{
+  position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(8,11,16,.92);backdrop-filter:blur(10px)
+}
+#pwGate.hidden{display:none}
+.pw-card{
+  width:min(360px,100%);background:var(--ss-surface,#fff);color:var(--ss-text,#111827);
+  border:1px solid var(--ss-border,#e5e7eb);border-radius:20px;padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.28);text-align:center
+}
+.pw-card h2{margin:0 0 6px;font-size:22px}.pw-card p{margin:0 0 15px;color:var(--ss-sub,#6b7280);font-size:12px}
+.pw-card input{
+  width:100%;height:46px;border:1px solid var(--ss-border,#e5e7eb);border-radius:12px;
+  background:var(--ss-surface2,#f8fafc);color:var(--ss-text,#111827);
+  font-size:20px;text-align:center;font-weight:1000;letter-spacing:6px;outline:none
+}
+.pw-card button{
+  width:100%;margin-top:10px;border:0;border-radius:12px;padding:12px;background:#e60012;
+  color:#fff;font-size:14px;font-weight:1000;cursor:pointer
+}
+#pwError{min-height:18px;margin-top:8px;color:#e60012;font-size:12px;font-weight:1000}
+
 </style>
 </head>
 <body>
+
+<div id="pwGate">
+  <div class="pw-card">
+    <h2>접근 비밀번호</h2>
+    <p>비밀번호를 입력해주세요.</p>
+    <input id="pwInput" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+    <button type="button" onclick="checkDashboardPassword()">확인</button>
+    <div id="pwError"></div>
+  </div>
+</div>
+
 <div class="wrap">
   <div class="top">
     <div class="top-actions">
@@ -1149,6 +1184,34 @@ body.dark .rider .miss-label{color:#ffc36a!important}
   </div>
 </div>
 <script>
+
+const DASHBOARD_PASSWORD='4242';
+const DASHBOARD_AUTH_KEY='maeum_dashboard_auth_4242';
+function unlockDashboard(){
+  const gate=document.getElementById('pwGate');
+  if(gate)gate.classList.add('hidden');
+}
+function checkDashboardPassword(){
+  const input=document.getElementById('pwInput');
+  const error=document.getElementById('pwError');
+  if((input?.value||'')===DASHBOARD_PASSWORD){
+    sessionStorage.setItem(DASHBOARD_AUTH_KEY,'1');
+    if(error)error.textContent='';
+    unlockDashboard();
+  }else{
+    if(error)error.textContent='비밀번호가 올바르지 않습니다.';
+    if(input){input.value='';input.focus();}
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem(DASHBOARD_AUTH_KEY)==='1')unlockDashboard();
+  const input=document.getElementById('pwInput');
+  if(input){
+    input.addEventListener('keydown',e=>{if(e.key==='Enter')checkDashboardPassword();});
+    setTimeout(()=>input.focus(),50);
+  }
+});
+
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
   "마음 달서A":{

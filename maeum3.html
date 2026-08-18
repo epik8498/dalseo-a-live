@@ -1034,9 +1034,44 @@ body.dark .rider .times div{border-color:#374151!important}
 body.dark .rider .miss,
 body.dark .rider .miss-label{color:#ffc36a!important}
 
+
+/* ===== 비밀번호 잠금 화면 ===== */
+#pwGate{
+  position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(8,11,16,.92);backdrop-filter:blur(10px)
+}
+#pwGate.hidden{display:none}
+.pw-card{
+  width:min(360px,100%);background:var(--ss-surface,#fff);color:var(--ss-text,#111827);
+  border:1px solid var(--ss-border,#e5e7eb);border-radius:20px;padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.28);text-align:center
+}
+.pw-card h2{margin:0 0 6px;font-size:22px}.pw-card p{margin:0 0 15px;color:var(--ss-sub,#6b7280);font-size:12px}
+.pw-card input{
+  width:100%;height:46px;border:1px solid var(--ss-border,#e5e7eb);border-radius:12px;
+  background:var(--ss-surface2,#f8fafc);color:var(--ss-text,#111827);
+  font-size:20px;text-align:center;font-weight:1000;letter-spacing:6px;outline:none
+}
+.pw-card button{
+  width:100%;margin-top:10px;border:0;border-radius:12px;padding:12px;background:#e60012;
+  color:#fff;font-size:14px;font-weight:1000;cursor:pointer
+}
+#pwError{min-height:18px;margin-top:8px;color:#e60012;font-size:12px;font-weight:1000}
+
 </style>
 </head>
 <body>
+
+<div id="pwGate">
+  <div class="pw-card">
+    <h2>접근 비밀번호</h2>
+    <p>비밀번호를 입력해주세요.</p>
+    <input id="pwInput" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+    <button type="button" onclick="checkDashboardPassword()">확인</button>
+    <div id="pwError"></div>
+  </div>
+</div>
+
 <div class="wrap">
   <div class="top">
     <div class="top-actions">
@@ -1149,22 +1184,50 @@ body.dark .rider .miss-label{color:#ffc36a!important}
   </div>
 </div>
 <script>
+
+const DASHBOARD_PASSWORD='4242';
+const DASHBOARD_AUTH_KEY='maeum3_dashboard_auth_4242';
+function unlockDashboard(){
+  const gate=document.getElementById('pwGate');
+  if(gate)gate.classList.add('hidden');
+}
+function checkDashboardPassword(){
+  const input=document.getElementById('pwInput');
+  const error=document.getElementById('pwError');
+  if((input?.value||'')===DASHBOARD_PASSWORD){
+    sessionStorage.setItem(DASHBOARD_AUTH_KEY,'1');
+    if(error)error.textContent='';
+    unlockDashboard();
+  }else{
+    if(error)error.textContent='비밀번호가 올바르지 않습니다.';
+    if(input){input.value='';input.focus();}
+  }
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  if(sessionStorage.getItem(DASHBOARD_AUTH_KEY)==='1')unlockDashboard();
+  const input=document.getElementById('pwInput');
+  if(input){
+    input.addEventListener('keydown',e=>{if(e.key==='Enter')checkDashboardPassword();});
+    setTimeout(()=>input.focus(),50);
+  }
+});
+
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
   "마음3 달서A":{
     key:"maeuma",
     file:"/live/maeuma",
     weekly:"/weekly/maeuma",
-    teams:["마음3"],
-    labels:{"마음3":"마음3"},
-    classes:{"마음3":"maeum"},
+    teams:["마음1","마음3","마음4","미분류"],
+    labels:{"마음1":"마음1","마음3":"마음3","마음4":"마음4","미분류":"미분류"},
+    classes:{"마음1":"maeum","마음3":"maeum","마음4":"maeum","미분류":"newteam"},
     missionTeam:null,
     settlementUnit:250
   }
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
 function initialArea(){return '마음3 달서A';}
-let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='마음3',SMS_TEAM='마음3',RIDER_SEARCH='',WEEKLY_TEAM='마음3',WEEKLY_START='';
+let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='마음3',RIDER_SEARCH='',WEEKLY_TEAM='전체',WEEKLY_START='';
 let CURRENT_PAGE='overview';
 function switchPage(page,btn){
   CURRENT_PAGE=page;
@@ -1231,7 +1294,7 @@ function ensureWeeklySelection(){
   if(WEEKLY_TEAM==='전체' && savedTeam && (savedTeam==='전체'||cfg.teams.includes(savedTeam))){
     WEEKLY_TEAM=savedTeam;
   }
-  if(WEEKLY_TEAM!=='전체'&&!cfg.teams.includes(WEEKLY_TEAM))WEEKLY_TEAM='마음3';
+  if(WEEKLY_TEAM!=='전체'&&!cfg.teams.includes(WEEKLY_TEAM))WEEKLY_TEAM='전체';
 
   const savedStart=localStorage.getItem('weeklyStart_'+cfg.key);
   if(!WEEKLY_START){
@@ -1431,7 +1494,17 @@ function safeWeeklySummary(){
 
 function renderNewRiderAlert(){
   const box=document.getElementById('newRiderAlert');
-  if(box)box.innerHTML='';
+  if(!box)return;
+  const riders=Array.isArray(DATA&&DATA.riders)?DATA.riders:[];
+  const newRiders=riders.filter(r=>r.team==='미분류'||r.team==='신규');
+  if(!newRiders.length){box.innerHTML='';return;}
+  const names=newRiders.slice(0,5).map(r=>r.name||r.userId||'이름없음');
+  const extra=newRiders.length>5?` 외 ${n(newRiders.length-5)}명`:'';
+  box.innerHTML=`<button type="button" class="new-rider-alert" onclick="openNewRiderManage()">
+    <span class="new-rider-alert-icon">!</span>
+    <span class="new-rider-alert-text"><b>신규 기사 ${n(newRiders.length)}명 확인 필요</b><small>${names.join(', ')}${extra}</small></span>
+    <span class="new-rider-alert-action">기사관리 →</span>
+  </button>`;
 }
 
 function openNewRiderManage(){
@@ -1441,36 +1514,13 @@ function openNewRiderManage(){
 }
 
 
-const DEDICATED_TEAM='마음3';
-function dedicatedRiders(){
-  return Array.isArray(DATA&&DATA.riders)?DATA.riders.filter(r=>r.team===DEDICATED_TEAM):[];
-}
-function dedicatedSummary(){
-  const obj=teamObj(DEDICATED_TEAM),s=obj.summary||{};
-  return {
-    complete:Number(s.complete||0),
-    reject:Number(s.reject||0),
-    cancel:Number(s.cancel||0),
-    riderFault:Number(s.riderFault||0),
-    onlineCount:Number(s.onlineCount||0),
-    count:Number(s.count!=null?s.count:dedicatedRiders().length),
-    morning:Number(s.morning||0),
-    afternoon:Number(s.afternoon||0),
-    evening:Number(s.evening||0),
-    midnight:Number(s.midnight||0),
-    excluded:Number(s.excluded||0),
-    acceptRate:s.acceptRate!=null?Number(s.acceptRate):acceptRate(Number(s.complete||0),Number(s.reject||0)+Number(s.cancel||0)+Number(s.riderFault||0)),
-    spareRejects:s.spareRejects!=null?Number(s.spareRejects):0
-  };
-}
-
 function render(){
   const d=DATA;
   if(!d)return;
 
   const cfg=areaCfg()||{};
   const teams=Array.isArray(cfg.teams)?cfg.teams:[];
-  const total=dedicatedSummary();
+  const total=(d.total&&typeof d.total==='object')?d.total:{};
   const ws=safeWeeklySummary();
 
   let totalOrder=0;
@@ -1494,7 +1544,7 @@ function render(){
   setText('weekSpare',n(ws.spare));
   setText('dayComplete',n(total.complete));
   setText('dayOrder',n(totalOrder));
-  setText('onlineCount',n(dedicatedSummary().onlineCount)+'명');
+  setText('onlineCount',n(total.onlineCount)+'명');
   setText('teamCountTitle','팀별 접속 현황');
   const teamCountEl=document.getElementById('teamCount');
   if(teamCountEl){
@@ -1941,7 +1991,7 @@ function renderFiltersAndRiders(){
     searchEl.value=RIDER_SEARCH;
   }
 
-  let riders=dedicatedRiders();
+  let riders=[...(DATA.riders||[])];
 
   if(FILTER!=='전체'){
     riders=riders.filter(r=>r.team===FILTER);
@@ -2006,7 +2056,7 @@ function renderManageList(){
     window.manageFilter='전체';
   }
 
-  let riders=dedicatedRiders();
+  let riders=[...(DATA.riders||[])];
   if(window.manageFilter!=='전체'){
     riders=riders.filter(r=>r.team===window.manageFilter);
   }
