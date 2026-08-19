@@ -896,7 +896,7 @@ body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
 }
 
 
-/* 팀별 접속 / 등록 */
+/* 팀별 현재 접속 */
 .team-count-item{
   display:grid!important;
   grid-template-columns:1fr auto!important;
@@ -1033,6 +1033,259 @@ body.dark .rider .stat,
 body.dark .rider .times div{border-color:#374151!important}
 body.dark .rider .miss,
 body.dark .rider .miss-label{color:#ffc36a!important}
+
+
+/* ===== 구간실적 + 주간요약 UI 롤백 ===== */
+.weekly-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:14px!important;margin-bottom:26px!important}
+.day-card{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--card)!important;padding:22px 18px!important;box-shadow:0 3px 10px rgba(0,0,0,.03)!important}
+body.dark .day-card{background:rgba(18,18,18,.92)!important;box-shadow:none!important}.day-head{text-align:center!important}.day-label{font-size:34px!important;color:var(--red)!important;font-weight:1000!important;line-height:1!important}.day-date{font-size:16px!important;color:var(--muted)!important;font-weight:1000!important;margin-top:9px!important}.period-row{display:grid!important;grid-template-columns:1fr auto!important;gap:8px!important;margin:10px 0!important;font-size:18px!important;line-height:1.35!important}.period-row .pname{color:var(--muted)!important;font-weight:1000!important}.period-row.fail .pval{color:var(--red)!important}.period-row.ok .pval{color:var(--text)!important}.day-line{height:1px!important;background:var(--line)!important;margin:16px 0!important}.day-total{text-align:center!important;font-size:18px!important;line-height:1.6!important}.day-result{text-align:center!important;margin-top:12px!important}
+.period-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:14px!important;margin-bottom:26px!important}.period-card{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:22px!important;padding:24px!important;box-shadow:0 4px 14px rgba(0,0,0,.04)!important}body.dark .period-card{box-shadow:none!important;background:rgba(20,20,20,.9)!important}.period-head{font-size:25px!important;font-weight:1000!important;margin-bottom:12px!important}.period-sub{font-size:16px!important;color:var(--muted)!important;font-weight:1000!important}.period-total{margin:24px 0 18px!important;text-align:center!important;font-size:32px!important;font-weight:1000!important}.period-total span:first-child{color:var(--red)!important}.total-bar{height:18px!important;background:#e9e9e9!important;border-radius:999px!important;overflow:hidden!important;margin-bottom:18px!important}body.dark .total-bar{background:#333!important}.total-fill{height:100%!important;background:var(--red)!important;border-radius:999px!important}.team-line{display:grid!important;grid-template-columns:52px 1fr auto!important;align-items:center!important;gap:10px!important;font-size:16px!important;font-weight:1000!important;margin:12px 0!important}.team-name{font-size:17px!important}.team-num .done{color:var(--red)!important}.team-num .goal{color:var(--blue)!important}.small-bar{height:14px!important;background:#ececec!important;border-radius:999px!important;overflow:hidden!important}body.dark .small-bar{background:#333!important}.small-fill.sonic{height:100%!important;background:var(--red)!important}.small-fill.number{height:100%!important;background:var(--blue)!important}.small-fill.maeum,.small-fill.dalseo{height:100%!important;background:var(--purple)!important}.small-fill.narmi{height:100%!important;background:var(--orange)!important}
+@media(max-width:760px){.weekly-grid{grid-template-columns:1fr 1fr!important}.period-grid{grid-template-columns:1fr!important}}
+@media(max-width:540px){.weekly-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}.day-card{padding:20px 14px!important}.day-label{font-size:31px!important}.period-row{font-size:16px!important}.period-grid{grid-template-columns:1fr!important}.period-card{padding:24px!important}}
+
+
+/* ===== UI 미세조정 v2 ===== */
+/* 전체 물량 게이지: 더 작게 */
+.total-bar{
+  height:6px!important;
+  margin:10px 0 14px!important;
+  border-radius:999px!important;
+}
+.total-fill{border-radius:999px!important}
+
+/* 팀별 실적 게이지: 더 크고 눈에 띄게 */
+.team-line{
+  grid-template-columns:58px 1fr auto!important;
+  gap:11px!important;
+  margin:14px 0!important;
+  font-size:16px!important;
+}
+.team-name{font-size:17px!important}
+.small-bar{
+  height:18px!important;
+  border-radius:999px!important;
+  background:#e7e7e7!important;
+}
+body.dark .small-bar{background:#303030!important}
+.small-fill{
+  min-height:18px!important;
+  border-radius:999px!important;
+}
+.team-num{
+  min-width:72px;
+  text-align:right;
+  font-size:16px!important;
+  font-weight:1000!important;
+}
+
+/* 팀별 접속현황: 큰 상자 하나 안에 팀 순서대로 숫자만 */
+.summary-card.team-summary,
+.sum.team-summary{
+  grid-column:1/-1!important;
+  min-height:auto!important;
+}
+.team-online-flat{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:8px;
+  padding:4px 0;
+  font-size:22px;
+  font-weight:1000;
+  letter-spacing:-.5px;
+}
+.team-online-flat .online-count{
+  color:var(--green,#00bf63);
+}
+.team-online-flat .slash{
+  color:var(--muted,#767676);
+  font-weight:700;
+}
+.team-online-flat-labels{
+  display:flex;
+  justify-content:center;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:4px;
+  color:var(--muted,#767676);
+  font-size:10px;
+  font-weight:900;
+}
+@media(max-width:560px){
+  .team-line{
+    grid-template-columns:52px 1fr auto!important;
+    gap:8px!important;
+  }
+  .small-bar{height:20px!important}
+  .small-fill{min-height:20px!important}
+  .team-num{min-width:62px;font-size:15px!important}
+  .team-online-flat{gap:8px;font-size:20px}
+  .team-online-flat-labels{gap:9px;font-size:9px}
+}
+
+
+/* ===== 팀별 접속 현황 v3 : 한 카드 / 숫자 한 줄 ===== */
+.team-count-card{
+  grid-column:1/-1!important;
+  min-height:92px!important;
+  padding:14px 18px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  text-align:center!important;
+}
+.team-count-card .sum-title{
+  width:100%!important;
+  margin:0 0 8px!important;
+  text-align:center!important;
+  font-size:12px!important;
+  color:var(--ss-sub)!important;
+}
+#teamCount.team-count-grid{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  width:100%!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+.team-online-number{
+  display:inline!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#059669!important;
+  font-size:26px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+}
+.team-online-slash{
+  display:inline!important;
+  color:var(--ss-sub)!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:700!important;
+}
+@media(max-width:560px){
+  .team-count-card{min-height:84px!important;padding:12px 8px!important}
+  .team-count-card .sum-title{font-size:10px!important;margin-bottom:7px!important}
+  #teamCount.team-count-grid{gap:7px!important}
+  .team-online-number{font-size:23px!important}
+  .team-online-slash{font-size:19px!important}
+}
+
+/* 이전 내부 팀 카드 스타일 무력화 */
+#teamCount .team-count-item,
+#teamCount .team-count-name,
+#teamCount .team-count-values,
+#teamCount small{
+  all:unset!important;
+}
+
+
+/* ===== 팀별 구간실적 게이지 v4 ===== */
+/* 전체 물량 게이지는 얇게 유지 */
+.total-bar{
+  height:5px!important;
+  margin:10px 0 16px!important;
+}
+
+/* 팀별 게이지는 확실히 크게 */
+.team-line{
+  display:grid!important;
+  grid-template-columns:64px minmax(0,1fr) 82px!important;
+  align-items:center!important;
+  gap:12px!important;
+  margin:15px 0!important;
+}
+.team-name{
+  font-size:16px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+.small-bar{
+  position:relative!important;
+  width:100%!important;
+  height:24px!important;
+  min-height:24px!important;
+  border-radius:8px!important;
+  background:#e3e6ea!important;
+  overflow:hidden!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)!important;
+}
+body.dark .small-bar{
+  background:#2b313a!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
+}
+.small-fill{
+  display:block!important;
+  height:100%!important;
+  min-height:24px!important;
+  border-radius:8px!important;
+}
+.small-fill.sonic{background:var(--red)!important}
+.small-fill.number{background:var(--blue)!important}
+.small-fill.maeum,.small-fill.dalseo{background:var(--purple)!important}
+.small-fill.narmi{background:var(--orange)!important}
+
+.team-num{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:4px!important;
+  min-width:82px!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+.team-num .done{font-size:18px!important;color:var(--red)!important}
+.team-num .goal{font-size:16px!important;color:var(--blue)!important}
+
+@media(max-width:760px){
+  .team-line{
+    grid-template-columns:58px minmax(0,1fr) 74px!important;
+    gap:9px!important;
+    margin:13px 0!important;
+  }
+  .small-bar{
+    height:22px!important;
+    min-height:22px!important;
+  }
+  .small-fill{min-height:22px!important}
+  .team-num{min-width:74px!important;font-size:15px!important}
+  .team-num .done{font-size:17px!important}
+}
+@media(max-width:540px){
+  .team-line{
+    grid-template-columns:54px minmax(0,1fr) 68px!important;
+    gap:7px!important;
+    margin:12px 0!important;
+  }
+  .team-name{font-size:14px!important}
+  .small-bar{
+    height:20px!important;
+    min-height:20px!important;
+    border-radius:7px!important;
+  }
+  .small-fill{
+    min-height:20px!important;
+    border-radius:7px!important;
+  }
+  .team-num{
+    min-width:68px!important;
+    font-size:14px!important;
+    gap:3px!important;
+  }
+  .team-num .done{font-size:16px!important}
+  .team-num .goal{font-size:14px!important}
+}
 
 </style>
 </head>
@@ -1482,24 +1735,15 @@ function render(){
   setText('dayComplete',n(total.complete));
   setText('dayOrder',n(totalOrder));
   setText('onlineCount',n(total.onlineCount)+'명');
-  setText('teamCountTitle','팀별 접속 현황');
+  const visibleTeams=teams.filter(t=>t!=='신규'&&t!=='미분류');
+  const teamLabels=visibleTeams.map(t=>cfg.labels&&cfg.labels[t]?cfg.labels[t]:t);
+  setText('teamCountTitle','팀별 접속 현황 · '+teamLabels.join(' / '));
   const teamCountEl=document.getElementById('teamCount');
   if(teamCountEl){
-    const visibleTeams=teams.filter(t=>t!=='신규');
-    teamCountEl.innerHTML=visibleTeams.map(t=>{
-      const label=cfg.labels&&cfg.labels[t]?cfg.labels[t]:t;
+    teamCountEl.innerHTML=visibleTeams.map((t,i)=>{
       const sm=teamObj(t).summary||{};
       const online=Number(sm.onlineCount||0);
-      const registered=Number(sm.count||0);
-      return `<div class="team-count-item">
-        <span class="team-count-name">${label}</span>
-        <div class="team-count-values">
-          <b class="online">${n(online)}</b>
-          <i>/</i>
-          <b class="registered">${n(registered)}</b>
-        </div>
-        <small>접속 / 등록</small>
-      </div>`;
+      return `${i?'<span class="team-online-slash">/</span>':''}<span class="team-online-number">${n(online)}</span>`;
     }).join('');
   }
 
@@ -1875,48 +2119,16 @@ function paceInfo(done,goal,key){
 
 function renderPeriods(){
   const cfg=areaCfg(),teams=cfg.teams.filter(t=>t!=='신규');
-
   document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
     const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0);
     const totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0);
-    const state=periodState(key);
-    const stateLabel=state==='current'?'● 진행중':state==='done'?'종료':'대기';
-
     const teamRows=teams.map(t=>{
       const done=periodIncludedDone(t,key);
       const goal=Number(teamObj(t).targets[key]||0);
-      return `<div class="ops-team-row simple">
-        <div class="ops-team-name">${cfg.labels[t]||t}</div>
-        <div class="ops-team-metrics simple-color">
-          <b class="team-done-num">${n(done)}</b>
-          <span class="team-sep">/</span>
-          <b class="team-goal-num">${n(goal)}</b>
-        </div>
-      </div>`;
+      const cls=cfg.classes[t]||'';
+      return `<div class="team-line"><div class="team-name">${cfg.labels[t]||t}</div><div class="small-bar"><div class="small-fill ${cls}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span></div></div>`;
     }).join('');
-
-    return `<div class="ops-period ${state}">
-      <div class="ops-head">
-        <div class="ops-title-wrap">
-          <div class="ops-title">${icon} ${label}</div>
-          <div class="ops-time">${periodTimeLabel(key)}</div>
-        </div>
-        <div class="ops-state ${state}">${stateLabel}</div>
-      </div>
-
-      <div class="ops-metric-pair">
-        <div class="ops-metric done">
-          <span>완료</span>
-          <strong>${n(totalDone)}</strong>
-        </div>
-        <div class="ops-metric goal">
-          <span>발주</span>
-          <strong>${n(totalGoal)}</strong>
-        </div>
-      </div>
-
-      <div class="ops-team-list">${teamRows}</div>
-    </div>`;
+    return `<div class="period-card"><div class="period-head">${icon} ${label}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teamRows}</div>`;
   }).join('');
 }
 function renderFiltersAndRiders(){
