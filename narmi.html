@@ -1982,6 +1982,18 @@ function renderFiltersAndRiders(){
     </div>`;
   }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
 }
+
+function firebaseSafeTeamKey(value){
+  return String(value||'').trim().replace(/[.#$\[\]\/]/g,'_');
+}
+function riderTeamMapKey(r){
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  if(phone)return 'phone_'+phone;
+  const userId=firebaseSafeTeamKey(r?.userId||'');
+  if(userId)return 'uid_'+userId;
+  return String(r?.name||'').trim();
+}
+
 function renderManageList(){
   const box=document.getElementById('manageList');
   if(!box)return;
@@ -2027,7 +2039,9 @@ function renderManageList(){
             <b>${r.name||'-'}</b>
             <small>${r.phone||r.userId||''}</small>
           </div>
-          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}">
+          <select class="manage-team-select"
+                  data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}"
+                  data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}">
             ${teams.map(t=>`
               <option value="${t}" ${r.team===t?'selected':''}>${cfg.labels[t]||t}</option>
             `).join('')}
@@ -2052,46 +2066,58 @@ async function saveTeamMap(){
 
   const changes={};
   selects.forEach(sel=>{
-    const name=sel.getAttribute('data-rider-name');
+    const key=sel.getAttribute('data-rider-key');
     const team=sel.value;
-    if(name && team)changes[name]=team;
+    if(key && team)changes[key]=team;
   });
 
   const btn=document.querySelector('#manageList .manage-save-btn');
-  if(btn){
-    btn.disabled=true;
-    btn.innerText='저장중...';
-  }
+  if(btn){btn.disabled=true;btn.innerText='저장중...';}
 
   try{
-    const res=await fetch('/api/save-teammap',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        area:areaCfg().key,
-        changes
-      })
-    });
+    let saved=false;
+    let apiError='';
 
-    const text=await res.text();
-    let result={};
-    try{ result=text?JSON.parse(text):{}; }catch(e){}
-
-    if(!res.ok){
-      throw new Error(result.error||text||('HTTP '+res.status));
+    // 1차: 기존 서버 API 사용
+    try{
+      const res=await fetch('/api/save-teammap',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({area:areaCfg().key,changes})
+      });
+      const text=await res.text();
+      let result={};
+      try{result=text?JSON.parse(text):{};}catch(e){}
+      if(res.ok && result.ok!==false){
+        saved=true;
+      }else{
+        apiError=result.error||text||('HTTP '+res.status);
+      }
+    }catch(e){
+      apiError=e.message||String(e);
     }
-    if(result.ok===false){
-      throw new Error(result.error||'저장 실패');
+
+    // 2차: API가 없거나 실패하면 Firebase teamMap에 직접 PATCH
+    if(!saved){
+      const url=`${FIREBASE_BASE}/settings/${areaCfg().key}/teamMap.json`;
+      const res=await fetch(url,{
+        method:'PATCH',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(changes)
+      });
+      if(!res.ok){
+        const text=await res.text();
+        throw new Error(`팀맵 저장 실패 · API: ${apiError||'-'} · Firebase: ${text||res.status}`);
+      }
+      saved=true;
     }
 
-    // 서버 응답 직후 화면에도 우선 반영
     (DATA.riders||[]).forEach(r=>{
-      if(changes[r.name])r.team=changes[r.name];
+      const key=riderTeamMapKey(r);
+      if(changes[key])r.team=changes[key];
     });
 
     alert('팀 변경 저장 완료');
-
-    // 최신 Firebase 데이터를 다시 읽고 기사관리 화면 유지
     await loadData();
     switchPage('manage');
     renderManageList();
@@ -2099,10 +2125,7 @@ async function saveTeamMap(){
     console.error('기사 팀 변경 저장 오류',e);
     alert('저장 오류: '+(e.message||e));
   }finally{
-    if(btn){
-      btn.disabled=false;
-      btn.innerText='팀 변경 저장';
-    }
+    if(btn){btn.disabled=false;btn.innerText='팀 변경 저장';}
   }
 }
 

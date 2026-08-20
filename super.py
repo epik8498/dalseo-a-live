@@ -102,7 +102,7 @@ CENTER_CONFIGS = [{'area': '달서A',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
   'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀', '신규'],
-  'area_config': {'소닉팀': 3, '넘버팀': 5.5, '마음팀': 4.5, '신규': 0},
+  'area_config': {'소닉팀': 2.5, '넘버팀': 5.5, '마음팀': 5.0, '신규': 0},
   'team_map_path': '/settings/dalseob/teamMap',
   'live_path': '/live/dalseob',
   'weekly_path': '/weekly/dalseob',
@@ -111,8 +111,8 @@ CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'junggua',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
   'center_code': 'DP2511170481',
-  'team_order': ['소닉팀', '넘버팀', '마음팀', '나르미팀', '신규'],
-  'area_config': {'소닉팀': 3.4, '넘버팀': 1.2, '마음팀': 3.4, '나르미팀': 1, '신규': 0},
+  'team_order': ['소닉팀', '넘버팀', 'THE +팀', '나르미팀', '신규'],
+  'area_config': {'소닉팀': 3.0, '넘버팀': 1.2, 'THE +팀': 3.4, '나르미팀': 1.4, '신규': 0},
   'team_map_path': '/settings/junggua/teamMap',
   'live_path': '/live/junggua',
   'weekly_path': '/weekly/junggua',
@@ -288,20 +288,103 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
 
 
 
-def team_of(name):
+
+def normalize_team_for_area(team, area_name=None):
+    """권역별 표준 팀명으로 변환합니다."""
+    area_name = area_name or AREA_NAME
+    team = norm(team)
+
+    if area_name == "달서B":
+        if team in ("마음", "마음팀", "THE +", "THE +팀", "THE+", "THE+팀"):
+            return "마음팀"
+
+    if area_name == "중구A":
+        if team in ("마음", "마음팀", "THE +", "THE +팀", "THE+", "THE+팀"):
+            return "THE +팀"
+
+    return team
+
+
+def migrate_team_map_names():
+    """Firebase teamMap에 남아 있는 예전 팀명을 권역별 현재 이름으로 실제 저장까지 정리합니다."""
+    global TEAM_MAP_CACHE
+    init_firebase()
+    ref = db.reference(TEAM_MAP_PATH)
+    raw = ref.get() or {}
+    if not isinstance(raw, dict):
+        raw = {}
+
+    migrated = {}
+    updates = {}
+    for rider_name, old_team in raw.items():
+        clean_name = norm(rider_name)
+        new_team = normalize_team_for_area(old_team, AREA_NAME)
+        migrated[clean_name] = new_team
+        if norm(old_team) != new_team:
+            updates[clean_name] = new_team
+
+    if updates:
+        ref.update(updates)
+        print(f"{AREA_NAME} teamMap 팀명 마이그레이션 완료: {len(updates)}명")
+        for rider_name, team in list(updates.items())[:20]:
+            print(f"  {rider_name} -> {team}")
+    else:
+        print(f"{AREA_NAME} teamMap 팀명 마이그레이션: 변경 없음")
+
+    TEAM_MAP_CACHE = migrated
+    return migrated
+
+
+def firebase_safe_key(value):
+    """Firebase key 금지문자를 제거한 안정적인 문자열을 만듭니다."""
+    value = norm(value)
+    return re.sub(r'[.#$\[\]/]', '_', value)
+
+
+def rider_team_keys(name, phone="", user_id=""):
+    """동명이인 충돌 방지를 위해 고유 식별키를 우선 반환합니다.
+
+    우선순위:
+      1) 전화번호
+      2) 배민 userId
+      3) 기존 이름 key (하위 호환)
+    """
+    keys = []
+    phone_key = normalize_phone(phone)
+    if phone_key:
+        keys.append("phone_" + phone_key)
+
+    user_key = firebase_safe_key(user_id)
+    if user_key:
+        keys.append("uid_" + user_key)
+
+    name_key = norm(name)
+    if name_key:
+        keys.append(name_key)
+
+    return keys
+
+
+def team_of(name, phone="", user_id=""):
     global TEAM_MAP_CACHE
     name = norm(name)
     if TEAM_MAP_CACHE is None:
         try:
-            init_firebase()
-            TEAM_MAP_CACHE = db.reference(TEAM_MAP_PATH).get() or {}
-            TEAM_MAP_CACHE = {norm(k): norm(v) for k, v in TEAM_MAP_CACHE.items()}
-            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명")
+            TEAM_MAP_CACHE = migrate_team_map_names()
+            print(f"teamMap 로드 완료: {len(TEAM_MAP_CACHE)}명 / {AREA_NAME}")
         except Exception as e:
-            print("teamMap 로드 실패:", e)
+            print("teamMap 로드/마이그레이션 실패:", e)
             TEAM_MAP_CACHE = {}
-    mapped = TEAM_MAP_CACHE.get(name)
-    # 대표가 기사관리에서 직접 지정/이동한 팀을 최우선으로 적용합니다.
+    mapped = None
+    matched_key = None
+    for lookup_key in rider_team_keys(name, phone, user_id):
+        candidate = normalize_team_for_area(TEAM_MAP_CACHE.get(lookup_key), AREA_NAME)
+        if candidate in TEAM_ORDER:
+            mapped = candidate
+            matched_key = lookup_key
+            break
+
+    # 전화번호/userId 고유키를 우선하고, 없을 때만 기존 이름 key를 하위 호환으로 사용합니다.
     if mapped in TEAM_ORDER:
         return mapped
     # 고정 명단에 포함된 기존 기사는 지정 팀을 유지합니다.
@@ -748,7 +831,7 @@ def parse_row_lines(row_lines):
         "name": name,
         "phone": phone,
         "userId": user_id,
-        "team": team_of(name),
+        "team": team_of(name, phone, user_id),
         "status": "운행중" if is_online else "운행 종료",
         "isOnline": is_online,
         "complete": complete,
@@ -786,7 +869,7 @@ def parse_dom_rows(row_groups):
                 "name": group.get("name", ""),
                 "phone": group.get("phone", ""),
                 "userId": group.get("userId", ""),
-                "team": team_of(group.get("name", "")),
+                "team": team_of(group.get("name", ""), group.get("phone", ""), group.get("userId", "")),
                 "status": "운행중" if is_online else "운행 종료",
                 "isOnline": is_online,
                 "complete": complete,
