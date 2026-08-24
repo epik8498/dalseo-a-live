@@ -1522,6 +1522,69 @@ function renderWeeklyControls(){
     }).join('');
   }
 }
+
+/* ===== 주간실적 목표물량: 현재 세트 기준 재계산 ===== */
+const WEEKLY_DAY_TARGETS={
+  0:{morning:19,afternoon:18,evening:30,midnight:23}, // 월
+  1:{morning:19,afternoon:18,evening:30,midnight:23}, // 화
+  2:{morning:19,afternoon:18,evening:30,midnight:23}, // 수
+  3:{morning:19,afternoon:18,evening:30,midnight:23}, // 목
+  4:{morning:21,afternoon:21,evening:32,midnight:26}, // 금
+  5:{morning:27,afternoon:22,evening:36,midnight:25}, // 토
+  6:{morning:29,afternoon:22,evening:35,midnight:24}  // 일
+};
+const WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY={
+  "2026-05-25":6,
+  "2026-06-03":6,
+  "2026-07-17":6,
+  "2026-08-17":6
+};
+function targetWeekdayForDate(dateStr){
+  if(WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY[dateStr]!=null)return WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY[dateStr];
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  return new Date(y,m-1,d).getDay()===0?6:new Date(y,m-1,d).getDay()-1;
+}
+function currentTeamSets(team){
+  const live=DATA?.teams?.[team]?.targets;
+  if(live && Number.isFinite(Number(live.sets)))return Number(live.sets);
+
+  // sets 필드가 없는 예전 live 데이터 fallback:
+  // 현재 날짜의 발주량 / 해당 요일 기본물량으로 세트 수를 역산
+  const currentDate=DATA?.businessDate;
+  if(live && currentDate){
+    const wd=targetWeekdayForDate(currentDate);
+    const base=WEEKLY_DAY_TARGETS[wd]||{};
+    for(const key of ['morning','afternoon','evening','midnight']){
+      const baseVal=Number(base[key]||0),goal=Number(live[key]||0);
+      if(baseVal>0 && goal>0){
+        return Math.round((goal/baseVal)*10)/10;
+      }
+    }
+  }
+  return null;
+}
+function currentGoalForTeamDate(team,date,key,storedGoal=0){
+  const sets=currentTeamSets(team);
+  if(sets==null)return Number(storedGoal||0);
+  const wd=targetWeekdayForDate(date);
+  const base=Number((WEEKLY_DAY_TARGETS[wd]||{})[key]||0);
+  return Math.ceil(base*sets);
+}
+function currentGoalForAllDate(date,key,row){
+  const cfg=areaCfg();
+  const teams=(cfg.teams||[]).filter(t=>t!=='신규'&&t!=='미분류');
+  let usable=false,total=0;
+  teams.forEach(team=>{
+    const sets=currentTeamSets(team);
+    if(sets!=null){
+      usable=true;
+      total+=currentGoalForTeamDate(team,date,key,0);
+    }
+  });
+  if(usable)return total;
+  return Number(row?.periodTargets?.[key]||0);
+}
+
 function weeklyView(){
   ensureWeeklySelection();
   const cfg=areaCfg();
@@ -1534,7 +1597,7 @@ function weeklyView(){
 
   const days=dates.map((date,i)=>{
     const row=byDate[date]||{};
-    let sm={},tg={},has=false;
+    let sm={},storedTargets={},has=false;
 
     if(isAll){
       has=!!row.businessDate;
@@ -1550,13 +1613,13 @@ function weeklyView(){
         excluded:Number(row.excluded||row.totalExcluded||row.total?.excluded||0),
         acceptRate:row.acceptRate
       };
-      tg=row.periodTargets||{};
+      storedTargets=row.periodTargets||{};
     }else{
       const stored=row.teams&&row.teams[WEEKLY_TEAM];
       if(stored){
         has=true;
         sm=(stored.summary&&typeof stored.summary==='object')?stored.summary:stored;
-        tg=(stored.targets&&typeof stored.targets==='object')?stored.targets:{};
+        storedTargets=(stored.targets&&typeof stored.targets==='object')?stored.targets:{};
       }
     }
 
@@ -1566,9 +1629,15 @@ function weeklyView(){
     const excluded=Number(sm.excluded||0);
 
     const periods=PERIODS.map(([key,,label])=>{
-      const done=Number(sm[key]||0),goal=Number(tg[key]||0);
+      const done=Number(sm[key]||0);
+      // 핵심: 과거 weekly 파일에 저장된 예전 목표값을 그대로 쓰지 않고,
+      // 현재 DATA의 팀별 sets를 기준으로 해당 날짜(요일)의 목표를 다시 계산합니다.
+      const goal=isAll
+        ? currentGoalForAllDate(date,key,row)
+        : currentGoalForTeamDate(WEEKLY_TEAM,date,key,storedTargets[key]);
       return {key,label,done,goal,fail:has&&goal>0&&done<goal,ok:has&&goal>0&&done>=goal};
     });
+
     const failPeriods=periods.filter(p=>p.fail);
     return {label:labels[i],date,has,complete,bad,rate,excluded,periods,ok:has&&failPeriods.length===0,failPeriods};
   });
