@@ -1,0 +1,77 @@
+[1mdiff --git a/maeum_offscreen.py b/maeum_offscreen.py[m
+[1mindex 165d9a71..13acbf55 100644[m
+[1m--- a/maeum_offscreen.py[m
+[1m+++ b/maeum_offscreen.py[m
+[36m@@ -48,8 +48,8 @@[m [mCENTER_CONFIGS = [{'area': '마음 달서A',[m
+   'slug': 'maeuma',[m
+   'aliases': ['대구달서온나A(DP2509199364)', '대구달서온나A (DP2509199364)', '대구달서온나A', 'DP2509199364'],[m
+   'center_code': 'DP2509199364',[m
+[31m-  'team_order': ['마음1', '마음3'],[m
+[31m-  'area_config': {'마음1': 7, '마음3': 4},[m
+[32m+[m[32m  'team_order': ['마음1', '마음3', '마음4'],[m
+[32m+[m[32m  'area_config': {'마음1': 7, '마음3': 4, '마음4': 0},[m
+   'team_map_path': '/settings/maeuma/teamMap',[m
+   'live_path': '/live/maeuma',[m
+   'weekly_path': '/weekly/maeuma',[m
+[36m@@ -411,8 +411,21 @@[m [mDAY_TARGETS = {[m
+ SPECIAL_DAY_TARGET_WEEKDAY = {[m
+     "2026-05-25": 6,[m
+     "2026-06-03": 6,[m
+[32m+[m[32m    "2026-08-17": 6,[m
+[32m+[m[41m    [m
+ }[m
+ [m
+[32m+[m[32mdef effective_weekday(date_value):[m
+[32m+[m[32m    """Special Day가 지정된 날짜는 실제 요일 대신 지정 요일 기준을 사용합니다."""[m
+[32m+[m[32m    if hasattr(date_value, "strftime"):[m
+[32m+[m[32m        key = date_value.strftime("%Y-%m-%d")[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        key = str(date_value)[m
+[32m+[m[32m    if key in SPECIAL_DAY_TARGET_WEEKDAY:[m
+[32m+[m[32m        return int(SPECIAL_DAY_TARGET_WEEKDAY[key])[m
+[32m+[m[32m    return date_value.weekday()[m
+[32m+[m
+[32m+[m
+ PERIODS = ["morning", "afternoon", "evening", "midnight"][m
+ PERIOD_LABELS = {[m
+     "morning": "오전피크",[m
+[36m@@ -476,7 +489,7 @@[m [mdef split_hourly_by_sla(hourly, date_value=None):[m
+         h += [0] * (24 - len(h))[m
+     if date_value is None:[m
+         date_value = business_date(datetime.now())[m
+[31m-    weekend = date_value.weekday() >= 5[m
+[32m+[m[32m    weekend = effective_weekday(date_value) >= 5[m
+ [m
+     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음[m
+     morning_excluded = sum(h[6:9])        # 06,07,08[m
+[36m@@ -511,7 +524,7 @@[m [mdef business_date(now):[m
+ [m
+ def current_period(now):[m
+     h = now.hour[m
+[31m-    weekend = now.weekday() >= 5[m
+[32m+[m[32m    weekend = effective_weekday(business_date(now)) >= 5[m
+ [m
+     # SLA 포함 구간 기준입니다.[m
+     # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.[m
+[36m@@ -565,13 +578,17 @@[m [mdef team_of(name):[m
+         except Exception as e:[m
+             print("teamMap 로드 실패:", e)[m
+             TEAM_MAP_CACHE = {}[m
+[31m-    # 명시된 고정명단을 Firebase teamMap보다 우선합니다.[m
+[31m-    for team, names in REQUIRED_TEAM_RIDERS.items():[m
+[31m-        if name in {norm(x) for x in names}:[m
+[31m-            return team[m
+[32m+[m[32m    # 기사이동에서 저장한 Firebase teamMap을 최우선 적용합니다.[m
+[32m+[m[32m    # 따라서 고정명단에 있던 기사도 대표가 마음4 등 다른 팀으로 옮기면 저장값을 그대로 따릅니다.[m
+     mapped = TEAM_MAP_CACHE.get(name)[m
+     if mapped in TEAM_ORDER:[m
+         return mapped[m
+[32m+[m
+[32m+[m[32m    # Firebase에 별도 이동값이 없는 기사만 초기 고정명단을 적용합니다.[m
+[32m+[m[32m    for team, names in REQUIRED_TEAM_RIDERS.items():[m
+[32m+[m[32m        if name in {norm(x) for x in names}:[m
+[32m+[m[32m            return team[m
+[32m+[m
+     return TEAM_ORDER[0] if TEAM_ORDER else "소닉팀"[m
+ [m
+ def to_int(value):[m

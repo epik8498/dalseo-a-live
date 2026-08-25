@@ -65,10 +65,10 @@ CENTER_CONFIGS = [
         "center_code": "DP2505305786",
         "team_order": ["성공", "상생", "BM", "서구", "룰랄", "미분류"],
         "area_config": {
-            "성공": 3,
-            "상생": 1,
-            "BM": 1,
-            "서구": 3,
+            "성공": 3.25,
+            "상생": 1.25,
+            "BM": 2.25,
+            "서구": 3.25,
             "룰랄": 0,
             "미분류": 0,
         },
@@ -685,9 +685,9 @@ CENTER_CONFIGS = [
         "center_code": "DP2602028125",
         "team_order": ["슈", "넘", "마", "미분류"],
         "area_config": {
-            "슈": 2,
-            "넘": 5,
-            "마": 5,
+            "슈": 3,
+            "넘": 5.5,
+            "마": 4.5,
             "미분류": 0,
         },
         "team_map_path": "/settings/dalseob_onna/teamMap",
@@ -1267,8 +1267,22 @@ DAY_TARGETS = {
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
-    "2026-07-17": 6
+    "2026-07-17": 6,
+    "2026-08-17": 6,
+    
 }
+
+
+def effective_weekday(date_value):
+    """Special Day가 지정된 날짜는 실제 요일 대신 지정 요일 기준을 사용합니다."""
+    if hasattr(date_value, "strftime"):
+        key = date_value.strftime("%Y-%m-%d")
+    else:
+        key = str(date_value)
+    if key in SPECIAL_DAY_TARGET_WEEKDAY:
+        return int(SPECIAL_DAY_TARGET_WEEKDAY[key])
+    return date_value.weekday()
+
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
 PERIOD_LABELS = {
@@ -1335,7 +1349,7 @@ def split_hourly_by_sla(hourly, date_value=None):
         h += [0] * (24 - len(h))
     if date_value is None:
         date_value = business_date(datetime.now())
-    weekend = date_value.weekday() >= 5
+    weekend = effective_weekday(date_value) >= 5
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
     morning_excluded = sum(h[6:9])        # 06,07,08
@@ -1370,7 +1384,7 @@ def business_date(now):
 
 def current_period(now):
     h = now.hour
-    weekend = now.weekday() >= 5
+    weekend = effective_weekday(business_date(now)) >= 5
 
     # SLA 포함 구간 기준입니다.
     # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.

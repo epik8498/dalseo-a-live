@@ -1275,61 +1275,61 @@
     "businessDate": "2026-07-24",
     "weekStart": "2026-07-22",
     "weekEnd": "2026-07-28",
-    "closedAt": "2026-07-24 15:04:48",
-    "totalComplete": 603,
-    "totalReject": 29,
-    "totalCancel": 15,
+    "closedAt": "2026-07-25 05:59:31",
+    "totalComplete": 2384,
+    "totalReject": 200,
+    "totalCancel": 66,
     "riderFault": 0,
     "morning": 343,
-    "afternoon": 218,
-    "evening": 0,
-    "midnight": 0,
+    "afternoon": 449,
+    "evening": 680,
+    "midnight": 698,
     "morningExcluded": 40,
-    "midnightExcluded": 0,
-    "excluded": 40,
+    "midnightExcluded": 172,
+    "excluded": 212,
     "periodTargets": {
       "morning": 300,
       "afternoon": 264,
       "evening": 408,
       "midnight": 348
     },
-    "acceptRate": 93.2,
-    "spareRejects": 106,
+    "acceptRate": 90.0,
+    "spareRejects": 330,
     "total": {
-      "complete": 603,
-      "reject": 29,
-      "cancel": 15,
+      "complete": 2384,
+      "reject": 200,
+      "cancel": 66,
       "riderFault": 0,
       "morning": 343,
-      "afternoon": 218,
-      "evening": 0,
-      "midnight": 0,
+      "afternoon": 449,
+      "evening": 680,
+      "midnight": 698,
       "morningExcluded": 40,
-      "midnightExcluded": 0,
-      "excluded": 40,
+      "midnightExcluded": 172,
+      "excluded": 212,
       "count": 227,
-      "onlineCount": 38,
-      "acceptRate": 93.2,
-      "spareRejects": 106
+      "onlineCount": 0,
+      "acceptRate": 90.0,
+      "spareRejects": 330
     },
     "teams": {
       "소닉팀": {
         "summary": {
-          "complete": 209,
-          "reject": 17,
-          "cancel": 5,
+          "complete": 707,
+          "reject": 108,
+          "cancel": 31,
           "riderFault": 0,
           "morning": 119,
-          "afternoon": 80,
-          "evening": 0,
-          "midnight": 0,
+          "afternoon": 162,
+          "evening": 214,
+          "midnight": 177,
           "morningExcluded": 10,
-          "midnightExcluded": 0,
-          "excluded": 10,
+          "midnightExcluded": 25,
+          "excluded": 35,
           "count": 67,
-          "onlineCount": 13,
-          "acceptRate": 90.5,
-          "spareRejects": 30
+          "onlineCount": 0,
+          "acceptRate": 83.6,
+          "spareRejects": 37
         },
         "targets": {
           "morning": 50,
@@ -1342,21 +1342,21 @@
       },
       "넘버팀": {
         "summary": {
-          "complete": 210,
-          "reject": 5,
-          "cancel": 7,
+          "complete": 709,
+          "reject": 34,
+          "cancel": 13,
           "riderFault": 0,
           "morning": 119,
-          "afternoon": 77,
-          "evening": 0,
-          "midnight": 0,
+          "afternoon": 148,
+          "evening": 165,
+          "midnight": 179,
           "morningExcluded": 14,
-          "midnightExcluded": 0,
-          "excluded": 14,
+          "midnightExcluded": 84,
+          "excluded": 98,
           "count": 50,
-          "onlineCount": 11,
-          "acceptRate": 94.6,
-          "spareRejects": 40
+          "onlineCount": 0,
+          "acceptRate": 93.8,
+          "spareRejects": 130
         },
         "targets": {
           "morning": 125,
@@ -1369,21 +1369,21 @@
       },
       "마음팀": {
         "summary": {
-          "complete": 184,
-          "reject": 7,
-          "cancel": 3,
+          "complete": 968,
+          "reject": 58,
+          "cancel": 22,
           "riderFault": 0,
           "morning": 105,
-          "afternoon": 61,
-          "evening": 0,
-          "midnight": 0,
+          "afternoon": 139,
+          "evening": 301,
+          "midnight": 342,
           "morningExcluded": 16,
-          "midnightExcluded": 0,
-          "excluded": 16,
+          "midnightExcluded": 63,
+          "excluded": 79,
           "count": 110,
-          "onlineCount": 14,
-          "acceptRate": 94.8,
-          "spareRejects": 36
+          "onlineCount": 0,
+          "acceptRate": 92.4,
+          "spareRejects": 162
         },
         "targets": {
           "morning": 125,
@@ -1392,6 +1392,4070 @@
           "midnight": 145,
           "total": 550,
           "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-25",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-26 05:59:34",
+    "totalComplete": 2826,
+    "totalReject": 301,
+    "totalCancel": 78,
+    "riderFault": 1,
+    "morning": 634,
+    "afternoon": 443,
+    "evening": 842,
+    "midnight": 692,
+    "morningExcluded": 49,
+    "midnightExcluded": 164,
+    "excluded": 213,
+    "periodTargets": {
+      "morning": 372,
+      "afternoon": 276,
+      "evening": 456,
+      "midnight": 336
+    },
+    "acceptRate": 88.1,
+    "spareRejects": 326,
+    "total": {
+      "complete": 2826,
+      "reject": 301,
+      "cancel": 78,
+      "riderFault": 1,
+      "morning": 634,
+      "afternoon": 443,
+      "evening": 842,
+      "midnight": 692,
+      "morningExcluded": 49,
+      "midnightExcluded": 164,
+      "excluded": 213,
+      "count": 227,
+      "onlineCount": 0,
+      "acceptRate": 88.1,
+      "spareRejects": 326
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 939,
+          "reject": 156,
+          "cancel": 43,
+          "riderFault": 0,
+          "morning": 261,
+          "afternoon": 166,
+          "evening": 265,
+          "midnight": 202,
+          "morningExcluded": 11,
+          "midnightExcluded": 34,
+          "excluded": 45,
+          "count": 67,
+          "onlineCount": 0,
+          "acceptRate": 82.5,
+          "spareRejects": 35
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 46,
+          "evening": 76,
+          "midnight": 56,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 941,
+          "reject": 67,
+          "cancel": 15,
+          "riderFault": 1,
+          "morning": 182,
+          "afternoon": 147,
+          "evening": 275,
+          "midnight": 232,
+          "morningExcluded": 23,
+          "midnightExcluded": 82,
+          "excluded": 105,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 91.9,
+          "spareRejects": 152
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 946,
+          "reject": 78,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 191,
+          "afternoon": 130,
+          "evening": 302,
+          "midnight": 258,
+          "morningExcluded": 15,
+          "midnightExcluded": 48,
+          "excluded": 63,
+          "count": 110,
+          "onlineCount": 0,
+          "acceptRate": 90.6,
+          "spareRejects": 138
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-26",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-27 05:59:38",
+    "totalComplete": 2623,
+    "totalReject": 414,
+    "totalCancel": 93,
+    "riderFault": 1,
+    "morning": 679,
+    "afternoon": 457,
+    "evening": 675,
+    "midnight": 600,
+    "morningExcluded": 54,
+    "midnightExcluded": 154,
+    "excluded": 208,
+    "periodTargets": {
+      "morning": 384,
+      "afternoon": 288,
+      "evening": 444,
+      "midnight": 324
+    },
+    "acceptRate": 83.8,
+    "spareRejects": 147,
+    "total": {
+      "complete": 2623,
+      "reject": 414,
+      "cancel": 93,
+      "riderFault": 1,
+      "morning": 679,
+      "afternoon": 457,
+      "evening": 675,
+      "midnight": 600,
+      "morningExcluded": 54,
+      "midnightExcluded": 154,
+      "excluded": 208,
+      "count": 226,
+      "onlineCount": 0,
+      "acceptRate": 83.8,
+      "spareRejects": 147
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 827,
+          "reject": 208,
+          "cancel": 40,
+          "riderFault": 0,
+          "morning": 258,
+          "afternoon": 150,
+          "evening": 258,
+          "midnight": 133,
+          "morningExcluded": 22,
+          "midnightExcluded": 4,
+          "excluded": 26,
+          "count": 66,
+          "onlineCount": 0,
+          "acceptRate": 76.9,
+          "spareRejects": -42
+        },
+        "targets": {
+          "morning": 64,
+          "afternoon": 48,
+          "evening": 74,
+          "midnight": 54,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 939,
+          "reject": 42,
+          "cancel": 15,
+          "riderFault": 0,
+          "morning": 232,
+          "afternoon": 172,
+          "evening": 197,
+          "midnight": 229,
+          "morningExcluded": 10,
+          "midnightExcluded": 99,
+          "excluded": 109,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 94.3,
+          "spareRejects": 177
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 857,
+          "reject": 164,
+          "cancel": 38,
+          "riderFault": 1,
+          "morning": 189,
+          "afternoon": 135,
+          "evening": 220,
+          "midnight": 238,
+          "morningExcluded": 22,
+          "midnightExcluded": 51,
+          "excluded": 73,
+          "count": 110,
+          "onlineCount": 0,
+          "acceptRate": 80.8,
+          "spareRejects": 11
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-27",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-28 05:59:02",
+    "totalComplete": 1518,
+    "totalReject": 108,
+    "totalCancel": 32,
+    "riderFault": 0,
+    "morning": 293,
+    "afternoon": 277,
+    "evening": 400,
+    "midnight": 358,
+    "morningExcluded": 37,
+    "midnightExcluded": 151,
+    "excluded": 188,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 91.6,
+    "spareRejects": 239,
+    "total": {
+      "complete": 1518,
+      "reject": 108,
+      "cancel": 32,
+      "riderFault": 0,
+      "morning": 293,
+      "afternoon": 277,
+      "evening": 400,
+      "midnight": 358,
+      "morningExcluded": 37,
+      "midnightExcluded": 151,
+      "excluded": 188,
+      "count": 226,
+      "onlineCount": 0,
+      "acceptRate": 91.6,
+      "spareRejects": 239
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 460,
+          "reject": 38,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 105,
+          "afternoon": 116,
+          "evening": 114,
+          "midnight": 105,
+          "morningExcluded": 11,
+          "midnightExcluded": 9,
+          "excluded": 20,
+          "count": 66,
+          "onlineCount": 0,
+          "acceptRate": 90.4,
+          "spareRejects": 66
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 446,
+          "reject": 22,
+          "cancel": 3,
+          "riderFault": 0,
+          "morning": 105,
+          "afternoon": 76,
+          "evening": 92,
+          "midnight": 96,
+          "morningExcluded": 19,
+          "midnightExcluded": 58,
+          "excluded": 77,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 94.7,
+          "spareRejects": 86
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 612,
+          "reject": 48,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 83,
+          "afternoon": 85,
+          "evening": 194,
+          "midnight": 157,
+          "morningExcluded": 7,
+          "midnightExcluded": 84,
+          "excluded": 91,
+          "count": 110,
+          "onlineCount": 0,
+          "acceptRate": 90.3,
+          "spareRejects": 87
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-28",
+    "weekStart": "2026-07-22",
+    "weekEnd": "2026-07-28",
+    "closedAt": "2026-07-29 05:59:43",
+    "totalComplete": 1779,
+    "totalReject": 273,
+    "totalCancel": 59,
+    "riderFault": 1,
+    "morning": 358,
+    "afternoon": 343,
+    "evening": 488,
+    "midnight": 427,
+    "morningExcluded": 37,
+    "midnightExcluded": 124,
+    "excluded": 161,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 84.2,
+    "spareRejects": 111,
+    "total": {
+      "complete": 1779,
+      "reject": 273,
+      "cancel": 59,
+      "riderFault": 1,
+      "morning": 358,
+      "afternoon": 343,
+      "evening": 488,
+      "midnight": 427,
+      "morningExcluded": 37,
+      "midnightExcluded": 124,
+      "excluded": 161,
+      "count": 226,
+      "onlineCount": 0,
+      "acceptRate": 84.2,
+      "spareRejects": 111
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 639,
+          "reject": 155,
+          "cancel": 25,
+          "riderFault": 1,
+          "morning": 152,
+          "afternoon": 165,
+          "evening": 196,
+          "midnight": 98,
+          "morningExcluded": 7,
+          "midnightExcluded": 21,
+          "excluded": 28,
+          "count": 66,
+          "onlineCount": 0,
+          "acceptRate": 77.9,
+          "spareRejects": -22
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 509,
+          "reject": 27,
+          "cancel": 4,
+          "riderFault": 0,
+          "morning": 118,
+          "afternoon": 95,
+          "evening": 93,
+          "midnight": 121,
+          "morningExcluded": 18,
+          "midnightExcluded": 64,
+          "excluded": 82,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 94.3,
+          "spareRejects": 96
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 631,
+          "reject": 91,
+          "cancel": 30,
+          "riderFault": 0,
+          "morning": 88,
+          "afternoon": 83,
+          "evening": 199,
+          "midnight": 208,
+          "morningExcluded": 12,
+          "midnightExcluded": 39,
+          "excluded": 51,
+          "count": 110,
+          "onlineCount": 0,
+          "acceptRate": 83.9,
+          "spareRejects": 36
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-29",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-07-30 05:58:21",
+    "totalComplete": 1817,
+    "totalReject": 174,
+    "totalCancel": 66,
+    "riderFault": 0,
+    "morning": 270,
+    "afternoon": 320,
+    "evening": 516,
+    "midnight": 499,
+    "morningExcluded": 41,
+    "midnightExcluded": 167,
+    "excluded": 208,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 88.3,
+    "spareRejects": 214,
+    "total": {
+      "complete": 1817,
+      "reject": 174,
+      "cancel": 66,
+      "riderFault": 0,
+      "morning": 270,
+      "afternoon": 320,
+      "evening": 516,
+      "midnight": 499,
+      "morningExcluded": 41,
+      "midnightExcluded": 167,
+      "excluded": 208,
+      "count": 229,
+      "onlineCount": 0,
+      "acceptRate": 88.3,
+      "spareRejects": 214
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 589,
+          "reject": 92,
+          "cancel": 43,
+          "riderFault": 0,
+          "morning": 119,
+          "afternoon": 117,
+          "evening": 160,
+          "midnight": 142,
+          "morningExcluded": 13,
+          "midnightExcluded": 38,
+          "excluded": 51,
+          "count": 68,
+          "onlineCount": 0,
+          "acceptRate": 81.4,
+          "spareRejects": 12
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 588,
+          "reject": 43,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 78,
+          "afternoon": 100,
+          "evening": 159,
+          "midnight": 154,
+          "morningExcluded": 21,
+          "midnightExcluded": 74,
+          "excluded": 95,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.2,
+          "spareRejects": 97
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 640,
+          "reject": 39,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 73,
+          "afternoon": 103,
+          "evening": 197,
+          "midnight": 203,
+          "morningExcluded": 7,
+          "midnightExcluded": 55,
+          "excluded": 62,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 92.1,
+          "spareRejects": 105
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-30",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-07-31 05:58:37",
+    "totalComplete": 2061,
+    "totalReject": 218,
+    "totalCancel": 58,
+    "riderFault": 0,
+    "morning": 278,
+    "afternoon": 319,
+    "evening": 681,
+    "midnight": 611,
+    "morningExcluded": 37,
+    "midnightExcluded": 133,
+    "excluded": 170,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 88.2,
+    "spareRejects": 239,
+    "total": {
+      "complete": 2061,
+      "reject": 218,
+      "cancel": 58,
+      "riderFault": 0,
+      "morning": 278,
+      "afternoon": 319,
+      "evening": 681,
+      "midnight": 611,
+      "morningExcluded": 37,
+      "midnightExcluded": 133,
+      "excluded": 170,
+      "count": 230,
+      "onlineCount": 0,
+      "acceptRate": 88.2,
+      "spareRejects": 239
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 606,
+          "reject": 94,
+          "cancel": 26,
+          "riderFault": 0,
+          "morning": 96,
+          "afternoon": 105,
+          "evening": 225,
+          "midnight": 158,
+          "morningExcluded": 14,
+          "midnightExcluded": 8,
+          "excluded": 22,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 83.5,
+          "spareRejects": 31
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 540,
+          "reject": 39,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 85,
+          "afternoon": 97,
+          "evening": 140,
+          "midnight": 155,
+          "morningExcluded": 14,
+          "midnightExcluded": 49,
+          "excluded": 63,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.2,
+          "spareRejects": 89
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 915,
+          "reject": 85,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 97,
+          "afternoon": 117,
+          "evening": 316,
+          "midnight": 298,
+          "morningExcluded": 9,
+          "midnightExcluded": 76,
+          "excluded": 85,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 89.3,
+          "spareRejects": 118
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-07-31",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-08-01 05:58:18",
+    "totalComplete": 2437,
+    "totalReject": 207,
+    "totalCancel": 70,
+    "riderFault": 0,
+    "morning": 302,
+    "afternoon": 374,
+    "evening": 709,
+    "midnight": 782,
+    "morningExcluded": 43,
+    "midnightExcluded": 223,
+    "excluded": 266,
+    "periodTargets": {
+      "morning": 300,
+      "afternoon": 264,
+      "evening": 408,
+      "midnight": 348
+    },
+    "acceptRate": 89.8,
+    "spareRejects": 332,
+    "total": {
+      "complete": 2437,
+      "reject": 207,
+      "cancel": 70,
+      "riderFault": 0,
+      "morning": 302,
+      "afternoon": 374,
+      "evening": 709,
+      "midnight": 782,
+      "morningExcluded": 43,
+      "midnightExcluded": 223,
+      "excluded": 266,
+      "count": 231,
+      "onlineCount": 0,
+      "acceptRate": 89.8,
+      "spareRejects": 332
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 752,
+          "reject": 76,
+          "cancel": 26,
+          "riderFault": 0,
+          "morning": 113,
+          "afternoon": 137,
+          "evening": 204,
+          "midnight": 229,
+          "morningExcluded": 12,
+          "midnightExcluded": 57,
+          "excluded": 69,
+          "count": 70,
+          "onlineCount": 0,
+          "acceptRate": 88.1,
+          "spareRejects": 86
+        },
+        "targets": {
+          "morning": 50,
+          "afternoon": 44,
+          "evening": 68,
+          "midnight": 58,
+          "total": 220,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 630,
+          "reject": 36,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 89,
+          "afternoon": 73,
+          "evening": 183,
+          "midnight": 203,
+          "morningExcluded": 16,
+          "midnightExcluded": 66,
+          "excluded": 82,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.6,
+          "spareRejects": 107
+        },
+        "targets": {
+          "morning": 125,
+          "afternoon": 110,
+          "evening": 170,
+          "midnight": 145,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1055,
+          "reject": 95,
+          "cancel": 30,
+          "riderFault": 0,
+          "morning": 100,
+          "afternoon": 164,
+          "evening": 322,
+          "midnight": 350,
+          "morningExcluded": 15,
+          "midnightExcluded": 100,
+          "excluded": 115,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 89.4,
+          "spareRejects": 138
+        },
+        "targets": {
+          "morning": 125,
+          "afternoon": 110,
+          "evening": 170,
+          "midnight": 145,
+          "total": 550,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-01",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-08-02 05:59:29",
+    "totalComplete": 2729,
+    "totalReject": 256,
+    "totalCancel": 78,
+    "riderFault": 0,
+    "morning": 567,
+    "afternoon": 424,
+    "evening": 701,
+    "midnight": 747,
+    "morningExcluded": 45,
+    "midnightExcluded": 241,
+    "excluded": 286,
+    "periodTargets": {
+      "morning": 372,
+      "afternoon": 276,
+      "evening": 456,
+      "midnight": 336
+    },
+    "acceptRate": 89.1,
+    "spareRejects": 348,
+    "total": {
+      "complete": 2729,
+      "reject": 256,
+      "cancel": 78,
+      "riderFault": 0,
+      "morning": 567,
+      "afternoon": 424,
+      "evening": 701,
+      "midnight": 747,
+      "morningExcluded": 45,
+      "midnightExcluded": 241,
+      "excluded": 286,
+      "count": 230,
+      "onlineCount": 0,
+      "acceptRate": 89.1,
+      "spareRejects": 348
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 853,
+          "reject": 104,
+          "cancel": 32,
+          "riderFault": 0,
+          "morning": 206,
+          "afternoon": 157,
+          "evening": 214,
+          "midnight": 186,
+          "morningExcluded": 37,
+          "midnightExcluded": 53,
+          "excluded": 90,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 86.2,
+          "spareRejects": 77
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 46,
+          "evening": 76,
+          "midnight": 56,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 811,
+          "reject": 56,
+          "cancel": 10,
+          "riderFault": 0,
+          "morning": 184,
+          "afternoon": 120,
+          "evening": 215,
+          "midnight": 202,
+          "morningExcluded": 5,
+          "midnightExcluded": 83,
+          "excluded": 88,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.5,
+          "spareRejects": 136
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1065,
+          "reject": 96,
+          "cancel": 36,
+          "riderFault": 0,
+          "morning": 177,
+          "afternoon": 147,
+          "evening": 272,
+          "midnight": 359,
+          "morningExcluded": 3,
+          "midnightExcluded": 105,
+          "excluded": 108,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 89.0,
+          "spareRejects": 134
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-02",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-08-03 05:58:31",
+    "totalComplete": 2753,
+    "totalReject": 500,
+    "totalCancel": 109,
+    "riderFault": 0,
+    "morning": 645,
+    "afternoon": 479,
+    "evening": 749,
+    "midnight": 634,
+    "morningExcluded": 56,
+    "midnightExcluded": 186,
+    "excluded": 242,
+    "periodTargets": {
+      "morning": 384,
+      "afternoon": 288,
+      "evening": 444,
+      "midnight": 324
+    },
+    "acceptRate": 81.9,
+    "spareRejects": 79,
+    "total": {
+      "complete": 2753,
+      "reject": 500,
+      "cancel": 109,
+      "riderFault": 0,
+      "morning": 645,
+      "afternoon": 479,
+      "evening": 749,
+      "midnight": 634,
+      "morningExcluded": 56,
+      "midnightExcluded": 186,
+      "excluded": 242,
+      "count": 231,
+      "onlineCount": 0,
+      "acceptRate": 81.9,
+      "spareRejects": 79
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 736,
+          "reject": 257,
+          "cancel": 38,
+          "riderFault": 0,
+          "morning": 179,
+          "afternoon": 130,
+          "evening": 225,
+          "midnight": 141,
+          "morningExcluded": 29,
+          "midnightExcluded": 32,
+          "excluded": 61,
+          "count": 70,
+          "onlineCount": 0,
+          "acceptRate": 71.4,
+          "spareRejects": -111
+        },
+        "targets": {
+          "morning": 64,
+          "afternoon": 48,
+          "evening": 74,
+          "midnight": 54,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 993,
+          "reject": 100,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 250,
+          "afternoon": 207,
+          "evening": 263,
+          "midnight": 170,
+          "morningExcluded": 10,
+          "midnightExcluded": 93,
+          "excluded": 103,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 89.2,
+          "spareRejects": 128
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1024,
+          "reject": 143,
+          "cancel": 51,
+          "riderFault": 0,
+          "morning": 216,
+          "afternoon": 142,
+          "evening": 261,
+          "midnight": 323,
+          "morningExcluded": 17,
+          "midnightExcluded": 61,
+          "excluded": 78,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 84.1,
+          "spareRejects": 62
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-03",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-08-04 05:59:04",
+    "totalComplete": 2472,
+    "totalReject": 230,
+    "totalCancel": 65,
+    "riderFault": 1,
+    "morning": 417,
+    "afternoon": 604,
+    "evening": 639,
+    "midnight": 577,
+    "morningExcluded": 38,
+    "midnightExcluded": 195,
+    "excluded": 233,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 89.3,
+    "spareRejects": 322,
+    "total": {
+      "complete": 2472,
+      "reject": 230,
+      "cancel": 65,
+      "riderFault": 1,
+      "morning": 417,
+      "afternoon": 604,
+      "evening": 639,
+      "midnight": 577,
+      "morningExcluded": 38,
+      "midnightExcluded": 195,
+      "excluded": 233,
+      "count": 230,
+      "onlineCount": 0,
+      "acceptRate": 89.3,
+      "spareRejects": 322
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 699,
+          "reject": 96,
+          "cancel": 30,
+          "riderFault": 1,
+          "morning": 168,
+          "afternoon": 221,
+          "evening": 181,
+          "midnight": 92,
+          "morningExcluded": 11,
+          "midnightExcluded": 26,
+          "excluded": 37,
+          "count": 68,
+          "onlineCount": 0,
+          "acceptRate": 84.6,
+          "spareRejects": 47
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 843,
+          "reject": 59,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 132,
+          "afternoon": 221,
+          "evening": 199,
+          "midnight": 187,
+          "morningExcluded": 14,
+          "midnightExcluded": 90,
+          "excluded": 104,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.0,
+          "spareRejects": 137
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 930,
+          "reject": 75,
+          "cancel": 21,
+          "riderFault": 0,
+          "morning": 117,
+          "afternoon": 162,
+          "evening": 259,
+          "midnight": 298,
+          "morningExcluded": 13,
+          "midnightExcluded": 79,
+          "excluded": 92,
+          "count": 112,
+          "onlineCount": 0,
+          "acceptRate": 90.6,
+          "spareRejects": 136
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-04",
+    "weekStart": "2026-07-29",
+    "weekEnd": "2026-08-04",
+    "closedAt": "2026-08-05 05:57:45",
+    "totalComplete": 2446,
+    "totalReject": 243,
+    "totalCancel": 73,
+    "riderFault": 0,
+    "morning": 529,
+    "afternoon": 488,
+    "evening": 663,
+    "midnight": 551,
+    "morningExcluded": 45,
+    "midnightExcluded": 166,
+    "excluded": 211,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 88.6,
+    "spareRejects": 295,
+    "total": {
+      "complete": 2446,
+      "reject": 243,
+      "cancel": 73,
+      "riderFault": 0,
+      "morning": 529,
+      "afternoon": 488,
+      "evening": 663,
+      "midnight": 551,
+      "morningExcluded": 45,
+      "midnightExcluded": 166,
+      "excluded": 211,
+      "count": 231,
+      "onlineCount": 0,
+      "acceptRate": 88.6,
+      "spareRejects": 295
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 778,
+          "reject": 126,
+          "cancel": 32,
+          "riderFault": 0,
+          "morning": 201,
+          "afternoon": 175,
+          "evening": 189,
+          "midnight": 158,
+          "morningExcluded": 22,
+          "midnightExcluded": 31,
+          "excluded": 53,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 83.1,
+          "spareRejects": 36
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 828,
+          "reject": 55,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 186,
+          "afternoon": 186,
+          "evening": 207,
+          "midnight": 149,
+          "morningExcluded": 17,
+          "midnightExcluded": 83,
+          "excluded": 100,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 92.6,
+          "spareRejects": 141
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 840,
+          "reject": 62,
+          "cancel": 30,
+          "riderFault": 0,
+          "morning": 142,
+          "afternoon": 127,
+          "evening": 267,
+          "midnight": 244,
+          "morningExcluded": 6,
+          "midnightExcluded": 52,
+          "excluded": 58,
+          "count": 112,
+          "onlineCount": 0,
+          "acceptRate": 90.1,
+          "spareRejects": 118
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-05",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-06 05:58:51",
+    "totalComplete": 2313,
+    "totalReject": 279,
+    "totalCancel": 81,
+    "riderFault": 0,
+    "morning": 467,
+    "afternoon": 516,
+    "evening": 675,
+    "midnight": 522,
+    "morningExcluded": 43,
+    "midnightExcluded": 88,
+    "excluded": 131,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 86.5,
+    "spareRejects": 218,
+    "total": {
+      "complete": 2313,
+      "reject": 279,
+      "cancel": 81,
+      "riderFault": 0,
+      "morning": 467,
+      "afternoon": 516,
+      "evening": 675,
+      "midnight": 522,
+      "morningExcluded": 43,
+      "midnightExcluded": 88,
+      "excluded": 131,
+      "count": 231,
+      "onlineCount": 0,
+      "acceptRate": 86.5,
+      "spareRejects": 218
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 695,
+          "reject": 140,
+          "cancel": 36,
+          "riderFault": 0,
+          "morning": 141,
+          "afternoon": 197,
+          "evening": 197,
+          "midnight": 133,
+          "morningExcluded": 14,
+          "midnightExcluded": 13,
+          "excluded": 27,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 79.8,
+          "spareRejects": -3
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 676,
+          "reject": 45,
+          "cancel": 21,
+          "riderFault": 0,
+          "morning": 160,
+          "afternoon": 150,
+          "evening": 197,
+          "midnight": 119,
+          "morningExcluded": 16,
+          "midnightExcluded": 34,
+          "excluded": 50,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 91.1,
+          "spareRejects": 103
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 942,
+          "reject": 94,
+          "cancel": 24,
+          "riderFault": 0,
+          "morning": 166,
+          "afternoon": 169,
+          "evening": 281,
+          "midnight": 270,
+          "morningExcluded": 13,
+          "midnightExcluded": 41,
+          "excluded": 54,
+          "count": 112,
+          "onlineCount": 0,
+          "acceptRate": 88.9,
+          "spareRejects": 117
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-06",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-07 05:59:34",
+    "totalComplete": 2247,
+    "totalReject": 258,
+    "totalCancel": 82,
+    "riderFault": 0,
+    "morning": 466,
+    "afternoon": 423,
+    "evening": 647,
+    "midnight": 552,
+    "morningExcluded": 36,
+    "midnightExcluded": 119,
+    "excluded": 155,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 86.9,
+    "spareRejects": 221,
+    "total": {
+      "complete": 2247,
+      "reject": 258,
+      "cancel": 82,
+      "riderFault": 0,
+      "morning": 466,
+      "afternoon": 423,
+      "evening": 647,
+      "midnight": 552,
+      "morningExcluded": 36,
+      "midnightExcluded": 119,
+      "excluded": 155,
+      "count": 230,
+      "onlineCount": 0,
+      "acceptRate": 86.9,
+      "spareRejects": 221
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 692,
+          "reject": 122,
+          "cancel": 38,
+          "riderFault": 0,
+          "morning": 142,
+          "afternoon": 151,
+          "evening": 196,
+          "midnight": 143,
+          "morningExcluded": 21,
+          "midnightExcluded": 37,
+          "excluded": 58,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 81.2,
+          "spareRejects": 13
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 631,
+          "reject": 41,
+          "cancel": 26,
+          "riderFault": 0,
+          "morning": 157,
+          "afternoon": 116,
+          "evening": 175,
+          "midnight": 133,
+          "morningExcluded": 11,
+          "midnightExcluded": 39,
+          "excluded": 50,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 90.4,
+          "spareRejects": 90
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 924,
+          "reject": 95,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 167,
+          "afternoon": 156,
+          "evening": 276,
+          "midnight": 276,
+          "morningExcluded": 4,
+          "midnightExcluded": 43,
+          "excluded": 47,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 89.1,
+          "spareRejects": 118
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-07",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-08 05:58:30",
+    "totalComplete": 2415,
+    "totalReject": 196,
+    "totalCancel": 66,
+    "riderFault": 1,
+    "morning": 433,
+    "afternoon": 446,
+    "evening": 702,
+    "midnight": 646,
+    "morningExcluded": 46,
+    "midnightExcluded": 140,
+    "excluded": 186,
+    "periodTargets": {
+      "morning": 300,
+      "afternoon": 264,
+      "evening": 408,
+      "midnight": 348
+    },
+    "acceptRate": 90.2,
+    "spareRejects": 340,
+    "total": {
+      "complete": 2415,
+      "reject": 196,
+      "cancel": 66,
+      "riderFault": 1,
+      "morning": 433,
+      "afternoon": 446,
+      "evening": 702,
+      "midnight": 646,
+      "morningExcluded": 46,
+      "midnightExcluded": 140,
+      "excluded": 186,
+      "count": 230,
+      "onlineCount": 0,
+      "acceptRate": 90.2,
+      "spareRejects": 340
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 724,
+          "reject": 98,
+          "cancel": 41,
+          "riderFault": 1,
+          "morning": 142,
+          "afternoon": 135,
+          "evening": 236,
+          "midnight": 169,
+          "morningExcluded": 20,
+          "midnightExcluded": 22,
+          "excluded": 42,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 83.8,
+          "spareRejects": 41
+        },
+        "targets": {
+          "morning": 50,
+          "afternoon": 44,
+          "evening": 68,
+          "midnight": 58,
+          "total": 220,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 656,
+          "reject": 28,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 145,
+          "afternoon": 159,
+          "evening": 149,
+          "midnight": 141,
+          "morningExcluded": 12,
+          "midnightExcluded": 50,
+          "excluded": 62,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 94.3,
+          "spareRejects": 124
+        },
+        "targets": {
+          "morning": 125,
+          "afternoon": 110,
+          "evening": 170,
+          "midnight": 145,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1035,
+          "reject": 70,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 146,
+          "afternoon": 152,
+          "evening": 317,
+          "midnight": 336,
+          "morningExcluded": 14,
+          "midnightExcluded": 68,
+          "excluded": 82,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 92.6,
+          "spareRejects": 175
+        },
+        "targets": {
+          "morning": 125,
+          "afternoon": 110,
+          "evening": 170,
+          "midnight": 145,
+          "total": 550,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-08",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-09 05:58:46",
+    "totalComplete": 2595,
+    "totalReject": 245,
+    "totalCancel": 82,
+    "riderFault": 1,
+    "morning": 646,
+    "afternoon": 333,
+    "evening": 726,
+    "midnight": 660,
+    "morningExcluded": 47,
+    "midnightExcluded": 183,
+    "excluded": 230,
+    "periodTargets": {
+      "morning": 372,
+      "afternoon": 276,
+      "evening": 456,
+      "midnight": 336
+    },
+    "acceptRate": 88.8,
+    "spareRejects": 320,
+    "total": {
+      "complete": 2595,
+      "reject": 245,
+      "cancel": 82,
+      "riderFault": 1,
+      "morning": 646,
+      "afternoon": 333,
+      "evening": 726,
+      "midnight": 660,
+      "morningExcluded": 47,
+      "midnightExcluded": 183,
+      "excluded": 230,
+      "count": 231,
+      "onlineCount": 0,
+      "acceptRate": 88.8,
+      "spareRejects": 320
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 754,
+          "reject": 102,
+          "cancel": 34,
+          "riderFault": 1,
+          "morning": 235,
+          "afternoon": 98,
+          "evening": 217,
+          "midnight": 169,
+          "morningExcluded": 13,
+          "midnightExcluded": 22,
+          "excluded": 35,
+          "count": 70,
+          "onlineCount": 0,
+          "acceptRate": 84.6,
+          "spareRejects": 51
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 46,
+          "evening": 76,
+          "midnight": 56,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 802,
+          "reject": 65,
+          "cancel": 17,
+          "riderFault": 0,
+          "morning": 224,
+          "afternoon": 122,
+          "evening": 188,
+          "midnight": 157,
+          "morningExcluded": 25,
+          "midnightExcluded": 86,
+          "excluded": 111,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 90.7,
+          "spareRejects": 118
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1039,
+          "reject": 78,
+          "cancel": 31,
+          "riderFault": 0,
+          "morning": 187,
+          "afternoon": 113,
+          "evening": 321,
+          "midnight": 334,
+          "morningExcluded": 9,
+          "midnightExcluded": 75,
+          "excluded": 84,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 90.5,
+          "spareRejects": 150
+        },
+        "targets": {
+          "morning": 155,
+          "afternoon": 115,
+          "evening": 190,
+          "midnight": 140,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-09",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-10 05:59:46",
+    "totalComplete": 2482,
+    "totalReject": 300,
+    "totalCancel": 67,
+    "riderFault": 0,
+    "morning": 649,
+    "afternoon": 369,
+    "evening": 655,
+    "midnight": 598,
+    "morningExcluded": 75,
+    "midnightExcluded": 134,
+    "excluded": 209,
+    "periodTargets": {
+      "morning": 384,
+      "afternoon": 288,
+      "evening": 444,
+      "midnight": 324
+    },
+    "acceptRate": 87.1,
+    "spareRejects": 253,
+    "total": {
+      "complete": 2482,
+      "reject": 300,
+      "cancel": 67,
+      "riderFault": 0,
+      "morning": 649,
+      "afternoon": 369,
+      "evening": 655,
+      "midnight": 598,
+      "morningExcluded": 75,
+      "midnightExcluded": 134,
+      "excluded": 209,
+      "count": 230,
+      "onlineCount": 2,
+      "acceptRate": 87.1,
+      "spareRejects": 253
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 800,
+          "reject": 168,
+          "cancel": 38,
+          "riderFault": 0,
+          "morning": 237,
+          "afternoon": 152,
+          "evening": 217,
+          "midnight": 156,
+          "morningExcluded": 30,
+          "midnightExcluded": 8,
+          "excluded": 38,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 79.5,
+          "spareRejects": -6
+        },
+        "targets": {
+          "morning": 64,
+          "afternoon": 48,
+          "evening": 74,
+          "midnight": 54,
+          "total": 240,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 762,
+          "reject": 64,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 184,
+          "afternoon": 75,
+          "evening": 193,
+          "midnight": 199,
+          "morningExcluded": 17,
+          "midnightExcluded": 94,
+          "excluded": 111,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 91.5,
+          "spareRejects": 119
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 920,
+          "reject": 68,
+          "cancel": 22,
+          "riderFault": 0,
+          "morning": 228,
+          "afternoon": 142,
+          "evening": 245,
+          "midnight": 243,
+          "morningExcluded": 28,
+          "midnightExcluded": 32,
+          "excluded": 60,
+          "count": 111,
+          "onlineCount": 1,
+          "acceptRate": 91.1,
+          "spareRejects": 140
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 120,
+          "evening": 185,
+          "midnight": 135,
+          "total": 600,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-10",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-11 05:59:25",
+    "totalComplete": 2055,
+    "totalReject": 236,
+    "totalCancel": 50,
+    "riderFault": 0,
+    "morning": 357,
+    "afternoon": 422,
+    "evening": 585,
+    "midnight": 523,
+    "morningExcluded": 56,
+    "midnightExcluded": 110,
+    "excluded": 166,
+    "periodTargets": {
+      "morning": 264,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 300
+    },
+    "acceptRate": 87.8,
+    "spareRejects": 227,
+    "total": {
+      "complete": 2055,
+      "reject": 236,
+      "cancel": 50,
+      "riderFault": 0,
+      "morning": 357,
+      "afternoon": 422,
+      "evening": 585,
+      "midnight": 523,
+      "morningExcluded": 56,
+      "midnightExcluded": 110,
+      "excluded": 166,
+      "count": 230,
+      "onlineCount": 1,
+      "acceptRate": 87.8,
+      "spareRejects": 227
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 648,
+          "reject": 100,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 134,
+          "afternoon": 158,
+          "evening": 181,
+          "midnight": 150,
+          "morningExcluded": 20,
+          "midnightExcluded": 5,
+          "excluded": 25,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 84.8,
+          "spareRejects": 46
+        },
+        "targets": {
+          "morning": 44,
+          "afternoon": 42,
+          "evening": 64,
+          "midnight": 50,
+          "total": 200,
+          "sets": 2
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 643,
+          "reject": 44,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 125,
+          "afternoon": 149,
+          "evening": 158,
+          "midnight": 140,
+          "morningExcluded": 18,
+          "midnightExcluded": 53,
+          "excluded": 71,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 91.9,
+          "spareRejects": 103
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 764,
+          "reject": 92,
+          "cancel": 21,
+          "riderFault": 0,
+          "morning": 98,
+          "afternoon": 115,
+          "evening": 246,
+          "midnight": 233,
+          "morningExcluded": 18,
+          "midnightExcluded": 52,
+          "excluded": 70,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 87.1,
+          "spareRejects": 78
+        },
+        "targets": {
+          "morning": 110,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 125,
+          "total": 500,
+          "sets": 5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-11",
+    "weekStart": "2026-08-05",
+    "weekEnd": "2026-08-11",
+    "closedAt": "2026-08-12 05:59:02",
+    "totalComplete": 2062,
+    "totalReject": 1880,
+    "totalCancel": 239,
+    "riderFault": 82,
+    "morning": 333,
+    "afternoon": 411,
+    "evening": 567,
+    "midnight": 605,
+    "morningExcluded": 18,
+    "midnightExcluded": 127,
+    "excluded": 145,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 48.4,
+    "spareRejects": -1686,
+    "total": {
+      "complete": 2062,
+      "reject": 1880,
+      "cancel": 239,
+      "riderFault": 82,
+      "morning": 333,
+      "afternoon": 411,
+      "evening": 567,
+      "midnight": 605,
+      "morningExcluded": 18,
+      "midnightExcluded": 127,
+      "excluded": 145,
+      "count": 372,
+      "onlineCount": 0,
+      "acceptRate": 48.4,
+      "spareRejects": -1686
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 1996,
+          "reject": 1814,
+          "cancel": 207,
+          "riderFault": 72,
+          "morning": 325,
+          "afternoon": 389,
+          "evening": 543,
+          "midnight": 593,
+          "morningExcluded": 18,
+          "midnightExcluded": 127,
+          "excluded": 145,
+          "count": 218,
+          "onlineCount": 0,
+          "acceptRate": 48.8,
+          "spareRejects": -1594
+        },
+        "targets": {
+          "morning": 57,
+          "afternoon": 54,
+          "evening": 90,
+          "midnight": 69,
+          "total": 270,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 66,
+          "reject": 66,
+          "cancel": 32,
+          "riderFault": 10,
+          "morning": 8,
+          "afternoon": 22,
+          "evening": 24,
+          "midnight": 12,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 104,
+          "onlineCount": 0,
+          "acceptRate": 37.9,
+          "spareRejects": -92
+        },
+        "targets": {
+          "morning": 86,
+          "afternoon": 81,
+          "evening": 135,
+          "midnight": 104,
+          "total": 406,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-12",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-13 05:57:48",
+    "totalComplete": 2017,
+    "totalReject": 166,
+    "totalCancel": 53,
+    "riderFault": 1,
+    "morning": 374,
+    "afternoon": 295,
+    "evening": 631,
+    "midnight": 507,
+    "morningExcluded": 25,
+    "midnightExcluded": 185,
+    "excluded": 210,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 90.2,
+    "spareRejects": 284,
+    "total": {
+      "complete": 2017,
+      "reject": 166,
+      "cancel": 53,
+      "riderFault": 1,
+      "morning": 374,
+      "afternoon": 295,
+      "evening": 631,
+      "midnight": 507,
+      "morningExcluded": 25,
+      "midnightExcluded": 185,
+      "excluded": 210,
+      "count": 229,
+      "onlineCount": 1,
+      "acceptRate": 90.2,
+      "spareRejects": 284
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 586,
+          "reject": 83,
+          "cancel": 29,
+          "riderFault": 0,
+          "morning": 126,
+          "afternoon": 84,
+          "evening": 191,
+          "midnight": 141,
+          "morningExcluded": 14,
+          "midnightExcluded": 30,
+          "excluded": 44,
+          "count": 71,
+          "onlineCount": 0,
+          "acceptRate": 84.0,
+          "spareRejects": 34
+        },
+        "targets": {
+          "morning": 57,
+          "afternoon": 54,
+          "evening": 90,
+          "midnight": 69,
+          "total": 270,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 719,
+          "reject": 22,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 147,
+          "afternoon": 120,
+          "evening": 195,
+          "midnight": 159,
+          "morningExcluded": 8,
+          "midnightExcluded": 90,
+          "excluded": 98,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 96.3,
+          "spareRejects": 151
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 712,
+          "reject": 61,
+          "cancel": 18,
+          "riderFault": 1,
+          "morning": 101,
+          "afternoon": 91,
+          "evening": 245,
+          "midnight": 207,
+          "morningExcluded": 3,
+          "midnightExcluded": 65,
+          "excluded": 68,
+          "count": 108,
+          "onlineCount": 0,
+          "acceptRate": 89.9,
+          "spareRejects": 98
+        },
+        "targets": {
+          "morning": 86,
+          "afternoon": 81,
+          "evening": 135,
+          "midnight": 104,
+          "total": 406,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-13",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-14 05:58:15",
+    "totalComplete": 1673,
+    "totalReject": 200,
+    "totalCancel": 39,
+    "riderFault": 0,
+    "morning": 272,
+    "afternoon": 308,
+    "evening": 564,
+    "midnight": 426,
+    "morningExcluded": 18,
+    "midnightExcluded": 85,
+    "excluded": 103,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 87.5,
+    "spareRejects": 179,
+    "total": {
+      "complete": 1673,
+      "reject": 200,
+      "cancel": 39,
+      "riderFault": 0,
+      "morning": 272,
+      "afternoon": 308,
+      "evening": 564,
+      "midnight": 426,
+      "morningExcluded": 18,
+      "midnightExcluded": 85,
+      "excluded": 103,
+      "count": 229,
+      "onlineCount": 1,
+      "acceptRate": 87.5,
+      "spareRejects": 179
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 475,
+          "reject": 64,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 89,
+          "afternoon": 102,
+          "evening": 133,
+          "midnight": 129,
+          "morningExcluded": 9,
+          "midnightExcluded": 13,
+          "excluded": 22,
+          "count": 71,
+          "onlineCount": 0,
+          "acceptRate": 85.0,
+          "spareRejects": 34
+        },
+        "targets": {
+          "morning": 57,
+          "afternoon": 54,
+          "evening": 90,
+          "midnight": 69,
+          "total": 270,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 609,
+          "reject": 42,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 96,
+          "afternoon": 128,
+          "evening": 196,
+          "midnight": 124,
+          "morningExcluded": 9,
+          "midnightExcluded": 56,
+          "excluded": 65,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 92.7,
+          "spareRejects": 104
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 589,
+          "reject": 94,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 87,
+          "afternoon": 78,
+          "evening": 235,
+          "midnight": 173,
+          "morningExcluded": 0,
+          "midnightExcluded": 16,
+          "excluded": 16,
+          "count": 108,
+          "onlineCount": 0,
+          "acceptRate": 84.6,
+          "spareRejects": 40
+        },
+        "targets": {
+          "morning": 86,
+          "afternoon": 81,
+          "evening": 135,
+          "midnight": 104,
+          "total": 406,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-14",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-15 05:58:21",
+    "totalComplete": 1868,
+    "totalReject": 156,
+    "totalCancel": 58,
+    "riderFault": 0,
+    "morning": 334,
+    "afternoon": 318,
+    "evening": 532,
+    "midnight": 514,
+    "morningExcluded": 36,
+    "midnightExcluded": 134,
+    "excluded": 170,
+    "periodTargets": {
+      "morning": 273,
+      "afternoon": 273,
+      "evening": 416,
+      "midnight": 338
+    },
+    "acceptRate": 89.7,
+    "spareRejects": 253,
+    "total": {
+      "complete": 1868,
+      "reject": 156,
+      "cancel": 58,
+      "riderFault": 0,
+      "morning": 334,
+      "afternoon": 318,
+      "evening": 532,
+      "midnight": 514,
+      "morningExcluded": 36,
+      "midnightExcluded": 134,
+      "excluded": 170,
+      "count": 230,
+      "onlineCount": 2,
+      "acceptRate": 89.7,
+      "spareRejects": 253
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 514,
+          "reject": 48,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 118,
+          "afternoon": 83,
+          "evening": 133,
+          "midnight": 144,
+          "morningExcluded": 17,
+          "midnightExcluded": 19,
+          "excluded": 36,
+          "count": 72,
+          "onlineCount": 0,
+          "acceptRate": 89.4,
+          "spareRejects": 67
+        },
+        "targets": {
+          "morning": 63,
+          "afternoon": 63,
+          "evening": 96,
+          "midnight": 78,
+          "total": 300,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 589,
+          "reject": 37,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 115,
+          "afternoon": 105,
+          "evening": 151,
+          "midnight": 122,
+          "morningExcluded": 12,
+          "midnightExcluded": 84,
+          "excluded": 96,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 91.5,
+          "spareRejects": 92
+        },
+        "targets": {
+          "morning": 116,
+          "afternoon": 116,
+          "evening": 176,
+          "midnight": 143,
+          "total": 551,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 765,
+          "reject": 71,
+          "cancel": 27,
+          "riderFault": 0,
+          "morning": 101,
+          "afternoon": 130,
+          "evening": 248,
+          "midnight": 248,
+          "morningExcluded": 7,
+          "midnightExcluded": 31,
+          "excluded": 38,
+          "count": 108,
+          "onlineCount": 1,
+          "acceptRate": 88.6,
+          "spareRejects": 93
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 95,
+          "evening": 144,
+          "midnight": 117,
+          "total": 451,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-15",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-16 05:58:31",
+    "totalComplete": 2571,
+    "totalReject": 232,
+    "totalCancel": 96,
+    "riderFault": 0,
+    "morning": 547,
+    "afternoon": 397,
+    "evening": 669,
+    "midnight": 710,
+    "morningExcluded": 30,
+    "midnightExcluded": 218,
+    "excluded": 248,
+    "periodTargets": {
+      "morning": 351,
+      "afternoon": 286,
+      "evening": 468,
+      "midnight": 325
+    },
+    "acceptRate": 88.7,
+    "spareRejects": 314,
+    "total": {
+      "complete": 2571,
+      "reject": 232,
+      "cancel": 96,
+      "riderFault": 0,
+      "morning": 547,
+      "afternoon": 397,
+      "evening": 669,
+      "midnight": 710,
+      "morningExcluded": 30,
+      "midnightExcluded": 218,
+      "excluded": 248,
+      "count": 230,
+      "onlineCount": 1,
+      "acceptRate": 88.7,
+      "spareRejects": 314
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 748,
+          "reject": 86,
+          "cancel": 23,
+          "riderFault": 0,
+          "morning": 203,
+          "afternoon": 130,
+          "evening": 194,
+          "midnight": 185,
+          "morningExcluded": 9,
+          "midnightExcluded": 27,
+          "excluded": 36,
+          "count": 72,
+          "onlineCount": 0,
+          "acceptRate": 87.3,
+          "spareRejects": 78
+        },
+        "targets": {
+          "morning": 81,
+          "afternoon": 66,
+          "evening": 108,
+          "midnight": 75,
+          "total": 330,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 934,
+          "reject": 74,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 231,
+          "afternoon": 138,
+          "evening": 204,
+          "midnight": 231,
+          "morningExcluded": 21,
+          "midnightExcluded": 109,
+          "excluded": 130,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 90.4,
+          "spareRejects": 134
+        },
+        "targets": {
+          "morning": 149,
+          "afternoon": 121,
+          "evening": 198,
+          "midnight": 138,
+          "total": 606,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 889,
+          "reject": 72,
+          "cancel": 48,
+          "riderFault": 0,
+          "morning": 113,
+          "afternoon": 129,
+          "evening": 271,
+          "midnight": 294,
+          "morningExcluded": 0,
+          "midnightExcluded": 82,
+          "excluded": 82,
+          "count": 108,
+          "onlineCount": 0,
+          "acceptRate": 88.1,
+          "spareRejects": 102
+        },
+        "targets": {
+          "morning": 122,
+          "afternoon": 99,
+          "evening": 162,
+          "midnight": 113,
+          "total": 496,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-16",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-17 05:59:01",
+    "totalComplete": 2575,
+    "totalReject": 650,
+    "totalCancel": 119,
+    "riderFault": 0,
+    "morning": 642,
+    "afternoon": 437,
+    "evening": 573,
+    "midnight": 657,
+    "morningExcluded": 25,
+    "midnightExcluded": 241,
+    "excluded": 266,
+    "periodTargets": {
+      "morning": 377,
+      "afternoon": 286,
+      "evening": 455,
+      "midnight": 312
+    },
+    "acceptRate": 77.0,
+    "spareRejects": -126,
+    "total": {
+      "complete": 2575,
+      "reject": 650,
+      "cancel": 119,
+      "riderFault": 0,
+      "morning": 642,
+      "afternoon": 437,
+      "evening": 573,
+      "midnight": 657,
+      "morningExcluded": 25,
+      "midnightExcluded": 241,
+      "excluded": 266,
+      "count": 228,
+      "onlineCount": 0,
+      "acceptRate": 77.0,
+      "spareRejects": -126
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 671,
+          "reject": 188,
+          "cancel": 32,
+          "riderFault": 0,
+          "morning": 211,
+          "afternoon": 118,
+          "evening": 147,
+          "midnight": 153,
+          "morningExcluded": 6,
+          "midnightExcluded": 36,
+          "excluded": 42,
+          "count": 69,
+          "onlineCount": 0,
+          "acceptRate": 75.3,
+          "spareRejects": -53
+        },
+        "targets": {
+          "morning": 87,
+          "afternoon": 66,
+          "evening": 105,
+          "midnight": 72,
+          "total": 330,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 868,
+          "reject": 95,
+          "cancel": 30,
+          "riderFault": 0,
+          "morning": 204,
+          "afternoon": 130,
+          "evening": 169,
+          "midnight": 218,
+          "morningExcluded": 16,
+          "midnightExcluded": 131,
+          "excluded": 147,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 87.4,
+          "spareRejects": 92
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 121,
+          "evening": 193,
+          "midnight": 132,
+          "total": 606,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 1036,
+          "reject": 367,
+          "cancel": 57,
+          "riderFault": 0,
+          "morning": 227,
+          "afternoon": 189,
+          "evening": 257,
+          "midnight": 286,
+          "morningExcluded": 3,
+          "midnightExcluded": 74,
+          "excluded": 77,
+          "count": 109,
+          "onlineCount": 0,
+          "acceptRate": 71.0,
+          "spareRejects": -165
+        },
+        "targets": {
+          "morning": 131,
+          "afternoon": 99,
+          "evening": 158,
+          "midnight": 108,
+          "total": 496,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-17",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-18 05:59:55",
+    "totalComplete": 2305,
+    "totalReject": 277,
+    "totalCancel": 99,
+    "riderFault": 0,
+    "morning": 621,
+    "afternoon": 387,
+    "evening": 619,
+    "midnight": 503,
+    "morningExcluded": 35,
+    "midnightExcluded": 140,
+    "excluded": 175,
+    "periodTargets": {
+      "morning": 377,
+      "afternoon": 286,
+      "evening": 455,
+      "midnight": 312
+    },
+    "acceptRate": 86.0,
+    "spareRejects": 200,
+    "total": {
+      "complete": 2305,
+      "reject": 277,
+      "cancel": 99,
+      "riderFault": 0,
+      "morning": 621,
+      "afternoon": 387,
+      "evening": 619,
+      "midnight": 503,
+      "morningExcluded": 35,
+      "midnightExcluded": 140,
+      "excluded": 175,
+      "count": 231,
+      "onlineCount": 2,
+      "acceptRate": 86.0,
+      "spareRejects": 200
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 782,
+          "reject": 143,
+          "cancel": 30,
+          "riderFault": 0,
+          "morning": 259,
+          "afternoon": 162,
+          "evening": 201,
+          "midnight": 116,
+          "morningExcluded": 19,
+          "midnightExcluded": 25,
+          "excluded": 44,
+          "count": 71,
+          "onlineCount": 1,
+          "acceptRate": 81.9,
+          "spareRejects": 22
+        },
+        "targets": {
+          "morning": 87,
+          "afternoon": 66,
+          "evening": 105,
+          "midnight": 72,
+          "total": 330,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 747,
+          "reject": 44,
+          "cancel": 22,
+          "riderFault": 0,
+          "morning": 194,
+          "afternoon": 131,
+          "evening": 197,
+          "midnight": 157,
+          "morningExcluded": 13,
+          "midnightExcluded": 55,
+          "excluded": 68,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 91.9,
+          "spareRejects": 120
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 121,
+          "evening": 193,
+          "midnight": 132,
+          "total": 606,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 776,
+          "reject": 90,
+          "cancel": 47,
+          "riderFault": 0,
+          "morning": 168,
+          "afternoon": 94,
+          "evening": 221,
+          "midnight": 230,
+          "morningExcluded": 3,
+          "midnightExcluded": 60,
+          "excluded": 63,
+          "count": 110,
+          "onlineCount": 0,
+          "acceptRate": 85.0,
+          "spareRejects": 57
+        },
+        "targets": {
+          "morning": 131,
+          "afternoon": 99,
+          "evening": 158,
+          "midnight": 108,
+          "total": 496,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-18",
+    "weekStart": "2026-08-12",
+    "weekEnd": "2026-08-18",
+    "closedAt": "2026-08-19 05:59:42",
+    "totalComplete": 1804,
+    "totalReject": 224,
+    "totalCancel": 49,
+    "riderFault": 0,
+    "morning": 323,
+    "afternoon": 348,
+    "evening": 493,
+    "midnight": 458,
+    "morningExcluded": 24,
+    "midnightExcluded": 158,
+    "excluded": 182,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 86.9,
+    "spareRejects": 178,
+    "total": {
+      "complete": 1804,
+      "reject": 224,
+      "cancel": 49,
+      "riderFault": 0,
+      "morning": 323,
+      "afternoon": 348,
+      "evening": 493,
+      "midnight": 458,
+      "morningExcluded": 24,
+      "midnightExcluded": 158,
+      "excluded": 182,
+      "count": 231,
+      "onlineCount": 1,
+      "acceptRate": 86.9,
+      "spareRejects": 178
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 517,
+          "reject": 92,
+          "cancel": 23,
+          "riderFault": 0,
+          "morning": 108,
+          "afternoon": 120,
+          "evening": 145,
+          "midnight": 112,
+          "morningExcluded": 17,
+          "midnightExcluded": 15,
+          "excluded": 32,
+          "count": 70,
+          "onlineCount": 1,
+          "acceptRate": 81.8,
+          "spareRejects": 14
+        },
+        "targets": {
+          "morning": 57,
+          "afternoon": 54,
+          "evening": 90,
+          "midnight": 69,
+          "total": 270,
+          "sets": 3
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 663,
+          "reject": 48,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 95,
+          "afternoon": 132,
+          "evening": 164,
+          "midnight": 195,
+          "morningExcluded": 2,
+          "midnightExcluded": 75,
+          "excluded": 77,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 91.8,
+          "spareRejects": 106
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 624,
+          "reject": 84,
+          "cancel": 15,
+          "riderFault": 0,
+          "morning": 120,
+          "afternoon": 96,
+          "evening": 184,
+          "midnight": 151,
+          "morningExcluded": 5,
+          "midnightExcluded": 68,
+          "excluded": 73,
+          "count": 111,
+          "onlineCount": 0,
+          "acceptRate": 86.3,
+          "spareRejects": 57
+        },
+        "targets": {
+          "morning": 86,
+          "afternoon": 81,
+          "evening": 135,
+          "midnight": 104,
+          "total": 406,
+          "sets": 4.5
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-19",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-20 05:58:16",
+    "totalComplete": 1884,
+    "totalReject": 280,
+    "totalCancel": 77,
+    "riderFault": 0,
+    "morning": 316,
+    "afternoon": 324,
+    "evening": 601,
+    "midnight": 486,
+    "morningExcluded": 28,
+    "midnightExcluded": 129,
+    "excluded": 157,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 84.1,
+    "spareRejects": 114,
+    "total": {
+      "complete": 1884,
+      "reject": 280,
+      "cancel": 77,
+      "riderFault": 0,
+      "morning": 316,
+      "afternoon": 324,
+      "evening": 601,
+      "midnight": 486,
+      "morningExcluded": 28,
+      "midnightExcluded": 129,
+      "excluded": 157,
+      "count": 233,
+      "onlineCount": 0,
+      "acceptRate": 84.1,
+      "spareRejects": 114
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 545,
+          "reject": 127,
+          "cancel": 33,
+          "riderFault": 0,
+          "morning": 117,
+          "afternoon": 106,
+          "evening": 173,
+          "midnight": 122,
+          "morningExcluded": 21,
+          "midnightExcluded": 6,
+          "excluded": 27,
+          "count": 70,
+          "onlineCount": 0,
+          "acceptRate": 77.3,
+          "spareRejects": -24
+        },
+        "targets": {
+          "morning": 48,
+          "afternoon": 45,
+          "evening": 75,
+          "midnight": 58,
+          "total": 226,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 656,
+          "reject": 56,
+          "cancel": 19,
+          "riderFault": 0,
+          "morning": 122,
+          "afternoon": 115,
+          "evening": 186,
+          "midnight": 173,
+          "morningExcluded": 3,
+          "midnightExcluded": 57,
+          "excluded": 60,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 89.7,
+          "spareRejects": 89
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 683,
+          "reject": 97,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 77,
+          "afternoon": 103,
+          "evening": 242,
+          "midnight": 191,
+          "morningExcluded": 4,
+          "midnightExcluded": 66,
+          "excluded": 70,
+          "count": 113,
+          "onlineCount": 0,
+          "acceptRate": 84.8,
+          "spareRejects": 48
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-20",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-21 05:59:39",
+    "totalComplete": 1791,
+    "totalReject": 316,
+    "totalCancel": 85,
+    "riderFault": 0,
+    "morning": 319,
+    "afternoon": 241,
+    "evening": 637,
+    "midnight": 447,
+    "morningExcluded": 27,
+    "midnightExcluded": 120,
+    "excluded": 147,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 81.7,
+    "spareRejects": 46,
+    "total": {
+      "complete": 1791,
+      "reject": 316,
+      "cancel": 85,
+      "riderFault": 0,
+      "morning": 319,
+      "afternoon": 241,
+      "evening": 637,
+      "midnight": 447,
+      "morningExcluded": 27,
+      "midnightExcluded": 120,
+      "excluded": 147,
+      "count": 234,
+      "onlineCount": 0,
+      "acceptRate": 81.7,
+      "spareRejects": 46
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 480,
+          "reject": 128,
+          "cancel": 32,
+          "riderFault": 0,
+          "morning": 99,
+          "afternoon": 87,
+          "evening": 161,
+          "midnight": 113,
+          "morningExcluded": 16,
+          "midnightExcluded": 4,
+          "excluded": 20,
+          "count": 71,
+          "onlineCount": 0,
+          "acceptRate": 75.0,
+          "spareRejects": -40
+        },
+        "targets": {
+          "morning": 48,
+          "afternoon": 45,
+          "evening": 75,
+          "midnight": 58,
+          "total": 226,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 689,
+          "reject": 76,
+          "cancel": 24,
+          "riderFault": 0,
+          "morning": 142,
+          "afternoon": 94,
+          "evening": 233,
+          "midnight": 146,
+          "morningExcluded": 8,
+          "midnightExcluded": 66,
+          "excluded": 74,
+          "count": 50,
+          "onlineCount": 0,
+          "acceptRate": 87.3,
+          "spareRejects": 72
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 622,
+          "reject": 112,
+          "cancel": 29,
+          "riderFault": 0,
+          "morning": 78,
+          "afternoon": 60,
+          "evening": 243,
+          "midnight": 188,
+          "morningExcluded": 3,
+          "midnightExcluded": 50,
+          "excluded": 53,
+          "count": 113,
+          "onlineCount": 0,
+          "acceptRate": 81.5,
+          "spareRejects": 14
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-21",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-22 05:57:42",
+    "totalComplete": 2246,
+    "totalReject": 299,
+    "totalCancel": 71,
+    "riderFault": 1,
+    "morning": 375,
+    "afternoon": 342,
+    "evening": 703,
+    "midnight": 624,
+    "morningExcluded": 23,
+    "midnightExcluded": 179,
+    "excluded": 202,
+    "periodTargets": {
+      "morning": 273,
+      "afternoon": 273,
+      "evening": 416,
+      "midnight": 338
+    },
+    "acceptRate": 85.8,
+    "spareRejects": 190,
+    "total": {
+      "complete": 2246,
+      "reject": 299,
+      "cancel": 71,
+      "riderFault": 1,
+      "morning": 375,
+      "afternoon": 342,
+      "evening": 703,
+      "midnight": 624,
+      "morningExcluded": 23,
+      "midnightExcluded": 179,
+      "excluded": 202,
+      "count": 236,
+      "onlineCount": 2,
+      "acceptRate": 85.8,
+      "spareRejects": 190
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 583,
+          "reject": 161,
+          "cancel": 34,
+          "riderFault": 0,
+          "morning": 116,
+          "afternoon": 80,
+          "evening": 202,
+          "midnight": 153,
+          "morningExcluded": 13,
+          "midnightExcluded": 19,
+          "excluded": 32,
+          "count": 73,
+          "onlineCount": 0,
+          "acceptRate": 74.9,
+          "spareRejects": -50
+        },
+        "targets": {
+          "morning": 53,
+          "afternoon": 53,
+          "evening": 80,
+          "midnight": 65,
+          "total": 251,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 724,
+          "reject": 35,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 112,
+          "afternoon": 131,
+          "evening": 195,
+          "midnight": 198,
+          "morningExcluded": 7,
+          "midnightExcluded": 81,
+          "excluded": 88,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 93.4,
+          "spareRejects": 130
+        },
+        "targets": {
+          "morning": 116,
+          "afternoon": 116,
+          "evening": 176,
+          "midnight": 143,
+          "total": 551,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 939,
+          "reject": 103,
+          "cancel": 21,
+          "riderFault": 1,
+          "morning": 147,
+          "afternoon": 131,
+          "evening": 306,
+          "midnight": 273,
+          "morningExcluded": 3,
+          "midnightExcluded": 79,
+          "excluded": 82,
+          "count": 113,
+          "onlineCount": 1,
+          "acceptRate": 88.3,
+          "spareRejects": 109
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 130,
+          "total": 500,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-22",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-23 05:58:21",
+    "totalComplete": 2451,
+    "totalReject": 307,
+    "totalCancel": 143,
+    "riderFault": 1,
+    "morning": 544,
+    "afternoon": 339,
+    "evening": 693,
+    "midnight": 627,
+    "morningExcluded": 27,
+    "midnightExcluded": 221,
+    "excluded": 248,
+    "periodTargets": {
+      "morning": 351,
+      "afternoon": 286,
+      "evening": 468,
+      "midnight": 325
+    },
+    "acceptRate": 84.5,
+    "spareRejects": 161,
+    "total": {
+      "complete": 2451,
+      "reject": 307,
+      "cancel": 143,
+      "riderFault": 1,
+      "morning": 544,
+      "afternoon": 339,
+      "evening": 693,
+      "midnight": 627,
+      "morningExcluded": 27,
+      "midnightExcluded": 221,
+      "excluded": 248,
+      "count": 235,
+      "onlineCount": 2,
+      "acceptRate": 84.5,
+      "spareRejects": 161
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 657,
+          "reject": 165,
+          "cancel": 39,
+          "riderFault": 1,
+          "morning": 178,
+          "afternoon": 92,
+          "evening": 192,
+          "midnight": 134,
+          "morningExcluded": 18,
+          "midnightExcluded": 43,
+          "excluded": 61,
+          "count": 72,
+          "onlineCount": 0,
+          "acceptRate": 76.2,
+          "spareRejects": -41
+        },
+        "targets": {
+          "morning": 68,
+          "afternoon": 55,
+          "evening": 90,
+          "midnight": 63,
+          "total": 276,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 882,
+          "reject": 38,
+          "cancel": 28,
+          "riderFault": 0,
+          "morning": 175,
+          "afternoon": 130,
+          "evening": 243,
+          "midnight": 222,
+          "morningExcluded": 9,
+          "midnightExcluded": 103,
+          "excluded": 112,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 93.0,
+          "spareRejects": 154
+        },
+        "targets": {
+          "morning": 149,
+          "afternoon": 121,
+          "evening": 198,
+          "midnight": 138,
+          "total": 606,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 912,
+          "reject": 104,
+          "cancel": 76,
+          "riderFault": 0,
+          "morning": 191,
+          "afternoon": 117,
+          "evening": 258,
+          "midnight": 271,
+          "morningExcluded": 0,
+          "midnightExcluded": 75,
+          "excluded": 75,
+          "count": 113,
+          "onlineCount": 1,
+          "acceptRate": 83.5,
+          "spareRejects": 48
+        },
+        "targets": {
+          "morning": 135,
+          "afternoon": 110,
+          "evening": 180,
+          "midnight": 125,
+          "total": 550,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-23",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-24 05:57:54",
+    "totalComplete": 2579,
+    "totalReject": 345,
+    "totalCancel": 71,
+    "riderFault": 0,
+    "morning": 601,
+    "afternoon": 411,
+    "evening": 736,
+    "midnight": 633,
+    "morningExcluded": 44,
+    "midnightExcluded": 154,
+    "excluded": 198,
+    "periodTargets": {
+      "morning": 377,
+      "afternoon": 286,
+      "evening": 455,
+      "midnight": 312
+    },
+    "acceptRate": 86.1,
+    "spareRejects": 228,
+    "total": {
+      "complete": 2579,
+      "reject": 345,
+      "cancel": 71,
+      "riderFault": 0,
+      "morning": 601,
+      "afternoon": 411,
+      "evening": 736,
+      "midnight": 633,
+      "morningExcluded": 44,
+      "midnightExcluded": 154,
+      "excluded": 198,
+      "count": 235,
+      "onlineCount": 1,
+      "acceptRate": 86.1,
+      "spareRejects": 228
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 829,
+          "reject": 192,
+          "cancel": 43,
+          "riderFault": 0,
+          "morning": 239,
+          "afternoon": 173,
+          "evening": 243,
+          "midnight": 144,
+          "morningExcluded": 21,
+          "midnightExcluded": 9,
+          "excluded": 30,
+          "count": 72,
+          "onlineCount": 0,
+          "acceptRate": 77.9,
+          "spareRejects": -28
+        },
+        "targets": {
+          "morning": 73,
+          "afternoon": 55,
+          "evening": 88,
+          "midnight": 60,
+          "total": 276,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 796,
+          "reject": 41,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 195,
+          "afternoon": 100,
+          "evening": 192,
+          "midnight": 210,
+          "morningExcluded": 14,
+          "midnightExcluded": 85,
+          "excluded": 99,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 93.8,
+          "spareRejects": 146
+        },
+        "targets": {
+          "morning": 160,
+          "afternoon": 121,
+          "evening": 193,
+          "midnight": 132,
+          "total": 606,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 954,
+          "reject": 112,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 167,
+          "afternoon": 138,
+          "evening": 301,
+          "midnight": 279,
+          "morningExcluded": 9,
+          "midnightExcluded": 60,
+          "excluded": 69,
+          "count": 113,
+          "onlineCount": 0,
+          "acceptRate": 88.2,
+          "spareRejects": 110
+        },
+        "targets": {
+          "morning": 145,
+          "afternoon": 110,
+          "evening": 175,
+          "midnight": 120,
+          "total": 550,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-24",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-25 05:59:41",
+    "totalComplete": 1744,
+    "totalReject": 139,
+    "totalCancel": 59,
+    "riderFault": 0,
+    "morning": 344,
+    "afternoon": 307,
+    "evening": 527,
+    "midnight": 426,
+    "morningExcluded": 34,
+    "midnightExcluded": 106,
+    "excluded": 140,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 89.8,
+    "spareRejects": 238,
+    "total": {
+      "complete": 1744,
+      "reject": 139,
+      "cancel": 59,
+      "riderFault": 0,
+      "morning": 344,
+      "afternoon": 307,
+      "evening": 527,
+      "midnight": 426,
+      "morningExcluded": 34,
+      "midnightExcluded": 106,
+      "excluded": 140,
+      "count": 235,
+      "onlineCount": 1,
+      "acceptRate": 89.8,
+      "spareRejects": 238
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 490,
+          "reject": 51,
+          "cancel": 21,
+          "riderFault": 0,
+          "morning": 128,
+          "afternoon": 114,
+          "evening": 129,
+          "midnight": 99,
+          "morningExcluded": 11,
+          "midnightExcluded": 9,
+          "excluded": 20,
+          "count": 72,
+          "onlineCount": 0,
+          "acceptRate": 87.2,
+          "spareRejects": 50
+        },
+        "targets": {
+          "morning": 48,
+          "afternoon": 45,
+          "evening": 75,
+          "midnight": 58,
+          "total": 226,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 550,
+          "reject": 20,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 109,
+          "afternoon": 92,
+          "evening": 157,
+          "midnight": 134,
+          "morningExcluded": 18,
+          "midnightExcluded": 40,
+          "excluded": 58,
+          "count": 50,
+          "onlineCount": 1,
+          "acceptRate": 93.2,
+          "spareRejects": 97
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 704,
+          "reject": 68,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 107,
+          "afternoon": 101,
+          "evening": 241,
+          "midnight": 193,
+          "morningExcluded": 5,
+          "midnightExcluded": 57,
+          "excluded": 62,
+          "count": 113,
+          "onlineCount": 0,
+          "acceptRate": 89.1,
+          "spareRejects": 90
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5.0
+        }
+      }
+    }
+  },
+  {
+    "area": "달서B",
+    "slug": "maeum_dalseob",
+    "businessDate": "2026-08-25",
+    "weekStart": "2026-08-19",
+    "weekEnd": "2026-08-25",
+    "closedAt": "2026-08-25 21:15:49",
+    "totalComplete": 1441,
+    "totalReject": 192,
+    "totalCancel": 59,
+    "riderFault": 0,
+    "morning": 301,
+    "afternoon": 290,
+    "evening": 624,
+    "midnight": 195,
+    "morningExcluded": 31,
+    "midnightExcluded": 0,
+    "excluded": 31,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 85.2,
+    "spareRejects": 109,
+    "total": {
+      "complete": 1441,
+      "reject": 192,
+      "cancel": 59,
+      "riderFault": 0,
+      "morning": 301,
+      "afternoon": 290,
+      "evening": 624,
+      "midnight": 195,
+      "morningExcluded": 31,
+      "midnightExcluded": 0,
+      "excluded": 31,
+      "count": 236,
+      "onlineCount": 47,
+      "acceptRate": 85.2,
+      "spareRejects": 109
+    },
+    "teams": {
+      "소닉팀": {
+        "summary": {
+          "complete": 454,
+          "reject": 101,
+          "cancel": 19,
+          "riderFault": 0,
+          "morning": 114,
+          "afternoon": 101,
+          "evening": 184,
+          "midnight": 45,
+          "morningExcluded": 10,
+          "midnightExcluded": 0,
+          "excluded": 10,
+          "count": 73,
+          "onlineCount": 11,
+          "acceptRate": 79.1,
+          "spareRejects": -7
+        },
+        "targets": {
+          "morning": 48,
+          "afternoon": 45,
+          "evening": 75,
+          "midnight": 58,
+          "total": 226,
+          "sets": 2.5
+        }
+      },
+      "넘버팀": {
+        "summary": {
+          "complete": 436,
+          "reject": 34,
+          "cancel": 15,
+          "riderFault": 0,
+          "morning": 106,
+          "afternoon": 100,
+          "evening": 167,
+          "midnight": 50,
+          "morningExcluded": 13,
+          "midnightExcluded": 0,
+          "excluded": 13,
+          "count": 50,
+          "onlineCount": 11,
+          "acceptRate": 89.9,
+          "spareRejects": 60
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 99,
+          "evening": 165,
+          "midnight": 127,
+          "total": 496,
+          "sets": 5.5
+        }
+      },
+      "마음팀": {
+        "summary": {
+          "complete": 551,
+          "reject": 57,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 81,
+          "afternoon": 89,
+          "evening": 273,
+          "midnight": 100,
+          "morningExcluded": 8,
+          "midnightExcluded": 0,
+          "excluded": 8,
+          "count": 113,
+          "onlineCount": 25,
+          "acceptRate": 87.0,
+          "spareRejects": 55
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5.0
         }
       }
     }

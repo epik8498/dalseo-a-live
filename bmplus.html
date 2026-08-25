@@ -182,9 +182,6 @@ body.dark .rider-period b{
   </div>
 </div>
 <script>
-let CURRENT_PAGE='overview';
-try{CURRENT_PAGE=sessionStorage.getItem('dashboardCurrentPage')||'overview';}catch(e){}
-
 const FIREBASE_BASE='https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app';
 const LIVE_PATH='/live/bmplus';
 const WEEKLY_PATH='/weekly/bmplus';
@@ -204,8 +201,7 @@ function toggleMode(){
 }
 if(localStorage.getItem('bmplusMode')==='dark')document.body.classList.add('dark');
 function switchPage(page,btn){
-  CURRENT_PAGE=page;
-  try{sessionStorage.setItem('dashboardCurrentPage',page);}catch(e){}
+  window.__USER_SELECTED_PAGE=page;
   document.querySelectorAll('.page-view').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.side-nav-btn').forEach(x=>x.classList.remove('active'));
   const p=document.getElementById('page-'+page);if(p)p.classList.add('active');
@@ -217,7 +213,6 @@ function teamSummaryFromRiders(list){const s={complete:0,reject:0,cancel:0,rider
 function teamSummary(t){return teamObj(t).summary||teamSummaryFromRiders(teamRiders(t))}
 async function fetchJson(path){const r=await fetch(FIREBASE_BASE+path+'.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(path);const j=await r.json();if(j==null)throw new Error(path+' empty');return j}
 async function loadData(){
-  const pageBeforeRefresh=CURRENT_PAGE||'overview';
   try{
     DATA=await fetchJson(LIVE_PATH);
   }catch(e){
@@ -241,8 +236,6 @@ async function loadData(){
     console.error('화면 렌더링 오류',e);
     document.getElementById('errorBox').innerHTML='<div class="section" style="color:var(--red)">데이터는 정상 수신됐지만 화면 표시 중 오류가 발생했습니다: '+(e.message||e)+'</div>';
   }
-
-  switchPage(pageBeforeRefresh);
 }
 function normalizeTeams(){
   const required=['1팀','2팀','3팀','4팀','미분류'];
@@ -551,7 +544,30 @@ function renderAll(){
   renderSummary();renderWeekly();renderSettlement();renderPeriods();renderManage();renderRiders();
   const b=document.getElementById('modeBtn');if(b)b.textContent=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';
 }
-loadData();setInterval(loadData,30000);
+
+async function refreshDashboardDataOnly(){
+  // 중요: 이 함수는 데이터만 새로 읽습니다.
+  // 사용자가 보고 있는 운영현황/주간실적/정산/기사관리/단체문자 화면은 절대 변경하지 않습니다.
+  const activePage=document.querySelector('.page-view.active');
+  const activeId=activePage?.id||'';
+  const activeNav=document.querySelector('.side-nav-btn.active');
+  const activeNavPage=activeNav?.getAttribute('data-page')||'';
+
+  await loadData();
+
+  // 다른 코드가 실수로 active class를 건드렸을 때만 원래 화면을 복구합니다.
+  // 사용자가 갱신 도중 직접 다른 메뉴를 눌렀다면 그 새 화면을 우선합니다.
+  const userPage=window.__USER_SELECTED_PAGE||'';
+  const wanted=userPage||activeNavPage||(activeId.startsWith('page-')?activeId.slice(5):'');
+  if(wanted){
+    const now=document.querySelector('.page-view.active')?.id||'';
+    if(now!==`page-${wanted}`){
+      switchPage(wanted);
+    }
+  }
+}
+
+loadData();setInterval(refreshDashboardDataOnly,30000);
 </script>
 </body>
 </html>

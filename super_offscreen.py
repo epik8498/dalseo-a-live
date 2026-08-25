@@ -131,8 +131,19 @@ DAY_TARGETS = {
 SPECIAL_DAY_TARGET_WEEKDAY = {
     "2026-05-25": 6,
     "2026-06-03": 6,
-    "2026-07-17": 6
+    "2026-07-17": 6,
+    "2026-08-17": 6,
+    
 }
+
+
+def schedule_weekday(date_value):
+    """특별일은 목표 물량뿐 아니라 SLA 시간 구간도 지정 요일 기준으로 적용합니다."""
+    return SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+
+
+def uses_weekend_schedule(date_value):
+    return schedule_weekday(date_value) >= 5
 
 PERIODS = ["morning", "afternoon", "evening", "midnight"]
 PERIOD_LABELS = {
@@ -199,7 +210,7 @@ def split_hourly_by_sla(hourly, date_value=None):
         h += [0] * (24 - len(h))
     if date_value is None:
         date_value = business_date(datetime.now())
-    weekend = date_value.weekday() >= 5
+    weekend = uses_weekend_schedule(date_value)
 
     # 미포함은 표시만 하고 게이지/목표 달성 계산에는 절대 포함하지 않음
     morning_excluded = sum(h[6:9])        # 06,07,08
@@ -234,7 +245,8 @@ def business_date(now):
 
 def current_period(now):
     h = now.hour
-    weekend = now.weekday() >= 5
+    # business_date 기준으로 특별일의 주말형 SLA 시간표까지 함께 적용합니다.
+    weekend = uses_weekend_schedule(business_date(now))
 
     # SLA 포함 구간 기준입니다.
     # 06~08, 00~05는 미포함 표시 구간이라 게이지/달성률에는 넣지 않습니다.
@@ -930,7 +942,7 @@ def summary(rows):
 
 def team_targets(now):
     bd = business_date(now)
-    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(bd.strftime("%Y-%m-%d"), bd.weekday())
+    target_weekday = schedule_weekday(bd)
     base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     result = {}
 
@@ -964,7 +976,7 @@ def current_week_dates(now):
 
 
 def target_total_by_period_for_date(date_value):
-    target_weekday = SPECIAL_DAY_TARGET_WEEKDAY.get(date_value.strftime("%Y-%m-%d"), date_value.weekday())
+    target_weekday = schedule_weekday(date_value)
     base = dict(zip(PERIODS, DAY_TARGETS[target_weekday]))
     total_sets = sum(AREA_CONFIG[AREA_NAME].values())
     return {p: math.ceil(base[p] * total_sets) for p in PERIODS}
