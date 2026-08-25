@@ -352,7 +352,7 @@ function switchPage(page,btn){
   if(page==='manage'&&typeof renderManage==='function')renderManage();
 }
 
-function num(v){return Number(v||0)}function n(v){return num(v).toLocaleString('ko-KR')}function rate(c,b){c=num(c);b=num(b);return c+b?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){return Math.floor(num(c)*.25)-num(b)}function bad(r){return num(r.reject||r.totalReject)+num(r.cancel||r.totalCancel)+num(r.riderFault)}function pct(a,b){return !num(b)?0:Math.min(100,Math.round(num(a)/num(b)*100))}function riders(){return DATA?.riders||[]}function teamObj(t){return DATA?.teams?.[t]||{summary:{},targets:{},riders:[]}}function teamRiders(t){return riders().filter(r=>r.team===t)}function onlineCount(list){return list.filter(r=>r.isOnline).length}function excluded(r){return num(r.excluded||0)}function currentPeriodLabel(){return DATA?.currentPeriodLabel||PERIOD_LABEL[DATA?.currentPeriod]||'-'}
+function num(v){return Number(v||0)}function n(v){return num(v).toLocaleString('ko-KR')}function rate(c,b){c=num(c);b=num(b);return c+b?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){return Math.floor(num(c)*.25)-num(b)}function bad(r){return num(r.reject||r.totalReject)+num(r.cancel||r.totalCancel)+num(r.riderFault)}function pct(a,b){return !num(b)?0:Math.min(100,Math.round(num(a)/num(b)*100))}function riders(){return uniqueRidersForDisplay(DATA?.riders||[])}function teamObj(t){return DATA?.teams?.[t]||{summary:{},targets:{},riders:[]}}function teamRiders(t){return riders().filter(r=>r.team===t)}function onlineCount(list){return list.filter(r=>r.isOnline).length}function excluded(r){return num(r.excluded||0)}function currentPeriodLabel(){return DATA?.currentPeriodLabel||PERIOD_LABEL[DATA?.currentPeriod]||'-'}
 function teamSummaryFromRiders(list){const s={complete:0,reject:0,cancel:0,riderFault:0,morning:0,afternoon:0,evening:0,midnight:0,excluded:0,count:list.length,onlineCount:onlineCount(list)};list.forEach(r=>{s.complete+=num(r.complete);s.reject+=num(r.reject);s.cancel+=num(r.cancel);s.riderFault+=num(r.riderFault);s.morning+=num(r.morning);s.afternoon+=num(r.afternoon);s.evening+=num(r.evening);s.midnight+=num(r.midnight);s.excluded+=excluded(r)});s.acceptRate=rate(s.complete,bad(s));s.spareRejects=spare(s.complete,bad(s));return s}
 function teamSummary(t){return teamObj(t).summary||teamSummaryFromRiders(teamRiders(t))}
 async function fetchJson(path){const r=await fetch(FIREBASE_BASE+path+'.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(path);const j=await r.json();if(j==null)throw new Error(path+' empty');return j}
@@ -708,7 +708,46 @@ function renderPeriods(){
 }
 function teamRow(name,list,summary,targets){const badTotal=bad(summary),acc=summary.acceptRate??rate(summary.complete,badTotal);return `<tr><td>${name}<br><span class="muted" style="font-size:12px">${list.length}명 / 접속 ${onlineCount(list)}명</span></td>${PERIODS.map(([k])=>`<td>${n(summary[k])} / ${n(targets[k])}</td>`).join('')}<td>${acc}%</td><td>${n(summary.spareRejects??spare(summary.complete,badTotal))}</td><td>${n(summary.excluded)}</td></tr>`}
 function renderTeams(){document.getElementById('teamTable').innerHTML=`<thead><tr><th>팀명 라이더(접속중)</th><th>오전<br>(완료/발주량)</th><th>오후<br>(완료/발주량)</th><th>저녁<br>(완료/발주량)</th><th>심야<br>(완료/발주량)</th><th>수락률</th><th>여유거절</th><th>미포함</th></tr></thead><tbody>${TEAM_ORDER.map(t=>teamRow(t,teamRiders(t),teamSummary(t),teamObj(t).targets||{})).join('')}</tbody>`}
-function filteredRiders(){let q=document.getElementById('riderSearch')?.value?.trim()||'';let teamFilter=document.getElementById('riderTeamFilter')?.value||'전체';let list=[...riders()];if(teamFilter!=='전체'){list=list.filter(r=>r.team===teamFilter)}if(q)list=list.filter(r=>String(r.name||'').includes(q));let s=document.getElementById('riderSort')?.value||'complete';list.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;if(s==='name')return String(a.name).localeCompare(String(b.name),'ko');if(s==='reject')return bad(b)-bad(a);return num(b.complete)-num(a.complete)});return list}
+
+function normalizeRiderPhone(v){return String(v||'').replace(/\D/g,'')}
+function uniqueRidersForDisplay(list){
+  const out=[];
+  const keyIndex=new Map();
+
+  (Array.isArray(list)?list:[]).forEach(r=>{
+    const phone=normalizeRiderPhone(r?.phone);
+    const uid=String(r?.userId||'').trim();
+    // 이름만 같은 경우는 동명이인이므로 합치지 않습니다.
+    const keys=[];
+    if(phone)keys.push('p:'+phone);
+    if(uid)keys.push('u:'+uid);
+
+    let idx=-1;
+    for(const k of keys){
+      if(keyIndex.has(k)){idx=keyIndex.get(k);break;}
+    }
+
+    if(idx<0){
+      idx=out.length;
+      out.push(r);
+    }else{
+      const old=out[idx]||{};
+      const oldScore=(old.placeholder?0:1000000)+(old.isOnline?100000:0)+num(old.complete);
+      const newScore=(r?.placeholder?0:1000000)+(r?.isOnline?100000:0)+num(r?.complete);
+      if(newScore>oldScore)out[idx]=r;
+    }
+
+    const chosen=out[idx]||r;
+    const cp=normalizeRiderPhone(chosen?.phone);
+    const cu=String(chosen?.userId||'').trim();
+    if(cp)keyIndex.set('p:'+cp,idx);
+    if(cu)keyIndex.set('u:'+cu,idx);
+    keys.forEach(k=>keyIndex.set(k,idx));
+  });
+  return out;
+}
+
+function filteredRiders(){let q=document.getElementById('riderSearch')?.value?.trim()||'';let teamFilter=document.getElementById('riderTeamFilter')?.value||'전체';let list=uniqueRidersForDisplay(riders());if(teamFilter!=='전체'){list=list.filter(r=>r.team===teamFilter)}if(q)list=list.filter(r=>String(r.name||'').includes(q));let s=document.getElementById('riderSort')?.value||'complete';list.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;if(s==='name')return String(a.name).localeCompare(String(b.name),'ko');if(s==='reject')return bad(b)-bad(a);return num(b.complete)-num(a.complete)});return list}
 function renderRiders(){
   const list=filteredRiders();
   const grid=document.getElementById('riderGrid');
