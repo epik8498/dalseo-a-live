@@ -182,6 +182,9 @@ body.dark .rider-period b{
   </div>
 </div>
 <script>
+let CURRENT_PAGE='overview';
+try{CURRENT_PAGE=sessionStorage.getItem('dashboardCurrentPage')||'overview';}catch(e){}
+
 const FIREBASE_BASE='https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app';
 const LIVE_PATH='/live/bmplus';
 const WEEKLY_PATH='/weekly/bmplus';
@@ -201,6 +204,8 @@ function toggleMode(){
 }
 if(localStorage.getItem('bmplusMode')==='dark')document.body.classList.add('dark');
 function switchPage(page,btn){
+  CURRENT_PAGE=page;
+  try{sessionStorage.setItem('dashboardCurrentPage',page);}catch(e){}
   document.querySelectorAll('.page-view').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.side-nav-btn').forEach(x=>x.classList.remove('active'));
   const p=document.getElementById('page-'+page);if(p)p.classList.add('active');
@@ -212,6 +217,7 @@ function teamSummaryFromRiders(list){const s={complete:0,reject:0,cancel:0,rider
 function teamSummary(t){return teamObj(t).summary||teamSummaryFromRiders(teamRiders(t))}
 async function fetchJson(path){const r=await fetch(FIREBASE_BASE+path+'.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(path);const j=await r.json();if(j==null)throw new Error(path+' empty');return j}
 async function loadData(){
+  const pageBeforeRefresh=CURRENT_PAGE||'overview';
   try{
     DATA=await fetchJson(LIVE_PATH);
   }catch(e){
@@ -235,6 +241,8 @@ async function loadData(){
     console.error('화면 렌더링 오류',e);
     document.getElementById('errorBox').innerHTML='<div class="section" style="color:var(--red)">데이터는 정상 수신됐지만 화면 표시 중 오류가 발생했습니다: '+(e.message||e)+'</div>';
   }
+
+  switchPage(pageBeforeRefresh);
 }
 function normalizeTeams(){
   const required=['1팀','2팀','3팀','4팀','미분류'];

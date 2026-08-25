@@ -317,6 +317,9 @@ body.dark .rider-periods>div{background:#1b222c}body.dark .rider-periods small{c
   </div>
 </div>
 <script>
+let CURRENT_PAGE='overview';
+try{CURRENT_PAGE=sessionStorage.getItem('dashboardCurrentPage')||'overview';}catch(e){}
+
 const FIREBASE_BASE='https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app';
 const AREA_CONFIGS={
   vic:{label:'중구A',title:'VIC 성공드림 · 중구A 관제판',livePath:'/live/vic',weeklyPath:'/weekly/vic',teamOrder:['성공','상생','BM','서구','룰랄','미분류']},
@@ -342,6 +345,8 @@ function toggleMode(){
 if(localStorage.getItem('vicMode')==='dark')document.body.classList.add('dark');
 
 function switchPage(page,btn){
+  CURRENT_PAGE=page;
+  try{sessionStorage.setItem('dashboardCurrentPage',page);}catch(e){}
   document.querySelectorAll('.page-view').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.side-nav-btn').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+page)?.classList.add('active');
@@ -368,6 +373,7 @@ async function switchArea(key){
   switchPage('overview');
 }
 async function loadData(){
+  const pageBeforeRefresh=CURRENT_PAGE||'overview';
   try{
     DATA=await fetchJson(LIVE_PATH);
   }catch(e){
@@ -394,6 +400,8 @@ async function loadData(){
     document.getElementById('errorBox').innerHTML=
       `<div class="error">데이터는 정상 수신됐지만 화면 표시 중 오류가 발생했습니다: ${e.message||e}</div>`;
   }
+
+  switchPage(pageBeforeRefresh);
 }
 function normalizeTeams(){
   const configured=[...(AREA_CONFIGS[AREA_KEY]?.teamOrder||[])];
