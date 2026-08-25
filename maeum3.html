@@ -2040,6 +2040,35 @@ function renderFiltersAndRiders(){
     </div>`;
   }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
 }
+
+/* ===== 기사관리: 자동갱신 중 저장 전 팀 선택값 보호 ===== */
+window.__MANAGE_DRAFTS=window.__MANAGE_DRAFTS||{};
+function manageDraftAreaKey(){
+  try{if(typeof areaCfg==='function'&&areaCfg())return areaCfg().key||'default'}catch(e){}
+  try{if(typeof AREA_KEY!=='undefined')return AREA_KEY||'default'}catch(e){}
+  return 'default';
+}
+function manageDraftStorageKey(){return 'manageDrafts_'+manageDraftAreaKey()}
+function loadManageDrafts(){
+  try{const x=JSON.parse(sessionStorage.getItem(manageDraftStorageKey())||'{}');if(x&&typeof x==='object')window.__MANAGE_DRAFTS=x}catch(e){}
+  return window.__MANAGE_DRAFTS;
+}
+function saveManageDrafts(){try{sessionStorage.setItem(manageDraftStorageKey(),JSON.stringify(window.__MANAGE_DRAFTS||{}))}catch(e){}}
+function manageDraftKeyForRider(r){
+  try{if(typeof riderTeamMapKey==='function')return riderTeamMapKey(r)}catch(e){}
+  const p=String(r?.phone||'').replace(/\D/g,''); if(p)return 'phone_'+p;
+  const u=String(r?.userId||'').trim(); if(u)return 'uid_'+u;
+  return 'name_'+String(r?.name||'').trim();
+}
+function setManageDraft(key,team){if(!key)return;loadManageDrafts();window.__MANAGE_DRAFTS[key]=team;saveManageDrafts()}
+function getManageDraft(key,fallback){loadManageDrafts();return key&&Object.prototype.hasOwnProperty.call(window.__MANAGE_DRAFTS,key)?window.__MANAGE_DRAFTS[key]:fallback}
+function reconcileManageDrafts(){
+  loadManageDrafts();let changed=false;
+  const list=(window.DATA&&Array.isArray(DATA.riders))?DATA.riders:[];
+  list.forEach(r=>{const k=manageDraftKeyForRider(r);if(k&&window.__MANAGE_DRAFTS[k]===r.team){delete window.__MANAGE_DRAFTS[k];changed=true}});
+  if(changed)saveManageDrafts();
+}
+
 function renderManageList(){
   const box=document.getElementById('manageList');
   if(!box)return;
@@ -2085,9 +2114,9 @@ function renderManageList(){
             <b>${r.name||'-'}</b>
             <small>${r.phone||r.userId||''}</small>
           </div>
-          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}">
+          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
             ${teams.map(t=>`
-              <option value="${t}" ${r.team===t?'selected':''}>${cfg.labels[t]||t}</option>
+              <option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${cfg.labels[t]||t}</option>
             `).join('')}
           </select>
         </div>
@@ -2174,6 +2203,7 @@ async function refreshDashboardDataOnly(){
   const activeNavPage=activeNav?.getAttribute('data-page')||'';
 
   await loadData();
+  reconcileManageDrafts();
 
   // 다른 코드가 실수로 active class를 건드렸을 때만 원래 화면을 복구합니다.
   // 사용자가 갱신 도중 직접 다른 메뉴를 눌렀다면 그 새 화면을 우선합니다.
