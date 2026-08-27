@@ -2206,9 +2206,12 @@ function uniqueRidersForDisplay(list){
   (Array.isArray(list)?list:[]).forEach(r=>{
     const phone=String(r?.phone||'').replace(/\D/g,'');
     const uid=String(r?.userId||'').trim().toLowerCase();
+    const uidDigits=uid.replace(/\D/g,'');
     const keys=[];
-    if(phone)keys.push('phone:'+phone);
+    if(phone)keys.push('identity:'+phone);
     if(uid)keys.push('uid:'+uid);
+    // 신규 UI 컬럼 밀림 방어: userId가 전화번호 형태면 phone과 교차 중복 비교
+    if(uidDigits && (uidDigits.length===10 || uidDigits.length===11))keys.push('identity:'+uidDigits);
 
     const matched=[...new Set(
       keys.filter(k=>keyIndex.has(k)).map(k=>keyIndex.get(k))
@@ -2241,8 +2244,10 @@ function uniqueRidersForDisplay(list){
     result.forEach((rr,idx)=>{
       const p=String(rr?.phone||'').replace(/\D/g,'');
       const u=String(rr?.userId||'').trim().toLowerCase();
-      if(p)keyIndex.set('phone:'+p,idx);
+      const ud=u.replace(/\D/g,'');
+      if(p)keyIndex.set('identity:'+p,idx);
       if(u)keyIndex.set('uid:'+u,idx);
+      if(ud && (ud.length===10 || ud.length===11))keyIndex.set('identity:'+ud,idx);
     });
   });
 

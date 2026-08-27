@@ -102,7 +102,7 @@ CENTER_CONFIGS = [{'area': '달서A',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
   'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀', '신규'],
-  'area_config': {'소닉팀': 2.5, '넘버팀': 5.5, '마음팀': 5.0, '신규': 0},
+  'area_config': {'소닉팀': 2.7, '넘버팀': 5.8, '마음팀': 4.5, '신규': 0},
   'team_map_path': '/settings/dalseob/teamMap',
   'live_path': '/live/dalseob',
   'weekly_path': '/weekly/dalseob',
@@ -112,7 +112,7 @@ CENTER_CONFIGS = [{'area': '달서A',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
   'center_code': 'DP2511170481',
   'team_order': ['소닉팀', '넘버팀', 'THE +팀', '나르미팀', '신규'],
-  'area_config': {'소닉팀': 3.0, '넘버팀': 1.2, 'THE +팀': 3.4, '나르미팀': 1.4, '신규': 0},
+  'area_config': {'소닉팀': 2.8, '넘버팀': 1.2, 'THE +팀': 4.0, '나르미팀': 2.0, '신규': 0},
   'team_map_path': '/settings/junggua/teamMap',
   'live_path': '/live/junggua',
   'weekly_path': '/weekly/junggua',
@@ -921,6 +921,113 @@ def empty_rider_card(name, team):
     }
 
 
+
+def rider_identity_keys(rider):
+    """기사 중복 판별 키.
+
+    신규 배민 UI에서 같은 기사의 userId 값이 다른 행에서는 phone 칸으로
+    밀려 읽히는 경우까지 잡습니다. 이름만 같은 동명이인은 합치지 않습니다.
+    """
+    rider = rider or {}
+    keys = []
+
+    phone = normalize_phone(rider.get("phone", ""))
+    user_id = norm(rider.get("userId", "")).lower()
+    user_digits = normalize_phone(user_id)
+
+    if phone:
+        keys.append(("identity", phone))
+
+    if user_id:
+        keys.append(("userId", user_id))
+
+    # userId가 전화번호 형태(10~11자리 숫자)라면 phone과 같은 신원 토큰으로도 비교.
+    # 예: 박영근 A행 userId=01058974243 / B행 phone=01058974243
+    if user_digits and len(user_digits) in (10, 11):
+        keys.append(("identity", user_digits))
+
+    return list(dict.fromkeys(keys))
+
+
+def rider_quality_score(rider):
+    """중복 카드 중 실적/신원 데이터가 더 온전한 행을 우선합니다."""
+    rider = rider or {}
+    hourly = rider.get("hourly") or []
+    return (
+        0 if rider.get("placeholder") else 1000000,
+        100000 if rider.get("isOnline") else 0,
+        to_int(rider.get("complete", 0)),
+        to_int(rider.get("morning", 0)) + to_int(rider.get("afternoon", 0))
+        + to_int(rider.get("evening", 0)) + to_int(rider.get("midnight", 0)),
+        sum(to_int(v) for v in hourly[:24]),
+        len(normalize_phone(rider.get("phone", ""))),
+        len(norm(rider.get("userId", ""))),
+    )
+
+
+def merge_duplicate_riders(a, b):
+    """동일 기사로 판정된 두 행을 하나로 정리합니다."""
+    a = dict(a or {})
+    b = dict(b or {})
+    if rider_quality_score(b) > rider_quality_score(a):
+        base, other = b, a
+    else:
+        base, other = a, b
+    base = dict(base)
+
+    for key in ("name", "phone", "userId", "status", "team"):
+        if not norm(base.get(key, "")) and norm(other.get(key, "")):
+            base[key] = other.get(key)
+
+    if not base.get("hourly") and other.get("hourly"):
+        base["hourly"] = other.get("hourly")
+    return base
+
+
+def dedupe_riders(riders, log_prefix=""):
+    """
+    phone 또는 userId가 같은 경우에만 같은 기사로 합칩니다.
+    이름만 같은 동명이인은 서로 다른 기사로 그대로 유지합니다.
+    """
+    result = []
+    key_to_index = {}
+    duplicate_count = 0
+
+    for rider in riders or []:
+        if not isinstance(rider, dict):
+            continue
+
+        keys = rider_identity_keys(rider)
+        matched = sorted({key_to_index[k] for k in keys if k in key_to_index})
+
+        if not matched:
+            idx = len(result)
+            result.append(rider)
+            for k in keys:
+                key_to_index[k] = idx
+            continue
+
+        keep_idx = matched[0]
+        result[keep_idx] = merge_duplicate_riders(result[keep_idx], rider)
+        duplicate_count += 1
+
+        # phone / userId가 서로 다른 기존 카드에 각각 걸린 비정상 케이스까지 하나로 병합
+        for extra_idx in reversed(matched[1:]):
+            result[keep_idx] = merge_duplicate_riders(result[keep_idx], result[extra_idx])
+            result.pop(extra_idx)
+
+        # 배열 인덱스가 바뀔 수 있으므로 맵 재구성
+        key_to_index = {}
+        for i, row in enumerate(result):
+            for k in rider_identity_keys(row):
+                key_to_index[k] = i
+
+    if duplicate_count:
+        prefix = f"{log_prefix} " if log_prefix else ""
+        print(f"{prefix}중복 기사 {duplicate_count}건 제거 완료")
+
+    return result
+
 def ensure_required_rider_cards(riders):
     existing_names = {norm(r.get("name", "")) for r in riders if r.get("name")}
     added = []
@@ -938,7 +1045,6 @@ def ensure_required_rider_cards(riders):
 def collect_all_pages_by_dom(page):
     base_url = page.url
     all_riders = []
-    seen = set()
 
     for page_no in range(MAX_PAGES):
         target_url = set_page_number(base_url, page_no)
@@ -977,23 +1083,20 @@ def collect_all_pages_by_dom(page):
             print("빈 페이지라서 수집 종료")
             break
 
-        new_count = 0
-        for r in riders:
-            key = normalize_phone(r.get("phone", "")) or (norm(r.get("name", "")) + "_" + norm(r.get("phone", "")))
-            if key not in seen:
-                seen.add(key)
-                all_riders.append(r)
-                new_count += 1
-            else:
-                print(f"중복 기사 제외: {r.get('name')} / {r.get('phone')} / {r.get('status')}")
+        before_count = len(all_riders)
+        all_riders.extend(riders)
+        all_riders = dedupe_riders(all_riders, f"{page_no + 1}페이지")
+        new_count = len(all_riders) - before_count
 
-        print(f"{page_no + 1}페이지 신규 기사 수: {new_count}")
+        print(f"{page_no + 1}페이지 신규 고유 기사 수: {new_count}")
 
         if new_count == 0:
-            print("새 기사 없음. 마지막 페이지로 판단하고 종료")
+            print("새 고유 기사 없음. 마지막 페이지로 판단하고 종료")
             break
 
+    all_riders = dedupe_riders(all_riders, "최종 수집")
     all_riders = ensure_required_rider_cards(all_riders)
+    all_riders = dedupe_riders(all_riders, "카드 보강 후")
     print(f"전체 카드 기사 수: {len(all_riders)}")
     phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
     if len(phones) != len(set(phones)):
@@ -1344,6 +1447,7 @@ def make_data(riders, config=None):
         "area_config": AREA_CONFIG.get(AREA_NAME, {}),
     }
     now = datetime.now()
+    riders = dedupe_riders(riders, "Firebase 업로드 직전")
     riders.sort(key=lambda x: (not x["isOnline"], x["name"]))
 
     targets = team_targets(now)
