@@ -2210,6 +2210,9 @@ function uniqueRidersForDisplay(list){
     const keys=[];
     if(phone)keys.push('identity:'+phone);
     if(uid)keys.push('uid:'+uid);
+    const riderName=String(r?.name||'').replace(/[\u200b\ufeff]/g,'').trim();
+    // 사용자 확인으로 실제 동일 기사임이 확정된 이름만 이름 보조키 사용
+    if(riderName==='박영근')keys.push('verifiedName:'+riderName);
     // 신규 UI 컬럼 밀림 방어: userId가 전화번호 형태면 phone과 교차 중복 비교
     if(uidDigits && (uidDigits.length===10 || uidDigits.length===11))keys.push('identity:'+uidDigits);
 
@@ -2247,6 +2250,8 @@ function uniqueRidersForDisplay(list){
       const ud=u.replace(/\D/g,'');
       if(p)keyIndex.set('identity:'+p,idx);
       if(u)keyIndex.set('uid:'+u,idx);
+      const rn=String(rr?.name||'').replace(/[\u200b\ufeff]/g,'').trim();
+      if(rn==='박영근')keyIndex.set('verifiedName:'+rn,idx);
       if(ud && (ud.length===10 || ud.length===11))keyIndex.set('identity:'+ud,idx);
     });
   });
