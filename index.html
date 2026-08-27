@@ -2198,6 +2198,57 @@ function renderPeriods(){
     return `<div class="period-card"><div class="period-head">${icon} ${label}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teamRows}</div>`;
   }).join('');
 }
+
+function uniqueRidersForDisplay(list){
+  const result=[];
+  const keyIndex=new Map();
+
+  (Array.isArray(list)?list:[]).forEach(r=>{
+    const phone=String(r?.phone||'').replace(/\D/g,'');
+    const uid=String(r?.userId||'').trim().toLowerCase();
+    const keys=[];
+    if(phone)keys.push('phone:'+phone);
+    if(uid)keys.push('uid:'+uid);
+
+    const matched=[...new Set(
+      keys.filter(k=>keyIndex.has(k)).map(k=>keyIndex.get(k))
+    )].sort((a,b)=>a-b);
+
+    // phone/userId가 없으면 이름만으로는 합치지 않습니다.
+    if(!matched.length){
+      const idx=result.length;
+      result.push(r);
+      keys.forEach(k=>keyIndex.set(k,idx));
+      return;
+    }
+
+    const keep=matched[0];
+    const old=result[keep]||{};
+    const score=x=>
+      (x?.placeholder?0:1000000)+
+      (x?.isOnline?100000:0)+
+      Number(x?.complete||0)+
+      Number(x?.morning||0)+Number(x?.afternoon||0)+
+      Number(x?.evening||0)+Number(x?.midnight||0);
+
+    if(score(r)>score(old))result[keep]=r;
+
+    for(let i=matched.length-1;i>=1;i--){
+      result.splice(matched[i],1);
+    }
+
+    keyIndex.clear();
+    result.forEach((rr,idx)=>{
+      const p=String(rr?.phone||'').replace(/\D/g,'');
+      const u=String(rr?.userId||'').trim().toLowerCase();
+      if(p)keyIndex.set('phone:'+p,idx);
+      if(u)keyIndex.set('uid:'+u,idx);
+    });
+  });
+
+  return result;
+}
+
 function renderFiltersAndRiders(){
   const cfg=areaCfg(),teams=cfg.teams;
   document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');
@@ -2207,7 +2258,7 @@ function renderFiltersAndRiders(){
     searchEl.value=RIDER_SEARCH;
   }
 
-  let riders=[...(DATA.riders||[])];
+  let riders=uniqueRidersForDisplay(DATA.riders||[]);
 
   if(FILTER!=='전체'){
     riders=riders.filter(r=>r.team===FILTER);
@@ -2313,7 +2364,7 @@ function renderManageList(){
     window.manageFilter='전체';
   }
 
-  let riders=[...DATA.riders];
+  let riders=uniqueRidersForDisplay(DATA.riders);
   if(window.manageFilter!=='전체'){
     riders=riders.filter(r=>r.team===window.manageFilter);
   }
