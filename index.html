@@ -1287,6 +1287,26 @@ body.dark .small-bar{
   .team-num .goal{font-size:14px!important}
 }
 
+
+
+/* ===== 게이지 표시 수정 =====
+   중구A 신규 팀(success / bm / sangsaeng)은 기존 CSS에 배경색 정의가 없어
+   width 값이 있어도 막대가 투명하게 보이던 문제를 수정합니다. */
+.small-fill{
+  height:100%!important;
+  min-height:18px!important;
+  background:var(--red)!important;
+  border-radius:999px!important;
+}
+.small-fill.sonic{background:var(--red)!important}
+.small-fill.number{background:var(--blue)!important}
+.small-fill.maeum,.small-fill.dalseo{background:var(--purple)!important}
+.small-fill.narmi{background:var(--orange)!important}
+.small-fill.success{background:var(--green)!important}
+.small-fill.bm{background:var(--purple)!important}
+.small-fill.sangsaeng{background:var(--blue)!important}
+.small-fill.newteam{background:#999!important}
+
 </style>
 </head>
 <body>
