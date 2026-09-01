@@ -1,211 +1,1291 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-<title>성공드림 독립 관제판</title>
+<meta charset="UTF-8">
+<title>VIC 관제판</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <style>
-:root{--bg:#f4f7fb;--card:#fff;--soft:#f8fafc;--text:#101828;--muted:#667085;--line:#e4e7ec;--red:#ef233c;--blue:#2563eb;--green:#12b76a;--orange:#f79009;--purple:#7c3aed;--shadow:0 18px 45px rgba(16,24,40,.08);--radius:24px}
-*{box-sizing:border-box}html,body{margin:0}body{background:radial-gradient(circle at top left,#edf6ff 0,#f7f9fc 34%,var(--bg) 100%);color:var(--text);font-family:Arial,'Noto Sans KR',sans-serif;font-weight:800}button,input,select{font-family:inherit}.wrap{max-width:1160px;margin:0 auto;padding:16px 14px 70px}.hero{position:sticky;top:0;z-index:20;background:rgba(244,247,251,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(228,231,236,.75);padding:14px 0 12px;margin-bottom:18px}.hero-inner{display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:12px}.logo{width:50px;height:50px;border-radius:17px;background:linear-gradient(135deg,var(--red),#ff6b7a);display:grid;place-items:center;color:#fff;font-size:23px;box-shadow:0 14px 28px rgba(239,35,60,.25)}.brand h1{margin:0;font-size:23px;letter-spacing:-.7px}.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}.pill{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:10px 14px;font-size:13px;color:var(--muted);box-shadow:0 8px 20px rgba(16,24,40,.04)}.region-tabs{display:flex;gap:7px;padding:5px;border:1px solid var(--line);border-radius:16px;background:var(--card);box-shadow:0 8px 20px rgba(16,24,40,.04)}.area-tab{border:0;border-radius:11px;background:transparent;color:var(--muted);padding:9px 15px;font-weight:1000;cursor:pointer}.area-tab.active{background:var(--red);color:#fff}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}.summary-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px 14px;min-height:105px;box-shadow:var(--shadow);position:relative;overflow:hidden}.summary-card:before{content:'';position:absolute;right:-26px;top:-26px;width:78px;height:78px;border-radius:50%;background:rgba(37,99,235,.07)}.summary-card.red:before{background:rgba(239,35,60,.09)}.summary-card.green:before{background:rgba(18,183,106,.1)}.summary-title{color:var(--muted);font-size:13px;line-height:1.25}.summary-value{margin-top:12px;font-size:27px;letter-spacing:-1px}.summary-value.red{color:var(--red)}.summary-value.green{color:var(--green)}.summary-value.blue{color:var(--blue)}.section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;margin:16px 0}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.section-title{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:1000;letter-spacing:-.5px}.bar{width:8px;height:26px;border-radius:999px;background:var(--red)}.toggle{border:0;background:var(--text);color:#fff;border-radius:14px;padding:12px 16px;font-weight:1000;cursor:pointer}.muted{color:var(--muted)}.hidden{display:none}.week-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}.week-tab{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:999px;padding:10px 14px;font-size:13px;font-weight:1000;cursor:pointer}.week-tab.active{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 10px 22px rgba(239,35,60,.18)}.table-wrap{overflow-x:auto}.weekly-table,.team-table{width:100%;border-collapse:separate;border-spacing:0 8px;min-width:780px}.weekly-table th,.team-table th{font-size:12px;color:var(--muted);text-align:center;padding:0 8px 6px;white-space:nowrap}.weekly-table th:first-child,.weekly-table td:first-child,.team-table th:first-child,.team-table td:first-child{text-align:left}.weekly-table td,.team-table td{background:var(--soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:13px 8px;text-align:center;font-size:14px;white-space:nowrap}.weekly-table td:first-child,.team-table td:first-child{border-left:1px solid var(--line);border-radius:14px 0 0 14px;font-size:16px;font-weight:1000}.weekly-table td:last-child,.team-table td:last-child{border-right:1px solid var(--line);border-radius:0 14px 14px 0}.oktxt{color:var(--green);font-weight:1000}.failtxt{color:var(--red);font-weight:1000}.badge{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:1000}.badge.ok{background:#e8fff3;color:#047a43}.badge.fail{background:#fff0f0;color:#d92d20}.badge.wait{background:#eef2f6;color:#475467}.period-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.period-card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fff,#fbfcfe);padding:16px}.period-name{font-size:17px}.period-main{font-size:26px;margin:14px 0 6px;letter-spacing:-.5px}.period-main span:first-child{color:var(--red)}.mini{font-size:12px;color:var(--muted)}.progress{height:12px;background:#eef2f6;border-radius:999px;overflow:hidden;margin:12px 0}.fill{height:100%;background:linear-gradient(90deg,var(--red),#ff7988);border-radius:999px}.period-result{border-top:1px solid var(--line);margin-top:13px;padding-top:12px;font-size:14px}.rider-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.rider-tools input,.rider-tools select{border:1px solid var(--line);background:#fff;border-radius:14px;padding:13px 14px;font-weight:900}.rider-tools input{flex:1;min-width:180px}.rider-tools button{border:0;background:var(--red);color:#fff;border-radius:14px;padding:13px 16px;font-weight:1000;cursor:pointer}.rider-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.rider{border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px}.rider.online{border-color:rgba(18,183,106,.55);background:#f0fff7}.rider-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.rider-name{font-size:19px}.status{font-size:12px;border-radius:999px;padding:6px 9px;background:#eef2f6;color:#475467}.online .status{background:#dcfae6;color:#067647}.rider-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}.rstat{border-radius:12px;background:var(--soft);padding:10px 6px;text-align:center}.rstat small{display:block;color:var(--muted);font-size:11px}.rstat b{display:block;margin-top:5px;font-size:15px}.modal{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:60;display:none;align-items:center;justify-content:center;padding:16px}.modal.show{display:flex}.modal-card{width:min(820px,100%);max-height:86vh;overflow:auto;background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 80px rgba(0,0,0,.25)}.modal-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}.close{border:0;background:#111827;color:#fff;border-radius:12px;padding:10px 14px;font-weight:1000}.sms-team{border:1px solid var(--line);border-radius:20px;padding:14px;margin:12px 0;background:var(--soft)}.sms-group{border:1px solid var(--line);border-radius:16px;padding:13px;margin:10px 0;background:#fff}.sms-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.sms-actions button,.sms-actions a{border:0;background:var(--blue);color:#fff;border-radius:12px;padding:10px 12px;text-decoration:none;font-size:13px;font-weight:1000}.phone-list{word-break:break-all;color:var(--muted);line-height:1.6;font-size:13px}.manage-list{display:grid;grid-template-columns:1fr;gap:8px}.manage-row{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;background:var(--soft);padding:12px}.manage-row b{font-size:16px}.manage-row select{border:1px solid var(--line);border-radius:10px;background:#fff;padding:9px 10px;font-weight:1000}.manage-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.manage-actions button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:12px;padding:10px 12px;font-weight:1000;cursor:pointer}.manage-actions button.active{background:var(--red);border-color:var(--red);color:#fff}.manage-save{width:100%;border:0;background:var(--red);color:#fff;border-radius:14px;padding:13px 16px;font-weight:1000;cursor:pointer;margin:8px 0 14px}
-@media(max-width:760px){.wrap{padding:10px 10px 60px}.hero-inner{align-items:flex-start}.brand h1{font-size:20px}.pill{display:none}.summary-grid{grid-template-columns:repeat(3,1fr);gap:7px}.summary-card{min-height:88px;padding:13px 8px;border-radius:16px}.summary-title{font-size:11.5px}.summary-value{font-size:20px;margin-top:10px}.section{padding:16px;border-radius:20px}.period-grid{grid-template-columns:1fr 1fr}.rider-grid{grid-template-columns:1fr}.rider-tools input,.rider-tools select,.rider-tools button{width:100%}}
+:root{--red:#e60012;--red2:#c90016;--blue:#006fd6;--green:#00bf63;--purple:#7c3aed;--orange:#ff9f00;--text:#111;--muted:#767676;--line:#e4e4e4;--card:#fff;--bg:#fff;--soft:#fafafa}
+body.dark{--text:#fff;--muted:#cfcfcf;--line:#333;--card:#151515;--bg:#080808;--soft:#111}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,'Noto Sans KR',sans-serif;font-weight:800}button,input,select{font-family:inherit}body.dark{background:linear-gradient(135deg,rgba(0,0,0,.94),rgba(15,15,15,.96)),url('logo.png') right 60px top 90px / 380px auto no-repeat}.wrap{max-width:820px;margin:0 auto;padding:18px 14px 48px}.top{position:relative;text-align:center;padding-top:8px}.top-actions{display:flex;justify-content:space-between;align-items:center;margin:0 48px 12px 48px}.move,.mode{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:14px;padding:13px 18px;font-size:16px;font-weight:1000;box-shadow:0 2px 8px rgba(0,0,0,.04);cursor:pointer}.logo-img{width:92px;min-height:54px;object-fit:contain}.brand{color:var(--red);font-size:34px;font-weight:1000;font-style:italic;line-height:1;margin-top:8px}.sub{font-size:18px;font-weight:1000;margin-top:10px}.area{margin:22px 0 12px;text-align:center;font-size:20px;font-weight:1000}.area b{color:var(--red)}.top-update{margin:0 0 24px;font-size:17px;font-weight:1000;color:var(--muted);text-align:center}.area-menu{display:none;position:absolute;left:60px;top:64px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.16);z-index:10;overflow:hidden;min-width:160px}.area-menu.show{display:block}.area-menu button{display:block;width:100%;padding:14px 18px;border:0;border-bottom:1px solid var(--line);background:var(--card);color:var(--text);font-size:16px;font-weight:1000;text-align:left;cursor:pointer}.area-menu button.active{background:var(--red);color:#fff}.error{border:2px solid var(--red);border-radius:18px;padding:18px;text-align:center;font-weight:1000;color:var(--red);background:#fff3f3;margin-bottom:18px}body.dark .error{background:#220000}.summary{border:2.5px solid var(--red2);border-radius:24px;background:rgba(255,255,255,.92);overflow:hidden;margin-bottom:30px}body.dark .summary{background:rgba(15,15,15,.82)}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr)}.sum{min-height:118px;padding:25px 8px 20px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.sum:nth-child(3n){border-right:0}.sum:nth-last-child(-n+3){border-bottom:0}.sum-title{font-size:17px;font-weight:1000;line-height:1.3}.sum-val{margin-top:13px;font-size:32px;font-weight:1000;letter-spacing:-1px}.sum-val.red{color:var(--red)}.sum-val.green{color:var(--green)}.section-title{margin:28px 0 14px;display:flex;align-items:center;gap:12px;font-size:30px;font-weight:1000;letter-spacing:-1px}.section-title .icon{display:inline-block;width:11px;height:34px;background:var(--red);border-radius:2px}.section-title small{font-size:18px;color:var(--muted);font-weight:1000}.toggle-btn{width:100%;border:0;border-radius:16px;background:var(--red);color:#fff;font-size:19px;font-weight:1000;padding:20px 16px;margin:8px 0 22px;box-shadow:0 10px 18px rgba(230,0,18,.22);cursor:pointer}.panel{display:none}.panel.show{display:block}.weekly-status{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:16px;margin-bottom:14px}.status-line{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:17px;font-weight:1000}.badge{display:inline-block;border-radius:999px;padding:7px 12px;font-size:14px;font-weight:1000}.badge.ok{background:#e8fff2;color:#008a43}.badge.fail{background:#fff0f0;color:var(--red)}.badge.wait{background:#f1f1f1;color:#666}.weekly-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:26px}.day-card{border:1px solid var(--line);border-radius:22px;background:var(--card);padding:22px 18px;box-shadow:0 3px 10px rgba(0,0,0,.03)}body.dark .day-card{background:rgba(18,18,18,.92);box-shadow:none}.day-head{text-align:center}.day-label{font-size:34px;color:var(--red);font-weight:1000;line-height:1}.day-date{font-size:16px;color:var(--muted);font-weight:1000;margin-top:9px}.period-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:10px 0;font-size:18px}.period-row .pname{color:var(--muted);font-weight:1000}.period-row.fail .pval{color:var(--red)}.period-row.ok .pval{color:var(--text)}.day-line{height:1px;background:var(--line);margin:16px 0}.day-total{text-align:center;font-size:18px;line-height:1.6}.day-result{text-align:center;margin-top:12px}.period-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:26px}.period-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px;box-shadow:0 4px 14px rgba(0,0,0,.04)}body.dark .period-card{box-shadow:none;background:rgba(20,20,20,.9)}.period-head{font-size:25px;font-weight:1000;margin-bottom:12px}.period-sub{font-size:16px;color:var(--muted);font-weight:1000}.period-total{margin:24px 0 18px;text-align:center;font-size:32px;font-weight:1000}.period-total span:first-child{color:var(--red)}.total-bar{height:18px;background:#e9e9e9;border-radius:999px;overflow:hidden;margin-bottom:18px}body.dark .total-bar{background:#333}.total-fill{height:100%;background:var(--red);border-radius:999px}.team-line{display:grid;grid-template-columns:52px 1fr auto;align-items:center;gap:10px;font-size:16px;font-weight:1000;margin:12px 0}.team-name{font-size:17px}.team-num .done{color:var(--red)}.team-num .goal{color:var(--blue)}.small-bar{height:14px;background:#ececec;border-radius:999px;overflow:hidden}body.dark .small-bar{background:#333}.small-fill.sonic{height:100%;background:var(--red)}.small-fill.number{height:100%;background:var(--blue)}.small-fill.maeum,.small-fill.dalseo{height:100%;background:var(--purple)}.small-fill.narmi{height:100%;background:var(--orange)}.mission-box{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;margin-bottom:18px}.mission-form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.field label{display:block;font-size:14px;color:var(--muted);font-weight:1000;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:13px 12px;font-size:16px;font-weight:1000}.mission-result{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}.mission-stat{border:1px solid var(--line);border-radius:14px;padding:13px;text-align:center}.mission-stat small{display:block;color:var(--muted);font-size:13px}.mission-stat b{display:block;margin-top:6px;font-size:22px;color:var(--red)}.mission-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.mission-rider{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft);display:flex;justify-content:space-between;gap:8px}.mission-rider b{font-size:17px}.mission-rider span{font-size:15px;color:var(--red);font-weight:1000}.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:22px 0 14px}.filters{display:flex;gap:10px;flex-wrap:wrap}.filters button{min-width:82px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:12px 15px;font-weight:1000;cursor:pointer}.filters button.active{background:var(--red);border-color:var(--red);color:#fff}.sort{display:flex;align-items:center;gap:8px;font-weight:1000}.sort select{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:12px 16px;font-weight:1000}.riders{display:grid;grid-template-columns:1fr 1fr;gap:12px}.rider{background:var(--card);border:1.5px solid #222;border-radius:16px;padding:15px 16px;box-shadow:0 4px 14px rgba(0,0,0,.05)}body.dark .rider{background:rgba(18,18,18,.92);box-shadow:none;border-color:#777}.rider.active{background:#eafff1;border:2.5px solid var(--green);color:#111}body.dark .rider.active{background:#063b1d;border:2.5px solid var(--green);color:#fff}.rider-top{display:flex;justify-content:space-between;align-items:center;gap:8px}.rider-name{font-size:22px;font-weight:1000}.dot{display:inline-block;width:10px;height:10px;border-radius:999px;background:#bbb;margin-right:8px}.rider.active .dot{background:var(--green)}.status{font-size:11px;font-weight:1000;padding:5px 8px;border-radius:999px;background:#eee;color:#555}.rider.active .status{background:#d9ffe8;color:#006b2c}.warn{color:var(--orange);font-size:12px;font-weight:1000;margin-left:4px}.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;text-align:center}.stat{border-right:1px solid var(--line)}.stat:last-child{border-right:0}.stat small{display:block;font-size:12px;font-weight:1000}.stat b{display:block;margin-top:4px;font-size:18px}.stat b.red{color:var(--red)}.times{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:12px;padding-top:10px;text-align:center}.times div{border-right:1px solid var(--line);font-size:12px;font-weight:1000}.times div:last-child{border-right:0}.times b{display:block;color:var(--red);font-size:16px;margin-top:3px}.footer{text-align:center;color:var(--muted);font-weight:1000;padding:24px 0 4px;display:none}
+@media(max-width:760px){.wrap{padding:16px 24px 60px}.top-actions{margin:0 46px 12px}.summary-grid{grid-template-columns:repeat(3,1fr)}.sum{min-height:106px;padding:22px 4px 16px}.sum-title{font-size:16px}.sum-val{font-size:31px}.period-grid{grid-template-columns:1fr}.weekly-grid{grid-template-columns:1fr 1fr}.section-title{font-size:28px}.mission-form{grid-template-columns:1fr 1fr}.mission-form .field:first-child{grid-column:1/3}.mission-list{grid-template-columns:1fr}}
+@media(max-width:540px){.wrap{padding:16px 24px 60px}.top-actions{margin:0 46px 12px}.move,.mode{padding:13px 15px;font-size:16px}.logo-img{width:88px}.brand{font-size:34px}.sub{font-size:18px}.area{font-size:20px}.top-update{font-size:17px}.area-menu{left:24px;top:66px}.summary{border-radius:22px}.sum{min-height:102px;padding:20px 2px 15px}.sum-title{font-size:15px}.sum-val{font-size:29px}.weekly-grid{grid-template-columns:1fr 1fr;gap:12px}.day-card{padding:20px 14px}.day-label{font-size:31px}.period-row{font-size:16px}.period-grid{grid-template-columns:1fr}.period-card{padding:24px}.riders{grid-template-columns:1fr}.controls{flex-direction:column;align-items:stretch}.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.filters button{min-width:0;padding:10px 4px}.sort{justify-content:flex-end}.mission-form{grid-template-columns:1fr}.mission-form .field:first-child{grid-column:auto}.mission-result{grid-template-columns:1fr 1fr 1fr}.mission-stat{padding:10px 4px}.mission-stat b{font-size:19px}}
 
-.settlement-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.settlement-controls select{flex:1;min-width:180px;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 13px;font-weight:1000}
-.settlement-box{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fff,#fbfcfe);padding:18px}
-.settlement-headline{text-align:center;margin-bottom:14px}
-.settlement-headline strong{display:block;font-size:27px;color:var(--red);margin-top:6px}
-.settlement-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
-.settlement-kpi{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center}
-.settlement-kpi small{display:block;color:var(--muted);font-size:11px}
-.settlement-kpi b{display:block;margin-top:5px;font-size:17px}
-.settlement-money{border-top:2px solid var(--text);margin-top:14px;padding-top:10px}
-.settlement-row{display:flex;justify-content:space-between;gap:12px;padding:9px 2px;border-bottom:1px solid var(--line);font-size:14px}
-.settlement-row:last-child{border-bottom:0}.settlement-row.grand{font-size:18px;color:var(--red)}
-.settlement-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center}
-@media(max-width:760px){.settlement-kpis{grid-template-columns:1fr 1fr}.settlement-controls{flex-direction:column}}
+.excluded-note{margin-top:10px;color:#b15b00;font-size:14px;font-weight:1000;line-height:1.45}body.dark .excluded-note{color:#ffbf66}.excluded-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.excluded-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:var(--soft);font-size:14px;font-weight:1000}.excluded-chip::before{content:'';display:inline-block;width:9px;height:9px;border-radius:999px;background:#999}.excluded-chip.sonic::before{background:var(--red)}.excluded-chip.number::before{background:var(--blue)}.excluded-chip.maeum::before,.excluded-chip.dalseo::before{background:var(--purple)}.excluded-chip.narmi::before{background:var(--orange)}.period-excluded{margin-top:6px;color:#b15b00;font-size:14px;font-weight:1000}.stat b .miss{color:#b15b00;font-size:.82em;letter-spacing:-.5px}.stat small .miss-label{color:#b15b00}.rider .stat:first-child b{line-height:1.18}body.dark .stat b .miss,body.dark .stat small .miss-label{color:#ffbf66}
 
+.settlement-wrap{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 16px;margin-bottom:26px;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.settlement-title{text-align:center;font-size:34px;font-weight:1000;letter-spacing:-1.5px;margin:2px 0 4px}.settlement-range{text-align:center;font-size:17px;margin-bottom:18px}
+.settlement-selectors{display:flex;gap:10px;margin-bottom:14px}.settlement-selectors select{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:13px;padding:12px 10px;font-size:14px;font-weight:1000}
+.settlement-team-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:4px 0 22px}.settlement-team-btn{border:1px solid var(--red);background:var(--card);color:var(--red);border-radius:14px;padding:14px 8px;font-size:20px;font-weight:1000;cursor:pointer}.settlement-team-btn.active{background:var(--red);color:#fff}
+.settlement-table{width:100%;border-collapse:collapse;table-layout:fixed}.settlement-table th{background:var(--red);color:#fff;border-right:5px solid var(--card);border-radius:999px;padding:6px 2px;font-size:12px}.settlement-table th:first-child{background:transparent}.settlement-table td{padding:17px 2px;text-align:center;border-bottom:1px solid rgba(230,0,18,.35);font-size:15px;font-weight:1000}.settlement-table tr:last-child td{border-bottom:0}.settlement-table td.day{font-size:25px;text-align:left;width:42px}.settlement-table td.bonus{font-size:14px}.settlement-table .future{color:var(--muted)}
+.settlement-status{margin:16px 0 10px;border-radius:14px;padding:12px 14px;text-align:center;font-size:14px;font-weight:1000}.settlement-status.ok{background:#e8fff2;color:#008a43}.settlement-status.fail{background:#fff0f0;color:var(--red)}.settlement-status.wait{background:#f4f4f4;color:#666}
+.settlement-total{text-align:center;margin:24px 0 14px}.settlement-total small{display:block;font-size:15px;color:var(--muted);margin-bottom:6px}.settlement-total strong{font-size:32px;color:var(--red);letter-spacing:-1px}
+.settlement-money{border-top:2px solid var(--text);padding-top:12px}.settlement-money-row{display:flex;justify-content:space-between;gap:12px;padding:8px 2px;font-size:15px}.settlement-money-row span{color:var(--muted)}.settlement-money-row b{text-align:right}.settlement-money-row.grand{margin-top:6px;padding-top:14px;border-top:1px solid var(--line);font-size:18px}.settlement-money-row.grand span,.settlement-money-row.grand b{color:var(--text)}
+.settlement-note{margin-top:13px;color:var(--muted);font-size:12px;line-height:1.55;text-align:center}
+@media(max-width:540px){.settlement-wrap{padding:18px 10px}.settlement-title{font-size:31px}.settlement-table th{font-size:11px;border-right:3px solid var(--card)}.settlement-table td{font-size:13px;padding:15px 1px}.settlement-table td.day{font-size:23px;width:36px}.settlement-table td.bonus{font-size:12px}.settlement-selectors{flex-direction:column}.settlement-total strong{font-size:29px}}
 
-/* 모바일 상단 권역 버튼 찌그러짐 방지 */
+/* 버튼/제목 크기만 축소 — 기능 및 스크립트 변경 없음 */
+.section-title{
+  margin:18px 0 8px !important;
+  gap:8px !important;
+  font-size:22px !important;
+  letter-spacing:-0.5px !important;
+}
+.section-title .icon{
+  width:7px !important;
+  height:24px !important;
+}
+.section-title small{
+  font-size:14px !important;
+}
+.toggle-btn{
+  border-radius:10px !important;
+  font-size:15px !important;
+  padding:10px 12px !important;
+  margin:4px 0 12px !important;
+  box-shadow:0 4px 9px rgba(230,0,18,.16) !important;
+}
 @media(max-width:760px){
-  .hero{padding:10px 0 10px}
-  .hero-inner{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:10px;
-    align-items:stretch;
-  }
-  .brand{
-    min-width:0;
-    width:100%;
-  }
-  .brand>div:last-child{
-    min-width:0;
-  }
-  .brand h1{
-    font-size:18px;
-    line-height:1.25;
-    white-space:normal;
-    word-break:keep-all;
-  }
-  .brand p{
-    font-size:11px;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-  .logo{
-    width:42px;
-    height:42px;
-    min-width:42px;
-    border-radius:14px;
-    font-size:20px;
-  }
-  .region-tabs{
-    width:100%;
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:6px;
-    padding:4px;
-    border-radius:14px;
-  }
-  .area-tab{
-    width:100%;
-    min-width:0;
-    padding:11px 6px;
-    font-size:14px;
-    line-height:1;
-    white-space:nowrap;
-    word-break:keep-all;
-    text-align:center;
-  }
-  .section-head{
-    align-items:center;
-    gap:8px;
-  }
   .section-title{
-    min-width:0;
-    font-size:18px;
-    line-height:1.25;
+    margin:16px 0 7px !important;
+    font-size:20px !important;
   }
-  .toggle{
-    flex:0 0 auto;
-    min-width:72px;
-    padding:10px 11px;
-    font-size:13px;
-    white-space:nowrap;
+  .section-title small{
+    font-size:13px !important;
+  }
+  .toggle-btn{
+    font-size:14px !important;
+    padding:9px 10px !important;
+    margin:4px 0 10px !important;
   }
 }
 
 
-/* ===== VIC UI 개선 + 주간기록 상태 ===== */
+/* 단체 문자 */
+.sms-box{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:18px;margin-bottom:18px}
+.sms-team-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.sms-team-btn{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:12px;padding:11px 6px;font-size:15px;font-weight:1000;cursor:pointer}
+.sms-team-btn.active{background:var(--red);border-color:var(--red);color:#fff}
+.sms-message{width:100%;min-height:120px;resize:vertical;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:14px;padding:14px;font-size:16px;font-weight:800;line-height:1.5}
+.sms-summary{margin:12px 0;color:var(--muted);font-size:14px;font-weight:1000}
+.sms-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sms-group{border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--soft)}
+.sms-group-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:10px}
+.sms-group-head b{font-size:16px}.sms-group-head span{color:var(--red);font-size:14px}
+.sms-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sms-actions button{border:0;border-radius:10px;padding:10px 6px;font-size:14px;font-weight:1000;cursor:pointer}
+.sms-send{background:var(--red);color:#fff}.sms-copy{background:var(--card);color:var(--text);border:1px solid var(--line)!important}
+.sms-note{margin-top:12px;color:var(--muted);font-size:12px;line-height:1.5;text-align:center}
+@media(max-width:540px){
+  .sms-team-tabs{grid-template-columns:repeat(2,1fr)}
+  .sms-groups{grid-template-columns:1fr}
+}
+
+
+/* SUPERSONIC UI 2.0 - visual layer only */
 :root{
   --ss-bg:#f4f6f8;--ss-surface:#fff;--ss-surface2:#f8fafc;--ss-text:#111827;
-  --ss-sub:#6b7280;--ss-border:#e5e7eb;--ss-red:#e60012;
-  --ss-shadow:0 8px 28px rgba(17,24,39,.07);--ss-shadow-sm:0 3px 14px rgba(17,24,39,.055)
+  --ss-sub:#6b7280;--ss-border:#e5e7eb;--ss-shadow:0 8px 28px rgba(17,24,39,.07);
+  --ss-shadow-sm:0 3px 14px rgba(17,24,39,.055);--ss-red:#e60012;--ss-red-soft:#fff1f2
 }
-body{background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.07),transparent 380px),var(--ss-bg)!important;color:var(--ss-text)!important}
-.wrap{max-width:1080px!important;padding:14px 14px 65px!important}
-.hero{position:relative!important;top:auto!important;background:rgba(255,255,255,.9)!important;border:1px solid var(--ss-border)!important;border-radius:22px!important;padding:14px!important;box-shadow:var(--ss-shadow)!important;margin-bottom:12px!important}
-.summary-grid{gap:8px!important}.summary-card{border:1px solid var(--ss-border)!important;border-radius:17px!important;box-shadow:var(--ss-shadow-sm)!important;min-height:92px!important;padding:13px 11px!important}.summary-card:before{display:none!important}.summary-title{font-size:11px!important}.summary-value{font-size:23px!important;margin-top:8px!important}
-.section{border:1px solid var(--ss-border)!important;border-radius:18px!important;box-shadow:var(--ss-shadow-sm)!important;padding:16px!important;margin:12px 0!important}
-.period-grid{gap:8px!important}.period-card{border-color:var(--ss-border)!important;border-radius:16px!important;padding:13px!important}.progress{height:7px!important}
-.rider-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}.rider{border-color:var(--ss-border)!important;border-radius:16px!important;padding:13px!important;box-shadow:var(--ss-shadow-sm)!important}.rider-name{font-size:17px!important}.rstat{padding:8px 4px!important}.rstat small{font-size:10px!important}.rstat b{font-size:14px!important}
-.weekly-save-ok,.weekly-save-warn{border-radius:13px;padding:10px 12px;margin:0 0 10px;font-size:12px;font-weight:1000}
-.weekly-save-ok{background:#e9fbf2;border:1px solid #b7ead0;color:#087443}
-.weekly-save-warn{background:#fff4e5;border:1px solid #ffd89a;color:#9a5b00}
-@media(max-width:900px){.rider-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media(max-width:760px){.rider-grid{grid-template-columns:1fr!important}.summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.period-grid{grid-template-columns:1fr 1fr!important}}
-@media(max-width:540px){.wrap{padding:9px 9px 55px!important}.summary-card{min-height:84px!important;padding:11px 6px!important}.summary-title{font-size:10px!important}.summary-value{font-size:20px!important}.section{padding:12px!important}.rider-name{font-size:18px!important}.weekly-save-ok,.weekly-save-warn{font-size:11px;padding:9px 10px}}
-
-
-/* ===== INDEX 스타일 VIC UI ===== */
-:root{
-  --ss-bg:#f4f6f8;--ss-surface:#fff;--ss-surface2:#f8fafc;--ss-text:#111827;
-  --ss-sub:#6b7280;--ss-border:#e5e7eb;--ss-red:#e60012;--ss-red-soft:#fff1f2;
-  --ss-shadow:0 8px 28px rgba(17,24,39,.07);--ss-shadow-sm:0 3px 14px rgba(17,24,39,.055)
-}
-body{background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.07),transparent 380px),var(--ss-bg)!important;color:var(--ss-text)!important}
+body{background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.07),transparent 380px),var(--ss-bg)!important;color:var(--ss-text)}
 body.dark{--ss-bg:#080b10;--ss-surface:#11151c;--ss-surface2:#171c24;--ss-text:#f9fafb;--ss-sub:#9ca3af;--ss-border:#252c36;background:radial-gradient(circle at 50% -120px,rgba(230,0,18,.12),transparent 380px),var(--ss-bg)!important}
-.wrap{max-width:1080px!important;margin:0 auto!important;padding:18px 18px 70px!important}
-.top{background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border:1px solid var(--ss-border);border-radius:24px;padding:14px 18px 18px!important;box-shadow:var(--ss-shadow);margin-bottom:16px;text-align:center}
+.wrap{max-width:1080px!important;padding:18px 18px 70px!important}
+.top{background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border:1px solid var(--ss-border);border-radius:24px;padding:14px 18px 18px!important;box-shadow:var(--ss-shadow);margin-bottom:16px}
 body.dark .top{background:rgba(17,21,28,.92)}
-.top-actions{display:flex;justify-content:space-between;align-items:center;margin:0 0 8px!important;gap:8px}
-.area-switch{display:flex;gap:6px}
-.move,.mode{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;color:var(--ss-text)!important;border-radius:12px!important;padding:10px 14px!important;font-size:13px!important;font-weight:1000;box-shadow:none!important;cursor:pointer}
-.move.active-area{background:var(--ss-red)!important;color:#fff!important;border-color:var(--ss-red)!important}
-.brand{color:var(--ss-red)!important;font-size:30px!important;font-weight:1000!important;font-style:normal!important;margin-top:4px!important;letter-spacing:-1.4px}
-.sub{font-size:13px!important;color:var(--ss-sub)!important;margin-top:5px!important}
-.area{margin:13px 0 5px!important;font-size:18px!important}.area b{display:inline-block;background:var(--ss-red-soft);color:var(--ss-red);border-radius:999px;padding:5px 10px}
-.top-update{margin:5px 0 0!important;font-size:12px!important;color:var(--ss-sub)!important}
+.top-actions{margin:0 0 8px!important}.move,.mode{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;color:var(--ss-text)!important;border-radius:12px!important;padding:10px 14px!important;font-size:14px!important;box-shadow:none!important}
+.logo-img{width:66px!important;min-height:40px!important}.brand{font-size:30px!important;margin-top:4px!important;letter-spacing:-1.5px}.sub{font-size:13px!important;color:var(--ss-sub);margin-top:5px!important}.area{margin:13px 0 5px!important;font-size:18px!important}.area b{display:inline-block;background:var(--ss-red-soft);color:var(--ss-red);border-radius:999px;padding:5px 10px}.top-update{margin:5px 0 0!important;font-size:12px!important;color:var(--ss-sub)!important}
+.summary{border:0!important;background:transparent!important;overflow:visible!important;margin:0 0 22px!important}.summary-grid{grid-template-columns:repeat(5,1fr)!important;gap:10px!important}.sum{min-height:106px!important;padding:16px 12px!important;border:1px solid var(--ss-border)!important;background:var(--ss-surface);border-radius:18px;box-shadow:var(--ss-shadow-sm);display:flex;flex-direction:column;justify-content:center}.sum-title{font-size:12px!important;color:var(--ss-sub)}.sum-val{margin-top:8px!important;font-size:26px!important}.sum-val.red{color:var(--ss-red)!important}.sum-val.green{color:#059669!important}
+.section-title{margin:24px 2px 10px!important;gap:8px!important;font-size:19px!important}.section-title .icon{width:5px!important;height:20px!important;border-radius:999px!important;background:var(--ss-red)!important}.section-title small{font-size:12px!important;color:var(--ss-sub)!important}.toggle-btn{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;color:var(--ss-text)!important;border-radius:14px!important;font-size:13px!important;padding:11px 14px!important;margin:0 0 10px!important;box-shadow:var(--ss-shadow-sm)!important;text-align:left}
+.weekly-status,.mission-box,.sms-box,.settlement-wrap{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;box-shadow:var(--ss-shadow-sm)!important}
+.weekly-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}.day-card{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:16px 14px!important;box-shadow:var(--ss-shadow-sm)!important}.day-label{font-size:25px!important}.day-date{font-size:11px!important}.period-row{font-size:13px!important;margin:8px 0!important}.day-total{font-size:13px!important}
+.period-grid{grid-template-columns:repeat(4,1fr)!important;gap:10px!important}.period-card{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:16px!important;box-shadow:var(--ss-shadow-sm)!important}.period-head{font-size:17px!important;margin-bottom:5px!important}.period-sub{font-size:11px!important}.period-total{margin:14px 0 10px!important;font-size:25px!important}.total-bar{height:9px!important}.team-line{grid-template-columns:45px 1fr auto!important;gap:7px!important;font-size:11px!important;margin:9px 0!important}.team-name{font-size:12px!important}.small-bar{height:8px!important}
+.controls{margin:18px 0 10px!important;padding:10px;background:var(--ss-surface);border:1px solid var(--ss-border);border-radius:16px;box-shadow:var(--ss-shadow-sm)}.filters{gap:6px!important}.filters button{min-width:68px!important;border:1px solid var(--ss-border)!important;background:var(--ss-surface2)!important;color:var(--ss-text)!important;border-radius:10px!important;padding:9px 11px!important;font-size:12px!important}.filters button.active{background:var(--ss-red)!important;border-color:var(--ss-red)!important;color:#fff!important}
+.riders{grid-template-columns:repeat(3,1fr)!important;gap:10px!important}.rider{border:1px solid var(--ss-border)!important;background:var(--ss-surface)!important;border-radius:18px!important;padding:14px!important;box-shadow:var(--ss-shadow-sm)!important}.rider.active{background:linear-gradient(180deg,#f2fff8,#fff)!important;border:1px solid rgba(5,150,105,.38)!important}.rider-name{font-size:17px!important}.status{font-size:10px!important;padding:4px 7px!important}.stats{margin-top:11px!important}.stat small{font-size:10px!important;color:var(--ss-sub)}.stat b{font-size:15px!important}.times{margin-top:10px!important;padding-top:8px!important}.times div{font-size:10px!important;color:var(--ss-sub)}.times b{font-size:14px!important}
+@media(max-width:900px){.summary-grid{grid-template-columns:repeat(3,1fr)!important}.weekly-grid{grid-template-columns:repeat(2,1fr)!important}.period-grid{grid-template-columns:repeat(2,1fr)!important}.riders{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:560px){.wrap{padding:10px 10px 54px!important}.top{border-radius:18px;padding:10px 12px 14px!important}.summary-grid{grid-template-columns:repeat(2,1fr)!important;gap:7px!important}.sum{min-height:86px!important;border-radius:14px!important;padding:12px 8px!important}.sum-title{font-size:10.5px!important}.sum-val{font-size:21px!important}.weekly-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.period-grid{grid-template-columns:1fr 1fr!important;gap:7px!important}.riders{grid-template-columns:1fr!important}.section-title{font-size:17px!important;margin-top:20px!important}}
 
-.summary{border:0!important;background:transparent!important;overflow:visible!important;margin:0 0 18px!important}
-.summary-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
-.summary-card{background:var(--ss-surface)!important;border:1px solid var(--ss-border)!important;border-radius:17px!important;padding:14px 12px!important;min-height:94px!important;box-shadow:var(--ss-shadow-sm)!important;position:relative!important}
-.summary-card:before{display:none!important}.summary-title{font-size:11px!important;color:var(--ss-sub)!important}.summary-value{font-size:23px!important;margin-top:8px!important}.summary-value.red{color:var(--ss-red)!important}.summary-value.green{color:#059669!important}.summary-value.blue{color:#006fd6!important}
-.summary-card.team-summary{grid-column:1/-1!important;min-height:auto!important}
-.team-count-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-top:8px}
-.team-count-item{display:grid;grid-template-columns:1fr auto;grid-template-areas:"name values" "label label";gap:2px 6px;background:var(--ss-surface2);border:1px solid var(--ss-border);border-radius:11px;padding:9px}
-.team-count-name{grid-area:name;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.team-count-values{grid-area:values;display:flex;gap:4px;align-items:center}.team-count-values .online{color:#059669}.team-count-values b{font-size:17px}.team-count-values i{font-style:normal;color:var(--ss-sub)}.team-count-item small{grid-area:label;text-align:right;color:var(--ss-sub);font-size:9px}
 
-.app-shell{display:grid;grid-template-columns:170px minmax(0,1fr);gap:16px;align-items:start}
-.side-nav{position:sticky;top:12px;border:1px solid var(--ss-border);background:var(--ss-surface);border-radius:18px;padding:10px;box-shadow:var(--ss-shadow-sm)}
-.side-nav-title{padding:8px 10px 10px;font-size:11px;color:var(--ss-sub)}
-.side-nav-btn{display:block;width:100%;border:0;background:transparent;color:var(--ss-text);border-radius:11px;padding:11px 12px;margin:2px 0;text-align:left;font-size:13px;font-weight:1000;cursor:pointer}
-.side-nav-btn.active{background:var(--ss-red);color:#fff}
-.page-stage{min-width:0}.page-view{display:none}.page-view.active{display:block}
-
-.section-title{margin:2px 2px 10px!important;display:flex!important;align-items:center!important;gap:8px!important;font-size:19px!important;font-weight:1000!important}
-.section-title .icon{display:inline-block;width:5px!important;height:20px!important;background:var(--ss-red)!important;border-radius:999px!important}
-.section-title small{font-size:11px!important;color:var(--ss-sub)!important}
-
-.ops-timeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:20px}
-.ops-period{border:1px solid var(--ss-border);background:var(--ss-surface);border-radius:17px;padding:14px;box-shadow:var(--ss-shadow-sm)}
-.ops-period.current{border:2px solid var(--ss-red)}
-.ops-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.ops-title{font-size:17px;font-weight:1000}.ops-state{font-size:10px;color:var(--ss-sub)}
-.ops-metric-pair{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px}.ops-metric{border-radius:12px;padding:9px 10px}.ops-metric small{display:block;font-size:9px;margin-bottom:3px}.ops-metric b{font-size:24px}
-.ops-metric.done{background:rgba(230,0,18,.07);border:1px solid rgba(230,0,18,.15);color:var(--ss-red)}.ops-metric.goal{background:rgba(0,111,214,.07);border:1px solid rgba(0,111,214,.15);color:#006fd6}body.dark .ops-metric.goal{color:#69b7ff}
-.ops-team-list{border-top:1px solid var(--ss-border);margin-top:10px;padding-top:6px}.ops-team-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:6px 0;font-size:13px}.ops-team-values{display:flex;gap:5px}.ops-team-values .done{color:var(--ss-red)}.ops-team-values .goal{color:#006fd6}body.dark .ops-team-values .goal{color:#69b7ff}.ops-team-values i{font-style:normal;color:var(--ss-sub)}
-
-.controls{display:grid!important;grid-template-columns:minmax(220px,1fr) 150px 130px!important;gap:8px!important;align-items:center!important;margin:0 0 10px!important;padding:9px!important;background:var(--ss-surface)!important;border:1px solid var(--ss-border)!important;border-radius:15px!important;box-shadow:var(--ss-shadow-sm)}
-.rider-search{width:100%;height:40px;border:1px solid var(--ss-border);background:var(--ss-surface2);color:var(--ss-text);border-radius:10px;padding:0 12px;font-size:13px;font-weight:900;outline:none}
-.controls select{width:100%;background:var(--ss-surface2)!important;color:var(--ss-text)!important;border:1px solid var(--ss-border)!important;border-radius:10px!important;padding:10px 11px!important;font-weight:900}
-.riders{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:9px!important}
-.rider{background:var(--ss-surface)!important;border:1px solid var(--ss-border)!important;border-radius:17px!important;padding:14px!important;box-shadow:var(--ss-shadow-sm)!important;color:var(--ss-text)!important}
-.rider.online{background:#f2fff8!important;border-color:rgba(5,150,105,.4)!important}.rider-name{font-size:17px!important}.rider-stats{grid-template-columns:repeat(4,1fr)!important}
-.rstat{background:var(--ss-surface2)!important;padding:8px 4px!important}.rstat small{font-size:10px!important;color:var(--ss-sub)!important}.rstat b{font-size:14px!important}
-body.dark .rider{background:#14181f!important;color:#fff!important;border-color:#4b5563!important}body.dark .rider.online{background:#0d3320!important;color:#fff!important}.status{background:var(--ss-surface2)!important;color:var(--ss-sub)!important}
-body.dark .rider-name,body.dark .rstat b{color:#fff!important}
-
-.weekly-browser,.settlement-box,.manage-panel,.sms-page{background:var(--ss-surface);border:1px solid var(--ss-border);border-radius:17px;padding:12px;box-shadow:var(--ss-shadow-sm)}
-.weekly-team-tabs,.week-tabs{display:flex;flex-wrap:wrap;gap:6px}.week-tab,.manage-actions button{border:1px solid var(--ss-border)!important;background:var(--ss-surface2)!important;color:var(--ss-text)!important;border-radius:9px!important;padding:8px 10px!important}.week-tab.active,.manage-actions button.active{background:var(--ss-red)!important;border-color:var(--ss-red)!important;color:#fff!important}
-.table-wrap{overflow-x:auto}.weekly-table{width:100%;min-width:720px;border-collapse:separate;border-spacing:0 7px}.weekly-table th{font-size:11px;color:var(--ss-sub);padding:5px}.weekly-table td{background:var(--ss-surface2)!important;border-color:var(--ss-border)!important;color:var(--ss-text);padding:11px 7px;text-align:center}
-.settlement-controls{display:flex;gap:8px;margin-bottom:10px}.settlement-controls select{flex:1;background:var(--ss-surface)!important;color:var(--ss-text)!important;border:1px solid var(--ss-border)!important;border-radius:10px;padding:10px}
-.manage-list{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}.manage-row{background:var(--ss-surface2)!important;border:1px solid var(--ss-border)!important;border-radius:12px!important;padding:10px!important}.manage-row select{background:var(--ss-surface)!important;color:var(--ss-text)!important;border-color:var(--ss-border)!important}
-.manage-save,.primary-btn{width:100%;border:0;background:var(--ss-red);color:#fff;border-radius:11px;padding:11px;font-weight:1000;cursor:pointer;margin:8px 0 10px}
-.modal-card{background:var(--ss-surface)!important;color:var(--ss-text)!important}.sms-team,.sms-group{background:var(--ss-surface2)!important;border-color:var(--ss-border)!important}
-
-#newRiderAlert:empty{display:none}.new-rider-alert{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:9px;border:1px solid rgba(230,0,18,.28);background:#fff7f7;color:var(--ss-text);border-radius:14px;padding:10px 12px;margin:0 0 12px;text-align:left;cursor:pointer}body.dark .new-rider-alert{background:#271014}.new-rider-alert-icon{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--ss-red);color:#fff}.new-rider-alert-text b{display:block;color:var(--ss-red);font-size:13px}.new-rider-alert-text small{display:block;color:var(--ss-sub);font-size:10px;margin-top:2px}.new-rider-alert-action{color:var(--ss-red);font-size:10px}
-
-.weekly-save-ok,.weekly-save-warn{border-radius:13px;padding:9px 11px;margin:0 0 10px;font-size:11px;font-weight:1000}.weekly-save-ok{background:#e9fbf2;border:1px solid #b7ead0;color:#087443}.weekly-save-warn{background:#fff4e5;border:1px solid #ffd89a;color:#9a5b00}
-
-@media(max-width:900px){.riders{grid-template-columns:repeat(2,minmax(0,1fr))!important}.team-count-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:760px){
-  .app-shell{grid-template-columns:1fr}.side-nav{position:sticky;top:5px;z-index:15;display:flex;overflow-x:auto;gap:5px;padding:7px}.side-nav-title{display:none}.side-nav-btn{flex:0 0 auto;width:auto;white-space:nowrap;margin:0;padding:9px 11px}
-  .ops-timeline{grid-template-columns:1fr 1fr}.controls{grid-template-columns:1fr!important}.riders{grid-template-columns:1fr!important}.manage-list{grid-template-columns:1fr!important}
+/* UI 2.1 - KPI cleanup + rider search */
+.summary-grid{grid-template-columns:repeat(4,1fr)!important}
+.controls{display:grid!important;grid-template-columns:minmax(240px,1fr) auto auto!important;gap:10px!important;align-items:center!important}
+.rider-search-wrap{min-width:0}
+.rider-search{
+  width:100%;height:40px;border:1px solid var(--ss-border);background:var(--ss-surface2);
+  color:var(--ss-text);border-radius:11px;padding:0 13px;font-size:13px;font-weight:900;
+  outline:none;transition:border-color .16s ease,box-shadow .16s ease
+}
+.rider-search:focus{border-color:rgba(230,0,18,.55);box-shadow:0 0 0 3px rgba(230,0,18,.08)}
+.rider-search::placeholder{color:var(--ss-sub);font-weight:800}
+.rider-empty{grid-column:1/-1;text-align:center;color:var(--ss-sub);background:var(--ss-surface);border:1px dashed var(--ss-border);border-radius:16px;padding:28px 16px;font-size:13px}
+@media(max-width:900px){
+  .summary-grid{grid-template-columns:repeat(3,1fr)!important}
+  .controls{grid-template-columns:1fr auto!important}
+  .rider-search-wrap{grid-column:1/-1}
 }
 @media(max-width:560px){
-  .wrap{padding:10px 9px 54px!important}.top{padding:10px 12px 14px!important;border-radius:18px}.brand{font-size:26px!important}.top-actions{align-items:flex-start}.area-switch{gap:4px}.move,.mode{padding:9px 10px!important;font-size:12px!important}
-  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important}.summary-card{min-height:86px!important;padding:11px 6px!important}.summary-title{font-size:10px!important}.summary-value{font-size:20px!important}.team-count-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .section-title{font-size:18px!important}.ops-period{padding:11px}.ops-title{font-size:15px}.ops-metric b{font-size:22px}.ops-team-row{font-size:12px}.rider-name{font-size:18px!important}
+  .summary-grid{grid-template-columns:repeat(2,1fr)!important}
+  .controls{grid-template-columns:1fr!important}
+  .rider-search-wrap,.filters,.sort{grid-column:1}
+  .sort{justify-content:flex-end}
+  .rider-search{height:42px;font-size:14px}
 }
 
 
-.rider-periods{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:9px;padding-top:9px;border-top:1px solid var(--ss-border);text-align:center}
-.rider-periods>div{background:var(--ss-surface2);border-radius:9px;padding:7px 3px}.rider-periods small{display:block;color:var(--ss-sub);font-size:9px}.rider-periods b{display:block;color:var(--ss-red);font-size:14px;margin-top:3px}
-body.dark .rider-periods>div{background:#1b222c}body.dark .rider-periods small{color:#cbd5e1}body.dark .rider-periods b{color:#ff5a66}
+/* UI 2.2 - KPI 3/3/1 + side navigation */
+.summary-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+.summary-grid .sum:last-child{
+  grid-column:1 / -1;
+}
+
+.app-shell{
+  display:grid;
+  grid-template-columns:170px minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+}
+.side-nav{
+  position:sticky;
+  top:14px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:18px;
+  padding:10px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.side-nav-title{
+  padding:8px 10px 10px;
+  font-size:11px;
+  color:var(--ss-sub);
+  letter-spacing:.4px;
+}
+.side-nav-btn{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--ss-text);
+  border-radius:11px;
+  padding:11px 12px;
+  margin:2px 0;
+  text-align:left;
+  font-size:13px;
+  font-weight:1000;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.side-nav-btn:hover{background:var(--ss-surface2)}
+.side-nav-btn.active{
+  background:var(--ss-red);
+  color:#fff;
+  box-shadow:0 5px 14px rgba(230,0,18,.18);
+}
+.page-stage{min-width:0}
+.page-view{display:none}
+.page-view.active{display:block;animation:ssPageIn .16s ease-out}
+@keyframes ssPageIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.menu-hidden-toggle{display:none!important}
+
+/* sidebar page panels are always visually open */
+.page-view .panel{display:block}
+.page-view .panel.show{display:block}
+
+/* KPI 3/3/full: 7th team card spans all three columns */
+.summary-grid .sum{width:100%}
+
+/* When menu is active, section title starts at top without excessive gap */
+.page-view>.section-title:first-child{margin-top:2px!important}
+
+/* Tablet/mobile: side menu becomes horizontal tabs */
+@media(max-width:760px){
+  .app-shell{grid-template-columns:1fr;gap:10px}
+  .side-nav{
+    position:sticky;
+    top:6px;
+    z-index:15;
+    display:flex;
+    overflow-x:auto;
+    gap:6px;
+    padding:7px;
+    border-radius:14px;
+    scrollbar-width:none;
+  }
+  .side-nav::-webkit-scrollbar{display:none}
+  .side-nav-title{display:none}
+  .side-nav-btn{
+    flex:0 0 auto;
+    width:auto;
+    white-space:nowrap;
+    padding:9px 12px;
+    margin:0;
+    font-size:12px;
+  }
+  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .summary-grid .sum:last-child{grid-column:1 / -1}
+}
+@media(max-width:520px){
+  .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .sum{min-width:0!important;padding:11px 5px!important}
+  .sum-title{font-size:9.5px!important}
+  .sum-val{font-size:18px!important}
+}
+
+
+/* 신규 기사 팀 */
+.small-fill.newteam{height:100%;background:#6b7280}
+.excluded-chip.newteam::before{background:#6b7280}
+.filters button[data-team-new]{border-style:dashed}
+
+
+/* ===== 모바일 구간실적 가독성 개선 ===== */
+/* 구간 카드에서는 미포함 실적을 표시하지 않습니다. 주간/기사카드 미포함 표시는 유지됩니다. */
+.period-card .period-excluded{display:none!important}
+
+/* 팀명과 완료/목표 숫자를 더 크게, 게이지는 더 짧고 얇게 */
+.period-card .team-line{
+  grid-template-columns:auto minmax(34px,72px) auto!important;
+  column-gap:9px!important;
+  align-items:center!important;
+}
+.period-card .team-name{
+  min-width:40px;
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+}
+.period-card .team-num{
+  font-size:14px!important;
+  line-height:1.15!important;
+  white-space:nowrap;
+  letter-spacing:-.45px;
+}
+.period-card .team-num .done,
+.period-card .team-num .goal{
+  font-size:15px!important;
+  font-weight:1000!important;
+}
+.period-card .small-bar{
+  width:100%!important;
+  height:6px!important;
+  min-width:34px!important;
+  max-width:72px!important;
+}
+.period-card .period-total{
+  font-weight:1000!important;
+}
+@media(max-width:560px){
+  .period-card{
+    padding:12px 9px!important;
+  }
+  .period-card .period-head{
+    font-size:15px!important;
+    line-height:1.15!important;
+  }
+  .period-card .period-sub{
+    font-size:10px!important;
+  }
+  .period-card .period-total{
+    margin:10px 0 8px!important;
+    font-size:21px!important;
+  }
+  .period-card .total-bar{
+    height:6px!important;
+    margin-bottom:10px!important;
+  }
+  .period-card .team-line{
+    grid-template-columns:auto minmax(28px,52px) auto!important;
+    column-gap:6px!important;
+    margin:8px 0!important;
+  }
+  .period-card .team-name{
+    min-width:32px!important;
+    font-size:13px!important;
+  }
+  .period-card .team-num{
+    font-size:13px!important;
+  }
+  .period-card .team-num .done,
+  .period-card .team-num .goal{
+    font-size:14px!important;
+  }
+  .period-card .small-bar{
+    height:5px!important;
+    min-width:28px!important;
+    max-width:52px!important;
+  }
+}
+
+
+/* ===== 모바일 전체 가독성 COMFORT ===== */
+@media(max-width:560px){
+  body{font-size:15px!important}
+  .wrap{padding:10px 9px 54px!important}
+
+  .brand{font-size:27px!important}
+  .sub{font-size:12px!important}
+  .area{font-size:17px!important}
+  .top-update{font-size:11px!important}
+  .mode,.move{font-size:13px!important;padding:9px 11px!important}
+
+  /* KPI: 3열 유지하되 글자를 읽기 좋은 크기로 */
+  .sum{min-height:94px!important;padding:12px 6px!important}
+  .sum-title{font-size:11px!important;line-height:1.25!important}
+  .sum-val{font-size:22px!important;line-height:1.1!important}
+
+  /* 상단 메뉴 */
+  .side-nav-btn{font-size:13px!important;padding:10px 13px!important}
+
+  /* 섹션 */
+  .section-title{font-size:18px!important;line-height:1.2!important}
+  .section-title small{font-size:11px!important}
+
+  /* 구간실적 */
+  .period-card{padding:13px 10px!important}
+  .period-card .period-head{font-size:17px!important}
+  .period-card .period-sub{font-size:11px!important;line-height:1.3!important}
+  .period-card .period-total{font-size:23px!important}
+  .period-card .team-name{font-size:14px!important}
+  .period-card .team-num{font-size:14px!important}
+  .period-card .team-num .done,
+  .period-card .team-num .goal{font-size:15px!important}
+
+  /* 기사 검색 / 정렬 */
+  .rider-search{height:44px!important;font-size:15px!important;padding:0 13px!important}
+  .sort{font-size:13px!important}
+  .sort select{font-size:13px!important;padding:8px 9px!important}
+  .filters button{font-size:13px!important;padding:9px 10px!important}
+
+  /* 기사카드 */
+  .rider{padding:15px 14px!important}
+  .rider-name{font-size:18px!important}
+  .status,.warn{font-size:11px!important}
+  .stat small{font-size:11px!important}
+  .stat b{font-size:16px!important}
+  .times div{font-size:11px!important}
+  .times b{font-size:15px!important}
+  .miss,.miss-label{font-size:10px!important}
+
+  /* 주간실적 */
+  .day-card{padding:14px 11px!important}
+  .day-label{font-size:24px!important}
+  .day-date{font-size:11px!important}
+  .period-row{font-size:13px!important;line-height:1.25!important}
+  .day-total{font-size:13px!important;line-height:1.55!important}
+  .badge{font-size:11px!important}
+  .weekly-status{font-size:13px!important}
+  .weekly-team-tab{font-size:12px!important;padding:9px 6px!important}
+
+  /* 미션 / 정산 / 관리 / 문자 */
+  .field label{font-size:12px!important}
+  .field input,.field select{font-size:14px!important;min-height:42px!important}
+  .mission-stat small,.settle-stat small{font-size:11px!important}
+  .mission-stat b,.settle-stat b{font-size:17px!important}
+  .mission-list,.manage-list,.sms-box,.settlement-wrap{font-size:13px!important}
+  .toggle-btn{font-size:13px!important}
+  button,input,select,textarea{touch-action:manipulation}
+}
+
+
+/* ===== 운영 타임라인형 구간실적 ===== */
+.ops-timeline{
+  display:grid;
+  gap:10px;
+}
+.ops-period{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:18px;
+  padding:14px 16px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.ops-period.current{
+  border:2px solid var(--ss-red);
+  box-shadow:0 8px 22px rgba(230,0,18,.10);
+  background:linear-gradient(180deg,rgba(230,0,18,.035),var(--ss-surface));
+}
+.ops-period.done{
+  opacity:.92;
+}
+.ops-period.future{
+  background:var(--ss-surface2);
+}
+.ops-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.ops-title-wrap{min-width:0}
+.ops-title{
+  font-size:18px;
+  font-weight:1000;
+  letter-spacing:-.3px;
+}
+.ops-time{
+  margin-top:3px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-state{
+  flex:0 0 auto;
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:11px;
+  font-weight:1000;
+}
+.ops-state.current{background:#fff0f0;color:var(--ss-red)}
+.ops-state.done{background:#e8fff2;color:#008a43}
+.ops-state.future{background:#eef1f5;color:#6b7280}
+
+.ops-main{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:12px;
+  align-items:end;
+  margin-top:13px;
+}
+.ops-score{
+  font-size:27px;
+  line-height:1;
+  font-weight:1000;
+  letter-spacing:-1px;
+}
+.ops-score .done{color:var(--ss-red)}
+.ops-score .goal{color:var(--ss-text)}
+.ops-need{
+  text-align:right;
+  font-size:13px;
+  font-weight:1000;
+}
+.ops-need strong{font-size:18px}
+.ops-need.ok{color:#008a43}
+.ops-need.warn{color:var(--ss-red)}
+.ops-need.wait{color:var(--ss-sub)}
+
+.ops-team-list{
+  margin-top:12px;
+  border-top:1px solid var(--ss-border);
+  padding-top:8px;
+}
+.ops-team-row{
+  display:grid;
+  grid-template-columns:minmax(48px,.8fr) auto auto;
+  gap:8px;
+  align-items:center;
+  padding:7px 0;
+  font-size:13px;
+  font-weight:1000;
+}
+.ops-team-name{font-size:14px}
+.ops-team-score{white-space:nowrap}
+.ops-team-remain{
+  white-space:nowrap;
+  text-align:right;
+}
+.ops-team-remain.ok{color:#008a43}
+.ops-team-remain.warn{color:var(--ss-red)}
+.ops-team-remain.wait{color:var(--ss-sub)}
+
+.ops-pace{
+  margin-top:10px;
+  padding:10px 11px;
+  border-radius:12px;
+  background:var(--ss-surface2);
+  font-size:12px;
+  line-height:1.55;
+  font-weight:900;
+}
+.ops-pace strong{font-size:13px}
+.ops-pace.good{color:#087443}
+.ops-pace.risk{color:#b42318}
+
+@media(min-width:900px){
+  .ops-timeline{
+    grid-template-columns:1fr 1fr;
+  }
+  .ops-period.current{
+    grid-column:1/-1;
+  }
+}
+@media(max-width:560px){
+  .ops-period{
+    padding:13px 12px;
+    border-radius:16px;
+  }
+  .ops-title{font-size:17px}
+  .ops-time{font-size:11px}
+  .ops-main{margin-top:11px}
+  .ops-score{font-size:25px}
+  .ops-need{font-size:12px}
+  .ops-need strong{font-size:17px}
+  .ops-team-row{
+    grid-template-columns:minmax(42px,.7fr) auto auto;
+    gap:6px;
+    padding:7px 0;
+    font-size:12px;
+  }
+  .ops-team-name{font-size:13px}
+  .ops-team-score{font-size:13px}
+  .ops-team-remain{font-size:13px}
+  .ops-pace{font-size:11px;padding:9px 10px}
+}
+
+
+/* ===== 구간실적 SIMPLE: 완료/목표만 ===== */
+.ops-main.simple{
+  display:block!important;
+  margin-top:14px!important;
+  text-align:left;
+}
+.ops-main.simple .ops-score{
+  font-size:30px!important;
+  line-height:1!important;
+}
+.ops-slash{
+  color:var(--ss-sub);
+  font-weight:700;
+  padding:0 3px;
+}
+.ops-score-caption{
+  margin-top:6px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-team-row.simple{
+  grid-template-columns:1fr auto!important;
+  gap:12px!important;
+}
+.ops-team-row.simple .ops-team-score{
+  font-size:15px!important;
+}
+.ops-team-row.simple .ops-team-score strong{
+  font-size:16px!important;
+  color:var(--ss-text);
+}
+@media(max-width:560px){
+  .ops-main.simple .ops-score{font-size:28px!important}
+  .ops-team-row.simple .ops-team-name{font-size:14px!important}
+  .ops-team-row.simple .ops-team-score{font-size:14px!important}
+  .ops-team-row.simple .ops-team-score strong{font-size:15px!important}
+}
+
+
+/* ===== 주간 기록 브라우저 ===== */
+.weekly-browser{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  border-radius:15px;
+  padding:10px;
+  margin-bottom:12px;
+  box-shadow:var(--ss-shadow-sm);
+}
+.weekly-browser-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.weekly-browser-row+.weekly-browser-row{margin-top:9px}
+.weekly-browser-label{
+  flex:0 0 58px;
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:1000;
+}
+.weekly-week-select{
+  min-width:0;
+  flex:1;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:10px;
+  padding:9px 10px;
+  font-size:12px;
+  font-weight:1000;
+}
+.weekly-team-tabs{display:flex;flex-wrap:wrap;gap:6px}
+.weekly-team-tab{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 11px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.weekly-team-tab.active{
+  background:var(--ss-red);
+  border-color:var(--ss-red);
+  color:#fff;
+}
+
+/* ===== 구간실적: 완료/발주를 색/블록으로 분리 ===== */
+.ops-metric-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:13px;
+}
+.ops-metric{
+  border-radius:13px;
+  padding:10px 12px;
+}
+.ops-metric span{
+  display:block;
+  font-size:10px;
+  font-weight:1000;
+  margin-bottom:3px;
+}
+.ops-metric strong{
+  display:block;
+  font-size:27px;
+  line-height:1;
+  letter-spacing:-.8px;
+}
+.ops-metric.done{
+  background:rgba(230,0,18,.07);
+  color:var(--ss-red);
+  border:1px solid rgba(230,0,18,.15);
+}
+.ops-metric.goal{
+  background:rgba(0,111,214,.065);
+  color:#006fd6;
+  border:1px solid rgba(0,111,214,.14);
+}
+body.dark .ops-metric.goal{color:#69b7ff}
+
+.ops-team-row.simple{
+  grid-template-columns:1fr auto!important;
+  gap:10px!important;
+}
+.ops-team-metrics{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.ops-team-metrics>span{
+  display:flex;
+  align-items:baseline;
+  gap:4px;
+  white-space:nowrap;
+}
+.ops-team-metrics small{
+  font-size:9px;
+  color:var(--ss-sub);
+  font-weight:900;
+}
+.ops-team-metrics b{font-size:14px}
+.ops-team-metrics .team-done b{color:var(--ss-red)}
+.ops-team-metrics .team-goal b{color:#006fd6}
+body.dark .ops-team-metrics .team-goal b{color:#69b7ff}
+
+@media(max-width:560px){
+  .weekly-browser-row{display:block}
+  .weekly-browser-label{margin:0 0 6px 2px}
+  .weekly-week-select{width:100%;font-size:13px}
+  .weekly-team-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:5px;
+  }
+  .weekly-team-tab{font-size:12px;padding:9px 4px}
+  .ops-metric strong{font-size:25px}
+  .ops-team-metrics{gap:8px}
+  .ops-team-metrics b{font-size:15px}
+}
+
+
+/* 팀별 구간실적: 완료=빨강 / 발주=파랑, 숫자만 */
+.ops-team-metrics.simple-color{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:6px;
+  min-width:92px;
+}
+.ops-team-metrics.simple-color .team-done-num{
+  color:var(--ss-red);
+  font-size:16px!important;
+  font-weight:1000;
+}
+.ops-team-metrics.simple-color .team-goal-num{
+  color:#006fd6;
+  font-size:16px!important;
+  font-weight:1000;
+}
+body.dark .ops-team-metrics.simple-color .team-goal-num{color:#69b7ff}
+.ops-team-metrics.simple-color .team-sep{
+  color:var(--ss-sub);
+  font-size:13px;
+  font-weight:900;
+}
+@media(max-width:560px){
+  .ops-team-metrics.simple-color .team-done-num,
+  .ops-team-metrics.simple-color .team-goal-num{font-size:17px!important}
+}
+
+
+
+/* ===== 기사관리 복구/모바일 최적화 ===== */
+.manage-toolbar{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.manage-filter-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.manage-filter-btn{
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.manage-filter-btn.active{
+  background:var(--ss-red);
+  border-color:var(--ss-red);
+  color:#fff;
+}
+.manage-save-btn{
+  flex:0 0 auto;
+  border:0;
+  background:var(--ss-red);
+  color:#fff;
+  border-radius:10px;
+  padding:10px 13px;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.manage-save-btn:disabled{opacity:.55;cursor:wait}
+.manage-count{
+  font-size:11px;
+  color:var(--ss-sub);
+  font-weight:1000;
+  margin:4px 2px 9px;
+}
+.manage-rider-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.manage-rider-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface2);
+  border-radius:12px;
+  padding:10px 11px;
+}
+.manage-rider-info{min-width:0}
+.manage-rider-info b{
+  display:block;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.manage-rider-info small{
+  display:block;
+  margin-top:3px;
+  color:var(--ss-sub);
+  font-size:10px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.manage-team-select{
+  flex:0 0 auto;
+  max-width:112px;
+  border:1px solid var(--ss-border);
+  background:var(--ss-surface);
+  color:var(--ss-text);
+  border-radius:9px;
+  padding:8px 7px;
+  font-size:12px;
+  font-weight:1000;
+}
+.manage-empty{
+  grid-column:1/-1;
+  padding:24px 10px;
+  text-align:center;
+  color:var(--ss-sub);
+  font-size:13px;
+}
+@media(max-width:560px){
+  .manage-toolbar{display:block}
+  .manage-save-btn{width:100%;margin-top:9px;font-size:14px;padding:11px}
+  .manage-filter-btn{font-size:13px;padding:9px 10px}
+  .manage-rider-list{grid-template-columns:1fr}
+  .manage-rider-row{padding:11px}
+  .manage-rider-info b{font-size:15px}
+  .manage-team-select{font-size:13px;max-width:120px}
+}
+
+
+/* ===== 팀별 접속 현황: 한 카드 안에서 소속명+인원 직관 표시 ===== */
+.team-count-card{
+  text-align:left!important;
+  justify-content:flex-start!important;
+  padding:14px 16px!important;
+}
+.team-count-card .sum-title{
+  text-align:left!important;
+  margin-bottom:10px!important;
+}
+.team-count-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  width:100%;
+}
+.team-count-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  background:var(--ss-surface2);
+  border:1px solid var(--ss-border);
+  border-radius:12px;
+  padding:10px 12px;
+  min-width:0;
+}
+.team-count-item span{
+  min-width:0;
+  font-size:12px;
+  color:var(--ss-sub);
+  font-weight:1000;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.team-count-item b{
+  flex:0 0 auto;
+  font-size:18px;
+  color:var(--ss-red);
+  font-weight:1000;
+  white-space:nowrap;
+}
+@media(max-width:760px){
+  .team-count-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:560px){
+  .team-count-card{padding:12px!important}
+  .team-count-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .team-count-item{padding:10px 9px}
+  .team-count-item span{font-size:13px}
+  .team-count-item b{font-size:18px}
+}
+
+
+/* 팀별 현재 접속 */
+.team-count-item{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  grid-template-areas:
+    "name values"
+    "label label";
+  row-gap:3px!important;
+}
+.team-count-name{
+  grid-area:name;
+  font-size:13px!important;
+  color:var(--ss-text)!important;
+}
+.team-count-values{
+  grid-area:values;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:4px;
+  white-space:nowrap;
+}
+.team-count-values b{font-size:18px!important}
+.team-count-values .online{color:#059669!important}
+.team-count-values .registered{color:var(--ss-text)!important}
+.team-count-values i{
+  font-style:normal;
+  color:var(--ss-sub);
+  font-size:13px;
+  font-weight:900;
+}
+.team-count-item small{
+  grid-area:label;
+  font-size:9px;
+  color:var(--ss-sub);
+  font-weight:900;
+  text-align:right;
+}
+@media(max-width:560px){
+  .team-count-name{font-size:13px!important}
+  .team-count-values b{font-size:18px!important}
+  .team-count-item small{font-size:9px}
+}
+
+
+/* ===== 신규 기사 알림 ===== */
+#newRiderAlert:empty{display:none}
+.new-rider-alert{
+  width:100%;
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:10px;
+  border:1px solid rgba(230,0,18,.28);
+  background:#fff7f7;
+  color:var(--ss-text);
+  border-radius:15px;
+  padding:11px 13px;
+  margin:0 0 12px;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:var(--ss-shadow-sm);
+}
+body.dark .new-rider-alert{background:#271014}
+.new-rider-alert-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:28px;height:28px;
+  border-radius:999px;
+  background:var(--ss-red);
+  color:#fff;
+  font-size:16px;
+  font-weight:1000;
+}
+.new-rider-alert-text{min-width:0}
+.new-rider-alert-text b{
+  display:block;
+  font-size:13px;
+  color:var(--ss-red);
+  font-weight:1000;
+}
+.new-rider-alert-text span{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  color:var(--ss-sub);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.new-rider-alert-action{
+  font-size:11px;
+  color:var(--ss-red);
+  font-weight:1000;
+  white-space:nowrap;
+}
+@media(max-width:560px){
+  .new-rider-alert{padding:11px 10px;gap:8px}
+  .new-rider-alert-text b{font-size:13px}
+  .new-rider-alert-action{font-size:10px}
+}
+
+
+/* ===== 다크모드 기사카드 가독성 보정 ===== */
+body.dark .rider{
+  color:#f8fafc!important;
+  background:#14181f!important;
+  border-color:#4b5563!important;
+}
+body.dark .rider.active{
+  color:#ffffff!important;
+  background:#0d3320!important;
+  border-color:#00bf63!important;
+}
+body.dark .rider-name{color:#ffffff!important}
+body.dark .rider .stat small,
+body.dark .rider .times div{color:#cbd5e1!important}
+body.dark .rider .stat b{color:#f8fafc!important}
+body.dark .rider .stat b.red,
+body.dark .rider .times b{color:#ff5a66!important}
+body.dark .rider .status{
+  background:#2a313b!important;
+  color:#e5e7eb!important;
+}
+body.dark .rider.active .status{
+  background:#124b2e!important;
+  color:#8ff0b9!important;
+}
+body.dark .rider .dot{background:#6b7280!important}
+body.dark .rider.active .dot{background:#00bf63!important}
+body.dark .rider .stats,
+body.dark .rider .times{border-color:#374151!important}
+body.dark .rider .stat,
+body.dark .rider .times div{border-color:#374151!important}
+body.dark .rider .miss,
+body.dark .rider .miss-label{color:#ffc36a!important}
+
+
+/* ===== 구간실적 + 주간요약 UI 롤백 ===== */
+.weekly-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:14px!important;margin-bottom:26px!important}
+.day-card{border:1px solid var(--line)!important;border-radius:22px!important;background:var(--card)!important;padding:22px 18px!important;box-shadow:0 3px 10px rgba(0,0,0,.03)!important}
+body.dark .day-card{background:rgba(18,18,18,.92)!important;box-shadow:none!important}.day-head{text-align:center!important}.day-label{font-size:34px!important;color:var(--red)!important;font-weight:1000!important;line-height:1!important}.day-date{font-size:16px!important;color:var(--muted)!important;font-weight:1000!important;margin-top:9px!important}.period-row{display:grid!important;grid-template-columns:1fr auto!important;gap:8px!important;margin:10px 0!important;font-size:18px!important;line-height:1.35!important}.period-row .pname{color:var(--muted)!important;font-weight:1000!important}.period-row.fail .pval{color:var(--red)!important}.period-row.ok .pval{color:var(--text)!important}.day-line{height:1px!important;background:var(--line)!important;margin:16px 0!important}.day-total{text-align:center!important;font-size:18px!important;line-height:1.6!important}.day-result{text-align:center!important;margin-top:12px!important}
+.period-grid{display:grid!important;grid-template-columns:repeat(2,1fr)!important;gap:14px!important;margin-bottom:26px!important}.period-card{background:var(--card)!important;border:1px solid var(--line)!important;border-radius:22px!important;padding:24px!important;box-shadow:0 4px 14px rgba(0,0,0,.04)!important}body.dark .period-card{box-shadow:none!important;background:rgba(20,20,20,.9)!important}.period-head{font-size:25px!important;font-weight:1000!important;margin-bottom:12px!important}.period-sub{font-size:16px!important;color:var(--muted)!important;font-weight:1000!important}.period-total{margin:24px 0 18px!important;text-align:center!important;font-size:32px!important;font-weight:1000!important}.period-total span:first-child{color:var(--red)!important}.total-bar{height:18px!important;background:#e9e9e9!important;border-radius:999px!important;overflow:hidden!important;margin-bottom:18px!important}body.dark .total-bar{background:#333!important}.total-fill{height:100%!important;background:var(--red)!important;border-radius:999px!important}.team-line{display:grid!important;grid-template-columns:52px 1fr auto!important;align-items:center!important;gap:10px!important;font-size:16px!important;font-weight:1000!important;margin:12px 0!important}.team-name{font-size:17px!important}.team-num .done{color:var(--red)!important}.team-num .goal{color:var(--blue)!important}.small-bar{height:14px!important;background:#ececec!important;border-radius:999px!important;overflow:hidden!important}body.dark .small-bar{background:#333!important}.small-fill.sonic{height:100%!important;background:var(--red)!important}.small-fill.number{height:100%!important;background:var(--blue)!important}.small-fill.maeum,.small-fill.dalseo{height:100%!important;background:var(--purple)!important}.small-fill.narmi{height:100%!important;background:var(--orange)!important}
+@media(max-width:760px){.weekly-grid{grid-template-columns:1fr 1fr!important}.period-grid{grid-template-columns:1fr!important}}
+@media(max-width:540px){.weekly-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}.day-card{padding:20px 14px!important}.day-label{font-size:31px!important}.period-row{font-size:16px!important}.period-grid{grid-template-columns:1fr!important}.period-card{padding:24px!important}}
+
+
+/* ===== UI 미세조정 v2 ===== */
+/* 전체 물량 게이지: 더 작게 */
+.total-bar{
+  height:6px!important;
+  margin:10px 0 14px!important;
+  border-radius:999px!important;
+}
+.total-fill{border-radius:999px!important}
+
+/* 팀별 실적 게이지: 더 크고 눈에 띄게 */
+.team-line{
+  grid-template-columns:58px 1fr auto!important;
+  gap:11px!important;
+  margin:14px 0!important;
+  font-size:16px!important;
+}
+.team-name{font-size:17px!important}
+.small-bar{
+  height:18px!important;
+  border-radius:999px!important;
+  background:#e7e7e7!important;
+}
+body.dark .small-bar{background:#303030!important}
+.small-fill{
+  min-height:18px!important;
+  border-radius:999px!important;
+}
+.team-num{
+  min-width:72px;
+  text-align:right;
+  font-size:16px!important;
+  font-weight:1000!important;
+}
+
+/* 팀별 접속현황: 큰 상자 하나 안에 팀 순서대로 숫자만 */
+.summary-card.team-summary,
+.sum.team-summary{
+  grid-column:1/-1!important;
+  min-height:auto!important;
+}
+.team-online-flat{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:8px;
+  padding:4px 0;
+  font-size:22px;
+  font-weight:1000;
+  letter-spacing:-.5px;
+}
+.team-online-flat .online-count{
+  color:var(--green,#00bf63);
+}
+.team-online-flat .slash{
+  color:var(--muted,#767676);
+  font-weight:700;
+}
+.team-online-flat-labels{
+  display:flex;
+  justify-content:center;
+  gap:13px;
+  flex-wrap:wrap;
+  margin-top:4px;
+  color:var(--muted,#767676);
+  font-size:10px;
+  font-weight:900;
+}
+@media(max-width:560px){
+  .team-line{
+    grid-template-columns:52px 1fr auto!important;
+    gap:8px!important;
+  }
+  .small-bar{height:20px!important}
+  .small-fill{min-height:20px!important}
+  .team-num{min-width:62px;font-size:15px!important}
+  .team-online-flat{gap:8px;font-size:20px}
+  .team-online-flat-labels{gap:9px;font-size:9px}
+}
+
+
+/* ===== 팀별 접속 현황 v3 : 한 카드 / 숫자 한 줄 ===== */
+.team-count-card{
+  grid-column:1/-1!important;
+  min-height:92px!important;
+  padding:14px 18px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:center!important;
+  text-align:center!important;
+}
+.team-count-card .sum-title{
+  width:100%!important;
+  margin:0 0 8px!important;
+  text-align:center!important;
+  font-size:12px!important;
+  color:var(--ss-sub)!important;
+}
+#teamCount.team-count-grid{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  width:100%!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+}
+.team-online-number{
+  display:inline!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#059669!important;
+  font-size:26px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+}
+.team-online-slash{
+  display:inline!important;
+  color:var(--ss-sub)!important;
+  font-size:22px!important;
+  line-height:1!important;
+  font-weight:700!important;
+}
+@media(max-width:560px){
+  .team-count-card{min-height:84px!important;padding:12px 8px!important}
+  .team-count-card .sum-title{font-size:10px!important;margin-bottom:7px!important}
+  #teamCount.team-count-grid{gap:7px!important}
+  .team-online-number{font-size:23px!important}
+  .team-online-slash{font-size:19px!important}
+}
+
+/* 이전 내부 팀 카드 스타일 무력화 */
+#teamCount .team-count-item,
+#teamCount .team-count-name,
+#teamCount .team-count-values,
+#teamCount small{
+  all:unset!important;
+}
+
+
+/* ===== 팀별 구간실적 게이지 v4 ===== */
+/* 전체 물량 게이지는 얇게 유지 */
+.total-bar{
+  height:5px!important;
+  margin:10px 0 16px!important;
+}
+
+/* 팀별 게이지는 확실히 크게 */
+.team-line{
+  display:grid!important;
+  grid-template-columns:64px minmax(0,1fr) 82px!important;
+  align-items:center!important;
+  gap:12px!important;
+  margin:15px 0!important;
+}
+.team-name{
+  font-size:16px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+.small-bar{
+  position:relative!important;
+  width:100%!important;
+  height:24px!important;
+  min-height:24px!important;
+  border-radius:8px!important;
+  background:#e3e6ea!important;
+  overflow:hidden!important;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)!important;
+}
+body.dark .small-bar{
+  background:#2b313a!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)!important;
+}
+.small-fill{
+  display:block!important;
+  height:100%!important;
+  min-height:24px!important;
+  border-radius:8px!important;
+}
+.small-fill.sonic{background:var(--red)!important}
+.small-fill.number{background:var(--blue)!important}
+.small-fill.maeum,.small-fill.dalseo{background:var(--purple)!important}
+.small-fill.narmi{background:var(--orange)!important}
+
+.team-num{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:4px!important;
+  min-width:82px!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+.team-num .done{font-size:18px!important;color:var(--red)!important}
+.team-num .goal{font-size:16px!important;color:var(--blue)!important}
+
+@media(max-width:760px){
+  .team-line{
+    grid-template-columns:58px minmax(0,1fr) 74px!important;
+    gap:9px!important;
+    margin:13px 0!important;
+  }
+  .small-bar{
+    height:22px!important;
+    min-height:22px!important;
+  }
+  .small-fill{min-height:22px!important}
+  .team-num{min-width:74px!important;font-size:15px!important}
+  .team-num .done{font-size:17px!important}
+}
+@media(max-width:540px){
+  .team-line{
+    grid-template-columns:54px minmax(0,1fr) 68px!important;
+    gap:7px!important;
+    margin:12px 0!important;
+  }
+  .team-name{font-size:14px!important}
+  .small-bar{
+    height:20px!important;
+    min-height:20px!important;
+    border-radius:7px!important;
+  }
+  .small-fill{
+    min-height:20px!important;
+    border-radius:7px!important;
+  }
+  .team-num{
+    min-width:68px!important;
+    font-size:14px!important;
+    gap:3px!important;
+  }
+  .team-num .done{font-size:16px!important}
+  .team-num .goal{font-size:14px!important}
+}
 
 </style>
 </head>
@@ -213,25 +1293,29 @@ body.dark .rider-periods>div{background:#1b222c}body.dark .rider-periods small{c
 <div class="wrap">
   <div class="top">
     <div class="top-actions">
-      <div class="area-switch">
-        <button id="areaBtnVic" class="move active-area" onclick="switchArea('vic')">중구A</button>
-        <button id="areaBtnDalseob" class="move" onclick="switchArea('dalseob_onna')">달서B</button>
-      </div>
-      <button class="mode" onclick="toggleMode()" id="modeBtn">🌙 다크 모드</button>
-    </div>
-    <div class="brand">VIC 성공드림</div>
-    <div class="sub">LIVE OPERATIONS · 독립 관제</div>
-    <div class="area">현재 권역 : <b id="areaText">중구A</b></div>
-    <div class="top-update" id="topUpdate">업데이트 대기중</div>
+  <button class="move" onclick="toggleAreaMenu()">권역이동 ▾</button>
+  <button class="mode" onclick="toggleMode()" id="modeBtn">🌙 다크 모드</button>
+</div>
+    <div class="area-menu" id="areaMenu"></div>
+    <img src="logo.png" class="logo-img" onerror="this.style.display='none'">
+    <div class="brand">SUPERSONIC</div><div class="sub">LIVE OPERATIONS · 배민 | 쿠팡협력사</div>
+    <div class="area">현재 권역 : <b id="areaText">-</b></div>
+    <div class="top-update" id="topUpdateTime">↻ 마지막 업데이트 : -</div>
   </div>
-
   <div id="errorBox"></div>
   <div id="newRiderAlert"></div>
-  <div id="weeklySaveStatus"></div>
-
-  <div class="summary">
-    <div class="summary-grid" id="summaryGrid"></div>
-  </div>
+  <div class="summary"><div class="summary-grid">
+    <div class="sum"><div class="sum-title">주간 완료</div><div class="sum-val red" id="weekComplete">0</div></div>
+    <div class="sum"><div class="sum-title">주간 수락률</div><div class="sum-val" id="weekRate">0%</div></div>
+    <div class="sum"><div class="sum-title">주간 여유거절</div><div class="sum-val green" id="weekSpare">0</div></div>
+    <div class="sum"><div class="sum-title">전체 접속</div><div class="sum-val green" id="onlineCount">0명</div></div>
+    <div class="sum"><div class="sum-title">당일 발주량</div><div class="sum-val" id="dayOrder">0</div></div>
+    <div class="sum"><div class="sum-title">당일 완료</div><div class="sum-val red" id="dayComplete">0</div></div>
+    <div class="sum team-count-card">
+      <div class="sum-title" id="teamCountTitle">팀별 접속 현황</div>
+      <div class="team-count-grid" id="teamCount">-</div>
+    </div>
+  </div></div>
 
   <div class="app-shell">
     <aside class="side-nav">
@@ -242,534 +1326,1009 @@ body.dark .rider-periods>div{background:#1b222c}body.dark .rider-periods small{c
       <button class="side-nav-btn" data-page="manage" onclick="switchPage('manage',this)">기사관리</button>
       <button class="side-nav-btn" data-page="sms" onclick="switchPage('sms',this)">단체문자</button>
     </aside>
-
     <main class="page-stage">
-      <section class="page-view active" id="page-overview">
-        <div class="section-title"><span class="icon"></span>구간별 실적 <small>완료 / 발주량</small></div>
-        <div class="ops-timeline" id="periodGrid"></div>
 
-        <div class="section-title"><span class="icon"></span>기사 현황</div>
-        <div class="controls">
-          <div class="rider-search-wrap">
-            <input id="riderSearch" class="rider-search" type="search" placeholder="기사명 검색" oninput="renderRiders()">
-          </div>
-          <div class="filters">
-            <select id="riderTeamFilter" onchange="renderRiders()"><option value="전체">전체</option></select>
-          </div>
-          <div class="sort">
-            <select id="riderSort" onchange="renderRiders()">
-              <option value="complete">완료순</option>
-              <option value="reject">거절순</option>
-              <option value="name">가나다순</option>
-            </select>
-          </div>
-        </div>
-        <div class="riders" id="riderGrid"></div>
-      </section>
+<section class="page-view" id="page-weekly">
+  <div class="section-title"><span class="icon"></span>주간실적 <small id="weekRange">-</small></div>
+  <div class="weekly-browser">
+    <div class="weekly-browser-row">
+      <div class="weekly-browser-label">조회 주차</div>
+      <select id="weeklyWeekSelect" class="weekly-week-select" onchange="setWeeklyWeek(this.value)"></select>
+    </div>
+    <div class="weekly-browser-row weekly-team-row">
+      <div class="weekly-browser-label">팀 선택</div>
+      <div class="weekly-team-tabs" id="weeklyTeamTabs"></div>
+    </div>
+  </div>
+  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('weeklyPanel','weeklyToggle')" id="weeklyToggle">주간실적 보기 ▾</button>
+  <div class="panel" id="weeklyPanel"><div id="weeklyStatus"></div><div class="weekly-grid" id="weeklyGrid"></div></div>
 
-      <section class="page-view" id="page-weekly">
-        <div class="section-title"><span class="icon"></span>주간실적 <small id="weekRange"></small></div>
-        <div class="weekly-browser">
-          <div class="weekly-team-tabs" id="weeklyTeamTabs"></div>
-        </div>
-        <div class="table-wrap"><table class="weekly-table" id="weeklyTable"></table></div>
-      </section>
 
-      <section class="page-view" id="page-settlement">
-        <div class="section-title"><span class="icon"></span>주간정산</div>
-        <div class="settlement-controls">
-          <select id="settlementWeek" onchange="renderSettlement()"></select>
-          <select id="settlementTeam" onchange="renderSettlement()"></select>
-        </div>
-        <div class="settlement-box" id="settlementBox"></div>
-      </section>
+  </section>
 
-      <section class="page-view" id="page-manage">
-        <div class="section-title"><span class="icon"></span>기사관리</div>
-        <div class="manage-panel">
-          <div class="manage-actions" id="manageFilters"></div>
-          <button class="manage-save" onclick="saveTeamMap()">팀 변경 저장</button>
-          <div class="manage-list" id="manageList">기사 목록 로딩중...</div>
-        </div>
-      </section>
+  <section class="page-view" id="page-settlement">
+  <div id="settlementSection">
+    <div class="section-title"><span class="icon"></span>주간 정산 <small>달서A</small></div>
+    <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('settlementPanel','settlementToggle')" id="settlementToggle">주간 정산 보기 ▾</button>
+    <div class="panel" id="settlementPanel">
+      <div class="settlement-wrap" id="settlementBox"></div>
+    </div>
+  </div>
 
-      <section class="page-view" id="page-sms">
-        <div class="section-title"><span class="icon"></span>단체문자</div>
-        <div class="sms-page">
-          <p class="muted">현재 권역의 팀별 수신번호를 최대 99명씩 나눕니다.</p>
-          <button class="primary-btn" onclick="openSmsModal()">단체문자 그룹 열기</button>
-        </div>
-      </section>
+  </section>
+
+  <section class="page-view" id="page-manage">
+  <div class="section-title"><span class="icon"></span>기사관리</div>
+<button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('managePanel','manageToggle')" id="manageToggle">기사관리 보기 ▾</button>
+<div class="panel" id="managePanel">
+  <div class="mission-box">
+    <div id="manageList">
+      기사 목록 로딩중...
+    </div>
+  </div>
+</div>
+  </section>
+
+  <section class="page-view" id="page-sms">
+  <div class="section-title"><span class="icon"></span>단체 문자</div>
+  <button class="toggle-btn menu-hidden-toggle" onclick="togglePanel('smsPanel','smsToggle')" id="smsToggle">단체 문자 보기 ▾</button>
+  <div class="panel" id="smsPanel">
+    <div class="sms-box">
+      <div class="sms-team-tabs" id="smsTeamTabs"></div>
+      <textarea id="smsMessage" class="sms-message" placeholder="보낼 문자 내용을 입력하세요." oninput="saveSmsDraft()"></textarea>
+      <div class="sms-summary" id="smsSummary">팀을 선택하면 그룹이 표시됩니다.</div>
+      <div class="sms-groups" id="smsGroups"></div>
+      <div class="sms-note">전화번호는 중복 제거 후 팀별로 최대 99명씩 나눕니다. 문자 앱이 열리면 수신자와 내용을 확인한 뒤 직접 전송하세요.</div>
+    </div>
+  </div>
+
+  </section>
+
+  <section class="page-view active" id="page-overview">
+  <div class="section-title"><span class="icon"></span>구간별 실적 <small>(완료 / 발주량)</small></div>
+  <div class="ops-timeline" id="periodCards"></div>
+  <div class="controls">
+    <div class="rider-search-wrap">
+      <input id="riderSearch" class="rider-search" type="search" inputmode="search"
+        placeholder="기사명 / 전화번호 / 아이디 검색"
+        autocomplete="off" oninput="setRiderSearch(this.value)">
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="sort">정렬:<select id="sortSelect" onchange="render()"><option value="complete">완료순</option><option value="name">가나다순</option></select></div>
+  </div>
+  <div class="riders" id="riderGrid"></div><div class="footer" id="footerTime">마지막 업데이트 : -</div>
+  </section>
     </main>
   </div>
 </div>
-
-<!-- renderTeams 호환용: 화면에서는 사용하지 않음 -->
-<table id="teamTable" style="display:none"></table>
-
-<div class="modal" id="smsModal">
-  <div class="modal-card">
-    <div class="modal-head">
-      <div><h2 style="margin:0">단체문자 그룹</h2><p class="muted" style="margin:6px 0 0">팀별 최대 99명씩 나눕니다.</p></div>
-      <button class="close" onclick="closeSmsModal()">닫기</button>
-    </div>
-    <div id="smsGroups"></div>
-  </div>
-</div>
 <script>
-const FIREBASE_BASE='https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app';
-const AREA_CONFIGS={
-  vic:{label:'중구A',title:'VIC 성공드림 · 중구A 관제판',livePath:'/live/vic',weeklyPath:'/weekly/vic',teamOrder:['성공','상생','BM','서구','룰랄','미분류']},
-  dalseob_onna:{label:'달서B',title:'VIC 성공드림 · 달서B 관제판',livePath:'/live/dalseob_onna',weeklyPath:'/weekly/dalseob_onna',teamOrder:['슈','넘','마','미분류']}
+const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
+const AREAS={
+  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀","신규"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","신규":"신규"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","신규":"newteam"},missionTeam:"소닉팀",settlementUnit:250},
+  "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["슈퍼","성공","직영","BM","상생","나르미","신규"],labels:{"슈퍼":"슈퍼","성공":"성공","직영":"직영","BM":"BM","상생":"상생","나르미":"나르미","신규":"신규"},classes:{"슈퍼":"sonic","성공":"success","직영":"number","BM":"bm","상생":"sangsaeng","나르미":"narmi","신규":"newteam"},missionTeam:"슈퍼",settlementUnit:350}
 };
-let AREA_KEY='vic';
-let LIVE_PATH=AREA_CONFIGS.vic.livePath;
-let WEEKLY_PATH=AREA_CONFIGS.vic.weeklyPath;
-const TEAM_ORDER=[...AREA_CONFIGS.vic.teamOrder];
-let WEEK_TEAM='성공';
-let MANAGE_FILTER='전체';
-const PERIODS=[['morning','오전'],['afternoon','오후'],['evening','저녁'],['midnight','심야']];
-const PERIOD_LABEL={morning:'오전피크',afternoon:'오후논피크',evening:'저녁피크',midnight:'심야논피크'};
-let DATA=null,WEEKLY=[];
-
-function toggleMode(){
-  document.body.classList.toggle('dark');
-  const dark=document.body.classList.contains('dark');
-  localStorage.setItem('vicMode',dark?'dark':'light');
-  const b=document.getElementById('modeBtn');
-  if(b)b.textContent=dark?'☀ 라이트 모드':'🌙 다크 모드';
+const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
+function initialArea(){
+  const q=new URLSearchParams(location.search).get('area');
+  const saved=localStorage.getItem('selectedArea');
+  if(AREAS[q]) return q;
+  if(AREAS[saved]) return saved;
+  return '달서B';
 }
-if(localStorage.getItem('vicMode')==='dark')document.body.classList.add('dark');
-
+let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='',WEEKLY_TEAM='전체',WEEKLY_START='';
+let CURRENT_PAGE='overview';
 function switchPage(page,btn){
   window.__USER_SELECTED_PAGE=page;
-  document.querySelectorAll('.page-view').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.side-nav-btn').forEach(x=>x.classList.remove('active'));
-  document.getElementById('page-'+page)?.classList.add('active');
+  CURRENT_PAGE=page;
+  document.querySelectorAll('.page-view').forEach(el=>el.classList.remove('active'));
+  const target=document.getElementById('page-'+page);
+  if(target)target.classList.add('active');
+
+  document.querySelectorAll('.side-nav-btn').forEach(el=>el.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  else document.querySelector(`.side-nav-btn[data-page="${page}"]`)?.classList.add('active');
-  if(page==='weekly')renderWeekly();
-  if(page==='settlement')renderSettlement();
-  if(page==='manage'&&typeof renderManage==='function')renderManage();
+  else{
+    const found=document.querySelector(`.side-nav-btn[data-page="${page}"]`);
+    if(found)found.classList.add('active');
+  }
+
+  // 페이지형 메뉴에서는 해당 패널을 바로 펼쳐 보여줍니다.
+  const panelMap={
+    weekly:'weeklyPanel',
+    settlement:'settlementPanel',
+    manage:'managePanel',
+    sms:'smsPanel'
+  };
+  const panelId=panelMap[page];
+  if(panelId){
+    const panel=document.getElementById(panelId);
+    if(panel)panel.classList.add('show');
+  }
+
 }
 
-function num(v){return Number(v||0)}function n(v){return num(v).toLocaleString('ko-KR')}function rate(c,b){c=num(c);b=num(b);return c+b?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){return Math.floor(num(c)*.25)-num(b)}function bad(r){return num(r.reject||r.totalReject)+num(r.cancel||r.totalCancel)+num(r.riderFault)}function pct(a,b){return !num(b)?0:Math.min(100,Math.round(num(a)/num(b)*100))}function riders(){return uniqueRidersForDisplay(DATA?.riders||[])}function teamObj(t){return DATA?.teams?.[t]||{summary:{},targets:{},riders:[]}}function teamRiders(t){return riders().filter(r=>r.team===t)}function onlineCount(list){return list.filter(r=>r.isOnline).length}function excluded(r){return num(r.excluded||0)}function currentPeriodLabel(){return DATA?.currentPeriodLabel||PERIOD_LABEL[DATA?.currentPeriod]||'-'}
-function teamSummaryFromRiders(list){const s={complete:0,reject:0,cancel:0,riderFault:0,morning:0,afternoon:0,evening:0,midnight:0,excluded:0,count:list.length,onlineCount:onlineCount(list)};list.forEach(r=>{s.complete+=num(r.complete);s.reject+=num(r.reject);s.cancel+=num(r.cancel);s.riderFault+=num(r.riderFault);s.morning+=num(r.morning);s.afternoon+=num(r.afternoon);s.evening+=num(r.evening);s.midnight+=num(r.midnight);s.excluded+=excluded(r)});s.acceptRate=rate(s.complete,bad(s));s.spareRejects=spare(s.complete,bad(s));return s}
-function teamSummary(t){return teamObj(t).summary||teamSummaryFromRiders(teamRiders(t))}
-async function fetchJson(path){const r=await fetch(FIREBASE_BASE+path+'.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(path);const j=await r.json();if(j==null)throw new Error(path+' empty');return j}
-async function switchArea(key){
-  const cfg=AREA_CONFIGS[key];if(!cfg)return;
-  AREA_KEY=key;LIVE_PATH=cfg.livePath;WEEKLY_PATH=cfg.weeklyPath;
-  TEAM_ORDER.splice(0,TEAM_ORDER.length,...cfg.teamOrder);
-  WEEK_TEAM=TEAM_ORDER[0];MANAGE_FILTER='전체';DATA=null;WEEKLY=[];
-  document.querySelectorAll('#areaBtnVic,#areaBtnDalseob').forEach(b=>b.classList.remove('active-area'));
-  document.getElementById(key==='vic'?'areaBtnVic':'areaBtnDalseob')?.classList.add('active-area');
-  const areaText=document.getElementById('areaText');if(areaText)areaText.textContent=cfg.label;
-  await loadData();
-  switchPage('overview');
+function n(v){return Number(v||0).toLocaleString('ko-KR')}function won(v){return Number(v||0).toLocaleString('ko-KR')+'원'}function pct(a,b){return !b?0:Math.min(100,Math.round((a/b)*100))}function areaCfg(){return AREAS[CURRENT]}function teamObj(name){return (DATA&&DATA.teams&&DATA.teams[name])||{summary:{},targets:{},riders:[]}}function badTotal(row){return Number(row.totalReject||row.reject||0)+Number(row.totalCancel||row.cancel||0)+Number(row.riderFault||0)}function acceptRate(c,b){c=Number(c||0);b=Number(b||0);return (c+b)?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){c=Number(c||0);b=Number(b||0);return Math.floor(c*.25)-b}function hsum(r,a,b){const h=Array.isArray(r.hourly)?r.hourly:[];let s=0;for(let i=a;i<b;i++)s+=Number(h[i]||0);return s}function morningExcluded(r){return r.morningExcluded!=null?Number(r.morningExcluded||0):hsum(r,6,9)}function midnightExcluded(r){return r.midnightExcluded!=null?Number(r.midnightExcluded||0):hsum(r,0,6)}function riderExcluded(r){return Number(r.excluded!=null?r.excluded:(morningExcluded(r)+midnightExcluded(r)))}function teamExcluded(team){let obj=teamObj(team);if(obj.summary&&obj.summary.excluded!=null)return Number(obj.summary.excluded||0);return (obj.riders||[]).reduce((s,r)=>s+riderExcluded(r),0)}function periodExcluded(key){const riders=(DATA&&DATA.riders)||[];if(key==='morning')return riders.reduce((s,r)=>s+morningExcluded(r),0);if(key==='midnight')return riders.reduce((s,r)=>s+midnightExcluded(r),0);return 0}
+function toggleAreaMenu(){document.getElementById('areaMenu').classList.toggle('show')}function selectArea(area){CURRENT=area;FILTER='전체';RIDER_SEARCH='';WEEKLY_TEAM='전체';WEEKLY_START='';localStorage.setItem('selectedArea',area);try{const u=new URL(location.href);u.searchParams.set('area',area);history.replaceState(null,'',u)}catch(e){}document.getElementById('areaMenu').classList.remove('show');loadData()}function setFilter(v){FILTER=v;render()}function setRiderSearch(v){RIDER_SEARCH=String(v||'').trim().toLowerCase();renderFiltersAndRiders()}function toggleMode(){document.body.classList.toggle('dark');const dark=document.body.classList.contains('dark');localStorage.setItem('mode',dark?'dark':'light');document.getElementById('modeBtn').innerText=dark?'☀ 라이트 모드':'🌙 다크 모드'}if(localStorage.getItem('mode')==='dark'){document.body.classList.add('dark')}
+function togglePanel(id,btnId){const p=document.getElementById(id),b=document.getElementById(btnId),open=!p.classList.contains('show');p.classList.toggle('show',open);b.innerText=b.innerText.replace(open?'보기 ▾':'닫기 ▴',open?'닫기 ▴':'보기 ▾')}
+
+function dateYmdLocal(d){
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function addYmd(dateStr,days){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);dt.setDate(dt.getDate()+days);
+  return dateYmdLocal(dt);
+}
+function wedStart(dateStr){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  const diff=(dt.getDay()-3+7)%7;
+  dt.setDate(dt.getDate()-diff);
+  return dateYmdLocal(dt);
+}
+function availableWeeklyStarts(){
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const set=new Set();
+  rows.forEach(r=>{
+    if(!r||!r.businessDate)return;
+    set.add(r.weekStart||wedStart(r.businessDate));
+  });
+  if(DATA&&DATA.businessDate)set.add(wedStart(DATA.businessDate));
+  return [...set].sort().reverse();
+}
+function ensureWeeklySelection(){
+  const cfg=areaCfg();
+  const starts=availableWeeklyStarts();
+
+  const savedTeam=localStorage.getItem('weeklyTeam_'+cfg.key);
+  if(WEEKLY_TEAM==='전체' && savedTeam && (savedTeam==='전체'||cfg.teams.includes(savedTeam))){
+    WEEKLY_TEAM=savedTeam;
+  }
+  if(WEEKLY_TEAM!=='전체'&&!cfg.teams.includes(WEEKLY_TEAM))WEEKLY_TEAM='전체';
+
+  const savedStart=localStorage.getItem('weeklyStart_'+cfg.key);
+  if(!WEEKLY_START){
+    WEEKLY_START=(savedStart&&starts.includes(savedStart))?savedStart:(starts[0]||'');
+  }
+  if(WEEKLY_START&&!starts.includes(WEEKLY_START))WEEKLY_START=starts[0]||'';
+}
+function setWeeklyTeam(team){
+  WEEKLY_TEAM=team;
+  localStorage.setItem('weeklyTeam_'+areaCfg().key,team);
+  renderWeeklyBrowser();
+}
+function setWeeklyWeek(start){
+  WEEKLY_START=start;
+  localStorage.setItem('weeklyStart_'+areaCfg().key,start);
+  renderWeeklyBrowser();
+}
+function renderWeeklyControls(){
+  ensureWeeklySelection();
+  const cfg=areaCfg();
+
+  const teamEl=document.getElementById('weeklyTeamTabs');
+  if(teamEl){
+    const entries=[['전체','전체'],...cfg.teams.map(t=>[t,cfg.labels[t]||t])];
+    teamEl.innerHTML=entries.map(([key,label])=>
+      `<button class="weekly-team-tab ${WEEKLY_TEAM===key?'active':''}" onclick="setWeeklyTeam('${key}')">${label}</button>`
+    ).join('');
+  }
+
+  const weekEl=document.getElementById('weeklyWeekSelect');
+  if(weekEl){
+    const starts=availableWeeklyStarts();
+    weekEl.innerHTML=starts.map(start=>{
+      const end=addYmd(start,6);
+      return `<option value="${start}" ${start===WEEKLY_START?'selected':''}>${start} ~ ${end}</option>`;
+    }).join('');
+  }
+}
+
+/* ===== 주간실적 목표물량: 현재 세트 기준 재계산 ===== */
+const WEEKLY_DAY_TARGETS={
+  0:{morning:19,afternoon:18,evening:30,midnight:23}, // 월
+  1:{morning:19,afternoon:18,evening:30,midnight:23}, // 화
+  2:{morning:19,afternoon:18,evening:30,midnight:23}, // 수
+  3:{morning:19,afternoon:18,evening:30,midnight:23}, // 목
+  4:{morning:21,afternoon:21,evening:32,midnight:26}, // 금
+  5:{morning:27,afternoon:22,evening:36,midnight:25}, // 토
+  6:{morning:29,afternoon:22,evening:35,midnight:24}  // 일
+};
+const WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY={
+  "2026-05-25":6,
+  "2026-06-03":6,
+  "2026-07-17":6,
+  "2026-08-17":6
+};
+function targetWeekdayForDate(dateStr){
+  if(WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY[dateStr]!=null)return WEEKLY_SPECIAL_DAY_TARGET_WEEKDAY[dateStr];
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  return new Date(y,m-1,d).getDay()===0?6:new Date(y,m-1,d).getDay()-1;
+}
+function currentTeamSets(team){
+  const live=DATA?.teams?.[team]?.targets;
+  if(live && Number.isFinite(Number(live.sets)))return Number(live.sets);
+
+  // sets 필드가 없는 예전 live 데이터 fallback:
+  // 현재 날짜의 발주량 / 해당 요일 기본물량으로 세트 수를 역산
+  const currentDate=DATA?.businessDate;
+  if(live && currentDate){
+    const wd=targetWeekdayForDate(currentDate);
+    const base=WEEKLY_DAY_TARGETS[wd]||{};
+    for(const key of ['morning','afternoon','evening','midnight']){
+      const baseVal=Number(base[key]||0),goal=Number(live[key]||0);
+      if(baseVal>0 && goal>0){
+        return Math.round((goal/baseVal)*10)/10;
+      }
+    }
+  }
+  return null;
+}
+function currentGoalForTeamDate(team,date,key,storedGoal=0){
+  const sets=currentTeamSets(team);
+  if(sets==null)return Number(storedGoal||0);
+  const wd=targetWeekdayForDate(date);
+  const base=Number((WEEKLY_DAY_TARGETS[wd]||{})[key]||0);
+  return Math.ceil(base*sets);
+}
+function currentGoalForAllDate(date,key,row){
+  const cfg=areaCfg();
+  const teams=(cfg.teams||[]).filter(t=>t!=='신규'&&t!=='미분류');
+  let usable=false,total=0;
+  teams.forEach(team=>{
+    const sets=currentTeamSets(team);
+    if(sets!=null){
+      usable=true;
+      total+=currentGoalForTeamDate(team,date,key,0);
+    }
+  });
+  if(usable)return total;
+  return Number(row?.periodTargets?.[key]||0);
+}
+
+function weeklyView(){
+  ensureWeeklySelection();
+  const cfg=areaCfg();
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  const start=WEEKLY_START||availableWeeklyStarts()[0]||'';
+  const dates=start?Array.from({length:7},(_,i)=>addYmd(start,i)):[];
+  const isAll=WEEKLY_TEAM==='전체';
+
+  const days=dates.map((date,i)=>{
+    const row=byDate[date]||{};
+    let sm={},storedTargets={},has=false;
+
+    if(isAll){
+      has=!!row.businessDate;
+      sm={
+        complete:Number(row.totalComplete||row.total?.complete||0),
+        reject:Number(row.totalReject||row.total?.reject||0),
+        cancel:Number(row.totalCancel||row.total?.cancel||0),
+        riderFault:Number(row.riderFault||row.total?.riderFault||0),
+        morning:Number(row.morning||row.total?.morning||0),
+        afternoon:Number(row.afternoon||row.total?.afternoon||0),
+        evening:Number(row.evening||row.total?.evening||0),
+        midnight:Number(row.midnight||row.total?.midnight||0),
+        excluded:Number(row.excluded||row.totalExcluded||row.total?.excluded||0),
+        acceptRate:row.acceptRate
+      };
+      storedTargets=row.periodTargets||{};
+    }else{
+      const stored=row.teams&&row.teams[WEEKLY_TEAM];
+      if(stored){
+        has=true;
+        sm=(stored.summary&&typeof stored.summary==='object')?stored.summary:stored;
+        storedTargets=(stored.targets&&typeof stored.targets==='object')?stored.targets:{};
+      }
+    }
+
+    const complete=Number(sm.complete||0);
+    const bad=Number(sm.reject||0)+Number(sm.cancel||0)+Number(sm.riderFault||0);
+    const rate=sm.acceptRate!=null?Number(sm.acceptRate):acceptRate(complete,bad);
+    const excluded=Number(sm.excluded||0);
+
+    const periods=PERIODS.map(([key,,label])=>{
+      const done=Number(sm[key]||0);
+      // 핵심: 과거 weekly 파일에 저장된 예전 목표값을 그대로 쓰지 않고,
+      // 현재 DATA의 팀별 sets를 기준으로 해당 날짜(요일)의 목표를 다시 계산합니다.
+      const goal=isAll
+        ? currentGoalForAllDate(date,key,row)
+        : currentGoalForTeamDate(WEEKLY_TEAM,date,key,storedTargets[key]);
+      return {key,label,done,goal,fail:has&&goal>0&&done<goal,ok:has&&goal>0&&done>=goal};
+    });
+
+    const failPeriods=periods.filter(p=>p.fail);
+    return {label:labels[i],date,has,complete,bad,rate,excluded,periods,ok:has&&failPeriods.length===0,failPeriods};
+  });
+
+  return {
+    start,
+    end:start?addYmd(start,6):'',
+    days,
+    label:isAll?'전체':(cfg.labels[WEEKLY_TEAM]||WEEKLY_TEAM)
+  };
+}
+function renderWeeklyBrowser(){
+  renderWeeklyControls();
+  const view=weeklyView();
+
+  const range=document.getElementById('weekRange');
+  if(range)range.innerText=view.start&&view.end?`${view.start} ~ ${view.end}`:'-';
+
+  const failed=view.days.filter(d=>d.has&&!d.ok);
+  const status=document.getElementById('weeklyStatus');
+  if(status){
+    status.innerHTML=`<div class="weekly-status">
+      <div class="status-line">
+        <span>${view.label} 주간 실적</span>
+        ${failed.length?`<span class="badge fail">미달 ${failed.length}일</span>`:`<span class="badge ok">기록 확인</span>`}
+      </div>
+    </div>`;
+  }
+
+  const grid=document.getElementById('weeklyGrid');
+  if(grid){
+    grid.innerHTML=view.days.map(day=>`<div class="day-card">
+      <div class="day-head"><div class="day-label">${day.label}</div><div class="day-date">${day.date}</div></div>
+      ${day.periods.map(p=>`<div class="period-row ${p.fail?'fail':p.ok?'ok':''}">
+        <div class="pname">${p.label}</div>
+        <div class="pval">${day.has?n(p.done):'-'} / ${day.has&&p.goal>0?n(p.goal):'-'}</div>
+      </div>`).join('')}
+      <div class="day-line"></div>
+      <div class="day-total">
+        <b>완료 ${day.has?n(day.complete):'-'}</b><br>
+        <b>거절합계 ${day.has?n(day.bad):'-'}</b><br>
+        <b>수락률 ${day.has?day.rate+'%':'-'}</b>
+      </div>
+      <div class="day-result">
+        ${day.has?'<span class="badge ok">저장됨</span>':'<span class="badge wait">기록없음</span>'}
+      </div>
+    </div>`).join('');
+  }
+}
+
+function renderAreaMenu(){document.getElementById('areaMenu').innerHTML=Object.keys(AREAS).map(a=>`<button onclick="selectArea('${a}')" class="${a===CURRENT?'active':''}">${a}</button>`).join('')}
+async function fetchJson(path){
+  const url=FIREBASE_BASE+path+".json?v="+Date.now();
+  const r=await fetch(url,{cache:'no-store'});
+  if(!r.ok)throw new Error(path);
+  const data=await r.json();
+  if(data===null||data===undefined)throw new Error(path+" empty");
+  return data;
 }
 async function loadData(){
+  renderAreaMenu();
   try{
-    DATA=await fetchJson(LIVE_PATH);
+    DATA=await fetchJson(areaCfg().file);
   }catch(e){
-    console.error('실시간 데이터 로딩 오류',e);
-    const label=AREA_CONFIGS[AREA_KEY]?.label||AREA_KEY;
-    document.getElementById('errorBox').innerHTML=
-      `<div class="error">${label} 실시간 데이터를 읽지 못했습니다. Firebase ${LIVE_PATH} 경로를 확인하세요.</div>`;
+    DATA=null;
+    document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 실시간 데이터를 읽지 못했습니다.<br>${e.message||''}<br>Firebase 경로를 확인하세요.</div>`;
+    return;
+  }
+  try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}
+  document.getElementById('errorBox').innerHTML='';
+  // 새로 열거나 새로고침할 때는 항상 운영현황부터 시작합니다.
+  try{render()}catch(e){
+    console.error('화면 렌더링 오류',e);
+    console.error('치명적 화면 렌더링 오류',e);
+    const box=document.getElementById('errorBox');
+    if(box)box.innerHTML=`<div class="error">화면 초기화 중 오류가 발생했습니다.<br>${e.message||'알 수 없는 오류'}</div>`;
+  }
+}
+function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
+let totals={complete:0,bad:0,spare:0,excluded:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),excluded=Number(r.excluded||r.totalExcluded||0),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;totals.excluded+=excluded;return{label:labels[i]||'',date:dk,has,complete,bad,excluded,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);if(!totals.excluded&&DATA&&DATA.total&&DATA.total.excluded!=null)totals.excluded=Number(DATA.total.excluded||0);return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
+
+function safeWeeklySummary(){
+  try{
+    return buildWeeklySummary();
+  }catch(e){
+    console.error('주간 요약 계산 오류',e);
+    return {
+      days:[],
+      start:'-',
+      end:'-',
+      complete:0,
+      bad:0,
+      spare:0,
+      excluded:0,
+      rate:100
+    };
+  }
+}
+
+
+function renderNewRiderAlert(){
+  const box=document.getElementById('newRiderAlert');
+  if(!box)return;
+
+  const riders=Array.isArray(DATA&&DATA.riders)?DATA.riders:[];
+  const newRiders=riders.filter(r=>r.team==='신규');
+
+  if(!newRiders.length){
+    box.innerHTML='';
     return;
   }
 
-  try{
-    WEEKLY=await fetchJson(WEEKLY_PATH);
-  }catch(e){
-    console.warn('주간 데이터 로딩 오류',e);
-    WEEKLY=DATA.weekly||[];
-  }
+  const names=newRiders.slice(0,5).map(r=>r.name||r.userId||'이름없음');
+  const extra=newRiders.length>5?` 외 ${n(newRiders.length-5)}명`:'';
 
-  try{
-    normalizeTeams();
-    document.getElementById('errorBox').innerHTML='';
-    renderAll();
-  }catch(e){
-    console.error('화면 렌더링 오류',e);
-    document.getElementById('errorBox').innerHTML=
-      `<div class="error">데이터는 정상 수신됐지만 화면 표시 중 오류가 발생했습니다: ${e.message||e}</div>`;
-  }
-}
-function normalizeTeams(){
-  const configured=[...(AREA_CONFIGS[AREA_KEY]?.teamOrder||[])];
-  const incoming=Array.isArray(DATA?.teamOrder)?DATA.teamOrder:[];
-
-  // 현재 선택한 권역에 등록된 팀만 표시합니다.
-  // 다른 권역의 teamOrder가 Firebase 데이터에 남아 있어도 관제판에는 섞지 않습니다.
-  const merged=configured.filter(t=>incoming.includes(t)||configured.includes(t));
-  TEAM_ORDER.splice(0,TEAM_ORDER.length,...merged);
-
-  if(!TEAM_ORDER.includes(WEEK_TEAM)){
-    WEEK_TEAM=TEAM_ORDER[0]||'미분류';
-  }
-  if(MANAGE_FILTER!=='전체'&&!TEAM_ORDER.includes(MANAGE_FILTER)){
-    MANAGE_FILTER='전체';
-  }
-
-  const f=document.getElementById('riderTeamFilter');
-  if(f){
-    const cur=f.value||'전체';
-    f.innerHTML='<option value="전체">전체</option>'+
-      TEAM_ORDER.map(t=>`<option value="${t}">${t}</option>`).join('');
-    f.value=TEAM_ORDER.includes(cur)?cur:'전체';
-  }
-}
-function buildWeekly(){
-  const ws=DATA&&DATA.weeklySummary;
-  if(ws&&Array.isArray(ws.days)){
-    return{
-      complete:num(ws.complete),
-      bad:num(ws.badTotal),
-      acceptRate:num(ws.acceptRate),
-      spare:num(ws.spareRejects)
-    };
-  }
-  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
-  const current=DATA?.businessDate||isoLocal(new Date());
-  const start=weekStartWed(current),end=dateAdd(start,6);
-  const currentRows=rows.filter(r=>r&&r.businessDate>=start&&r.businessDate<=end);
-  let complete=0,b=0;
-  currentRows.forEach(r=>{complete+=num(r.totalComplete);b+=bad(r)});
-  return{complete,bad:b,acceptRate:rate(complete,b),spare:spare(complete,b)};
+  box.innerHTML=`
+    <button type="button" class="new-rider-alert" onclick="openNewRiderManage()">
+      <div class="new-rider-alert-icon">!</div>
+      <div class="new-rider-alert-text">
+        <b>신규 기사 ${n(newRiders.length)}명 확인 필요</b>
+        <span>${names.join(', ')}${extra}</span>
+      </div>
+      <div class="new-rider-alert-action">기사관리 →</div>
+    </button>`;
 }
 
-const SETTLEMENT_UNIT_BY_AREA={vic:350,dalseob_onna:250};
-function settlementUnit(){return num(SETTLEMENT_UNIT_BY_AREA[AREA_KEY] ?? 350);}
-const OVERTIME_UNIT=100;
-function settlementTeams(){return TEAM_ORDER.filter(t=>t!=='미분류')}
-
-function toggleSettlement(){
-  const p=document.getElementById('settlementPanel'),b=document.getElementById('settlementBtn');
-  const open=p.classList.toggle('hidden')===false;
-  b.textContent=open?'닫기 ▴':'보기 ▾';
-  if(open)renderSettlement();
+function openNewRiderManage(){
+  window.manageFilter='신규';
+  switchPage('manage');
+  if(typeof renderManageList==='function')renderManageList();
 }
-function isoLocal(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
-function dateAdd(s,days){const [y,m,d]=String(s).split('-').map(Number),x=new Date(y,m-1,d);x.setDate(x.getDate()+days);return isoLocal(x)}
-function weekStartWed(s){const [y,m,d]=String(s).split('-').map(Number),x=new Date(y,m-1,d);x.setDate(x.getDate()-((x.getDay()-3+7)%7));return isoLocal(x)}
+
+function render(){
+  const d=DATA;
+  if(!d)return;
+
+  const cfg=areaCfg()||{};
+  const teams=Array.isArray(cfg.teams)?cfg.teams:[];
+  const total=(d.total&&typeof d.total==='object')?d.total:{};
+  const ws=safeWeeklySummary();
+
+  let totalOrder=0;
+  for(const t of teams){
+    const obj=teamObj(t);
+    totalOrder+=Number((obj.targets&&obj.targets.total)||0);
+  }
+
+  const setText=(id,value)=>{
+    const el=document.getElementById(id);
+    if(el)el.innerText=value;
+  };
+
+  setText('modeBtn',document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드');
+  setText('areaText',d.area||CURRENT);
+  setText('topUpdateTime','↻ 마지막 업데이트 : '+(d.updatedAt||'-'));
+  setText('footerTime','↻ 마지막 업데이트 : '+(d.updatedAt||'-'));
+  setText('weekRange',(ws.start||'-')+' ~ '+(ws.end||'-'));
+  setText('weekComplete',n(ws.complete));
+  setText('weekRate',Number(ws.rate||0)+'%');
+  setText('weekSpare',n(ws.spare));
+  setText('dayComplete',n(total.complete));
+  setText('dayOrder',n(totalOrder));
+  setText('onlineCount',n(total.onlineCount)+'명');
+  const visibleTeams=teams.filter(t=>t!=='신규'&&t!=='미분류');
+  const teamLabels=visibleTeams.map(t=>cfg.labels&&cfg.labels[t]?cfg.labels[t]:t);
+  setText('teamCountTitle','팀별 접속 현황 · '+teamLabels.join(' / '));
+  const teamCountEl=document.getElementById('teamCount');
+  if(teamCountEl){
+    teamCountEl.innerHTML=visibleTeams.map((t,i)=>{
+      const sm=teamObj(t).summary||{};
+      const online=Number(sm.onlineCount||0);
+      return `${i?'<span class="team-online-slash">/</span>':''}<span class="team-online-number">${n(online)}</span>`;
+    }).join('');
+  }
+
+  // 각 화면 기능은 서로 독립적으로 렌더링합니다.
+  // 한 기능에 문제가 생겨도 메인 화면 전체가 오류로 바뀌지 않습니다.
+  const safe=(name,fn)=>{
+    try{fn()}
+    catch(e){console.error(name+' 렌더링 오류',e)}
+  };
+
+  safe('신규기사알림',renderNewRiderAlert);
+  if(typeof renderWeeklyBrowser==='function') safe('주간실적',renderWeeklyBrowser);
+  if(typeof renderSettlement==='function') safe('정산',renderSettlement);
+  if(typeof renderPeriods==='function') safe('구간실적',renderPeriods);
+  if(typeof renderFiltersAndRiders==='function') safe('기사카드',renderFiltersAndRiders);
+  if(typeof renderManageList==='function') safe('팀관리',renderManageList);
+  if(typeof renderSms==='function') safe('단체문자',renderSms);
+}
+function periodIncludedDone(team,key){
+  // d_a.py에서 이미 SLA 포함 구간만 summary[key]에 저장합니다.
+  // 여기서 미포함을 다시 빼면 게이지가 이중 차감됩니다.
+  return Number(teamObj(team).summary[key]||0);
+}
+
+
+function dateAdd(dateStr,days){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  dt.setDate(dt.getDate()+Number(days||0));
+  const yy=dt.getFullYear();
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  return `${yy}-${mm}-${dd}`;
+}
+function weekStartFor(dateStr){
+  const [y,m,d]=String(dateStr).split('-').map(Number);
+  const dt=new Date(y,m-1,d);
+  const diff=(dt.getDay()-3+7)%7;
+  dt.setDate(dt.getDate()-diff);
+  const yy=dt.getFullYear();
+  const mm=String(dt.getMonth()+1).padStart(2,'0');
+  const dd=String(dt.getDate()).padStart(2,'0');
+  return `${yy}-${mm}-${dd}`;
+}
 function settlementWeeks(){
-  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
-  const starts=[weekStartWed(isoLocal(new Date()))];
-  rows.forEach(r=>{if(r?.businessDate)starts.push(weekStartWed(r.businessDate))});
-  return [...new Set(starts)].sort().reverse().slice(0,8);
+  const now=new Date();
+  const today=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  const currentStart=weekStartFor(today);
+  return [
+    currentStart,
+    dateAdd(currentStart,-7),
+    dateAdd(currentStart,-14),
+    dateAdd(currentStart,-21)
+  ];
 }
 function settlementRows(start){const end=dateAdd(start,6);return (Array.isArray(WEEKLY)?WEEKLY:[]).filter(r=>r.businessDate>=start&&r.businessDate<=end)}
+const VALID_VOLUME=680;
+const OVERTIME_UNIT=100;
+function teamDailyRecord(row,team,key){
+  if(!row||!row.teams||!row.teams[team]) return {has:false,done:0,goal:0};
+  const t=row.teams[team]||{};
+  const sm=t.summary||t||{};
+  const tg=t.targets||{};
+  return {has:true,done:Number(sm[key]||0),goal:Number(tg[key]||0)};
+}
 function slotBonus(done,goal,unit){
-  done=Math.floor(num(done));goal=Math.floor(num(goal));unit=num(unit);
+  done=Math.floor(Number(done||0));
+  goal=Math.floor(Number(goal||0));
+  unit=Number(unit||0);
+
   if(goal<=0||done<=goal||unit<=0)return 0;
-  const b=[goal,Math.floor(goal*1.10),Math.floor(goal*1.20),Math.floor(goal*1.30),Math.floor(goal*1.40),Math.floor(goal*1.50)];
-  const rates=[.90,.80,.70,.60,.50];
-  let remaining=Math.max(0,Math.min(done,b[5])-goal),total=0;
-  for(let i=0;i<5;i++){const cap=Math.max(0,b[i+1]-b[i]),cnt=Math.min(remaining,cap);total+=cnt*unit*rates[i];remaining-=cnt;if(remaining<=0)break}
+
+  // 100% 초과분부터 150%까지만 인정합니다.
+  // 각 10% 구간은 실제 정수 물량 경계로 분리합니다.
+  // 예: 목표 110건이면 각 구간은 정확히 11건씩 배분됩니다.
+  const boundaries=[
+    goal,
+    Math.floor(goal*1.10),
+    Math.floor(goal*1.20),
+    Math.floor(goal*1.30),
+    Math.floor(goal*1.40),
+    Math.floor(goal*1.50)
+  ];
+
+  const rates=[0.90,0.80,0.70,0.60,0.50];
+  const paidDone=Math.min(done,boundaries[5]);
+  let remaining=Math.max(0,paidDone-goal);
+  let total=0;
+
+  for(let i=0;i<5;i++){
+    const bandCapacity=Math.max(0,boundaries[i+1]-boundaries[i]);
+    const bandCount=Math.min(remaining,bandCapacity);
+    total+=bandCount*unit*rates[i];
+    remaining-=bandCount;
+    if(remaining<=0)break;
+  }
+
   return Math.round(total);
 }
-function calcSettlement(start,team){
-  const rows=settlementRows(start),slots=[];let sets=0,excludedTotal=0,complete=0,badTotal=0;
+function calcTeamSettlement(start,team){
+  const rows=settlementRows(start);
+  const unit=Number(areaCfg()?.settlementUnit||0);
+  const slots=[];
+  let complete=0,bad=0,excluded=0;
+  let sets=0;
+
   rows.forEach(r=>{
-    const t=r?.teams?.[team],s=t?.summary||t||{},g=t?.targets||{};
+    const t=r?.teams?.[team];
+    const sm=t?.summary||t||{};
+    const tg=t?.targets||{};
+
     if(t){
-      complete+=num(s.complete);badTotal+=bad(s);excludedTotal+=num(s.excluded);
-      if(num(g.sets)>0)sets=num(g.sets);
+      complete+=Number(sm.complete||0);
+      bad+=Number(sm.reject||0)+Number(sm.cancel||0)+Number(sm.riderFault||0);
+      excluded+=Number(sm.excluded||0);
+
+      // 해당 주차 JSON에 저장된 실제 세트 수를 기준으로 합니다.
+      if(Number(tg.sets||0)>0){
+        sets=Number(tg.sets||0);
+      }
     }
-    PERIODS.forEach(([k])=>{const done=num(s[k]),goal=num(g[k]);if(goal>0)slots.push({done,goal,bonus:slotBonus(done,goal,settlementUnit())})});
+
+    PERIODS.forEach(([key,,label])=>{
+      const done=Number(sm[key]||0);
+      const goal=Number(tg[key]||0);
+
+      // 각 날짜·팀·구간의 목표값도 JSON 값을 그대로 사용합니다.
+      if(goal>0){
+        slots.push({
+          date:r.businessDate,
+          key,
+          label,
+          done,
+          goal,
+          rate:done/goal,
+          excessBonus:slotBonus(done,goal,unit)
+        });
+      }
+    });
   });
-  if(!sets)sets=num(DATA?.teams?.[team]?.targets?.sets);
-  const unit=settlementUnit(),fixed=680*sets,base=fixed*300,grade=fixed*unit;
-  const excess=slots.reduce((s,x)=>s+x.bonus,0),overtime=excludedTotal*OVERTIME_UNIT;
-  return {sets,complete,badTotal,excludedTotal,slots,achieved:slots.filter(x=>x.done>=x.goal).length,base,grade,excess,overtime,total:base+grade+excess+overtime};
+
+  // 새 주차라 아직 weekly 팀 기록이 없을 때만 현재 실시간 JSON의 sets를 보조값으로 사용합니다.
+  if(sets<=0){
+    sets=Number(DATA?.teams?.[team]?.targets?.sets||0);
+  }
+
+  const fixedVolume=VALID_VOLUME*sets;
+  const base=fixedVolume*300;
+  const gradeBase=fixedVolume*unit;
+  const excess=slots.reduce((s,x)=>s+Number(x.excessBonus||0),0);
+  const overtime=excluded*OVERTIME_UNIT;
+  const achieved=slots.filter(x=>x.done>=x.goal).length;
+  const rate=acceptRate(complete,bad);
+
+  return {
+    rows,
+    slots,
+    complete,
+    bad,
+    excluded,
+    achieved,
+    sets,
+    rate,
+    base,
+    gradeBase,
+    excess,
+    overtime,
+    unit,
+    total:base+gradeBase+excess+overtime
+  };
 }
+
+function setSettlementWeek(v){localStorage.setItem('settlementWeek',v);renderSettlement()}
+function setSettlementTeam(v){localStorage.setItem('settlementTeam',v);renderSettlement()}
 function renderSettlement(){
-  const weekEl=document.getElementById('settlementWeek'),teamEl=document.getElementById('settlementTeam'),box=document.getElementById('settlementBox');
-  if(!weekEl||!teamEl||!box||!DATA)return;
-  const weeks=settlementWeeks();
-  const oldWeek=weekEl.value,oldTeam=teamEl.value;
-  weekEl.innerHTML=weeks.map(w=>`<option value="${w}">${w} ~ ${dateAdd(w,6)}</option>`).join('');
-  weekEl.value=weeks.includes(oldWeek)?oldWeek:weeks[0];
-  const teams=settlementTeams();teamEl.innerHTML=teams.map(t=>`<option value="${t}">${t}</option>`).join('');
-  teamEl.value=teams.includes(oldTeam)?oldTeam:teams[0];
-  const c=calcSettlement(weekEl.value,teamEl.value);
-  box.innerHTML=`<div class="settlement-headline"><span class="muted">${weekEl.value} ~ ${dateAdd(weekEl.value,6)} · ${teamEl.value}</span><strong>${n(c.total)}원</strong></div>
-  <div class="settlement-kpis">
-    <div class="settlement-kpi"><small>세트</small><b>${n(c.sets)}</b></div>
-    <div class="settlement-kpi"><small>기록 슬롯</small><b>${c.slots.length}/28</b></div>
-    <div class="settlement-kpi"><small>달성 슬롯</small><b>${c.achieved}/28</b></div>
-    <div class="settlement-kpi"><small>시간외 건수</small><b>${n(c.excludedTotal)}</b></div>
-  </div>
-  <div class="settlement-money">
-    <div class="settlement-row"><span>기본 관리비<br><small class="muted">680건 × ${n(c.sets)}세트 × 300원</small></span><b>${n(c.base)}원</b></div>
-    <div class="settlement-row"><span>보너스 관리비<br><small class="muted">680건 × ${n(c.sets)}세트 × ${n(settlementUnit())}원</small></span><b>${n(c.grade)}원</b></div>
-    <div class="settlement-row"><span>초과 관리비<br><small class="muted">슬롯별 100~150% 구간 요율</small></span><b>${n(c.excess)}원</b></div>
-    <div class="settlement-row"><span>시간외 관리비<br><small class="muted">${n(c.excludedTotal)}건 × ${n(OVERTIME_UNIT)}원</small></span><b>${n(c.overtime)}원</b></div>
-    <div class="settlement-row grand"><span>총 관리비</span><b>${n(c.total)}원</b></div>
-  </div>
-  <div class="settlement-note">미분류 기사는 정산에서 제외됩니다. 세트와 목표는 주간 JSON의 팀별 값을 우선 사용합니다.</div>`;
-}
+  const sec=document.getElementById('settlementSection'),box=document.getElementById('settlementBox');
+  if(!sec||!box)return;
+  sec.style.display='block';
 
-
-function renderWeeklySaveStatus(){
-  const box=document.getElementById('weeklySaveStatus');
-  if(!box||!DATA)return;
-  const date=DATA.businessDate||'-';
-  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
-  const found=rows.find(r=>r&&r.businessDate===date);
-  if(found){
-    box.innerHTML=`<div class="weekly-save-ok">주간기록 저장됨 · ${date} · 완료 ${n(found.totalComplete)}건</div>`;
-  }else{
-    box.innerHTML=`<div class="weekly-save-warn">현재 날짜 주간기록이 아직 없습니다 · ${date}</div>`;
-  }
-}
-
-function renderSummary(){
-  const total=DATA.total||{},week=buildWeekly();
-  const order=TEAM_ORDER.reduce((s,t)=>s+num(teamObj(t).targets?.total),0);
-  const visibleTeams=TEAM_ORDER.filter(t=>t!=='미분류');
-  const cards=[
-    ['주간 완료',week.complete,'red'],
-    ['주간 수락률',week.acceptRate+'%','blue'],
-    ['주간 여유거절',week.spare,'green'],
-    ['전체 접속',total.onlineCount+'명','green'],
-    ['당일 발주량',order,''],
-    ['당일 완료',total.complete,'red']
-  ];
-  document.getElementById('summaryGrid').innerHTML=
-    cards.map(c=>`<div class="summary-card"><div class="summary-title">${c[0]}</div><div class="summary-value ${c[2]}">${c[1]}</div></div>`).join('')+
-    `<div class="summary-card team-summary"><div class="summary-title">팀별 접속 현황</div>
-      <div class="team-count-grid">${visibleTeams.map(t=>{
-        const s=teamSummary(t);
-        return `<div class="team-count-item"><span class="team-count-name">${t}</span><div class="team-count-values"><b class="online">${n(s.onlineCount)}</b><i>/</i><b>${n(s.count)}</b></div><small>접속 / 등록</small></div>`;
-      }).join('')}</div>
-    </div>`;
-}
-function toggleWeekly(){const p=document.getElementById('weeklyPanel'),b=document.getElementById('weeklyBtn');const open=p.classList.toggle('hidden')===false;b.textContent=open?'닫기 ▴':'보기 ▾';if(open)renderWeekly()}
-function toggleManage(){const p=document.getElementById('managePanel'),b=document.getElementById('manageBtn');const open=p.classList.toggle('hidden')===false;b.textContent=open?'닫기 ▴':'보기 ▾'}
-function dayBase(){
-  return DATA?.weeklySummary?.days?.length ? DATA.weeklySummary.days : [];
-}
-
-function weeklyTeamDays(team){
-  const fromSummary=DATA?.weeklySummary?.teams?.[team]?.days;
-  if(Array.isArray(fromSummary)&&fromSummary.length)return fromSummary;
-
-  // fallback: Firebase /weekly/vic 원본에서 현재 수~화 주차의 팀 데이터를 직접 구성
-  const current=DATA?.businessDate||isoLocal(new Date());
-  const start=weekStartWed(current),end=dateAdd(start,6);
-  const byDate=new Map(
-    (Array.isArray(WEEKLY)?WEEKLY:[])
-      .filter(r=>r&&r.businessDate>=start&&r.businessDate<=end)
-      .map(r=>[r.businessDate,r])
-  );
-
-  const labels=['수','목','금','토','일','월','화'];
-  return labels.map((label,i)=>{
-    const date=dateAdd(start,i);
-    const row=byDate.get(date)||{};
-    const t=row?.teams?.[team]||{};
-    const s=t.summary||t||{};
-    const g=t.targets||{};
-    return {
-      label,
-      businessDate:date,
-      hasData:Boolean(byDate.get(date)),
-      complete:num(s.complete),
-      reject:num(s.reject),
-      cancel:num(s.cancel),
-      riderFault:num(s.riderFault),
-      morning:num(s.morning),
-      afternoon:num(s.afternoon),
-      evening:num(s.evening),
-      midnight:num(s.midnight),
-      excluded:num(s.excluded),
-      targets:{
-        morning:num(g.morning),
-        afternoon:num(g.afternoon),
-        evening:num(g.evening),
-        midnight:num(g.midnight)
-      },
-      acceptRate:s.acceptRate!=null?num(s.acceptRate):rate(num(s.complete),bad(s))
-    };
-  });
-}
-
-function periodStatusFinal(key,done,goal){
-  const order=['morning','afternoon','evening','midnight'];
-  const cur=DATA?.currentPeriod||'morning';
-  const passed=order.indexOf(key)<order.indexOf(cur);
-  if(passed){
-    return num(done)>=num(goal)
-      ?'<span class="badge ok">성공</span>'
-      :'<span class="badge fail">실패</span>';
-  }
-  return '<span class="badge wait">진행중</span>';
-}
-
-function setWeeklyTeam(team){
-  WEEK_TEAM=team;
-  renderWeekly();
-}
-
-function weeklyTeamRow(d){
-  const s=d||{};
-  const t=s.targets||{};
-  const ps=PERIODS.map(([k])=>({
-    key:k,
-    done:num(s[k]),
-    goal:num(t[k])
-  }));
-
-  if(!s.hasData){
-    return `<tr>
-      <td>${s.label||''}<br><span class="muted" style="font-size:12px">${s.businessDate||''}</span></td>
-      <td colspan="7" class="muted">기록 없음</td>
-    </tr>`;
-  }
-
-  const failKeys=ps.filter(p=>p.goal>0&&p.done<p.goal);
-  const result=failKeys.length
-    ?`<span class="failtxt">실패 ${failKeys.map(p=>PERIOD_LABEL[p.key]).join(', ')}</span>`
-    :`<span class="oktxt">성공</span>`;
-
-  return `<tr>
-    <td>${s.label||''}<br><span class="muted" style="font-size:12px">${s.businessDate||''}</span></td>
-    ${ps.map(p=>`<td class="${p.goal>0&&p.done<p.goal?'failtxt':''}">${n(p.done)} / ${n(p.goal)}</td>`).join('')}
-    <td>${n(s.excluded)}</td>
-    <td>${result}</td>
-    <td>${s.acceptRate!=null?s.acceptRate:rate(s.complete,bad(s))}%</td>
-  </tr>`;
-}
-
-function renderWeekly(){
-  const ws=DATA?.weeklySummary||{};
-  const start=ws.startDate||weekStartWed(DATA?.businessDate||isoLocal(new Date()));
-  const end=ws.endDate||dateAdd(start,6);
-
-  document.getElementById('weekRange').textContent=`${start} ~ ${end}`;
-
-  const tabs=document.getElementById('weeklyTeamTabs');
-  if(tabs){
-    tabs.innerHTML=TEAM_ORDER
-      .filter(t=>t!=='미분류')
-      .map(t=>`<button class="week-tab ${WEEK_TEAM===t?'active':''}" onclick="setWeeklyTeam('${t}')">${t}</button>`)
-      .join('');
-  }
-
-  if(!TEAM_ORDER.includes(WEEK_TEAM)||WEEK_TEAM==='미분류'){
-    WEEK_TEAM=TEAM_ORDER.find(t=>t!=='미분류')||TEAM_ORDER[0];
-  }
-
-  const days=weeklyTeamDays(WEEK_TEAM);
-  const table=document.getElementById('weeklyTable');
-  if(!table)return;
-
-  if(!days.length){
-    table.innerHTML='<tbody><tr><td>주간 데이터가 아직 없습니다.</td></tr></tbody>';
+  const cfg=areaCfg(),weeks=settlementWeeks();
+  if(!weeks.length){
+    box.innerHTML='<div class="settlement-status wait">주간 기록이 아직 없습니다.</div>';
     return;
   }
 
-  table.innerHTML=`<thead><tr>
-    <th>${WEEK_TEAM} / 일자</th>
-    <th>오전<br>완료/발주</th>
-    <th>오후<br>완료/발주</th>
-    <th>저녁<br>완료/발주</th>
-    <th>심야<br>완료/발주</th>
-    <th>미포함</th>
-    <th>결과</th>
-    <th>수락률</th>
-  </tr></thead>
-  <tbody>${days.map(weeklyTeamRow).join('')}</tbody>`;
+  let week=localStorage.getItem('settlementWeek');
+  if(!weeks.includes(week))week=weeks[0];
+
+  let team=localStorage.getItem('settlementTeam');
+  if(!cfg.teams.includes(team))team=cfg.teams[0];
+
+  const end=dateAdd(week,6),c=calcTeamSettlement(week,team),rows=settlementRows(week);
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  let dayRows='';
+
+  for(let i=0;i<7;i++){
+    const date=dateAdd(week,i),r=byDate[date],cells=[],bonuses=[];
+    PERIODS.forEach(([key])=>{
+      const rec=teamDailyRecord(r,team,key);
+      cells.push(rec.has&&rec.goal>0?`${Math.floor(rec.done/rec.goal*100)}%`:'-');
+      bonuses.push(rec.has&&rec.goal>0?slotBonus(rec.done,rec.goal,c.unit):0);
+    });
+    dayRows+=`<tr><td class="day">${labels[i]}</td>${cells.map(v=>`<td class="${v==='-'?'future':''}">${v}</td>`).join('')}<td class="bonus">${won(bonuses.reduce((a,b)=>a+b,0))}</td></tr>`;
+  }
+
+  box.innerHTML=`<div class="settlement-title">주간정산</div>
+  <div class="settlement-range">${week.replaceAll('-','.')} ~ ${end.replaceAll('-','.')}</div>
+  <div class="settlement-selectors">
+    <select onchange="setSettlementWeek(this.value)">${weeks.map(w=>`<option value="${w}" ${w===week?'selected':''}>${w} ~ ${dateAdd(w,6)}</option>`).join('')}</select>
+    <div style="flex:1;border:1px solid var(--line);border-radius:13px;padding:12px 10px;font-size:14px;text-align:center;background:var(--soft)">권역 보너스 단가 ${n(c.unit)}원</div>
+  </div>
+  <div class="settlement-team-tabs">${cfg.teams.map(t=>`<button class="settlement-team-btn ${t===team?'active':''}" onclick="setSettlementTeam('${t}')">${cfg.labels[t]}</button>`).join('')}</div>
+  <table class="settlement-table">
+    <thead><tr><th></th><th>오전</th><th>오후</th><th>저녁</th><th>심야</th><th>초과 관리비</th></tr></thead>
+    <tbody>${dayRows}</tbody>
+  </table>
+  <div class="settlement-status wait">${cfg.labels[team]}팀 ${c.sets}세트 · 기록 슬롯 ${c.slots.length}/28 · 달성 슬롯 ${c.achieved}/28</div>
+  <div class="settlement-total"><small>${cfg.labels[team]}팀 현재 총 관리비</small><strong>${won(c.total)}</strong></div>
+  <div class="settlement-money">
+    <div class="settlement-money-row"><span>기본 관리비<br><small>${n(VALID_VOLUME)}건 × ${n(c.sets)}세트 × 300원</small></span><b>${won(c.base)}</b></div>
+    <div class="settlement-money-row"><span>보너스 관리비<br><small>${n(VALID_VOLUME)}건 × ${n(c.sets)}세트 × ${n(c.unit)}원</small></span><b>${won(c.gradeBase)}</b></div>
+    <div class="settlement-money-row"><span>초과 관리비<br><small>주간 슬롯별 100~150% 구간 요율 합산</small></span><b>${won(c.excess)}</b></div>
+    <div class="settlement-money-row"><span>시간외 관리비<br><small>${n(c.excluded)}건 × ${n(OVERTIME_UNIT)}원</small></span><b>${won(c.overtime)}</b></div>
+    <div class="settlement-money-row grand"><span>총 관리비</span><b>${won(c.total)}</b></div>
+  </div>
+  <div class="settlement-note">기본·보너스 관리비는 해당 주차 JSON에 저장된 세트 수를 기준으로 계산합니다.<br>각 슬롯 목표도 날짜별 팀 JSON 목표값을 그대로 사용합니다.<br>초과 관리비와 시간외 관리비만 실적에 따라 변동되며, 150% 초과분은 제외합니다.</div>`;
+}
+
+
+function normalizeSmsPhone(v){
+  const digits=String(v||'').replace(/\D/g,'');
+  if(!digits.startsWith('010')||digits.length!==11)return '';
+  return digits;
+}
+function smsRecipientsByTeam(team){
+  const seen=new Set();
+  return ((DATA&&DATA.riders)||[])
+    .filter(r=>r.team===team)
+    .map(r=>normalizeSmsPhone(r.phone))
+    .filter(phone=>{
+      if(!phone||seen.has(phone))return false;
+      seen.add(phone);
+      return true;
+    });
+}
+function chunk99(items){
+  const groups=[];
+  for(let i=0;i<items.length;i+=99)groups.push(items.slice(i,i+99));
+  return groups;
+}
+function setSmsTeam(team){
+  SMS_TEAM=team;
+  localStorage.setItem('smsTeam_'+areaCfg().key,team);
+  renderSms();
+}
+function saveSmsDraft(){
+  const el=document.getElementById('smsMessage');
+  if(el)localStorage.setItem('smsDraft_'+areaCfg().key,el.value);
+}
+async function copySmsRecipients(index){
+  const groups=chunk99(smsRecipientsByTeam(SMS_TEAM));
+  const group=groups[index]||[];
+  if(!group.length)return;
+  const value=group.join(',');
+  try{
+    await navigator.clipboard.writeText(value);
+    alert(`수신번호 ${group.length}개를 복사했습니다.`);
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=value;
+    ta.style.position='fixed';
+    ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    alert(`수신번호 ${group.length}개를 복사했습니다.`);
+  }
+}
+function openSmsGroup(index){
+  const groups=chunk99(smsRecipientsByTeam(SMS_TEAM));
+  const group=groups[index]||[];
+  if(!group.length)return;
+  const message=(document.getElementById('smsMessage')?.value||'').trim();
+
+  // 대부분의 모바일 문자 앱에서 쉼표로 여러 수신자를 인식합니다.
+  const recipients=group.join(',');
+  const isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  const separator=isiOS?'&':'?';
+  const body=message?`${separator}body=${encodeURIComponent(message)}`:'';
+  location.href=`sms:${recipients}${body}`;
+}
+function renderSms(){
+  const tabs=document.getElementById('smsTeamTabs');
+  const groupsEl=document.getElementById('smsGroups');
+  const summary=document.getElementById('smsSummary');
+  const message=document.getElementById('smsMessage');
+  if(!tabs||!groupsEl||!summary||!message||!DATA)return;
+
+  const cfg=areaCfg();
+  const saved=localStorage.getItem('smsTeam_'+cfg.key);
+  if(!SMS_TEAM||!cfg.teams.includes(SMS_TEAM)){
+    SMS_TEAM=cfg.teams.includes(saved)?saved:cfg.teams[0];
+  }
+
+  const draftKey='smsDraft_'+cfg.key;
+  if(message.dataset.area!==cfg.key){
+    message.value=localStorage.getItem(draftKey)||'';
+    message.dataset.area=cfg.key;
+  }
+
+  tabs.innerHTML=cfg.teams.map(team=>`
+    <button class="sms-team-btn ${team===SMS_TEAM?'active':''}" onclick="setSmsTeam('${team}')">
+      ${cfg.labels[team]||team}
+    </button>
+  `).join('');
+
+  const recipients=smsRecipientsByTeam(SMS_TEAM);
+  const groups=chunk99(recipients);
+  summary.innerText=`${cfg.labels[SMS_TEAM]||SMS_TEAM}팀 · 유효 전화번호 ${n(recipients.length)}명 · ${n(groups.length)}개 그룹`;
+
+  groupsEl.innerHTML=groups.length?groups.map((group,index)=>`
+    <div class="sms-group">
+      <div class="sms-group-head">
+        <b>${cfg.labels[SMS_TEAM]||SMS_TEAM} ${index+1}그룹</b>
+        <span>${n(group.length)}명</span>
+      </div>
+      <div class="sms-actions">
+        <button class="sms-send" onclick="openSmsGroup(${index})">문자 앱 열기</button>
+        <button class="sms-copy" onclick="copySmsRecipients(${index})">번호 복사</button>
+      </div>
+    </div>
+  `).join(''):'<div style="grid-column:1/-1;color:var(--muted);text-align:center;padding:16px">유효한 010 전화번호가 없습니다.</div>';
+}
+
+
+function periodWindow(key){
+  const bd=DATA&&DATA.businessDate?new Date(DATA.businessDate+'T12:00:00'):new Date();
+  const day=bd.getDay(); // 0 sun, 6 sat
+  const weekend=(day===0||day===6);
+  if(key==='morning')return weekend?[9,14]:[9,13];
+  if(key==='afternoon')return weekend?[14,17]:[13,17];
+  if(key==='evening')return [17,20];
+  return [20,24];
+}
+function currentHourFloat(){
+  const now=new Date();
+  return now.getHours()+now.getMinutes()/60;
+}
+function periodState(key){
+  const [start,end]=periodWindow(key),h=currentHourFloat();
+  if(h<start)return 'future';
+  if(h>=end)return 'done';
+  return 'current';
+}
+function periodTimeLabel(key){
+  const [s,e]=periodWindow(key);
+  const fmt=x=>String(x).padStart(2,'0')+':00';
+  return fmt(s)+' ~ '+fmt(e===24?0:e);
+}
+function paceInfo(done,goal,key){
+  const state=periodState(key);
+  if(state!=='current'||goal<=0)return null;
+  const [start,end]=periodWindow(key),now=currentHourFloat();
+  const elapsed=Math.max(0.01,now-start);
+  const remainTime=Math.max(0.01,end-now);
+  const remain=Math.max(0,goal-done);
+  const currentPace=done/elapsed;
+  const neededPace=remain/remainTime;
+  return {currentPace,neededPace,good:currentPace>=neededPace};
 }
 
 function renderPeriods(){
-  const teams=TEAM_ORDER.filter(t=>t!=='미분류');
-  const order=['morning','afternoon','evening','midnight'];
-  const cur=DATA?.currentPeriod||'morning';
-  document.getElementById('periodGrid').innerHTML=PERIODS.map(([k])=>{
-    const done=teams.reduce((sum,t)=>sum+num(teamObj(t).summary?.[k]),0);
-    const goal=teams.reduce((sum,t)=>sum+num(teamObj(t).targets?.[k]),0);
-    const idx=order.indexOf(k),curIdx=order.indexOf(cur);
-    const state=k===cur?'current':idx<curIdx?'done':'future';
-    const stateLabel=state==='current'?'● 진행중':state==='done'?'종료':'대기';
-    return `<div class="ops-period ${state}">
-      <div class="ops-head"><div class="ops-title">${PERIOD_LABEL[k]}</div><div class="ops-state">${stateLabel}</div></div>
-      <div class="ops-metric-pair">
-        <div class="ops-metric done"><small>완료</small><b>${n(done)}</b></div>
-        <div class="ops-metric goal"><small>발주</small><b>${n(goal)}</b></div>
-      </div>
-      <div class="ops-team-list">${teams.map(t=>{
-        const td=num(teamObj(t).summary?.[k]),tg=num(teamObj(t).targets?.[k]);
-        return `<div class="ops-team-row"><span>${t}</span><div class="ops-team-values"><b class="done">${n(td)}</b><i>/</i><b class="goal">${n(tg)}</b></div></div>`;
-      }).join('')}</div>
-    </div>`;
+  const cfg=areaCfg(),teams=cfg.teams.filter(t=>t!=='신규');
+  document.getElementById('periodCards').innerHTML=PERIODS.map(([key,icon,label])=>{
+    const totalDone=teams.reduce((s,t)=>s+periodIncludedDone(t,key),0);
+    const totalGoal=teams.reduce((s,t)=>s+Number(teamObj(t).targets[key]||0),0);
+    const teamRows=teams.map(t=>{
+      const done=periodIncludedDone(t,key);
+      const goal=Number(teamObj(t).targets[key]||0);
+      const cls=cfg.classes[t]||'';
+      return `<div class="team-line"><div class="team-name">${cfg.labels[t]||t}</div><div class="small-bar"><div class="small-fill ${cls}" style="width:${pct(done,goal)}%"></div></div><div class="team-num"><span class="done">${n(done)}</span> / <span class="goal">${n(goal)}</span></div></div>`;
+    }).join('');
+    return `<div class="period-card"><div class="period-head">${icon} ${label}</div><div class="period-sub">완료 / 발주량</div><div class="period-total"><span>${n(totalDone)}</span> / <span>${n(totalGoal)}</span></div><div class="total-bar"><div class="total-fill" style="width:${pct(totalDone,totalGoal)}%"></div></div>${teamRows}</div>`;
   }).join('');
 }
-function teamRow(name,list,summary,targets){const badTotal=bad(summary),acc=summary.acceptRate??rate(summary.complete,badTotal);return `<tr><td>${name}<br><span class="muted" style="font-size:12px">${list.length}명 / 접속 ${onlineCount(list)}명</span></td>${PERIODS.map(([k])=>`<td>${n(summary[k])} / ${n(targets[k])}</td>`).join('')}<td>${acc}%</td><td>${n(summary.spareRejects??spare(summary.complete,badTotal))}</td><td>${n(summary.excluded)}</td></tr>`}
-function renderTeams(){document.getElementById('teamTable').innerHTML=`<thead><tr><th>팀명 라이더(접속중)</th><th>오전<br>(완료/발주량)</th><th>오후<br>(완료/발주량)</th><th>저녁<br>(완료/발주량)</th><th>심야<br>(완료/발주량)</th><th>수락률</th><th>여유거절</th><th>미포함</th></tr></thead><tbody>${TEAM_ORDER.map(t=>teamRow(t,teamRiders(t),teamSummary(t),teamObj(t).targets||{})).join('')}</tbody>`}
 
-function normalizeRiderPhone(v){return String(v||'').replace(/\D/g,'')}
 function uniqueRidersForDisplay(list){
-  const out=[];
+  const result=[];
   const keyIndex=new Map();
 
   (Array.isArray(list)?list:[]).forEach(r=>{
-    const phone=normalizeRiderPhone(r?.phone);
-    const uid=String(r?.userId||'').trim();
-    // 이름만 같은 경우는 동명이인이므로 합치지 않습니다.
+    const phone=String(r?.phone||'').replace(/\D/g,'');
+    const uid=String(r?.userId||'').trim().toLowerCase();
+    const uidDigits=uid.replace(/\D/g,'');
     const keys=[];
-    if(phone)keys.push('p:'+phone);
-    if(uid)keys.push('u:'+uid);
+    if(phone)keys.push('identity:'+phone);
+    if(uid)keys.push('uid:'+uid);
+    const riderName=String(r?.name||'').replace(/[\u200b\ufeff]/g,'').trim();
+    // 사용자 확인으로 실제 동일 기사임이 확정된 이름만 이름 보조키 사용
+    if(riderName==='박영근')keys.push('verifiedName:'+riderName);
+    // 신규 UI 컬럼 밀림 방어: userId가 전화번호 형태면 phone과 교차 중복 비교
+    if(uidDigits && (uidDigits.length===10 || uidDigits.length===11))keys.push('identity:'+uidDigits);
 
-    let idx=-1;
-    for(const k of keys){
-      if(keyIndex.has(k)){idx=keyIndex.get(k);break;}
+    const matched=[...new Set(
+      keys.filter(k=>keyIndex.has(k)).map(k=>keyIndex.get(k))
+    )].sort((a,b)=>a-b);
+
+    // phone/userId가 없으면 이름만으로는 합치지 않습니다.
+    if(!matched.length){
+      const idx=result.length;
+      result.push(r);
+      keys.forEach(k=>keyIndex.set(k,idx));
+      return;
     }
 
-    if(idx<0){
-      idx=out.length;
-      out.push(r);
-    }else{
-      const old=out[idx]||{};
-      const oldScore=(old.placeholder?0:1000000)+(old.isOnline?100000:0)+num(old.complete);
-      const newScore=(r?.placeholder?0:1000000)+(r?.isOnline?100000:0)+num(r?.complete);
-      if(newScore>oldScore)out[idx]=r;
+    const keep=matched[0];
+    const old=result[keep]||{};
+    const score=x=>
+      (x?.placeholder?0:1000000)+
+      (x?.isOnline?100000:0)+
+      Number(x?.complete||0)+
+      Number(x?.morning||0)+Number(x?.afternoon||0)+
+      Number(x?.evening||0)+Number(x?.midnight||0);
+
+    if(score(r)>score(old))result[keep]=r;
+
+    for(let i=matched.length-1;i>=1;i--){
+      result.splice(matched[i],1);
     }
 
-    const chosen=out[idx]||r;
-    const cp=normalizeRiderPhone(chosen?.phone);
-    const cu=String(chosen?.userId||'').trim();
-    if(cp)keyIndex.set('p:'+cp,idx);
-    if(cu)keyIndex.set('u:'+cu,idx);
-    keys.forEach(k=>keyIndex.set(k,idx));
+    keyIndex.clear();
+    result.forEach((rr,idx)=>{
+      const p=String(rr?.phone||'').replace(/\D/g,'');
+      const u=String(rr?.userId||'').trim().toLowerCase();
+      const ud=u.replace(/\D/g,'');
+      if(p)keyIndex.set('identity:'+p,idx);
+      if(u)keyIndex.set('uid:'+u,idx);
+      const rn=String(rr?.name||'').replace(/[\u200b\ufeff]/g,'').trim();
+      if(rn==='박영근')keyIndex.set('verifiedName:'+rn,idx);
+      if(ud && (ud.length===10 || ud.length===11))keyIndex.set('identity:'+ud,idx);
+    });
   });
-  return out;
+
+  return result;
 }
 
-function filteredRiders(){let q=document.getElementById('riderSearch')?.value?.trim()||'';let teamFilter=document.getElementById('riderTeamFilter')?.value||'전체';let list=uniqueRidersForDisplay(riders());if(teamFilter!=='전체'){list=list.filter(r=>r.team===teamFilter)}if(q)list=list.filter(r=>String(r.name||'').includes(q));let s=document.getElementById('riderSort')?.value||'complete';list.sort((a,b)=>{if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;if(s==='name')return String(a.name).localeCompare(String(b.name),'ko');if(s==='reject')return bad(b)-bad(a);return num(b.complete)-num(a.complete)});return list}
-function renderRiders(){
-  const list=filteredRiders();
-  const grid=document.getElementById('riderGrid');
-  if(!grid)return;
-  grid.innerHTML=list.length?list.map(r=>`<div class="rider ${r.isOnline?'online':''}">
-    <div class="rider-top"><div class="rider-name">${r.name||'-'}</div><span class="status">${r.isOnline?'접속중':'운행종료'}</span></div>
-    <div class="rider-stats">
-      <div class="rstat"><small>완료</small><b>${n(r.complete)}</b></div>
-      <div class="rstat"><small>거절</small><b>${n(r.reject)}</b></div>
-      <div class="rstat"><small>취소</small><b>${n(num(r.cancel)+num(r.riderFault))}</b></div>
-      <div class="rstat"><small>수락률</small><b>${r.acceptRate!=null?r.acceptRate:rate(r.complete,bad(r))}%</b></div>
-    </div>
-    <div class="rider-periods">
-      <div><small>오전</small><b>${n(r.morning)}</b></div>
-      <div><small>오후</small><b>${n(r.afternoon)}</b></div>
-      <div><small>저녁</small><b>${n(r.evening)}</b></div>
-      <div><small>심야</small><b>${n(r.midnight)}</b></div>
-    </div>
-  </div>`).join(''):'<div class="rider-empty">조건에 맞는 기사가 없습니다.</div>';
+function renderFiltersAndRiders(){
+  const cfg=areaCfg(),teams=cfg.teams;
+  document.getElementById('filters').innerHTML=[['전체','전체'],...teams.map(t=>[t,t])].map(([v,l])=>`<button onclick="setFilter('${v}')" class="${FILTER===v?'active':''}">${l}</button>`).join('');
+
+  const searchEl=document.getElementById('riderSearch');
+  if(searchEl && document.activeElement!==searchEl && searchEl.value!==RIDER_SEARCH){
+    searchEl.value=RIDER_SEARCH;
+  }
+
+  let riders=uniqueRidersForDisplay(DATA.riders||[]);
+
+  if(FILTER!=='전체'){
+    riders=riders.filter(r=>r.team===FILTER);
+  }
+
+  if(RIDER_SEARCH){
+    const q=RIDER_SEARCH.replace(/\s+/g,'');
+    riders=riders.filter(r=>{
+      const name=String(r.name||'').toLowerCase().replace(/\s+/g,'');
+      const phone=String(r.phone||'').toLowerCase().replace(/[\s-]+/g,'');
+      const userId=String(r.userId||'').toLowerCase().replace(/\s+/g,'');
+      return name.includes(q)||phone.includes(q)||userId.includes(q);
+    });
+  }
+
+  let sort=document.getElementById('sortSelect').value;
+  if(sort==='name'){
+    riders.sort((a,b)=>{
+      if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;
+      return a.name.localeCompare(b.name,'ko');
+    });
+  }else{
+    riders.sort((a,b)=>{
+      if(a.isOnline!==b.isOnline)return b.isOnline-a.isOnline;
+      return Number(b.complete||0)-Number(a.complete||0);
+    });
+  }
+
+  document.getElementById('riderGrid').innerHTML=riders.length?riders.map(r=>{
+    const miss=riderExcluded(r);
+    return `<div class="rider ${r.isOnline?'active':''}">
+      <div class="rider-top">
+        <div class="rider-name"><span class="dot"></span>${r.name}</div>
+        <div><span class="status">${r.isOnline?'접속중':'운행종료'}</span>${r.warning?'<span class="warn">80%↓</span>':''}</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>완료<span class="miss-label">/미포함</span></small><b class="red">${n(r.complete)}<span class="miss"> / ${n(miss)}건</span></b></div>
+        <div class="stat"><small>거절/취소</small><b>${n(r.reject)} / ${n(r.cancel)}</b></div>
+        <div class="stat"><small>수락률</small><b>${r.acceptRate}%</b></div>
+      </div>
+      <div class="times">
+        <div>오전<b>${n(r.morning)}</b></div>
+        <div>오후<b>${n(r.afternoon)}</b></div>
+        <div>저녁<b>${n(r.evening)}</b></div>
+        <div>심야<b>${n(r.midnight)}</b></div>
+      </div>
+    </div>`;
+  }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
 }
-function setManageFilter(team){MANAGE_FILTER=team;renderManage()}
+
+function firebaseSafeTeamKey(value){
+  return String(value||'').trim().replace(/[.#$\[\]\/]/g,'_');
+}
+function riderTeamMapKey(r){
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  if(phone)return 'phone_'+phone;
+  const userId=firebaseSafeTeamKey(r?.userId||'');
+  if(userId)return 'uid_'+userId;
+  return String(r?.name||'').trim();
+}
+
 
 /* ===== 기사관리: 자동갱신 중 저장 전 팀 선택값 보호 ===== */
 window.__MANAGE_DRAFTS=window.__MANAGE_DRAFTS||{};
@@ -799,101 +2358,141 @@ function reconcileManageDrafts(){
   if(changed)saveManageDrafts();
 }
 
-function renderManage(){const filters=document.getElementById('manageFilters');if(filters){filters.innerHTML=['전체',...TEAM_ORDER].map(t=>`<button class="${MANAGE_FILTER===t?'active':''}" onclick="setManageFilter('${t}')">${t}</button>`).join('')}let list=[...riders()];if(MANAGE_FILTER!=='전체')list=list.filter(r=>r.team===MANAGE_FILTER);list.sort((a,b)=>String(a.name).localeCompare(String(b.name),'ko'));document.getElementById('manageList').innerHTML=list.map(r=>`<div class="manage-row"><b>${r.name}<span class="muted" style="font-size:12px"> · ${r.userId||''}</span></b><select data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">${TEAM_ORDER.map(t=>`<option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${t}</option>`).join('')}</select></div>`).join('')||'<div class="muted">기사 데이터가 없습니다.</div>'}
-const TEAMMAP_API='https://dalseo-a-live.vercel.app/api/save-teammap';
+function renderManageList(){
+  const box=document.getElementById('manageList');
+  if(!box)return;
+
+  if(!DATA || !Array.isArray(DATA.riders)){
+    box.innerHTML='<div class="manage-empty">기사 데이터가 없습니다.</div>';
+    return;
+  }
+
+  const cfg=areaCfg();
+  const teams=Array.isArray(cfg.teams)?cfg.teams:[];
+  if(!window.manageFilter || !(window.manageFilter==='전체' || teams.includes(window.manageFilter))){
+    window.manageFilter='전체';
+  }
+
+  let riders=uniqueRidersForDisplay(DATA.riders);
+  if(window.manageFilter!=='전체'){
+    riders=riders.filter(r=>r.team===window.manageFilter);
+  }
+
+  riders.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ko'));
+
+  box.innerHTML=`
+    <div class="manage-toolbar">
+      <div class="manage-filter-tabs">
+        ${['전체',...teams].map(t=>`
+          <button type="button"
+            class="manage-filter-btn ${window.manageFilter===t?'active':''}"
+            onclick="setManageFilter('${t}')">
+            ${t==='전체'?'전체':(cfg.labels[t]||t)}
+          </button>
+        `).join('')}
+      </div>
+      <button type="button" class="manage-save-btn" onclick="saveTeamMap()">팀 변경 저장</button>
+    </div>
+
+    <div class="manage-count">표시 기사 ${n(riders.length)}명</div>
+
+    <div class="manage-rider-list">
+      ${riders.length?riders.map(r=>`
+        <div class="manage-rider-row">
+          <div class="manage-rider-info">
+            <b>${r.name||'-'}</b>
+            <small>${r.phone||r.userId||''}</small>
+          </div>
+          <select class="manage-team-select"
+                  data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}"
+                  data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
+            ${teams.map(t=>`
+              <option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${cfg.labels[t]||t}</option>
+            `).join('')}
+          </select>
+        </div>
+      `).join(''):'<div class="manage-empty">해당 팀의 기사가 없습니다.</div>'}
+    </div>
+  `;
+}
+
+function setManageFilter(team){
+  window.manageFilter=team;
+  renderManageList();
+}
 
 async function saveTeamMap(){
-  const selects=document.querySelectorAll('#manageList select');
-  const changes={};
-  selects.forEach(sel=>{
-    const name=sel.getAttribute('data-rider-name');
-    if(name&&sel.value)changes[name]=sel.value;
-  });
-
-  if(!Object.keys(changes).length){
+  const selects=[...document.querySelectorAll('#manageList .manage-team-select')];
+  if(!selects.length){
     alert('저장할 기사 정보가 없습니다.');
     return;
   }
 
-  const saveButton=document.querySelector('.manage-save');
-  const originalText=saveButton?.textContent||'팀 변경 저장';
+  const changes={};
+  selects.forEach(sel=>{
+    const key=sel.getAttribute('data-rider-key');
+    const team=sel.value;
+    if(key && team)changes[key]=team;
+  });
+
+  const btn=document.querySelector('#manageList .manage-save-btn');
+  if(btn){btn.disabled=true;btn.innerText='저장중...';}
 
   try{
-    if(saveButton){
-      saveButton.disabled=true;
-      saveButton.textContent='저장 중...';
-    }
+    let saved=false;
+    let apiError='';
 
-    const res=await fetch(TEAMMAP_API,{
-      method:'POST',
-      mode:'cors',
-      headers:{
-        'Content-Type':'application/json',
-        'Accept':'application/json'
-      },
-      body:JSON.stringify({
-        area:AREA_KEY,
-        changes
-      })
-    });
-
-    const responseText=await res.text();
-    let result={};
+    // 1차: 기존 서버 API 사용
     try{
-      result=responseText?JSON.parse(responseText):{};
+      const res=await fetch('/api/save-teammap',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({area:areaCfg().key,changes})
+      });
+      const text=await res.text();
+      let result={};
+      try{result=text?JSON.parse(text):{};}catch(e){}
+      if(res.ok && result.ok!==false){
+        saved=true;
+      }else{
+        apiError=result.error||text||('HTTP '+res.status);
+      }
     }catch(e){
-      result={error:responseText||'서버 응답을 해석하지 못했습니다.'};
+      apiError=e.message||String(e);
     }
 
-    if(!res.ok||result.ok===false){
-      throw new Error(result.error||`HTTP ${res.status}`);
+    // 2차: API가 없거나 실패하면 Firebase teamMap에 직접 PATCH
+    if(!saved){
+      const url=`${FIREBASE_BASE}/settings/${areaCfg().key}/teamMap.json`;
+      const res=await fetch(url,{
+        method:'PATCH',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(changes)
+      });
+      if(!res.ok){
+        const text=await res.text();
+        throw new Error(`팀맵 저장 실패 · API: ${apiError||'-'} · Firebase: ${text||res.status}`);
+      }
+      saved=true;
     }
 
-    riders().forEach(r=>{
-      if(changes[r.name])r.team=changes[r.name];
+    (DATA.riders||[]).forEach(r=>{
+      const key=riderTeamMapKey(r);
+      if(changes[key])r.team=changes[key];
     });
 
-    alert(`팀 변경 저장 완료 (${Object.keys(changes).length}명)`);
-    renderAll();
-    setTimeout(loadData,1500);
+    alert('팀 변경 저장 완료');
+    await loadData();
+    switchPage('manage');
+    renderManageList();
   }catch(e){
-    alert(
-      '저장 오류: '+e.message+
-      '\nVercel API 연결과 CORS 설정을 확인해주세요.'+
-      '\n요청 주소: '+TEAMMAP_API
-    );
+    console.error('기사 팀 변경 저장 오류',e);
+    alert('저장 오류: '+(e.message||e));
   }finally{
-    if(saveButton){
-      saveButton.disabled=false;
-      saveButton.textContent=originalText;
-    }
+    if(btn){btn.disabled=false;btn.innerText='팀 변경 저장';}
   }
 }
 
-function smsGroupHtml(teamName,list){let html=`<div class="sms-team"><h3 style="margin:0 0 10px">${teamName} (${list.length}명)</h3>`;for(let i=0;i<list.length;i+=99){const g=list.slice(i,i+99),label=String.fromCharCode(65+i/99),phones=g.map(x=>x.phone).join(',');html+=`<div class="sms-group"><b>${label}그룹 (${g.length}명)</b><div class="phone-list">${g.map(x=>`${x.name} ${x.phone}`).join(' · ')}</div><div class="sms-actions"><button onclick="copyText('${phones}')">번호 복사</button><a href="sms:${phones}">문자앱 열기</a></div></div>`}return html+'</div>'}
-function openSmsModal(){const base=filteredRiders().filter(r=>r.phone).map(r=>({team:r.team,name:r.name,phone:String(r.phone).replace(/\D/g,'')}));let html=TEAM_ORDER.map(t=>smsGroupHtml(t,base.filter(x=>x.team===t))).join('');document.getElementById('smsGroups').innerHTML=html;document.getElementById('smsModal').classList.add('show')}
-function closeSmsModal(){document.getElementById('smsModal').classList.remove('show')}function copyText(t){navigator.clipboard?.writeText(t);alert('복사했습니다.')}
-function openUnclassifiedManage(){
-  MANAGE_FILTER='미분류';
-  switchPage('manage');
-  renderManage();
-}
-function renderAll(){
-  document.getElementById('topUpdate').textContent='마지막 업데이트: '+(DATA.updatedAt||'-');
-  const unclassified=(DATA?.riders||[]).filter(r=>r.team==='미분류');
-  document.getElementById('errorBox').innerHTML='';
-  const alertBox=document.getElementById('newRiderAlert');
-  if(alertBox){
-    alertBox.innerHTML=unclassified.length?`<button class="new-rider-alert" onclick="openUnclassifiedManage()">
-      <span class="new-rider-alert-icon">!</span>
-      <span class="new-rider-alert-text"><b>신규 기사 ${unclassified.length}명 확인 필요</b><small>${unclassified.slice(0,5).map(r=>r.name).join(', ')}${unclassified.length>5?' 외 '+(unclassified.length-5)+'명':''}</small></span>
-      <span class="new-rider-alert-action">기사관리 →</span>
-    </button>`:'';
-  }
-  if(typeof renderWeeklySaveStatus==='function')renderWeeklySaveStatus();
-  renderSummary();renderWeekly();renderSettlement();renderPeriods();renderTeams();renderManage();renderRiders();
-  const b=document.getElementById('modeBtn');if(b)b.textContent=document.body.classList.contains('dark')?'☀ 라이트 모드':'🌙 다크 모드';
-}
 
 async function refreshDashboardDataOnly(){
   // 중요: 이 함수는 데이터만 새로 읽습니다.
@@ -918,7 +2517,8 @@ async function refreshDashboardDataOnly(){
   }
 }
 
-loadData();setInterval(refreshDashboardDataOnly,30000);
+loadData();
+setInterval(refreshDashboardDataOnly,30000);
 </script>
 </body>
 </html>

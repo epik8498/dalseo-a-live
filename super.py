@@ -43,6 +43,8 @@ CURRENT_SLUG = ""
 REQUIRED_TEAM_RIDERS = {}
 TEAM_MAP_CACHE = None
 VERIFIED_CENTER_CODE = None
+IDENTITY_TEAM_MAP = {}
+EXCLUDED_IDENTITY_KEYS = set()
 
 CENTER_CONFIGS = [{'area': '달서A',
   'slug': 'dalseoa',
@@ -108,15 +110,17 @@ CENTER_CONFIGS = [{'area': '달서A',
   'weekly_path': '/weekly/dalseob',
   'required_team_riders': {}},
  {'area': '중구A',
-  'slug': 'junggua',
-  'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
-  'center_code': 'DP2511170481',
-  'team_order': ['소닉팀', '넘버팀', 'THE +팀', '나르미팀', '신규'],
-  'area_config': {'소닉팀': 2.8, '넘버팀': 1.2, 'THE +팀': 4.0, '나르미팀': 2.0, '신규': 0},
-  'team_map_path': '/settings/junggua/teamMap',
-  'live_path': '/live/junggua',
-  'weekly_path': '/weekly/junggua',
-  'required_team_riders': {'나르미팀': ['김주엽', 'TRINH THI KIEU MI', '김경아', '김병길', '김상일', '김상화', '김수만', '김신조', '김영상', '김재범', '김홍종', '나동현', '류일상', '박광수', '박규철', '박중현', '백승엽', '서광직', '손승희', '신용수', '안치성', '윤부용', '윤영식', '이동규', '이만득', '이명훈', '이성호', '이시헌', '이정영', '이종덕', '이주현', '이지훈', '임경석', '정수웅', '정지식', '조재규', '최재민', '최한상']}}]
+   'slug': 'junggua',
+   'aliases': ['대구중A온나1(DP2505305786)', '대구중A온나1 (DP2505305786)', '대구중A온나1', 'DP2505305786'],
+   'center_code': 'DP2505305786',
+   'team_order': ['슈퍼', '성공', '직영', 'BM', '상생', '나르미', '신규'],
+   'area_config': {'슈퍼': 2.8, '성공': 3, '직영': 4.2, 'BM': 2, '상생': 1, '나르미': 2.0, '신규': 0},
+   'team_map_path': '/settings/junggua/teamMap',
+   'live_path': '/live/junggua',
+   'weekly_path': '/weekly/junggua',
+   'required_team_riders': {},
+   'identity_team_map': {'phone_01057456300': '슈퍼', 'uid_aa57456300': '슈퍼', 'phone_01023326437': '나르미', 'uid_agiwang88': '나르미', 'phone_01089510080': '슈퍼', 'uid_won6542': '슈퍼', 'phone_01095661008': '슈퍼', 'uid_daedong1008': '슈퍼', 'phone_01083667241': '나르미', 'phone_01029972284': '나르미', 'uid_yyss0908': '나르미', 'phone_01027257069': '직영', 'uid_yuil666': '직영', 'phone_01096792722': '슈퍼', 'uid_jm3315': '슈퍼', 'phone_01095157960': '나르미', 'uid_yby9913': '나르미', 'phone_01028105684': '직영', 'uid_ansgh5684': '직영', 'phone_01085654445': '슈퍼', 'uid_bmw159357': '슈퍼', 'phone_01076637520': '나르미', 'uid_woals77s': '나르미', 'phone_01097790044': '슈퍼', 'uid_wngh1710': '슈퍼', 'phone_01092032403': '나르미', 'uid_asessnail': '나르미', 'phone_01062457690': '슈퍼', 'uid_hnm05003': '슈퍼', 'phone_01057789690': '슈퍼', 'uid_ngtm9': '슈퍼', 'phone_01071548131': '슈퍼', 'uid_fnwnfk33': '슈퍼', 'phone_01035272356': '직영', 'uid_moon1250': '직영', 'phone_01021978393': '나르미', 'phone_01055488393': '나르미', 'phone_01051217089': '슈퍼', 'uid_dream7350': '슈퍼', 'phone_01036163400': '슈퍼', 'uid_cyon2231': '슈퍼', 'phone_01093442156': '슈퍼', 'uid_kdh7631': '슈퍼', 'phone_01022877383': '슈퍼', 'uid_chols18': '슈퍼', 'phone_01082471499': '직영', 'uid_kbc1422': '직영', 'phone_01074099919': '슈퍼', 'uid_ksm108': '슈퍼', 'phone_01045846363': '나르미', 'uid_tkddlf6361': '나르미', 'phone_01090397150': '나르미', 'uid_kimsh7150': '나르미', 'phone_01095819421': '직영', 'uid_BC942145': '직영', 'phone_01090721235': '나르미', 'uid_개인정보처리방침\nCopyright ⓒ Woowa Brothers Corp All Rights Reserved_': '나르미', 'phone_01084171900': '슈퍼', 'uid_sos1900': '슈퍼', 'phone_01088588862': '직영', 'uid_mysigon2': '직영', 'phone_01044606052': '슈퍼', 'uid_kkk7285': '슈퍼', 'phone_01033310513': '나르미', 'uid_das5019': '나르미', 'phone_01091725567': '나르미', 'uid_Kys5567': '나르미', 'phone_01036966753': '슈퍼', 'uid_dudtn6753': '슈퍼', 'phone_01038148938': '슈퍼', 'uid_ko7330': '슈퍼', 'phone_01076884319': '슈퍼', 'uid_dbswo4633': '슈퍼', 'phone_01036495033': '슈퍼', 'uid_kis5033': '슈퍼', 'phone_01035271068': '슈퍼', 'uid_tjq0925': '슈퍼', 'phone_01023878546': '나르미', 'uid_wnduqdl91': '나르미', 'phone_01077419068': '나르미', 'uid_khjwj2': '나르미', 'phone_01025047344': '슈퍼', 'uid_smilemaru19': '슈퍼', 'phone_01040540117': '나르미', 'uid_shoorainbow': '나르미', 'phone_01086303485': '슈퍼', 'uid_jungh16': '슈퍼', 'phone_01035373966': '나르미', 'phone_01076343059': '직영', 'uid_ckddn456123': '직영', 'phone_01080820179': '슈퍼', 'uid_kyeongjin1': '슈퍼', 'phone_01043431800': '나르미', 'uid_pks061012': '나르미', 'phone_01079160000': '나르미', 'uid_gcpark100': '나르미', 'phone_01079637387': '슈퍼', 'uid_rktl1212': '슈퍼', 'phone_01038068348': '슈퍼', 'uid_sbeotjd': '슈퍼', 'phone_01064634980': '슈퍼', 'uid_tjdrbs11020': '슈퍼', 'phone_01082215061': '슈퍼', 'uid_epik8498': '슈퍼', 'phone_01058974243': '슈퍼', 'phone_01075765128': '슈퍼', 'uid_jrs7639': '슈퍼', 'phone_01068939625': '슈퍼', 'uid_pj0906': '슈퍼', 'phone_01081407166': '직영', 'uid_rudtnwlstn12': '직영', 'phone_01038217652': '직영', 'phone_01077361022': '나르미', 'uid_gogoterry': '나르미', 'phone_01050462797': '나르미', 'phone_01024260078': '슈퍼', 'uid_skce123': '슈퍼', 'phone_01049858252': '직영', 'uid_ahafree': '직영', 'phone_01037102977': '슈퍼', 'uid_skch01': '슈퍼', 'phone_01091519166': '직영', 'uid_zxc9166': '직영', 'phone_01072624644': '나르미', 'uid_yss0908': '나르미', 'phone_01039723064': '직영', 'uid_jaeyong1983': '직영', 'phone_01082092975': '나르미', 'uid_ascmoon': '나르미', 'phone_01091614445': '직영', 'uid_pooh3986': '직영', 'phone_01076271378': '나르미', 'uid_fmamfnan': '나르미', 'phone_01042577444': '슈퍼', 'uid_h7444': '슈퍼', 'phone_01048950609': '직영', 'uid_mylive00': '직영', 'phone_01076263146': '직영', 'uid_chsolem2': '직영', 'phone_01079049872': '슈퍼', 'uid_boo2132': '슈퍼', 'phone_01096588114': '슈퍼', 'uid_ggmomo98': '슈퍼', 'phone_01028825855': '직영', 'uid_dlrmagud': '직영', 'phone_01059094145': '슈퍼', 'uid_intherain010': '슈퍼', 'phone_01040712284': '나르미', 'phone_01058949971': '나르미', 'uid_lmh0113': '나르미', 'phone_01076109761': '슈퍼', 'uid_lesangm': '슈퍼', 'phone_01099197690': '슈퍼', 'uid_moeer': '슈퍼', 'phone_01057224644': '나르미', 'phone_01048683753': '나르미', 'uid_asd0714': '나르미', 'phone_01059474863': '슈퍼', 'uid_hn54002': '슈퍼', 'phone_01083747444': '슈퍼', 'uid_mywoals66': '슈퍼', 'phone_01054442225': '직영', 'uid_dokebi3': '직영', 'phone_01044115684': '직영', 'uid_zzunga820407': '직영', 'phone_01064988113': '슈퍼', 'uid_dlwjdqls0813': '슈퍼', 'phone_01090909466': '나르미', 'phone_01042220059': '나르미', 'uid_dlwhdejr77': '나르미', 'phone_01090893777': '나르미', 'uid_dididirmsid': '나르미', 'phone_01049380544': '슈퍼', 'uid_cdll27': '슈퍼', 'phone_01041332410': '직영', 'uid_dnjs96000': '직영', 'phone_01039704456': '나르미', 'uid_tepery': '나르미', 'phone_01025239330': '슈퍼', 'uid_roder9330': '슈퍼', 'phone_01022224512': '슈퍼', 'uid_rksek7763': '슈퍼', 'phone_01085403884': '슈퍼', 'uid_qwqw1230': '슈퍼', 'phone_01040479098': '나르미', 'uid_jikrty2621': '나르미', 'phone_01068654893': '슈퍼', 'uid_cion4893': '슈퍼', 'phone_01035064035': '나르미', 'uid_jjisik': '나르미', 'phone_01038001769': '슈퍼', 'uid_Sin69333': '슈퍼', 'phone_01094174313': '슈퍼', 'uid_gnfcp': '슈퍼', 'phone_01045339113': '슈퍼', 'uid_wolf0122': '슈퍼', 'phone_01064072855': '슈퍼', 'uid_esthell2': '슈퍼', 'phone_01039945353': '나르미', 'uid_jjk73299': '나르미', 'phone_01046452907': '슈퍼', 'uid_chome0411': '슈퍼', 'phone_01049991096': '슈퍼', 'uid_dkgee': '슈퍼', 'phone_01029915550': '슈퍼', 'uid_jin70fa': '슈퍼', 'phone_01087059260': '슈퍼', 'uid_cghzxc': '슈퍼', 'phone_01073789884': '슈퍼', 'uid_choijy9219': '슈퍼', 'phone_01089302205': '슈퍼', 'uid_chlwnstn1226': '슈퍼', 'phone_01095126282': '슈퍼', 'uid_zuno10': '슈퍼', 'phone_01099000232': '직영', 'uid_vip1128': '직영', 'phone_01044331492': '나르미', 'uid_chs33': '나르미', 'phone_01098194222': '슈퍼', 'uid_cjh2331': '슈퍼', 'phone_01056608498': '슈퍼', 'uid_epik849812': '슈퍼', 'phone_01085065130': '슈퍼', 'uid_dkagh3295': '슈퍼', 'phone_01057851012': '직영', 'uid_riuxioknu': '직영', 'phone_01028323995': '직영', 'uid_cthanhqb': '직영', 'phone_01056641307': '성공', 'uid_screenstar': '성공', 'phone_01023727221': '직영', 'uid_ss10500': '직영', 'phone_01085970060': '직영', 'uid_kts822300': '직영', 'phone_01059336512': '직영', 'uid_gywnsdpwl10': '직영', 'phone_01030397177': '상생', 'uid_zet707': '상생', 'phone_01099158611': '성공', 'uid_saz1212': '성공', 'phone_01082056416': '직영', 'uid_youjoon0407': '직영', 'phone_01056589664': '성공', 'uid_bluesens': '성공', 'phone_01035050800': 'BM', 'uid_kolon77': 'BM', 'phone_01087623602': '직영', 'uid_bjw3602': '직영', 'phone_01030585896': '성공', 'uid_3hk2212': '성공', 'phone_01056439969': '직영', 'uid_qnfehr1237': '직영', 'phone_01088407989': 'BM', 'uid_mudark623': 'BM', 'phone_01077703289': '직영', 'uid_qlsdnsl': '직영', 'phone_01033168902': '직영', 'uid_tksxkdhwna99': '직영', 'phone_01055397207': '직영', 'uid_BC720742': '직영', 'phone_01026290157': '직영', 'uid_my101001': '직영', 'phone_01072346097': '직영', 'uid_kanghiung': '직영', 'phone_01084268623': '성공', 'uid_BC862346': '성공', 'phone_01065037450': '성공', 'uid_kooja79': '성공', 'phone_01088569679': '성공', 'uid_Good9679': '성공', 'phone_01058631372': 'BM', 'uid_fks024': 'BM', 'phone_01051444441': '직영', 'uid_Asd2259': '직영', 'phone_01088146134': '상생', 'uid_korea6587': '상생', 'phone_01076335554': '직영', 'uid_bm91bm91': '직영', 'phone_01026755482': '상생', 'uid_wnsrldihy': '상생', 'phone_01045424686': '성공', 'uid_rnjs9639': '성공', 'phone_01048899272': '직영', 'uid_akroto10': '직영', 'phone_01059241664': '상생', 'uid_sky1sea97': '상생', 'phone_01098366557': 'BM', 'uid_azxs0790': 'BM', 'phone_01058615229': '상생', 'uid_ddim5004': '상생', 'phone_01075379533': '성공', 'uid_qqaazz120000': '성공', 'phone_01028115580': '성공', 'uid_beatsuya': '성공', 'phone_01084310043': '직영', 'uid_alsghd33': '직영', 'phone_01085157793': '상생', 'uid_Himemay184': '상생', 'phone_01046515916': '직영', 'uid_개인정보처리방침': '직영', 'phone_01066988781': '직영', 'uid_wizzzzz2491': '직영', 'phone_01056322414': '상생', 'uid_kzuuya': '상생', 'phone_01080989458': '직영', 'uid_namh0801': '직영', 'phone_01048297999': '성공', 'uid_byung9643': '성공', 'phone_01038064118': '직영', 'uid_win9198': '직영', 'phone_01033749936': '직영', 'uid_kbc9936': '직영', 'phone_01021655947': '성공', 'uid_Kk6021': '성공', 'phone_01082505746': '상생', 'uid_zzlccg445': '상생', 'phone_01066873099': '직영', 'uid_k7811305': '직영', 'phone_01045114445': '상생', 'uid_aasdds': '상생', 'phone_01065589422': '성공', 'uid_nice1250': '성공', 'phone_01074965436': '직영', 'uid_sksmsk22': '직영', 'phone_01021649980': '직영', 'uid_kcc518551': '직영', 'phone_01094509952': '상생', 'uid_wjdgus9887': '상생', 'phone_01034898989': '성공', 'uid_wowgma2': '성공', 'phone_01062223655': '성공', 'uid_promisel': '성공', 'phone_01084016924': 'BM', 'uid_Jongman6189': 'BM', 'phone_01062980423': 'BM', 'uid_sadf8122': 'BM', 'phone_01066652756': '직영', 'uid_zzzsss5': '직영', 'phone_01097792669': '직영', 'uid_tk770322': '직영', 'phone_01026708245': '상생', 'uid_xkdlass0245': '상생', 'phone_01045889854': '성공', 'uid_sign222': '성공', 'phone_01082552058': '직영', 'uid_hyunjin2058': '직영', 'phone_01040826360': '상생', 'uid_kimli0109': '상생', 'phone_01057183351': '상생', 'uid_fkdnrtjd': '상생', 'phone_01081806691': '성공', 'uid_coolnjc': '성공', 'phone_01067957475': '직영', 'uid_bangho0112': '직영', 'phone_01063935129': '직영', 'uid_j63935129': '직영', 'phone_01023526995': '직영', 'uid_njw0414': '직영', 'phone_01039172070': '성공', 'uid_fbtmdcks31': '성공', 'phone_01036933810': '성공', 'uid_stp21': '성공', 'phone_01022695096': 'BM', 'uid_kslove1269': 'BM', 'phone_01021948560': '직영', 'uid_j1030jhs': '직영', 'phone_01083447540': '성공', 'uid_qkrtkddlf': '성공', 'phone_01042339955': '직영', 'uid_snskwks': '직영', 'phone_01071332776': '직영', 'uid_71332776': '직영', 'phone_01072529443': '직영', 'uid_pyh9443': '직영', 'phone_01098898011': '직영', 'uid_jhan1052': '직영', 'phone_01077092461': '직영', 'uid_wogus9043': '직영', 'phone_01062089030': '상생', 'uid_popiop123': '상생', 'phone_01050601319': '성공', 'uid_opop0323': '성공', 'phone_01038226593': '성공', 'uid_pcs1803': '성공', 'phone_01073501388': '성공', 'uid_honga1388': '성공', 'phone_01051548925': '성공', 'uid_cs8925': '성공', 'phone_01048695822': '직영', 'uid_snns432': '직영', 'phone_01084451461': 'BM', 'uid_xkxl67': 'BM', 'phone_01028788705': 'BM', 'uid_qoqudgh456': 'BM', 'phone_01043125247': '상생', 'uid_abollo1': '상생', 'phone_01057734867': '성공', 'uid_tgb4ever': '성공', 'phone_01048678489': '성공', 'uid_tg4ever': '성공', 'phone_01022185625': '직영', 'uid_dnjs817': '직영', 'phone_01089479130': 'BM', 'uid_hg97507': 'BM', 'phone_01077154649': '직영', 'uid_zx0921': '직영', 'phone_01042454345': 'BM', 'uid_seoseo0314': 'BM', 'phone_01088657389': '직영', 'uid_eddie6577': '직영', 'phone_01093312498': '직영', 'uid_bogus2498': '직영', 'phone_01073973335': 'BM', 'uid_sa003114': 'BM', 'phone_01084418283': 'BM', 'uid_thdwodyd': 'BM', 'phone_01049078688': '직영', 'uid_halada011': '직영', 'phone_01064655868': '직영', 'uid_duddk6022': '직영', 'phone_01058638489': '성공', 'uid_tgs4ever': '성공', 'phone_01035002074': '성공', 'uid_aa35002074': '성공', 'phone_01095500590': 'BM', 'uid_cxz3131': 'BM', 'phone_01025248560': '성공', 'uid_Dawon51': '성공', 'phone_01058741714': '직영', 'uid_yousy1128': '직영', 'phone_01035523225': '성공', 'uid_yeoil486': '성공', 'phone_01077953316': '직영', 'uid_rkcl1234': '직영', 'phone_01096092776': '성공', 'uid_ysh2776': '성공', 'phone_01038042784': '직영', 'uid_onna2776': '직영', 'phone_01065219430': '직영', 'uid_cole9430': '직영', 'phone_01026701866': '직영', 'uid_dhkdrkdnl02': '직영', 'phone_01071446550': '직영', 'uid_eotkd93': '직영', 'phone_01036736050': '직영', 'uid_rmatja1214': '직영', 'phone_01084207505': '상생', 'uid_jjj3357': '상생', 'phone_01095337575': '직영', 'uid_aswq666': '직영', 'phone_01042343299': '상생', 'uid_3299yu3299': '상생', 'phone_01076801653': '직영', 'uid_tkddyd778': '직영', 'phone_01088861539': '직영', 'uid_aqeda': '직영', 'phone_01044336385': '직영', 'uid_gidrml12': '직영', 'phone_01046476973': '상생', 'uid_tmddyd9714': '상생', 'phone_01082820407': '성공', 'uid_BC200532': '성공', 'phone_01075099361': '성공', 'uid_lee9361': '성공', 'phone_01074053712': 'BM', 'uid_biomedics': 'BM', 'phone_01043663838': 'BM', 'uid_mystop1214': 'BM', 'phone_01085258088': '성공', 'uid_zwzwzwz': '성공', 'phone_01089567995': '성공', 'uid_nnhs6670': '성공', 'phone_01085799951': '성공', 'uid_hunt011': '성공', 'phone_01037694885': 'BM', 'uid_lee1hahaha': 'BM', 'phone_01059297202': 'BM', 'uid_r78789': 'BM', 'phone_01020440978': '성공', 'uid_Tack0957': '성공', 'phone_01095697982': '직영', 'uid_BC533812': '직영', 'phone_01082828008': '상생', 'uid_luxury8707': '상생', 'phone_01022502382': '성공', 'uid_imss119': '성공', 'phone_01090651819': '성공', 'uid_hra0318': '성공', 'phone_01026465953': '직영', 'uid_csp7687': '직영', 'phone_01044006914': '상생', 'uid_aa7096': '상생', 'phone_01049559963': '성공', 'uid_junhan0202': '성공', 'phone_01031342157': '직영', 'uid_rhfjsrjdia1': '직영', 'phone_01056974044': '상생', 'uid_ssogi1': '상생', 'phone_01027564187': '직영', 'uid_sok1038': '직영', 'phone_01035410201': '상생', 'uid_cat3434': '상생', 'phone_01053428451': '상생', 'uid_jhj845100': '상생', 'phone_01055945572': 'BM', 'uid_fiat4408': 'BM', 'phone_01055114469': '상생', 'uid_B4469011': '상생', 'phone_01021952353': '상생', 'uid_jang2535': '상생', 'phone_01035703210': '성공', 'uid_ssssb95': '성공', 'phone_01075042474': '직영', 'uid_vhtpglehs': '직영', 'phone_01059186698': '직영', 'uid_junjunghwan1': '직영', 'phone_01058408883': 'BM', 'uid_wjswls201': 'BM', 'phone_01055515588': '성공', 'uid_realdal': '성공', 'phone_01028176207': 'BM', 'uid_jun2817': 'BM', 'phone_01021889481': 'BM', 'uid_mamigirl1004': 'BM', 'phone_01057421370': '직영', 'uid_tjdgkr1370': '직영', 'phone_01051577745': 'BM', 'uid_freehug4610': 'BM', 'phone_01064783350': '상생', 'uid_mkoq80': '상생', 'phone_01048944440': 'BM', 'uid_hoya104': 'BM', 'phone_01077610715': '상생', 'uid_Kaze0715': '상생', 'phone_01021432011': '직영', 'uid_eksfk711': '직영', 'phone_01064244113': '성공', 'uid_oppyn': '성공', 'phone_01025220677': '성공', 'uid_cho0677': '성공', 'phone_01089568216': '직영', 'uid_csyyyys': '직영', 'phone_01050137594': '성공', 'uid_zezx20': '성공', 'phone_01099546312': 'BM', 'uid_ccm7577': 'BM', 'phone_01056876099': '상생', 'uid_hjjphd': '상생', 'phone_01077011158': '상생', 'uid_kdkd88': '상생', 'phone_01063895509': '직영', 'uid_hwangjoil': '직영'},
+   'excluded_identity_keys': ['phone_01020582724', 'phone_01023061112', 'phone_01024348122', 'phone_01028607600', 'phone_01033651548', 'phone_01034929496', 'phone_01037959383', 'phone_01054464713', 'phone_01055535804', 'phone_01055987613', 'phone_01057430409', 'phone_01057901107', 'phone_01062852543', 'phone_01072210501', 'phone_01076736626', 'phone_01081144903', 'phone_01088832434', 'phone_01089701982', 'phone_01089831091', 'phone_01091144577', 'phone_01091895291', 'phone_01095064566', 'phone_01099665758', 'uid_31324577', 'uid_BC6626125', 'uid_Syk1232', 'uid_diqkdndlstod74', 'uid_ish2751', 'uid_kgw49280', 'uid_kingzex333', 'uid_ksh9522', 'uid_lo154800', 'uid_msigumchi', 'uid_na0507', 'uid_psy524', 'uid_qopqop86', 'uid_rerere3', 'uid_sizz104', 'uid_sky624b', 'uid_sosms2', 'uid_sslove0317', 'uid_tg850824', 'uid_tnt2772', 'uid_umkilyong', 'uid_wkdgustlr81', 'uid_yes022619']}]
 
 DAY_TARGETS = {
     0: [19, 18, 30, 23],
@@ -341,7 +345,7 @@ def firebase_safe_key(value):
     return re.sub(r'[.#$\[\]/]', '_', value)
 
 
-def rider_team_keys(name, phone="", user_id=""):
+def rider_team_keys(name, phone="", user_id="", include_name=True):
     """동명이인 충돌 방지를 위해 고유 식별키를 우선 반환합니다.
 
     우선순위:
@@ -359,7 +363,7 @@ def rider_team_keys(name, phone="", user_id=""):
         keys.append("uid_" + user_key)
 
     name_key = norm(name)
-    if name_key:
+    if include_name and name_key:
         keys.append(name_key)
 
     return keys
@@ -375,9 +379,17 @@ def team_of(name, phone="", user_id=""):
         except Exception as e:
             print("teamMap 로드/마이그레이션 실패:", e)
             TEAM_MAP_CACHE = {}
+    # 중구A 이관 명단은 이름이 아닌 전화번호/userId로만 확정합니다.
+    # 동명이인은 절대 이름만으로 같은 소속에 넣지 않습니다.
+    for identity_key in rider_team_keys(name, phone, user_id, include_name=False):
+        fixed_team = IDENTITY_TEAM_MAP.get(identity_key)
+        if fixed_team in TEAM_ORDER:
+            return fixed_team
+
     mapped = None
     matched_key = None
-    for lookup_key in rider_team_keys(name, phone, user_id):
+    include_name_lookup = AREA_NAME != "중구A"
+    for lookup_key in rider_team_keys(name, phone, user_id, include_name=include_name_lookup):
         candidate = normalize_team_for_area(TEAM_MAP_CACHE.get(lookup_key), AREA_NAME)
         if candidate in TEAM_ORDER:
             mapped = candidate
@@ -387,10 +399,11 @@ def team_of(name, phone="", user_id=""):
     # 전화번호/userId 고유키를 우선하고, 없을 때만 기존 이름 key를 하위 호환으로 사용합니다.
     if mapped in TEAM_ORDER:
         return mapped
-    # 고정 명단에 포함된 기존 기사는 지정 팀을 유지합니다.
-    for team, names in REQUIRED_TEAM_RIDERS.items():
-        if name in {norm(x) for x in names}:
-            return team
+    # 달서A/B 기존 고정 명단은 유지하되, 중구A는 이름 단독 매칭을 금지합니다.
+    if AREA_NAME != "중구A":
+        for team, names in REQUIRED_TEAM_RIDERS.items():
+            if name in {norm(x) for x in names}:
+                return team
     # 어느 팀에도 등록되지 않은 새 기사는 자동으로 신규 팀에 배정합니다.
     return "신규" if "신규" in TEAM_ORDER else (TEAM_ORDER[0] if TEAM_ORDER else "신규")
 
@@ -608,10 +621,13 @@ def read_dom_rows(page):
           c => c.text && !phoneRe.test(c.text) && !c.text.includes('운행'),
           110
         );
+        // 운행상태는 인접 기사 행의 상태가 섞이면 접속자 수가 잘못 잡히므로
+        // 휴대폰 셀과 세로 중심이 거의 같은 셀만 허용하고 정확히 두 상태만 인정합니다.
+        const statusRow = row.filter(c => Math.abs(c.cy - phoneNode.cy) <= 6);
         let statusCell = nearestCell(
-          row,
+          statusRow,
           identityHeaders.status,
-          c => /운행\s*(중|종료)/.test(c.text.replace(/\s+/g,'')),
+          c => /^(운행중|운행종료)$/.test(c.text.replace(/\s+/g,'')),
           110
         );
 
@@ -922,6 +938,9 @@ def empty_rider_card(name, team):
 
 
 
+VERIFIED_DUPLICATE_RIDER_NAMES = {"박영근"}
+
+
 def rider_identity_keys(rider):
     """기사 중복 판별 키.
 
@@ -940,6 +959,12 @@ def rider_identity_keys(rider):
 
     if user_id:
         keys.append(("userId", user_id))
+
+    # 실제 중복 기사로 확인된 이름만 이름 자체를 보조 신원키로 사용합니다.
+    # 전체 기사에 이름키를 적용하지 않으므로 동명이인은 계속 분리됩니다.
+    rider_name = norm(rider.get("name", ""))
+    if rider_name in VERIFIED_DUPLICATE_RIDER_NAMES:
+        keys.append(("verifiedName", rider_name))
 
     # userId가 전화번호 형태(10~11자리 숫자)라면 phone과 같은 신원 토큰으로도 비교.
     # 예: 박영근 A행 userId=01058974243 / B행 phone=01058974243
@@ -1561,6 +1586,14 @@ def git_push():
 
 
 
+def is_excluded_rider(rider):
+    """탈퇴 지사 기사는 전화번호/userId가 일치할 때만 제외합니다."""
+    for key in rider_team_keys(rider.get("name", ""), rider.get("phone", ""), rider.get("userId", ""), include_name=False):
+        if key in EXCLUDED_IDENTITY_KEYS:
+            return True
+    return False
+
+
 def run_update(page, config=None):
     global VERIFIED_CENTER_CODE
     config = config or {
@@ -1578,6 +1611,12 @@ def run_update(page, config=None):
         )
 
     riders = collect_all_pages_by_dom(page)
+    if EXCLUDED_IDENTITY_KEYS:
+        before_count = len(riders)
+        riders = [r for r in riders if not is_excluded_rider(r)]
+        removed = before_count - len(riders)
+        if removed:
+            print(f"{AREA_NAME} 탈퇴 지사 기사 제외: {removed}명")
     if len(riders) == 0:
         raise RuntimeError("기사 데이터를 못 읽었습니다.")
 
@@ -1613,6 +1652,7 @@ def activate_center(config):
     global AREA_NAME, TEAM_ORDER, AREA_CONFIG, TEAM_MAP_PATH
     global LIVE_PATH, WEEKLY_PATH, CURRENT_SLUG, DATA_FILE, WEEKLY_FILE
     global REQUIRED_TEAM_RIDERS, TEAM_MAP_CACHE, VERIFIED_CENTER_CODE
+    global IDENTITY_TEAM_MAP, EXCLUDED_IDENTITY_KEYS
     VERIFIED_CENTER_CODE = None
     AREA_NAME = config["area"]
     CURRENT_SLUG = config["slug"]
@@ -1622,6 +1662,8 @@ def activate_center(config):
     LIVE_PATH = config["live_path"]
     WEEKLY_PATH = config["weekly_path"]
     REQUIRED_TEAM_RIDERS = dict(config.get("required_team_riders") or {})
+    IDENTITY_TEAM_MAP = dict(config.get("identity_team_map") or {})
+    EXCLUDED_IDENTITY_KEYS = set(config.get("excluded_identity_keys") or [])
     DATA_FILE = BASE_DIR / f"data_{CURRENT_SLUG}.json"
     WEEKLY_FILE = BASE_DIR / f"weekly_{CURRENT_SLUG}.json"
     TEAM_MAP_CACHE = None
