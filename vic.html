@@ -1307,6 +1307,9 @@ body.dark .small-bar{
 .small-fill.sangsaeng{background:var(--blue)!important}
 .small-fill.newteam{background:#999!important}
 
+
+.small-fill.success{height:100%;background:var(--green)}
+.excluded-chip.success::before{background:var(--green)}
 </style>
 </head>
 <body>
@@ -1424,7 +1427,7 @@ body.dark .small-bar{
 <script>
 const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app";
 const AREAS={
-  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀","신규"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","신규":"신규"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","신규":"newteam"},missionTeam:"소닉팀",settlementUnit:250},
+  "달서B":{key:"dalseob",file:"/live/dalseob",weekly:"/weekly/dalseob",teams:["소닉팀","넘버팀","마음팀","성공드림","신규"],labels:{"소닉팀":"슈퍼","넘버팀":"넘버","마음팀":"마음","성공드림":"성공드림","신규":"신규"},classes:{"소닉팀":"sonic","넘버팀":"number","마음팀":"maeum","성공드림":"success","신규":"newteam"},missionTeam:"소닉팀",settlementUnit:250},
   "중구A":{key:"junggua",file:"/live/junggua",weekly:"/weekly/junggua",teams:["슈퍼","성공","직영","BM","상생","나르미","신규"],labels:{"슈퍼":"슈퍼","성공":"성공","직영":"직영","BM":"BM","상생":"상생","나르미":"나르미","신규":"신규"},classes:{"슈퍼":"sonic","성공":"success","직영":"number","BM":"bm","상생":"sangsaeng","나르미":"narmi","신규":"newteam"},missionTeam:"슈퍼",settlementUnit:350}
 };
 const PERIODS=[['morning','☀','오전피크'],['afternoon','☀','오후논피크'],['evening','🌇','저녁피크'],['midnight','🌙','심야논피크']];
