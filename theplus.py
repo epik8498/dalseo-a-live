@@ -54,12 +54,12 @@ CENTER_CONFIGS = [{
         'DP2509099587'
     ],
     'center_code': 'DP2509099587',
-    'team_order': ['더플러스', '연합', '신규'],
-    'area_config': {'더플러스': 4.0, '연합': 4.0, '신규': 0},
+    'team_order': ['더플러스', '우사장', '몬스터', '신규'],
+    'area_config': {'더플러스': 4.0, '우사장': 1.0, '몬스터': 3.0, '신규': 0},
     'team_map_path': '/settings/theplus/teamMap',
     'live_path': '/live/theplus',
     'weekly_path': '/weekly/theplus',
-    'required_team_riders': {'더플러스': ['김범주', '김영민', '김정수', '김동훈', '김유섭', '김건우', '김태윤', '고선모', '강정호', '김영아', '권시환', '김권민', '박진석', '목성연', '배규광', '이정윤', '이광춘', '이승훈', '이슬비', '양지성', '오선찬', '이홍우', '이정후', '민병수', '나성복', '엄태일', '임세규', '이동규', '서상교', '장현식', '정용철', '최성재', '최유미', '이상탁', '서도원', '시영기', '조원준', '전종대', '김홍식', '임성현']}
+    'required_team_riders': {'더플러스': ['김범주', '김영민', '김정수', '김동훈', '김유섭', '김건우', '김태윤', '고선모', '강정호', '김영아', '권시환', '김권민', '박진석', '목성연', '배규광', '이정윤', '이광춘', '이승훈', '이슬비', '양지성', '오선찬', '이홍우', '이정후', '민병수', '나성복', '엄태일', '임세규', '이동규', '서상교', '장현식', '정용철', '최성재', '최유미', '이상탁', '서도원', '시영기', '조원준', '전종대', '김홍식', '임성현'], '우사장': ['안태현', '손성인', '탁은희', '권기덕', '김동진', '안순애', '오석운', '우수택']}
 }]
 
 DAY_TARGETS = {
@@ -245,8 +245,10 @@ def normalize_team_for_area(team, area_name=None):
     if area_name == "중구A":
         if team in ("더플러스", "더플러스팀", "THE +", "THE +팀", "THE+", "THE+팀"):
             return "더플러스"
-        if team in ("연합", "연합팀"):
-            return "연합"
+        if team in ("연합", "연합팀", "몬스터", "몬스터팀"):
+            return "몬스터"
+        if team in ("우사장", "우사장팀"):
+            return "우사장"
         if team in ("신규", "미분류"):
             return "신규"
 
@@ -316,6 +318,13 @@ def rider_team_keys(name, phone="", user_id=""):
 def team_of(name, phone="", user_id=""):
     global TEAM_MAP_CACHE
     name = norm(name)
+
+    # 고정 명단은 Firebase teamMap보다 우선합니다.
+    # 특히 우사장 8명은 기존 teamMap에 신규/다른 팀으로 남아 있어도 반드시 우사장으로 분류합니다.
+    for team, names in REQUIRED_TEAM_RIDERS.items():
+        if name in {norm(x) for x in names}:
+            return team
+
     if TEAM_MAP_CACHE is None:
         try:
             TEAM_MAP_CACHE = migrate_team_map_names()
@@ -323,6 +332,7 @@ def team_of(name, phone="", user_id=""):
         except Exception as e:
             print("teamMap 로드/마이그레이션 실패:", e)
             TEAM_MAP_CACHE = {}
+
     mapped = None
     matched_key = None
     for lookup_key in rider_team_keys(name, phone, user_id):
@@ -335,10 +345,7 @@ def team_of(name, phone="", user_id=""):
     # 전화번호/userId 고유키를 우선하고, 없을 때만 기존 이름 key를 하위 호환으로 사용합니다.
     if mapped in TEAM_ORDER:
         return mapped
-    # 고정 명단에 포함된 기존 기사는 지정 팀을 유지합니다.
-    for team, names in REQUIRED_TEAM_RIDERS.items():
-        if name in {norm(x) for x in names}:
-            return team
+
     # 고정 명단/teamMap에 없는 기사는 신규로 등록하고 대표가 기사관리에서 직접 이동합니다.
     return "신규" if "신규" in TEAM_ORDER else (TEAM_ORDER[0] if TEAM_ORDER else "신규")
 
@@ -1104,7 +1111,16 @@ def load_weekly():
     try:
         if WEEKLY_FILE.exists():
             with open(WEEKLY_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                rows = json.load(f)
+            # 기존 연합 기록은 팀명 변경 후에도 몬스터 실적으로 이어서 표시합니다.
+            if isinstance(rows, list):
+                for row in rows:
+                    if not isinstance(row, dict):
+                        continue
+                    teams = row.get("teams")
+                    if isinstance(teams, dict) and "연합" in teams and "몬스터" not in teams:
+                        teams["몬스터"] = teams.pop("연합")
+            return rows
     except Exception:
         print("weekly 파일 손상 - 새로 생성")
     return []
