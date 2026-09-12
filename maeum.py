@@ -14,6 +14,8 @@ from firebase_uploader import upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
+WEEKLY_SNAPSHOT_HOUR = 1
+WEEKLY_SAVED_BUSINESS_DATES = {}  # slug -> businessDate
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
@@ -49,7 +51,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구달서온나A(DP2509199364)', '대구달서온나A (DP2509199364)', '대구달서온나A', 'DP2509199364'],
   'center_code': 'DP2509199364',
   'team_order': ['마음1', '마음3', '마음4'],
-  'area_config': {'마음1': 7, '마음3': 5, '마음4': 1},
+  'area_config': {'마음1': 7, '마음3': 4, '마음4': 1},
   'team_map_path': '/settings/maeuma/teamMap',
   'live_path': '/live/maeuma',
   'weekly_path': '/weekly/maeuma',
@@ -87,7 +89,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구달서B온나(DP2602028125)', '대구달서B온나 (DP2602028125)', '대구달서B온나', 'DP2602028125'],
   'center_code': 'DP2602028125',
   'team_order': ['소닉팀', '넘버팀', '마음팀'],
-  'area_config': {'소닉팀': 2.5, '넘버팀': 5.5, '마음팀': 5.0},
+  'area_config': {'소닉팀': 1.2, '넘버팀': 5.3, '마음팀': 4.2},
   'team_map_path': '/settings/maeum_dalseob/teamMap',
   'live_path': '/live/maeum_dalseob',
   'weekly_path': '/weekly/maeum_dalseob',
@@ -289,7 +291,7 @@ CENTER_CONFIGS = [{'area': '마음 달서A',
   'aliases': ['대구중A온나3(DP2511170481)', '대구중A온나3 (DP2511170481)', '대구중A온나3', 'DP2511170481'],
   'center_code': 'DP2511170481',
   'team_order': ['소닉팀', '넘버팀', '마음팀', '나르미팀'],
-  'area_config': {'소닉팀': 3.0, '넘버팀': 1.2, '마음팀': 3.4, '나르미팀': 1.4},
+  'area_config': {'소닉팀': 2.8, '넘버팀': 1.2, '마음팀': 4.0, '나르미팀': 2.0},
   'team_map_path': '/settings/maeum_junggua/teamMap',
   'live_path': '/live/maeum_junggua',
   'weekly_path': '/weekly/maeum_junggua',
@@ -600,7 +602,30 @@ def spare_rejects(complete, reject, cancel=0, rider_fault=0):
 
 
 
-def team_of(name):
+def firebase_safe_key(value):
+    """Firebase key 금지문자를 제거한 안정적인 문자열을 만듭니다."""
+    value = norm(value)
+    return re.sub(r'[.#$\[\]/]', '_', value)
+
+
+def stable_team_keys(phone="", user_id=""):
+    """기사 이동용 고유키. 이름은 기사 신원키로 사용하지 않습니다."""
+    keys = []
+    phone_key = normalize_phone(phone)
+    if phone_key:
+        keys.append("phone_" + phone_key)
+    user_key = firebase_safe_key(user_id)
+    if user_key:
+        keys.append("uid_" + user_key)
+    return list(dict.fromkeys(keys))
+
+
+def canonical_rider_key(rider):
+    keys = stable_team_keys((rider or {}).get("phone", ""), (rider or {}).get("userId", ""))
+    return keys[0] if keys else ""
+
+
+def team_of(name, phone="", user_id="", allow_name_fallback=True):
     global TEAM_MAP_CACHE
     name = norm(name)
     if TEAM_MAP_CACHE is None:
@@ -612,17 +637,26 @@ def team_of(name):
         except Exception as e:
             print("teamMap 로드 실패:", e)
             TEAM_MAP_CACHE = {}
-    # 기사이동에서 저장한 Firebase teamMap을 최우선 적용합니다.
-    # 따라서 고정명단에 있던 기사도 대표가 마음4 등 다른 팀으로 옮기면 저장값을 그대로 따릅니다.
-    mapped = TEAM_MAP_CACHE.get(name)
-    if mapped in TEAM_ORDER:
-        return mapped
 
-    # Firebase에 별도 이동값이 없는 기사만 초기 고정명단을 적용합니다.
-    for team, names in REQUIRED_TEAM_RIDERS.items():
-        if name in {norm(x) for x in names}:
-            return team
+    # 전화번호/userId 고유키로 저장된 기사 이동값을 최우선 적용합니다.
+    for lookup_key in stable_team_keys(phone, user_id):
+        mapped = TEAM_MAP_CACHE.get(lookup_key)
+        if mapped in TEAM_ORDER:
+            return mapped
 
+    # 과거 이름 기반 teamMap은 동명이인이 아닌 경우에만 하위호환으로 허용합니다.
+    if allow_name_fallback and name:
+        mapped = TEAM_MAP_CACHE.get(name)
+        if mapped in TEAM_ORDER:
+            return mapped
+
+    # 고정명단도 이름 기반이므로 동명이인이 아닌 경우에만 적용합니다.
+    if allow_name_fallback and name:
+        for team, names in REQUIRED_TEAM_RIDERS.items():
+            if name in {norm(x) for x in names}:
+                return team
+
+    # 기존 마음 지사 정책 보존: 미지정 기사는 첫 팀으로 분류합니다.
     return TEAM_ORDER[0] if TEAM_ORDER else "소닉팀"
 
 def to_int(value):
@@ -1062,7 +1096,7 @@ def parse_row_lines(row_lines):
         "name": name,
         "phone": phone,
         "userId": user_id,
-        "team": team_of(name),
+        "team": team_of(name, phone, user_id),
         "status": "운행중" if is_online else "운행 종료",
         "isOnline": is_online,
         "complete": complete,
@@ -1100,7 +1134,7 @@ def parse_dom_rows(row_groups):
                 "name": group.get("name", ""),
                 "phone": group.get("phone", ""),
                 "userId": group.get("userId", ""),
-                "team": team_of(group.get("name", "")),
+                "team": team_of(group.get("name", ""), group.get("phone", ""), group.get("userId", "")),
                 "status": "운행중" if is_online else "운행 종료",
                 "isOnline": is_online,
                 "complete": complete,
@@ -1151,6 +1185,113 @@ def empty_rider_card(name, team):
         "placeholder": True,
     }
 
+
+
+def rider_identity_keys(rider):
+    """전화번호/userId만으로 동일 기사를 판정합니다. 이름만 같은 기사는 절대 합치지 않습니다."""
+    rider = rider or {}
+    keys = []
+    phone = normalize_phone(rider.get("phone", ""))
+    user_id = norm(rider.get("userId", "")).lower()
+    user_digits = normalize_phone(user_id)
+    if phone:
+        keys.append(("identity", phone))
+    if user_id:
+        keys.append(("userId", user_id))
+    if user_digits and len(user_digits) in (10, 11):
+        keys.append(("identity", user_digits))
+    return list(dict.fromkeys(keys))
+
+
+def rider_quality_score(rider):
+    rider = rider or {}
+    hourly = rider.get("hourly") or []
+    return (
+        0 if rider.get("placeholder") else 1000000,
+        100000 if rider.get("isOnline") else 0,
+        to_int(rider.get("complete", 0)),
+        to_int(rider.get("morning", 0)) + to_int(rider.get("afternoon", 0))
+        + to_int(rider.get("evening", 0)) + to_int(rider.get("midnight", 0)),
+        sum(to_int(v) for v in hourly[:24]),
+        len(normalize_phone(rider.get("phone", ""))),
+        len(norm(rider.get("userId", ""))),
+    )
+
+
+def merge_duplicate_riders(a, b):
+    a = dict(a or {})
+    b = dict(b or {})
+    if rider_quality_score(b) > rider_quality_score(a):
+        base, other = b, a
+    else:
+        base, other = a, b
+    base = dict(base)
+    for key in ("name", "phone", "userId", "status", "team"):
+        if not norm(base.get(key, "")) and norm(other.get(key, "")):
+            base[key] = other.get(key)
+    if not base.get("hourly") and other.get("hourly"):
+        base["hourly"] = other.get("hourly")
+    return base
+
+
+def dedupe_riders(riders, log_prefix=""):
+    """phone 또는 userId가 같은 경우에만 병합하며 이름만 같은 동명이인은 분리 유지합니다."""
+    result = []
+    key_to_index = {}
+    duplicate_count = 0
+    for rider in riders or []:
+        if not isinstance(rider, dict):
+            continue
+        keys = rider_identity_keys(rider)
+        matched = sorted({key_to_index[k] for k in keys if k in key_to_index})
+        if not matched:
+            idx = len(result)
+            result.append(rider)
+            for k in keys:
+                key_to_index[k] = idx
+            continue
+        keep_idx = matched[0]
+        result[keep_idx] = merge_duplicate_riders(result[keep_idx], rider)
+        duplicate_count += 1
+        for extra_idx in reversed(matched[1:]):
+            result[keep_idx] = merge_duplicate_riders(result[keep_idx], result[extra_idx])
+            result.pop(extra_idx)
+        key_to_index = {}
+        for i, row in enumerate(result):
+            for k in rider_identity_keys(row):
+                key_to_index[k] = i
+    if duplicate_count:
+        prefix = f"{log_prefix} " if log_prefix else ""
+        print(f"{prefix}중복 기사 {duplicate_count}건 제거 완료")
+    return result
+
+
+def finalize_rider_identity_and_teams(riders):
+    """최종 기사카드에 riderKey를 부여하고 동명이인의 이름 기반 팀매핑을 차단합니다."""
+    riders = dedupe_riders(riders, "최종 신원정리")
+    name_counts = {}
+    for r in riders:
+        name = norm(r.get("name", ""))
+        if name:
+            name_counts[name] = name_counts.get(name, 0) + 1
+    duplicate_names = {name for name, cnt in name_counts.items() if cnt > 1}
+    if duplicate_names:
+        print("동명이인 감지(이름 기반 팀매핑 차단):", ", ".join(sorted(duplicate_names)))
+    seen = {}
+    for r in riders:
+        name = norm(r.get("name", ""))
+        r["riderKey"] = canonical_rider_key(r)
+        r["team"] = team_of(
+            name, r.get("phone", ""), r.get("userId", ""),
+            allow_name_fallback=name not in duplicate_names,
+        )
+        key = r.get("riderKey", "")
+        if key:
+            if key in seen:
+                print("경고: 최종 riderKey 중복:", key, seen[key], name)
+            else:
+                seen[key] = name
+    return riders
 
 def ensure_required_rider_cards(riders):
     existing_names = {norm(r.get("name", "")) for r in riders if r.get("name")}
@@ -1210,9 +1351,10 @@ def collect_all_pages_by_dom(page):
 
         new_count = 0
         for r in riders:
-            key = normalize_phone(r.get("phone", "")) or (norm(r.get("name", "")) + "_" + norm(r.get("phone", "")))
-            if key not in seen:
-                seen.add(key)
+            keys = rider_identity_keys(r)
+            page_key = keys[0] if keys else ("row", page_no, len(all_riders), norm(r.get("name", "")))
+            if page_key not in seen:
+                seen.add(page_key)
                 all_riders.append(r)
                 new_count += 1
             else:
@@ -1224,7 +1366,10 @@ def collect_all_pages_by_dom(page):
             print("새 기사 없음. 마지막 페이지로 판단하고 종료")
             break
 
+    all_riders = dedupe_riders(all_riders, "최종 수집")
     all_riders = ensure_required_rider_cards(all_riders)
+    all_riders = dedupe_riders(all_riders, "카드 보강 후")
+    all_riders = finalize_rider_identity_and_teams(all_riders)
     print(f"전체 카드 기사 수: {len(all_riders)}")
     phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
     if len(phones) != len(set(phones)):
@@ -1643,12 +1788,20 @@ def save_json(data, config=None):
     if verify.get("area") != config["area"] or verify.get("slug") != config["slug"]:
         raise RuntimeError(f"저장 후 권역 검증 실패: {expected_data_file.name}")
 
+    # Firebase 실시간 경로에는 weekly 이력/요약을 제외한 경량 데이터만 저장합니다.
+    lite_data = dict(data)
+    lite_data.pop("weekly", None)
+    lite_data.pop("availableWeeks", None)
+    lite_data.pop("weeklySummary", None)
+
     try:
-        upload_json(expected_data_file.name, config["live_path"])
-        upload_json(expected_weekly_file.name, config["weekly_path"])
-        print(f"Firebase 업로드 완료: {config['live_path']} ← {expected_data_file.name}")
-        print(f"Firebase 업로드 완료: {config['weekly_path']} ← {expected_weekly_file.name}")
-    except Exception as e:
+        init_firebase()
+        db.reference(config["live_path"]).set(lite_data)
+        lite_path = f"/live-lite/{config['slug']}"
+        db.reference(lite_path).set(lite_data)
+        print(f"Firebase 실시간 경량 업로드 완료: {config['live_path']}")
+        print(f"Firebase 실시간 경량 업로드 완료: {lite_path}")
+    except Exception:
         print("Firebase 업로드 실패")
         raise
 
@@ -1689,7 +1842,7 @@ def git_push():
 
 
 def run_update(page, config=None):
-    global VERIFIED_CENTER_CODE
+    global VERIFIED_CENTER_CODE, TEAM_MAP_CACHE, WEEKLY_SAVED_BUSINESS_DATES
     config = config or {
         "area": AREA_NAME,
         "slug": CURRENT_SLUG,
@@ -1698,6 +1851,9 @@ def run_update(page, config=None):
         "live_path": LIVE_PATH,
         "weekly_path": WEEKLY_PATH,
     }
+
+    # 기사관리에서 변경된 최신 teamMap을 매 수집 주기마다 다시 읽습니다.
+    TEAM_MAP_CACHE = None
 
     expected_code = norm(config.get("center_code", ""))
     if VERIFIED_CENTER_CODE != expected_code:
@@ -1727,7 +1883,21 @@ def run_update(page, config=None):
             f"!= {config['area']}/{config['slug']}"
         )
 
-    save_weekly_if_close(data, config)
+    # 주간 기록은 매일 01시에 전날 businessDate를 한 번만 확정 저장/업로드합니다.
+    now_for_weekly = datetime.now()
+    weekly_business_date = str(business_date(now_for_weekly))
+    slug = config["slug"]
+    if (
+        now_for_weekly.hour == WEEKLY_SNAPSHOT_HOUR
+        and WEEKLY_SAVED_BUSINESS_DATES.get(slug) != weekly_business_date
+    ):
+        save_weekly_if_close(data, config)
+        upload_json(WEEKLY_FILE.name, config["weekly_path"])
+        WEEKLY_SAVED_BUSINESS_DATES[slug] = weekly_business_date
+        print(f"주간 확정 저장 완료: {config['weekly_path']} / {weekly_business_date}")
+    else:
+        print("주간 Firebase 업로드 생략 - 01시 1회 저장 규칙")
+
     weekly = load_weekly()
     data["weekly"] = weekly
     data["availableWeeks"] = available_weeks(weekly)

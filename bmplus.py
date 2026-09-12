@@ -14,6 +14,8 @@ from firebase_uploader import upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
+WEEKLY_SNAPSHOT_HOUR = 1
+WEEKLY_SAVED_BUSINESS_DATES = {}  # bmplus -> businessDate; 01시 중복 저장 방지
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
@@ -41,7 +43,7 @@ TEAM_ORDER = ["1팀", "2팀", "3팀", "4팀", "미분류"]
 AREA_CONFIG = {
     "배민플러스": {
         "1팀": 2,
-        "2팀": 5,
+        "2팀": 4,
         "3팀": 2,
         "4팀": 0,
         "미분류": 0,
@@ -284,7 +286,14 @@ TEAM_MAP_CACHE = None
 TEAM_MAP_PHONE_CACHE = None
 TEAM_MAP_USERID_CACHE = None
 
-def team_of(name, phone=None, user_id=None):
+def team_of(name, phone=None, user_id=None, allow_name_fallback=True):
+    """기사 소속 판정.
+
+    고유 식별자 우선순위:
+      1) 전화번호
+      2) 배민 userId
+      3) 이름(하위 호환용, 동명이인일 때는 호출부에서 차단)
+    """
     global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
 
     name = norm(name)
@@ -310,28 +319,35 @@ def team_of(name, phone=None, user_id=None):
             TEAM_MAP_PHONE_CACHE = {}
             TEAM_MAP_USERID_CACHE = {}
 
-    # 관리화면에서 저장한 Firebase 값이 있으면 가장 먼저 반영합니다.
     mapped = None
+
+    # 기사이동 저장값은 전화번호/ID를 절대 우선합니다.
     if phone_key:
         mapped = TEAM_MAP_PHONE_CACHE.get(phone_key)
     if mapped not in TEAM_ORDER and user_id:
         mapped = TEAM_MAP_USERID_CACHE.get(user_id)
-    if mapped not in TEAM_ORDER:
+
+    # 이름 key는 기존 데이터 호환용일 뿐입니다.
+    if mapped not in TEAM_ORDER and allow_name_fallback and name:
         mapped = TEAM_MAP_CACHE.get(name)
     if mapped in TEAM_ORDER:
         return mapped
 
-    # 엑셀 소속 명단을 전화번호 > 아이디 > 이름 순으로 적용합니다.
+    # 정적 명단도 고유키가 있으면 우선합니다.
     if phone_key:
         mapped = STATIC_TEAM_MAP_PHONE.get(phone_key)
     if mapped not in TEAM_ORDER and user_id:
         mapped = STATIC_TEAM_MAP_USERID.get(user_id)
-    if mapped not in TEAM_ORDER and name not in STATIC_TEAM_MAP_CONFLICT_NAMES:
+    if (
+        mapped not in TEAM_ORDER
+        and allow_name_fallback
+        and name
+        and name not in STATIC_TEAM_MAP_CONFLICT_NAMES
+    ):
         mapped = STATIC_TEAM_MAP.get(name)
     if mapped in TEAM_ORDER:
         return mapped
 
-    # 명단에 없는 신규 기사나 동일 이름 충돌 기사는 임의 배정하지 않습니다.
     return "미분류"
 
 def to_int(value):
@@ -347,6 +363,147 @@ def norm(value):
 
 def normalize_phone(value):
     return re.sub(r"\D", "", str(value or ""))
+
+
+def firebase_safe_key(value):
+    return re.sub(r'[.#$\[\]/]', '_', norm(value))
+
+
+def rider_identity_keys(rider):
+    """이름이 아닌 전화번호/userId만으로 동일 기사를 판정합니다."""
+    rider = rider or {}
+    phone = normalize_phone(rider.get("phone", ""))
+    user_id = norm(rider.get("userId", "")).lower()
+    user_digits = normalize_phone(user_id)
+
+    keys = []
+    if phone:
+        keys.append(("identity", phone))
+    if user_id:
+        keys.append(("userId", user_id))
+    # UI 오인식으로 userId 칸에 전화번호가 들어간 경우를 교차 식별
+    if user_digits and len(user_digits) >= 10:
+        keys.append(("identity", user_digits))
+
+    # 키 중복 제거
+    out = []
+    seen = set()
+    for k in keys:
+        if k not in seen:
+            seen.add(k)
+            out.append(k)
+    return out
+
+
+def canonical_rider_key(rider):
+    phone = normalize_phone((rider or {}).get("phone", ""))
+    if phone:
+        return "phone_" + phone
+    user_id = firebase_safe_key((rider or {}).get("userId", ""))
+    if user_id:
+        return "uid_" + user_id
+    return ""
+
+
+def merge_duplicate_riders(a, b):
+    """같은 기사로 확인된 복수 행을 한 장의 카드로 병합합니다. 실적은 합산하지 않습니다."""
+    a = dict(a or {})
+    b = dict(b or {})
+    # 더 풍부한 식별정보를 보존
+    for field in ("name", "phone", "userId"):
+        if not a.get(field) and b.get(field):
+            a[field] = b.get(field)
+
+    a["isOnline"] = bool(a.get("isOnline") or b.get("isOnline"))
+    a["status"] = "운행중" if a["isOnline"] else (a.get("status") or b.get("status") or "운행 종료")
+
+    # 중복 행 실적 합산은 이중집계가 되므로 큰 값 하나를 채택
+    for field in (
+        "complete", "reject", "cancel", "riderFault",
+        "morning", "afternoon", "evening", "midnight",
+        "morningExcluded", "midnightExcluded", "excluded",
+    ):
+        a[field] = max(to_int(a.get(field, 0)), to_int(b.get(field, 0)))
+
+    ha = list(a.get("hourly") or [0] * 24)[:24]
+    hb = list(b.get("hourly") or [0] * 24)[:24]
+    if len(ha) < 24:
+        ha += [0] * (24 - len(ha))
+    if len(hb) < 24:
+        hb += [0] * (24 - len(hb))
+    a["hourly"] = [max(to_int(x), to_int(y)) for x, y in zip(ha, hb)]
+    a["acceptRate"] = calc_accept_rate(
+        to_int(a.get("complete", 0)),
+        to_int(a.get("reject", 0)),
+        to_int(a.get("cancel", 0)),
+        to_int(a.get("riderFault", 0)),
+    )
+    a["warning"] = a["acceptRate"] < TARGET_ACCEPT_RATE
+    return a
+
+
+def dedupe_riders(riders, log_prefix=""):
+    """전화번호 또는 userId가 같은 경우만 합칩니다. 이름만 같은 기사는 절대 합치지 않습니다."""
+    result = []
+    key_to_index = {}
+    duplicate_count = 0
+
+    for rider in riders or []:
+        if not isinstance(rider, dict):
+            continue
+        keys = rider_identity_keys(rider)
+        matched = sorted({key_to_index[k] for k in keys if k in key_to_index})
+
+        if not matched:
+            idx = len(result)
+            result.append(dict(rider))
+            for k in keys:
+                key_to_index[k] = idx
+            continue
+
+        keep_idx = matched[0]
+        result[keep_idx] = merge_duplicate_riders(result[keep_idx], rider)
+        duplicate_count += 1
+
+        for k in rider_identity_keys(result[keep_idx]):
+            key_to_index[k] = keep_idx
+        for k in keys:
+            key_to_index[k] = keep_idx
+
+    if duplicate_count:
+        prefix = (log_prefix + " ") if log_prefix else ""
+        print(f"{prefix}중복 기사 {duplicate_count}건 제거 완료")
+    return result
+
+
+def finalize_rider_identities(riders):
+    """최종 기사카드에 안정 키를 부여하고 동명이인은 이름 매핑에서 완전히 분리합니다."""
+    riders = dedupe_riders(riders, "최종 수집")
+    counts = {}
+    for r in riders:
+        name = norm(r.get("name", ""))
+        if name:
+            counts[name] = counts.get(name, 0) + 1
+    duplicate_names = {name for name, cnt in counts.items() if cnt > 1}
+    if duplicate_names:
+        print("동명이인 감지(이름 기반 팀매핑 차단):", ", ".join(sorted(duplicate_names)))
+
+    seen_keys = {}
+    for r in riders:
+        r["riderKey"] = canonical_rider_key(r)
+        r["team"] = team_of(
+            r.get("name", ""),
+            r.get("phone", ""),
+            r.get("userId", ""),
+            allow_name_fallback=norm(r.get("name", "")) not in duplicate_names,
+        )
+        key = r.get("riderKey")
+        if key:
+            if key in seen_keys:
+                print("경고: 최종 riderKey 중복:", key, seen_keys[key], r.get("name", ""))
+            else:
+                seen_keys[key] = r.get("name", "")
+    return riders
 
 
 def status_online(status):
@@ -838,7 +995,6 @@ def parse_dom_rows(row_groups):
 def collect_all_pages_by_dom(page):
     base_url = page.url
     all_riders = []
-    seen = set()
 
     for page_no in range(MAX_PAGES):
         target_url = set_page_number(base_url, page_no)
@@ -877,22 +1033,18 @@ def collect_all_pages_by_dom(page):
             print("빈 페이지라서 수집 종료")
             break
 
-        new_count = 0
-        for r in riders:
-            key = normalize_phone(r.get("phone", "")) or (norm(r.get("name", "")) + "_" + norm(r.get("phone", "")))
-            if key not in seen:
-                seen.add(key)
-                all_riders.append(r)
-                new_count += 1
-            else:
-                print(f"중복 기사 제외: {r.get('name')} / {r.get('phone')} / {r.get('status')}")
+        before_count = len(all_riders)
+        all_riders.extend(riders)
+        all_riders = dedupe_riders(all_riders, f"{page_no + 1}페이지")
+        new_count = len(all_riders) - before_count
 
-        print(f"{page_no + 1}페이지 신규 기사 수: {new_count}")
+        print(f"{page_no + 1}페이지 신규 고유 기사 수: {new_count}")
 
         if new_count == 0:
-            print("새 기사 없음. 마지막 페이지로 판단하고 종료")
+            print("새 고유 기사 없음. 마지막 페이지로 판단하고 종료")
             break
 
+    all_riders = finalize_rider_identities(all_riders)
     print(f"전체 카드 기사 수: {len(all_riders)}")
     phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
     if len(phones) != len(set(phones)):
@@ -1169,6 +1321,7 @@ def save_json(data):
     if DATA_FILE.name != "data_bmplus.json" or WEEKLY_FILE.name != "weekly_bmplus.json":
         raise RuntimeError("업로드 차단: 배민플러스 전용 파일명이 아닙니다.")
 
+    # 로컬 파일은 진단/백업용으로 전체 데이터를 유지합니다.
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -1177,11 +1330,16 @@ def save_json(data):
     if verify.get("area") != "배민플러스":
         raise RuntimeError("저장 후 배민플러스 데이터 검증 실패")
 
-    upload_json("data_bmplus.json", "/live/bmplus")
-    upload_json("weekly_bmplus.json", "/weekly/bmplus")
-    print("Firebase 업로드 완료: /live/bmplus")
-    print("Firebase 업로드 완료: /weekly/bmplus")
+    # 실시간 Firebase에는 weekly 전체 이력/요약을 넣지 않습니다.
+    lite_data = dict(data)
+    lite_data.pop("weekly", None)
+    lite_data.pop("weeklySummary", None)
 
+    init_firebase()
+    db.reference("/live/bmplus").set(lite_data)       # 구 경로도 경량화
+    db.reference("/live-lite/bmplus").set(lite_data)  # 신규 저트래픽 경로
+    print("Firebase 실시간 경량 업로드 완료: /live/bmplus")
+    print("Firebase 실시간 경량 업로드 완료: /live-lite/bmplus")
 
 def save_html():
     return
@@ -1219,7 +1377,7 @@ def git_push():
 
 
 def run_update(page):
-    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE
+    global TEAM_MAP_CACHE, TEAM_MAP_PHONE_CACHE, TEAM_MAP_USERID_CACHE, WEEKLY_SAVED_BUSINESS_DATES
 
     # 기사이동으로 변경된 Firebase 팀맵을 매 수집마다 다시 불러옵니다.
     # 기존 캐시를 비운 뒤 첫 기사 분류 시 /settings/bmplus/* 팀맵을 새로 읽습니다.
@@ -1235,7 +1393,22 @@ def run_update(page):
         return
 
     data = make_data(riders)
-    save_weekly_if_close(data)
+
+    # 주간 기록은 매일 01시에 전날 businessDate를 딱 한 번 확정 저장/업로드합니다.
+    now_for_weekly = datetime.now()
+    weekly_business_date = data.get("businessDate", "")
+    if (
+        now_for_weekly.hour == WEEKLY_SNAPSHOT_HOUR
+        and WEEKLY_SAVED_BUSINESS_DATES.get("bmplus") != weekly_business_date
+    ):
+        save_weekly_if_close(data)
+        init_firebase()
+        upload_json(WEEKLY_FILE.name, "/weekly/bmplus")
+        WEEKLY_SAVED_BUSINESS_DATES["bmplus"] = weekly_business_date
+        print(f"Firebase 주간 확정 저장 완료: /weekly/bmplus / {weekly_business_date}")
+    else:
+        print("주간 Firebase 업로드 생략 - 01시 1회 저장 규칙")
+
     weekly = load_weekly()
     data["weekly"] = weekly
     data["weeklySummary"] = weekly_summary(weekly, datetime.now())

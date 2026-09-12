@@ -183,7 +183,7 @@ body.dark .rider-period b{
 </div>
 <script>
 const FIREBASE_BASE='https://supersonic-l-default-rtdb.asia-southeast1.firebasedatabase.app';
-const LIVE_PATH='/live/bmplus';
+const LIVE_PATH='/live-lite/bmplus';
 const WEEKLY_PATH='/weekly/bmplus';
 const AREA_KEY='bmplus';
 const TEAM_ORDER=['1팀','2팀','3팀','4팀','미분류'];
@@ -192,6 +192,19 @@ let MANAGE_FILTER='전체';
 const PERIODS=[['morning','오전'],['afternoon','오후'],['evening','저녁'],['midnight','심야']];
 const PERIOD_LABEL={morning:'오전피크',afternoon:'오후논피크',evening:'저녁피크',midnight:'심야논피크'};
 let DATA=null,WEEKLY=[];
+const LIVE_REFRESH_MS=60000;
+const WEEKLY_REFRESH_HOUR=1;
+const WEEKLY_REFRESH_MINUTE=5;
+let WEEKLY_CACHE=null;
+let WEEKLY_FETCH_DAY='';
+let REFRESH_RUNNING=false;
+
+function weeklySnapshotCycleKey(d=new Date()){
+  const after=(d.getHours()>WEEKLY_REFRESH_HOUR)||(d.getHours()===WEEKLY_REFRESH_HOUR&&d.getMinutes()>=WEEKLY_REFRESH_MINUTE);
+  const x=new Date(d);
+  if(!after)x.setDate(x.getDate()-1);
+  return `${x.getFullYear()}-${String(x.getMonth()+1).padStart(2,'0')}-${String(x.getDate()).padStart(2,'0')}`;
+}
 
 function toggleMode(){
   document.body.classList.toggle('dark');
@@ -208,24 +221,76 @@ function switchPage(page,btn){
   if(btn)btn.classList.add('active');else{const b=document.querySelector(`.side-nav-btn[data-page="${page}"]`);if(b)b.classList.add('active')}
 }
 
-function num(v){return Number(v||0)}function n(v){return num(v).toLocaleString('ko-KR')}function rate(c,b){c=num(c);b=num(b);return c+b?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){return Math.floor(num(c)*.25)-num(b)}function bad(r){return num(r.reject||r.totalReject)+num(r.cancel||r.totalCancel)+num(r.riderFault)}function pct(a,b){return !num(b)?0:Math.min(100,Math.round(num(a)/num(b)*100))}function riders(){return DATA?.riders||[]}function teamObj(t){return DATA?.teams?.[t]||{summary:{},targets:{},riders:[]}}function teamRiders(t){return riders().filter(r=>r.team===t)}function onlineCount(list){return list.filter(r=>r.isOnline).length}function excluded(r){return num(r.excluded||0)}function currentPeriodLabel(){return DATA?.currentPeriodLabel||PERIOD_LABEL[DATA?.currentPeriod]||'-'}
+function num(v){return Number(v||0)}function n(v){return num(v).toLocaleString('ko-KR')}function rate(c,b){c=num(c);b=num(b);return c+b?Math.round((c/(c+b))*1000)/10:100}function spare(c,b){return Math.floor(num(c)*.25)-num(b)}function bad(r){return num(r.reject||r.totalReject)+num(r.cancel||r.totalCancel)+num(r.riderFault)}function pct(a,b){return !num(b)?0:Math.min(100,Math.round(num(a)/num(b)*100))}function riders(){return dedupeRidersClient(DATA?.riders||[])}function teamObj(t){return DATA?.teams?.[t]||{summary:{},targets:{},riders:[]}}function teamRiders(t){return riders().filter(r=>r.team===t)}function onlineCount(list){return list.filter(r=>r.isOnline).length}function excluded(r){return num(r.excluded||0)}function currentPeriodLabel(){return DATA?.currentPeriodLabel||PERIOD_LABEL[DATA?.currentPeriod]||'-'}
 function teamSummaryFromRiders(list){const s={complete:0,reject:0,cancel:0,riderFault:0,morning:0,afternoon:0,evening:0,midnight:0,excluded:0,count:list.length,onlineCount:onlineCount(list)};list.forEach(r=>{s.complete+=num(r.complete);s.reject+=num(r.reject);s.cancel+=num(r.cancel);s.riderFault+=num(r.riderFault);s.morning+=num(r.morning);s.afternoon+=num(r.afternoon);s.evening+=num(r.evening);s.midnight+=num(r.midnight);s.excluded+=excluded(r)});s.acceptRate=rate(s.complete,bad(s));s.spareRejects=spare(s.complete,bad(s));return s}
 function teamSummary(t){return teamObj(t).summary||teamSummaryFromRiders(teamRiders(t))}
 async function fetchJson(path){const r=await fetch(FIREBASE_BASE+path+'.json?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(path);const j=await r.json();if(j==null)throw new Error(path+' empty');return j}
-async function loadData(){
+
+function firebaseSafeTeamKey(value){return String(value||'').trim().replace(/[.#$\[\]\/]/g,'_')}
+function riderTeamMapKey(r){
+  const explicit=String(r?.riderKey||'').trim();
+  if(explicit)return explicit;
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  if(phone)return 'phone_'+phone;
+  const userId=firebaseSafeTeamKey(r?.userId||'');
+  if(userId)return 'uid_'+userId;
+  return '';
+}
+function riderIdentityKeys(r){
+  const keys=[];
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  const uid=String(r?.userId||'').trim().toLowerCase();
+  const uidDigits=uid.replace(/\D/g,'');
+  if(phone)keys.push('phone:'+phone);
+  if(uid)keys.push('uid:'+uid);
+  if(uidDigits.length>=10)keys.push('phone:'+uidDigits);
+  return [...new Set(keys)];
+}
+function dedupeRidersClient(list){
+  const out=[],keyToIndex=new Map();
+  for(const rider of (Array.isArray(list)?list:[])){
+    const keys=riderIdentityKeys(rider);
+    const matched=[...new Set(keys.filter(k=>keyToIndex.has(k)).map(k=>keyToIndex.get(k)))];
+    if(!matched.length){
+      const idx=out.length; out.push(rider);
+      keys.forEach(k=>keyToIndex.set(k,idx));
+      continue;
+    }
+    const idx=matched[0],base=out[idx];
+    // 프론트는 카드 이중노출 방어용. 실적을 합산하지 않고 더 큰 값을 보존합니다.
+    ['complete','reject','cancel','riderFault','morning','afternoon','evening','midnight','excluded'].forEach(f=>{
+      base[f]=Math.max(num(base[f]),num(rider[f]));
+    });
+    base.isOnline=!!(base.isOnline||rider.isOnline);
+    base.status=base.isOnline?'운행중':(base.status||rider.status||'운행 종료');
+    if(!base.phone&&rider.phone)base.phone=rider.phone;
+    if(!base.userId&&rider.userId)base.userId=rider.userId;
+    keys.forEach(k=>keyToIndex.set(k,idx));
+  }
+  return out;
+}
+async function loadData(options={}){
+  const forceWeekly=!!options.forceWeekly;
   try{
     DATA=await fetchJson(LIVE_PATH);
+    if(DATA&&Array.isArray(DATA.riders))DATA.riders=dedupeRidersClient(DATA.riders);
   }catch(e){
     console.error('실시간 데이터 로딩 오류',e);
-    document.getElementById('errorBox').innerHTML='<div class="section" style="color:var(--red)">배민플러스 실시간 데이터를 읽지 못했습니다. Firebase /live/bmplus 경로를 확인하세요.</div>';
+    document.getElementById('errorBox').innerHTML='<div class="section" style="color:var(--red)">배민플러스 실시간 데이터를 읽지 못했습니다. Firebase /live-lite/bmplus 경로를 확인하세요.</div>';
     return;
   }
 
-  try{
-    WEEKLY=await fetchJson(WEEKLY_PATH);
-  }catch(e){
-    console.warn('주간 데이터 로딩 오류',e);
-    WEEKLY=DATA.weekly||[];
+  if(forceWeekly || !WEEKLY_CACHE){
+    try{
+      WEEKLY=await fetchJson(WEEKLY_PATH);
+      WEEKLY_CACHE=WEEKLY;
+      WEEKLY_FETCH_DAY=weeklySnapshotCycleKey();
+    }catch(e){
+      console.warn('주간 데이터 로딩 오류 - 기존 캐시 유지',e);
+      WEEKLY=WEEKLY_CACHE||[];
+    }
+  }else{
+    WEEKLY=WEEKLY_CACHE;
   }
 
   try{
@@ -359,12 +424,28 @@ function renderSummary(){
 }
 function toggleWeekly(){switchPage('weekly')}
 function toggleManage(){switchPage('manage')}
-function dayBase(){return DATA?.weeklySummary?.days?.length?DATA.weeklySummary.days:[]}
+function dayBase(){
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+  const nowDate=DATA?.businessDate||isoLocal(new Date());
+  const start=weekStartWed(nowDate);
+  const end=dateAdd(start,6);
+  const byDate=Object.fromEntries(rows.map(r=>[r.businessDate,r]));
+  const labels=['수','목','금','토','일','월','화'];
+  return labels.map((label,i)=>{
+    const date=dateAdd(start,i),row=byDate[date]||{};
+    return {
+      label,businessDate:date,teams:row.teams||{},
+      complete:num(row.totalComplete),reject:num(row.totalReject),cancel:num(row.totalCancel),riderFault:num(row.riderFault),
+      morning:num(row.morning),afternoon:num(row.afternoon),evening:num(row.evening),midnight:num(row.midnight),
+      excluded:num(row.excluded),acceptRate:row.acceptRate,hasData:!!byDate[date]
+    };
+  });
+}
 function periodStatusFinal(key,done,goal){const order=['morning','afternoon','evening','midnight'];const cur=DATA?.currentPeriod||'morning';const passed=order.indexOf(key)<order.indexOf(cur);if(passed){return num(done)>=num(goal)?'<span class="badge ok">성공</span>':'<span class="badge fail">실패</span>'}return '<span class="badge wait">진행중</span>'}
 function teamDaySummary(d,team){const ts=d.teams?.[team];if(ts?.summary)return {summary:ts.summary,targets:ts.targets||d.periodTargets||{}};return {summary:{morning:0,afternoon:0,evening:0,midnight:0,complete:0,reject:0,cancel:0,riderFault:0,excluded:0,acceptRate:100},targets:d.periodTargets||{}}}
 function setWeeklyTeam(team){WEEK_TEAM=team;renderWeekly()}
 function weeklyTeamRow(d,team){const x=teamDaySummary(d,team),s=x.summary,t=x.targets;const ps=PERIODS.map(([k])=>({key:k,done:num(s[k]),goal:num(t[k])}));const failKeys=ps.filter(p=>num(p.goal)>0&&num(p.done)<num(p.goal));const result=failKeys.length?`<span class="failtxt">실패 ${failKeys.map(p=>PERIOD_LABEL[p.key]).join(', ')}</span>`:`<span class="oktxt">성공</span>`;return `<tr><td>${d.label||''}<br><span class="muted" style="font-size:12px">${d.businessDate||''}</span></td>${ps.map(p=>`<td class="${p.goal>0&&p.done<p.goal?'failtxt':''}">${n(p.done)} / ${n(p.goal)}</td>`).join('')}<td>${n(s.excluded)}</td><td>${result}</td><td>${s.acceptRate??rate(s.complete,bad(s))}%</td></tr>`}
-function renderWeekly(){const days=dayBase();document.getElementById('weekRange').textContent=DATA?.weeklySummary?`${DATA.weeklySummary.startDate||''} ~ ${DATA.weeklySummary.endDate||''}`:'';const tabs=document.getElementById('weeklyTeamTabs');if(tabs){tabs.innerHTML=TEAM_ORDER.map(t=>`<button class="week-tab ${WEEK_TEAM===t?'active':''}" onclick="setWeeklyTeam('${t}')">${t}</button>`).join('')}if(!days.length){document.getElementById('weeklyTable').innerHTML='<tbody><tr><td>주간 데이터가 아직 없습니다.</td></tr></tbody>';return}document.getElementById('weeklyTable').innerHTML=`<thead><tr><th>${WEEK_TEAM} / 일자</th><th>오전<br>완료/발주</th><th>오후<br>완료/발주</th><th>저녁<br>완료/발주</th><th>심야<br>완료/발주</th><th>미포함</th><th>결과</th><th>수락률</th></tr></thead><tbody>${days.map(d=>weeklyTeamRow(d,WEEK_TEAM)).join('')}</tbody>`}
+function renderWeekly(){const days=dayBase();const start=DATA?.businessDate?weekStartWed(DATA.businessDate):weekStartWed(isoLocal(new Date()));document.getElementById('weekRange').textContent=`${start} ~ ${dateAdd(start,6)}`;const tabs=document.getElementById('weeklyTeamTabs');if(tabs){tabs.innerHTML=TEAM_ORDER.map(t=>`<button class="week-tab ${WEEK_TEAM===t?'active':''}" onclick="setWeeklyTeam('${t}')">${t}</button>`).join('')}if(!days.length){document.getElementById('weeklyTable').innerHTML='<tbody><tr><td>주간 데이터가 아직 없습니다.</td></tr></tbody>';return}document.getElementById('weeklyTable').innerHTML=`<thead><tr><th>${WEEK_TEAM} / 일자</th><th>오전<br>완료/발주</th><th>오후<br>완료/발주</th><th>저녁<br>완료/발주</th><th>심야<br>완료/발주</th><th>미포함</th><th>결과</th><th>수락률</th></tr></thead><tbody>${days.map(d=>weeklyTeamRow(d,WEEK_TEAM)).join('')}</tbody>`}
 function renderPeriods(){
   const teams=TEAM_ORDER.filter(t=>t!=='미분류');
   const order=['morning','afternoon','evening','midnight'],cur=DATA?.currentPeriod||'morning';
@@ -454,7 +535,7 @@ function manageDraftKeyForRider(r){
   try{if(typeof riderTeamMapKey==='function')return riderTeamMapKey(r)}catch(e){}
   const p=String(r?.phone||'').replace(/\D/g,''); if(p)return 'phone_'+p;
   const u=String(r?.userId||'').trim(); if(u)return 'uid_'+u;
-  return 'name_'+String(r?.name||'').trim();
+  return '';
 }
 function setManageDraft(key,team){if(!key)return;loadManageDrafts();window.__MANAGE_DRAFTS[key]=team;saveManageDrafts()}
 function getManageDraft(key,fallback){loadManageDrafts();return key&&Object.prototype.hasOwnProperty.call(window.__MANAGE_DRAFTS,key)?window.__MANAGE_DRAFTS[key]:fallback}
@@ -485,7 +566,7 @@ function renderManage(){
   box.innerHTML=list.length?list.map(r=>`
     <div class="manage-row">
       <b>${r.name||'-'}<span class="muted" style="font-size:12px"> · ${r.userId||''}</span></b>
-      <select data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
+      <select data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}" data-phone="${String(r.phone||'').replace(/"/g,'&quot;')}" data-user-id="${String(r.userId||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)" ${riderTeamMapKey(r)?'':'disabled title="전화번호/기사ID가 없어 안전하게 이동할 수 없습니다."'}>
         ${TEAM_ORDER.map(t=>`<option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${t}</option>`).join('')}
       </select>
     </div>
@@ -495,16 +576,25 @@ function renderManage(){
 const TEAMMAP_API='https://dalseo-a-live.vercel.app/api/save-teammap';
 
 async function saveTeamMap(){
-  const selects=document.querySelectorAll('#manageList select');
-  const changes={};
+  const selects=[...document.querySelectorAll('#manageList select')];
+  const phoneChanges={};
+  const userIdChanges={};
+  const localChanges={};
 
   selects.forEach(sel=>{
-    const name=sel.getAttribute('data-rider-name');
-    if(name&&sel.value)changes[name]=sel.value;
+    const team=sel.value;
+    const key=sel.getAttribute('data-rider-key')||'';
+    const phone=String(sel.getAttribute('data-phone')||'').replace(/\D/g,'');
+    const userId=String(sel.getAttribute('data-user-id')||'').trim();
+    if(!key||!team)return;
+
+    if(phone)phoneChanges[phone]=team;
+    if(userId)userIdChanges[firebaseSafeTeamKey(userId)]=team;
+    localChanges[key]=team;
   });
 
-  if(!Object.keys(changes).length){
-    alert('저장할 기사 정보가 없습니다.');
+  if(!Object.keys(localChanges).length){
+    alert('고유 기사ID가 있는 저장 대상이 없습니다.');
     return;
   }
 
@@ -517,38 +607,35 @@ async function saveTeamMap(){
       saveButton.textContent='저장 중...';
     }
 
-    const res=await fetch(TEAMMAP_API,{
-      method:'POST',
-      mode:'cors',
-      headers:{
-        'Content-Type':'application/json',
-        'Accept':'application/json'
-      },
-      body:JSON.stringify({
-        area:AREA_KEY,
-        changes
-      })
-    });
-
-    const responseText=await res.text();
-    let result={};
-    try{
-      result=responseText?JSON.parse(responseText):{};
-    }catch(e){
-      result={error:responseText||'서버 응답을 해석하지 못했습니다.'};
+    const writes=[];
+    if(Object.keys(phoneChanges).length){
+      writes.push(fetch(`${FIREBASE_BASE}/settings/bmplus/teamMapPhone.json`,{
+        method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(phoneChanges)
+      }));
+    }
+    if(Object.keys(userIdChanges).length){
+      writes.push(fetch(`${FIREBASE_BASE}/settings/bmplus/teamMapUserId.json`,{
+        method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(userIdChanges)
+      }));
     }
 
-    if(!res.ok||result.ok===false){
-      throw new Error(result.error||`HTTP ${res.status}`);
-    }
+    const results=await Promise.all(writes);
+    const failed=results.find(r=>!r.ok);
+    if(failed)throw new Error(`Firebase 저장 실패 HTTP ${failed.status}`);
 
     riders().forEach(r=>{
-      if(changes[r.name])r.team=changes[r.name];
+      const key=riderTeamMapKey(r);
+      if(key&&localChanges[key])r.team=localChanges[key];
     });
 
-    alert(`팀 변경 저장 완료 (${Object.keys(changes).length}명)`);
+    // 저장 완료된 초안만 제거
+    loadManageDrafts();
+    Object.keys(localChanges).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
+    saveManageDrafts();
+
+    alert(`팀 변경 저장 완료 (${Object.keys(localChanges).length}명)`);
     renderAll();
-    setTimeout(loadData,1500);
+    setTimeout(()=>loadData({forceWeekly:false}),1500);
   }catch(e){
     console.error('팀 변경 저장 오류',e);
     alert('저장 오류: '+(e.message||e));
@@ -559,7 +646,6 @@ async function saveTeamMap(){
     }
   }
 }
-
 function smsGroupHtml(teamName,list){let html=`<div class="sms-team"><h3 style="margin:0 0 10px">${teamName} (${list.length}명)</h3>`;for(let i=0;i<list.length;i+=99){const g=list.slice(i,i+99),label=String.fromCharCode(65+i/99),phones=g.map(x=>x.phone).join(',');html+=`<div class="sms-group"><b>${label}그룹 (${g.length}명)</b><div class="phone-list">${g.map(x=>`${x.name} ${x.phone}`).join(' · ')}</div><div class="sms-actions"><button onclick="copyText('${phones}')">번호 복사</button><a href="sms:${phones}">문자앱 열기</a></div></div>`}return html+'</div>'}
 function openSmsModal(){const base=filteredRiders().filter(r=>r.phone).map(r=>({team:r.team,name:r.name,phone:String(r.phone).replace(/\D/g,'')}));let html=TEAM_ORDER.map(t=>smsGroupHtml(t,base.filter(x=>x.team===t))).join('');document.getElementById('smsGroups').innerHTML=html;document.getElementById('smsModal').classList.add('show')}
 function closeSmsModal(){document.getElementById('smsModal').classList.remove('show')}function copyText(t){navigator.clipboard?.writeText(t);alert('복사했습니다.')}
@@ -575,29 +661,47 @@ function renderAll(){
 }
 
 async function refreshDashboardDataOnly(){
-  // 중요: 이 함수는 데이터만 새로 읽습니다.
-  // 사용자가 보고 있는 운영현황/주간실적/정산/기사관리/단체문자 화면은 절대 변경하지 않습니다.
-  const activePage=document.querySelector('.page-view.active');
-  const activeId=activePage?.id||'';
-  const activeNav=document.querySelector('.side-nav-btn.active');
-  const activeNavPage=activeNav?.getAttribute('data-page')||'';
+  if(document.hidden || REFRESH_RUNNING)return;
+  REFRESH_RUNNING=true;
+  try{
+    // 데이터만 새로 읽고 사용자가 보고 있는 페이지는 유지합니다.
+    const activePage=document.querySelector('.page-view.active');
+    const activeId=activePage?.id||'';
+    const activeNav=document.querySelector('.side-nav-btn.active');
+    const activeNavPage=activeNav?.getAttribute('data-page')||'';
 
-  await loadData();
-  reconcileManageDrafts();
+    await loadData({forceWeekly:false});
+    reconcileManageDrafts();
 
-  // 다른 코드가 실수로 active class를 건드렸을 때만 원래 화면을 복구합니다.
-  // 사용자가 갱신 도중 직접 다른 메뉴를 눌렀다면 그 새 화면을 우선합니다.
-  const userPage=window.__USER_SELECTED_PAGE||'';
-  const wanted=userPage||activeNavPage||(activeId.startsWith('page-')?activeId.slice(5):'');
-  if(wanted){
-    const now=document.querySelector('.page-view.active')?.id||'';
-    if(now!==`page-${wanted}`){
-      switchPage(wanted);
+    const userPage=window.__USER_SELECTED_PAGE||'';
+    const wanted=userPage||activeNavPage||(activeId.startsWith('page-')?activeId.slice(5):'');
+    if(wanted){
+      const now=document.querySelector('.page-view.active')?.id||'';
+      if(now!==`page-${wanted}`)switchPage(wanted);
     }
+  }finally{
+    REFRESH_RUNNING=false;
   }
 }
 
-loadData();setInterval(refreshDashboardDataOnly,30000);
+// 최초 접속 시 live + weekly를 각각 1회 읽습니다.
+loadData({forceWeekly:true});
+setInterval(refreshDashboardDataOnly,LIVE_REFRESH_MS);
+
+// 01시 확정 저장 뒤 01:05부터 하루 1회만 weekly를 다시 읽습니다.
+setInterval(async()=>{
+  if(document.hidden)return;
+  const now=new Date();
+  const snapshotKey=weeklySnapshotCycleKey(now);
+  const afterSnapshot=(now.getHours()>WEEKLY_REFRESH_HOUR)||(now.getHours()===WEEKLY_REFRESH_HOUR&&now.getMinutes()>=WEEKLY_REFRESH_MINUTE);
+  if(afterSnapshot && WEEKLY_FETCH_DAY!==snapshotKey){
+    await loadData({forceWeekly:true});
+  }
+},60000);
+
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden)refreshDashboardDataOnly();
+});
 </script>
 </body>
 </html>

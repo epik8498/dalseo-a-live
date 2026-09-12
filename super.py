@@ -14,6 +14,8 @@ from firebase_uploader import upload_json
 
 AUTO_GIT_PUSH = False
 REFRESH_SECONDS = 60
+WEEKLY_SNAPSHOT_HOUR = 1
+WEEKLY_SAVED_BUSINESS_DATES = {}  # slug -> businessDate; 프로세스 내 01시 중복 저장 방지
 MAX_PAGES = 20
 TARGET_ACCEPT_RATE = 80
 
@@ -115,7 +117,7 @@ CENTER_CONFIGS = [{'area': '달서A',
    'aliases': ['대구중A온나1(DP2505305786)', '대구중A온나1 (DP2505305786)', '대구중A온나1', 'DP2505305786'],
    'center_code': 'DP2505305786',
    'team_order': ['슈퍼', '성공', '직영', 'BM', '상생', '나르미', '신규'],
-   'area_config': {'슈퍼': 2.8, '성공': 3, '직영': 4.2, 'BM': 2, '상생': 1, '나르미': 2.0, '신규': 0},
+   'area_config': {'슈퍼': 2.2, '성공': 3.5, '직영': 5.0, 'BM': 2, '상생': 2, '나르미': 2.3, '신규': 0},
    'team_map_path': '/settings/junggua/teamMap',
    'live_path': '/live/junggua',
    'weekly_path': '/weekly/junggua',
@@ -407,6 +409,91 @@ def team_of(name, phone="", user_id=""):
                 return team
     # 어느 팀에도 등록되지 않은 새 기사는 자동으로 신규 팀에 배정합니다.
     return "신규" if "신규" in TEAM_ORDER else (TEAM_ORDER[0] if TEAM_ORDER else "신규")
+
+
+def stable_team_keys(name="", phone="", user_id=""):
+    """기사 이동/팀 저장에 사용하는 고유키. 이름은 절대 포함하지 않습니다."""
+    return rider_team_keys(name, phone, user_id, include_name=False)
+
+
+def canonical_rider_key(rider):
+    """화면/관리용 기사 고유키. 전화번호 우선, 없으면 userId를 사용합니다."""
+    rider = rider or {}
+    keys = stable_team_keys(rider.get("name", ""), rider.get("phone", ""), rider.get("userId", ""))
+    return keys[0] if keys else ""
+
+
+def resolve_team_safely(rider, duplicate_names=None):
+    """
+    팀 분류 최종판정.
+    - 전화번호/userId가 있으면 그 고유키만 우선 사용
+    - 동명이인은 이름 기반 teamMap/고정명단을 절대 사용하지 않음
+    - 이름 기반 레거시 매핑은 현재 권역에서 이름이 유일한 기사에게만 허용
+    """
+    global TEAM_MAP_CACHE
+    rider = rider or {}
+    name = norm(rider.get("name", ""))
+    phone = rider.get("phone", "")
+    user_id = rider.get("userId", "")
+    duplicate_names = duplicate_names or set()
+
+    if TEAM_MAP_CACHE is None:
+        try:
+            TEAM_MAP_CACHE = migrate_team_map_names()
+        except Exception:
+            TEAM_MAP_CACHE = {}
+
+    # 1) 코드에 내장된 안정 식별자 고정팀
+    for key in stable_team_keys(name, phone, user_id):
+        fixed = normalize_team_for_area(IDENTITY_TEAM_MAP.get(key), AREA_NAME)
+        if fixed in TEAM_ORDER:
+            return fixed
+
+    # 2) Firebase teamMap의 안정 식별자
+    for key in stable_team_keys(name, phone, user_id):
+        mapped = normalize_team_for_area((TEAM_MAP_CACHE or {}).get(key), AREA_NAME)
+        if mapped in TEAM_ORDER:
+            return mapped
+
+    # 3) 이름이 중복되지 않을 때만 과거 이름키를 하위호환으로 허용
+    if name and name not in duplicate_names:
+        mapped = normalize_team_for_area((TEAM_MAP_CACHE or {}).get(name), AREA_NAME)
+        if mapped in TEAM_ORDER:
+            return mapped
+
+        # 달서A/B 고정명단도 이름이 유일할 때만 사용
+        if AREA_NAME != "중구A":
+            for team, names in REQUIRED_TEAM_RIDERS.items():
+                if name in {norm(x) for x in names}:
+                    return team
+
+    return "신규" if "신규" in TEAM_ORDER else (TEAM_ORDER[0] if TEAM_ORDER else "신규")
+
+
+def finalize_rider_identity_and_teams(riders):
+    """중복 제거 후 기사ID와 팀을 최종 확정합니다."""
+    riders = list(riders or [])
+    name_counts = {}
+    for r in riders:
+        nm = norm(r.get("name", ""))
+        if nm:
+            name_counts[nm] = name_counts.get(nm, 0) + 1
+    duplicate_names = {nm for nm, cnt in name_counts.items() if cnt > 1}
+
+    if duplicate_names:
+        print("동명이인 감지(이름 매핑 차단):", ", ".join(sorted(duplicate_names)))
+
+    seen_keys = {}
+    for r in riders:
+        r["riderKey"] = canonical_rider_key(r)
+        r["team"] = resolve_team_safely(r, duplicate_names)
+        key = r.get("riderKey", "")
+        if key:
+            if key in seen_keys:
+                print("경고: 최종 riderKey 중복 감지:", key, seen_keys[key], r.get("name", ""))
+            else:
+                seen_keys[key] = r.get("name", "")
+    return riders
 
 def to_int(value):
     try:
@@ -939,9 +1026,6 @@ def empty_rider_card(name, team):
 
 
 
-VERIFIED_DUPLICATE_RIDER_NAMES = {"박영근"}
-
-
 def rider_identity_keys(rider):
     """기사 중복 판별 키.
 
@@ -960,12 +1044,6 @@ def rider_identity_keys(rider):
 
     if user_id:
         keys.append(("userId", user_id))
-
-    # 실제 중복 기사로 확인된 이름만 이름 자체를 보조 신원키로 사용합니다.
-    # 전체 기사에 이름키를 적용하지 않으므로 동명이인은 계속 분리됩니다.
-    rider_name = norm(rider.get("name", ""))
-    if rider_name in VERIFIED_DUPLICATE_RIDER_NAMES:
-        keys.append(("verifiedName", rider_name))
 
     # userId가 전화번호 형태(10~11자리 숫자)라면 phone과 같은 신원 토큰으로도 비교.
     # 예: 박영근 A행 userId=01058974243 / B행 phone=01058974243
@@ -1123,6 +1201,7 @@ def collect_all_pages_by_dom(page):
     all_riders = dedupe_riders(all_riders, "최종 수집")
     all_riders = ensure_required_rider_cards(all_riders)
     all_riders = dedupe_riders(all_riders, "카드 보강 후")
+    all_riders = finalize_rider_identity_and_teams(all_riders)
     print(f"전체 카드 기사 수: {len(all_riders)}")
     phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
     if len(phones) != len(set(phones)):
@@ -1372,10 +1451,11 @@ def weekly_summary(weekly_rows, now, config=None):
     }
 
 
-def save_weekly_if_close(data, config=None):
-    """오늘 권역 전체 및 팀별 실적을 weekly 파일에 갱신합니다.
+def save_weekly_snapshot(data, config=None):
+    """01시 확정 시점에 해당 businessDate의 주간 기록을 1회 저장합니다.
 
-    같은 날짜는 최신값으로 덮어쓰고, 날짜가 다르면 수치가 같아도 새 행으로 보존합니다.
+    business_date()는 06시 전까지 전날을 가리키므로 01시 저장은 전날 확정 기록이 됩니다.
+    같은 날짜가 이미 있으면 01시 확정값으로 덮어씁니다.
     """
     config = config or {
         "area": AREA_NAME,
@@ -1543,10 +1623,19 @@ def save_json(data, config=None):
         raise RuntimeError(f"저장 후 권역 검증 실패: {expected_data_file.name}")
 
     try:
-        upload_json(expected_data_file.name, config["live_path"])
-        upload_json(expected_weekly_file.name, config["weekly_path"])
-        print(f"Firebase 업로드 완료: {config['live_path']} ← {expected_data_file.name}")
-        print(f"Firebase 업로드 완료: {config['weekly_path']} ← {expected_weekly_file.name}")
+        # 실시간 경로에는 주간 이력 덩어리를 절대 포함하지 않습니다.
+        # /live 는 기존 관제판 호환용, /live-lite 는 신규 저트래픽 관제판용입니다.
+        lite_data = dict(data)
+        lite_data.pop("weekly", None)
+        lite_data.pop("availableWeeks", None)
+        lite_data.pop("weeklySummary", None)
+        init_firebase()
+        db.reference(config["live_path"]).set(lite_data)
+        lite_path = f"/live-lite/{config['slug']}"
+        db.reference(lite_path).set(lite_data)
+
+        print(f"Firebase 실시간 경량 업로드 완료: {config['live_path']}")
+        print(f"Firebase 실시간 경량 업로드 완료: {lite_path}")
     except Exception as e:
         print("Firebase 업로드 실패")
         raise
@@ -1630,7 +1719,18 @@ def run_update(page, config=None):
             f"!= {config['area']}/{config['slug']}"
         )
 
-    save_weekly_if_close(data, config)
+    # 주간 기록은 매일 01시대에 권역별 1회만 확정 저장/업로드합니다.
+    # 01시는 business_date()상 전날이므로 전날 최종 기록이 저장됩니다.
+    now_for_weekly = datetime.now()
+    weekly_business_date = str(business_date(now_for_weekly))
+    slug = config["slug"]
+    if now_for_weekly.hour == WEEKLY_SNAPSHOT_HOUR and WEEKLY_SAVED_BUSINESS_DATES.get(slug) != weekly_business_date:
+        save_weekly_snapshot(data, config)
+        upload_json(WEEKLY_FILE.name, config["weekly_path"])
+        WEEKLY_SAVED_BUSINESS_DATES[slug] = weekly_business_date
+        print(f"주간 확정 저장 완료: {config['weekly_path']} / {weekly_business_date}")
+
+    # 로컬 data 파일 호환 필드는 유지하되 Firebase 실시간 payload에서는 save_json()이 제거합니다.
     weekly = load_weekly()
     data["weekly"] = weekly
     data["availableWeeks"] = available_weeks(weekly)
