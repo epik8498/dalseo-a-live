@@ -1583,7 +1583,8 @@ function render(){
   setText('teamCountTitle','팀별 접속 현황');
   const teamCountEl=document.getElementById('teamCount');
   if(teamCountEl){
-    const visibleTeams=teams.filter(t=>t!=='신규');
+    // 신규 기사도 실제 등록 기사 수에 포함해 등록/해지 변동이 즉시 보이도록 표시합니다.
+    const visibleTeams=teams;
     teamCountEl.innerHTML=visibleTeams.map(t=>{
       const label=cfg.labels&&cfg.labels[t]?cfg.labels[t]:t;
       const sm=teamObj(t).summary||{};
