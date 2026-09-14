@@ -1441,7 +1441,7 @@ function initialArea(){
 }
 let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='',WEEKLY_TEAM='전체',WEEKLY_START='';
 // Firebase 다운로드 절감: 실시간은 60초, 주간은 01시 확정 후 하루 1회. 백그라운드 탭에서는 자동조회 중지.
-const LIVE_REFRESH_MS=60000;
+const LIVE_REFRESH_MS=180000;
 const WEEKLY_REFRESH_HOUR=1;
 const WEEKLY_REFRESH_MINUTE=5; // 서버 01시 확정 저장 직후 1회 동기화
 const WEEKLY_CACHE={};

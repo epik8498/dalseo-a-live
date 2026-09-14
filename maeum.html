@@ -1216,7 +1216,7 @@ const FIREBASE_BASE="https://supersonic-l-default-rtdb.asia-southeast1.firebased
 const AREAS={
   "마음 달서A":{
      key:"maeuma",
-  file:"/live/maeuma",
+  file:"/live-lite/maeuma",
   weekly:"/weekly/maeuma",
   teams:["마음1","마음3","마음4","미분류"],
   labels:{"마음1":"마음1","마음3":"마음3","마음4":"마음4","미분류":"미분류"},
@@ -1226,7 +1226,7 @@ const AREAS={
 },
   "달서B":{
     key:"maeum_dalseob",
-  file:"/live/maeum_dalseob",
+  file:"/live-lite/maeum_dalseob",
   weekly:"/weekly/maeum_dalseob",
   teams:["소닉팀","넘버팀","마음팀","미분류"],
   labels:{"소닉팀":"소닉","넘버팀":"넘버","마음팀":"마음","미분류":"미분류"},
@@ -1236,7 +1236,7 @@ const AREAS={
 },
 "수성C":{
   key:"maeum_suseongc",
-  file:"/live/maeum_suseongc",
+  file:"/live-lite/maeum_suseongc",
   weekly:"/weekly/maeum_suseongc",
   teams:["마음팀","BDMJ팀","미분류"],
   labels:{
@@ -1254,7 +1254,7 @@ const AREAS={
 },
 "중구A":{
   key:"maeum_junggua",
-  file:"/live/maeum_junggua",
+  file:"/live-lite/maeum_junggua",
   weekly:"/weekly/maeum_junggua",
   teams:["소닉팀","넘버팀","마음팀","나르미팀","미분류"],
   labels:{
@@ -1285,6 +1285,19 @@ function initialArea(){
 }
 let DATA=null,WEEKLY=[],CURRENT=initialArea(),FILTER='전체',SMS_TEAM='',RIDER_SEARCH='',WEEKLY_TEAM='전체',WEEKLY_START='';
 let CURRENT_PAGE='overview';
+const LIVE_REFRESH_MS=180000;
+const WEEKLY_REFRESH_HOUR=1;
+const WEEKLY_REFRESH_MINUTE=5;
+const WEEKLY_CACHE={};
+const WEEKLY_FETCH_DAY={};
+let REFRESH_RUNNING=false;
+
+function weeklySnapshotCycleKey(now=new Date()){
+  const d=new Date(now);
+  const after=(d.getHours()>WEEKLY_REFRESH_HOUR)||(d.getHours()===WEEKLY_REFRESH_HOUR&&d.getMinutes()>=WEEKLY_REFRESH_MINUTE);
+  if(!after)d.setDate(d.getDate()-1);
+  return d.toLocaleDateString('sv-SE');
+}
 function switchPage(page,btn){
   window.__USER_SELECTED_PAGE=page;
   CURRENT_PAGE=page;
@@ -1506,21 +1519,34 @@ function assertAreaIsolation(data){
   }
 }
 
-async function loadData(){
+async function loadData(options={}){
+  const forceWeekly=!!options.forceWeekly;
   renderAreaMenu();
   try{
     DATA=await fetchJson(areaCfg().file);assertAreaIsolation(DATA);
   }catch(e){
     DATA=null;
-    document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 실시간 데이터를 읽지 못했습니다.<br>${e.message||''}<br>Firebase 경로를 확인하세요.</div>`;
+    document.getElementById('errorBox').innerHTML=`<div class="error">${CURRENT} 실시간 데이터를 읽지 못했습니다.<br>${e.message||''}<br>Firebase ${areaCfg().file} 경로를 확인하세요.</div>`;
     return;
   }
-  try{WEEKLY=await fetchJson(areaCfg().weekly)}catch(e){WEEKLY=DATA.weekly||[]}
+
+  const key=areaCfg().key;
+  if(forceWeekly || !Object.prototype.hasOwnProperty.call(WEEKLY_CACHE,key)){
+    try{
+      WEEKLY=await fetchJson(areaCfg().weekly);
+      WEEKLY_CACHE[key]=WEEKLY;
+      WEEKLY_FETCH_DAY[key]=weeklySnapshotCycleKey();
+    }catch(e){
+      console.warn('주간 데이터 로딩 오류 - 기존 캐시 유지',e);
+      WEEKLY=WEEKLY_CACHE[key]||[];
+    }
+  }else{
+    WEEKLY=WEEKLY_CACHE[key]||[];
+  }
+
   document.getElementById('errorBox').innerHTML='';
-  // 새로 열거나 새로고침할 때는 항상 운영현황부터 시작합니다.
   try{render()}catch(e){
     console.error('화면 렌더링 오류',e);
-    console.error('치명적 화면 렌더링 오류',e);
     const box=document.getElementById('errorBox');
     if(box)box.innerHTML=`<div class="error">화면 초기화 중 오류가 발생했습니다.<br>${e.message||'알 수 없는 오류'}</div>`;
   }
@@ -2056,7 +2082,7 @@ function renderFiltersAndRiders(){
     searchEl.value=RIDER_SEARCH;
   }
 
-  let riders=[...(DATA.riders||[])];
+  let riders=uniqueRidersForDisplay(DATA.riders||[]);
 
   if(FILTER!=='전체'){
     riders=riders.filter(r=>r.team===FILTER);
@@ -2107,6 +2133,34 @@ function renderFiltersAndRiders(){
   }).join(''):`<div class="rider-empty">검색 결과가 없습니다.</div>`;
 }
 
+function firebaseSafeTeamKey(value){
+  return String(value||'').trim().replace(/[.#$\[\]\/]/g,'_');
+}
+function riderStableTeamKeys(r){
+  const keys=[];
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  if(phone)keys.push('phone_'+phone);
+  const userId=firebaseSafeTeamKey(r?.userId||'');
+  if(userId)keys.push('uid_'+userId);
+  return [...new Set(keys)];
+}
+function riderTeamMapKey(r){
+  const explicit=String(r?.riderKey||'').trim();
+  if(explicit)return explicit;
+  return riderStableTeamKeys(r)[0]||'';
+}
+function uniqueRidersForDisplay(list){
+  const out=[];
+  const seen=new Set();
+  for(const r of (Array.isArray(list)?list:[])){
+    const key=riderTeamMapKey(r);
+    if(!key){out.push(r);continue;}
+    if(seen.has(key))continue;
+    seen.add(key);out.push(r);
+  }
+  return out;
+}
+
 /* ===== 기사관리: 자동갱신 중 저장 전 팀 선택값 보호 ===== */
 window.__MANAGE_DRAFTS=window.__MANAGE_DRAFTS||{};
 function manageDraftAreaKey(){
@@ -2123,8 +2177,8 @@ function saveManageDrafts(){try{sessionStorage.setItem(manageDraftStorageKey(),J
 function manageDraftKeyForRider(r){
   try{if(typeof riderTeamMapKey==='function')return riderTeamMapKey(r)}catch(e){}
   const p=String(r?.phone||'').replace(/\D/g,''); if(p)return 'phone_'+p;
-  const u=String(r?.userId||'').trim(); if(u)return 'uid_'+u;
-  return 'name_'+String(r?.name||'').trim();
+  const u=firebaseSafeTeamKey(r?.userId||''); if(u)return 'uid_'+u;
+  return '';
 }
 function setManageDraft(key,team){if(!key)return;loadManageDrafts();window.__MANAGE_DRAFTS[key]=team;saveManageDrafts()}
 function getManageDraft(key,fallback){loadManageDrafts();return key&&Object.prototype.hasOwnProperty.call(window.__MANAGE_DRAFTS,key)?window.__MANAGE_DRAFTS[key]:fallback}
@@ -2150,7 +2204,7 @@ function renderManageList(){
     window.manageFilter='전체';
   }
 
-  let riders=[...DATA.riders];
+  let riders=uniqueRidersForDisplay(DATA.riders);
   if(window.manageFilter!=='전체'){
     riders=riders.filter(r=>r.team===window.manageFilter);
   }
@@ -2180,7 +2234,13 @@ function renderManageList(){
             <b>${r.name||'-'}</b>
             <small>${r.phone||r.userId||''}</small>
           </div>
-          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
+          <select class="manage-team-select"
+                  data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}"
+                  data-phone="${String(r.phone||'').replace(/"/g,'&quot;')}"
+                  data-user-id="${String(r.userId||'').replace(/"/g,'&quot;')}"
+                  data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}"
+                  onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)"
+                  ${riderTeamMapKey(r)?'':'disabled title="식별정보 없음(이동 잠금)"'}>
             ${teams.map(t=>`
               <option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${cfg.labels[t]||t}</option>
             `).join('')}
@@ -2198,93 +2258,113 @@ function setManageFilter(team){
 
 async function saveTeamMap(){
   const selects=[...document.querySelectorAll('#manageList .manage-team-select')];
-  if(!selects.length){
-    alert('저장할 기사 정보가 없습니다.');
-    return;
-  }
+  if(!selects.length){alert('저장할 기사 정보가 없습니다.');return;}
 
   const changes={};
+  const localChanges={};
   selects.forEach(sel=>{
-    const name=sel.getAttribute('data-rider-name');
     const team=sel.value;
-    if(name && team)changes[name]=team;
+    const canonical=sel.getAttribute('data-rider-key')||'';
+    const phone=String(sel.getAttribute('data-phone')||'').replace(/\D/g,'');
+    const userId=firebaseSafeTeamKey(sel.getAttribute('data-user-id')||'');
+    if(!canonical||!team)return;
+    if(phone)changes['phone_'+phone]=team;
+    if(userId)changes['uid_'+userId]=team;
+    localChanges[canonical]=team;
   });
 
+  if(!Object.keys(localChanges).length){alert('고유 식별정보가 있는 저장 대상이 없습니다.');return;}
+
   const btn=document.querySelector('#manageList .manage-save-btn');
-  if(btn){
-    btn.disabled=true;
-    btn.innerText='저장중...';
-  }
+  if(btn){btn.disabled=true;btn.innerText='저장중...';}
 
   try{
-    const res=await fetch('/api/save-teammap',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        area:areaCfg().key,
-        changes
-      })
+    let saved=false;
+    let apiError='';
+    try{
+      const res=await fetch('/api/save-teammap',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({area:areaCfg().key,changes})
+      });
+      const text=await res.text();
+      let result={};try{result=text?JSON.parse(text):{};}catch(e){}
+      if(res.ok&&result.ok!==false)saved=true;
+      else apiError=result.error||text||('HTTP '+res.status);
+    }catch(e){apiError=e.message||String(e);}
+
+    if(!saved){
+      const url=`${FIREBASE_BASE}/settings/${areaCfg().key}/teamMap.json`;
+      const res=await fetch(url,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(changes)});
+      if(!res.ok){
+        const text=await res.text();
+        throw new Error(`팀맵 저장 실패 · API: ${apiError||'-'} · Firebase: ${text||res.status}`);
+      }
+    }
+
+    uniqueRidersForDisplay(DATA.riders||[]).forEach(r=>{
+      const key=riderTeamMapKey(r);
+      if(key&&localChanges[key])r.team=localChanges[key];
     });
 
-    const text=await res.text();
-    let result={};
-    try{ result=text?JSON.parse(text):{}; }catch(e){}
+    loadManageDrafts();
+    Object.keys(localChanges).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
+    saveManageDrafts();
 
-    if(!res.ok){
-      throw new Error(result.error||text||('HTTP '+res.status));
-    }
-    if(result.ok===false){
-      throw new Error(result.error||'저장 실패');
-    }
-
-    // 서버 응답 직후 화면에도 우선 반영
-    (DATA.riders||[]).forEach(r=>{
-      if(changes[r.name])r.team=changes[r.name];
-    });
-
-    alert('팀 변경 저장 완료');
-
-    // 최신 Firebase 데이터를 다시 읽고 기사관리 화면 유지
-    await loadData();
+    alert(`팀 변경 저장 완료 (${Object.keys(localChanges).length}명)`);
+    await loadData({forceWeekly:false});
     switchPage('manage');
     renderManageList();
   }catch(e){
     console.error('기사 팀 변경 저장 오류',e);
     alert('저장 오류: '+(e.message||e));
   }finally{
-    if(btn){
-      btn.disabled=false;
-      btn.innerText='팀 변경 저장';
-    }
+    if(btn){btn.disabled=false;btn.innerText='팀 변경 저장';}
   }
 }
 
 
 async function refreshDashboardDataOnly(){
-  // 중요: 이 함수는 데이터만 새로 읽습니다.
-  // 사용자가 보고 있는 운영현황/주간실적/정산/기사관리/단체문자 화면은 절대 변경하지 않습니다.
-  const activePage=document.querySelector('.page-view.active');
-  const activeId=activePage?.id||'';
-  const activeNav=document.querySelector('.side-nav-btn.active');
-  const activeNavPage=activeNav?.getAttribute('data-page')||'';
+  if(document.hidden || REFRESH_RUNNING)return;
+  REFRESH_RUNNING=true;
+  try{
+    const activePage=document.querySelector('.page-view.active');
+    const activeId=activePage?.id||'';
+    const activeNav=document.querySelector('.side-nav-btn.active');
+    const activeNavPage=activeNav?.getAttribute('data-page')||'';
 
-  await loadData();
-  reconcileManageDrafts();
+    await loadData({forceWeekly:false});
+    reconcileManageDrafts();
 
-  // 다른 코드가 실수로 active class를 건드렸을 때만 원래 화면을 복구합니다.
-  // 사용자가 갱신 도중 직접 다른 메뉴를 눌렀다면 그 새 화면을 우선합니다.
-  const userPage=window.__USER_SELECTED_PAGE||'';
-  const wanted=userPage||activeNavPage||(activeId.startsWith('page-')?activeId.slice(5):'');
-  if(wanted){
-    const now=document.querySelector('.page-view.active')?.id||'';
-    if(now!==`page-${wanted}`){
-      switchPage(wanted);
+    const userPage=window.__USER_SELECTED_PAGE||'';
+    const wanted=userPage||activeNavPage||(activeId.startsWith('page-')?activeId.slice(5):'');
+    if(wanted){
+      const now=document.querySelector('.page-view.active')?.id||'';
+      if(now!==`page-${wanted}`)switchPage(wanted);
     }
+  }finally{
+    REFRESH_RUNNING=false;
   }
 }
 
-loadData();
-setInterval(refreshDashboardDataOnly,30000);
+// 최초 접속: LIVE + WEEKLY 각각 1회
+loadData({forceWeekly:true});
+setInterval(refreshDashboardDataOnly,LIVE_REFRESH_MS);
+
+// 서버의 01시 확정 저장이 끝난 뒤 01:05부터 하루 1회만 WEEKLY 재조회
+setInterval(async()=>{
+  if(document.hidden)return;
+  const now=new Date();
+  const snapshotKey=weeklySnapshotCycleKey(now);
+  const key=areaCfg().key;
+  const afterSnapshot=(now.getHours()>WEEKLY_REFRESH_HOUR)||(now.getHours()===WEEKLY_REFRESH_HOUR&&now.getMinutes()>=WEEKLY_REFRESH_MINUTE);
+  if(afterSnapshot && WEEKLY_FETCH_DAY[key]!==snapshotKey){
+    await loadData({forceWeekly:true});
+  }
+},60000);
+
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden)refreshDashboardDataOnly();
+});
 </script>
 </body>
 </html>
