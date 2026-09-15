@@ -578,35 +578,76 @@ const TEAMMAP_API='https://dalseo-a-live.vercel.app/api/save-teammap';
 async function saveTeamMap(){
   const selects=[...document.querySelectorAll('#manageList select')];
   const currentByKey={};
-  riders().forEach(r=>{const key=riderTeamMapKey(r);if(key)currentByKey[key]=r.team||'';});
-  const phoneChanges={},userIdChanges={},legacyKeyChanges={},localChanges={};
-  selects.forEach(sel=>{
-    const team=sel.value,key=sel.getAttribute('data-rider-key')||'';
-    const phone=String(sel.getAttribute('data-phone')||'').replace(/\D/g,'');
-    const userId=String(sel.getAttribute('data-user-id')||'').trim();
-    if(!key||!team||currentByKey[key]===team)return;
-    if(phone)phoneChanges[phone]=team;
-    if(userId)userIdChanges[firebaseSafeTeamKey(userId)]=team;
-    legacyKeyChanges[key]=team; localChanges[key]=team;
+  riders().forEach(r=>{
+    const key=riderTeamMapKey(r);
+    if(key)currentByKey[key]=r.team||'';
   });
-  if(!Object.keys(localChanges).length){alert('변경된 기사가 없습니다.');return;}
+
+  const changes={};
+  selects.forEach(sel=>{
+    const team=sel.value;
+    const key=sel.getAttribute('data-rider-key')||'';
+    if(!key||!team)return;
+    if(currentByKey[key]===team)return;
+    changes[key]=team;
+  });
+
+  if(!Object.keys(changes).length){
+    alert('변경된 기사가 없습니다.');
+    return;
+  }
+
   const saveButton=document.querySelector('.manage-save');
   const originalText=saveButton?.textContent||'팀 변경 저장';
+
   try{
-    if(saveButton){saveButton.disabled=true;saveButton.textContent='저장 중...';}
-    const writes=[];
-    if(Object.keys(phoneChanges).length)writes.push(fetch(`${FIREBASE_BASE}/settings/bmplus/teamMapPhone.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(phoneChanges)}));
-    if(Object.keys(userIdChanges).length)writes.push(fetch(`${FIREBASE_BASE}/settings/bmplus/teamMapUserId.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(userIdChanges)}));
-    if(Object.keys(legacyKeyChanges).length)writes.push(fetch(`${FIREBASE_BASE}/settings/bmplus/teamMap.json`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(legacyKeyChanges)}));
-    if(!writes.length)throw new Error('저장 가능한 기사 식별정보가 없습니다.');
-    const results=await Promise.all(writes); const failed=results.find(r=>!r.ok);
-    if(failed){let detail='';try{detail=await failed.text();}catch(e){}throw new Error(`Firebase 저장 실패 HTTP ${failed.status}${detail?' · '+detail:''}`);}
-    (DATA?.riders||[]).forEach(r=>{const key=riderTeamMapKey(r);if(key&&localChanges[key])r.team=localChanges[key];});
-    loadManageDrafts();Object.keys(localChanges).forEach(k=>delete window.__MANAGE_DRAFTS[k]);saveManageDrafts();
-    renderAll();alert(`팀 변경 저장 완료 (${Object.keys(localChanges).length}명)`);
+    if(saveButton){
+      saveButton.disabled=true;
+      saveButton.textContent='저장 중...';
+    }
+
+    // BMPLUS도 다른 기존 지사와 동일하게 서버 API를 통해 저장합니다.
+    // 브라우저에서 Firebase에 직접 쓰지 않습니다.
+    const res=await fetch(TEAMMAP_API,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        area:AREA_KEY,
+        changes
+      })
+    });
+
+    const raw=await res.text();
+    let result={};
+    try{result=raw?JSON.parse(raw):{};}catch(e){}
+
+    if(!res.ok || result.ok===false){
+      throw new Error(result.error||raw||(`HTTP ${res.status}`));
+    }
+
+    (DATA?.riders||[]).forEach(r=>{
+      const key=riderTeamMapKey(r);
+      if(key&&changes[key])r.team=changes[key];
+    });
+
+    loadManageDrafts();
+    Object.keys(changes).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
+    saveManageDrafts();
+
+    renderAll();
+    alert(`팀 변경 저장 완료 (${Object.keys(changes).length}명)`);
+
+    // 수집기가 다음 주기에 최신 팀맵을 반영한 뒤 다시 읽습니다.
     setTimeout(()=>loadData({forceWeekly:false}),65000);
-  }catch(e){console.error('팀 변경 저장 오류',e);alert('저장 오류: '+(e.message||e));}
-  finally{if(saveButton){saveButton.disabled=false;saveButton.textContent=originalText;}}
+  }catch(e){
+    console.error('팀 변경 저장 오류',e);
+    alert('저장 오류: '+(e.message||e));
+  }finally{
+    if(saveButton){
+      saveButton.disabled=false;
+      saveButton.textContent=originalText;
+    }
+  }
 }
 function smsGroupHtml(teamName,list){let html=`<div class="sms-team"><h3 style="margin:0 0 10px">${teamName} (${list.length}명)</h3>`;for(let i=0;i<list.length;i+=99){const g=list.slice(i,i+99),label=String.fromCharCode(65+i/99),phones=g.map(x=>x.phone).join(',');html+=`<div class="sms-group"><b>${label}그룹 (${g.length}명)</b><div class="phone-list">${g.map(x=>`${x.name} ${x.phone}`).join(' · ')}</div><div class="sms-actions"><button onclick="copyText('${phones}')">번호 복사</button><a href="sms:${phones}">문자앱 열기</a></div></div>`}return html+'</div>'}
 function openSmsModal(){const base=filteredRiders().filter(r=>r.phone).map(r=>({team:r.team,name:r.name,phone:String(r.phone).replace(/\D/g,'')}));let html=TEAM_ORDER.map(t=>smsGroupHtml(t,base.filter(x=>x.team===t))).join('');document.getElementById('smsGroups').innerHTML=html;document.getElementById('smsModal').classList.add('show')}
