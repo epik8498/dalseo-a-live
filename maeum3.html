@@ -2114,7 +2114,12 @@ function renderManageList(){
             <b>${r.name||'-'}</b>
             <small>${r.phone||r.userId||''}</small>
           </div>
-          <select class="manage-team-select" data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
+          <select class="manage-team-select"
+            data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}"
+            data-rider-key="${String(r.riderKey||manageDraftKeyForRider(r)||'').replace(/"/g,'&quot;')}"
+            data-current-team="${String(r.team||'').replace(/"/g,'&quot;')}"
+            data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}"
+            onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)">
             ${teams.map(t=>`
               <option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${cfg.labels[t]||t}</option>
             `).join('')}
@@ -2137,12 +2142,38 @@ async function saveTeamMap(){
     return;
   }
 
+  // 기사 이름이 아니라 phone_/uid_ 고유키로만 실제 변경분을 저장합니다.
+  // 신원키가 없는 placeholder 기사는 잘못된 동명이인 이동을 막기 위해 저장하지 않습니다.
   const changes={};
+  const localChanges={};
+  const blocked=[];
+
   selects.forEach(sel=>{
-    const name=sel.getAttribute('data-rider-name');
-    const team=sel.value;
-    if(name && team)changes[name]=team;
+    const name=String(sel.getAttribute('data-rider-name')||'').trim();
+    const key=String(sel.getAttribute('data-rider-key')||'').trim();
+    const currentTeam=String(sel.getAttribute('data-current-team')||'').trim();
+    const team=String(sel.value||'').trim();
+
+    if(!team || team===currentTeam)return;
+
+    if(!(key.startsWith('phone_') || key.startsWith('uid_'))){
+      blocked.push(name||'신원정보 없는 기사');
+      return;
+    }
+
+    changes[key]=team;
+    localChanges[key]=team;
   });
+
+  if(blocked.length){
+    alert('전화번호/기사ID가 확인되지 않아 이동할 수 없는 기사가 있습니다:\\n'+blocked.join(', '));
+    return;
+  }
+
+  if(!Object.keys(changes).length){
+    alert('변경된 기사가 없습니다.');
+    return;
+  }
 
   const btn=document.querySelector('#manageList .manage-save-btn');
   if(btn){
@@ -2171,20 +2202,25 @@ async function saveTeamMap(){
       throw new Error(result.error||'저장 실패');
     }
 
-    // 서버 응답 직후 화면에도 우선 반영
+    // 서버 응답 직후 화면에도 같은 고유키 기준으로 반영합니다.
     (DATA.riders||[]).forEach(r=>{
-      if(changes[r.name])r.team=changes[r.name];
+      const key=String(r.riderKey||manageDraftKeyForRider(r)||'').trim();
+      if(localChanges[key])r.team=localChanges[key];
     });
+
+    // 저장 완료된 draft만 제거합니다.
+    loadManageDrafts();
+    Object.keys(localChanges).forEach(k=>{ delete window.__MANAGE_DRAFTS[k]; });
+    saveManageDrafts();
 
     alert('팀 변경 저장 완료');
 
-    // 최신 Firebase 데이터를 다시 읽고 기사관리 화면 유지
+    // 크롤러가 다음 주기에 teamMap을 다시 읽으므로 화면은 기사관리 상태를 유지합니다.
     await loadData();
     switchPage('manage');
     renderManageList();
   }catch(e){
-    console.error('기사 팀 변경 저장 오류',e);
-    alert('저장 오류: '+(e.message||e));
+    alert('팀 변경 저장 실패: '+(e?.message||e));
   }finally{
     if(btn){
       btn.disabled=false;
