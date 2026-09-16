@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUPERSONIC Enterprise</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans KR",sans-serif;background:#0e1116;color:#f4f6f8}
+button,input{font:inherit}.hidden{display:none!important}.login{min-height:100vh;display:grid;place-items:center;padding:24px}.card{width:min(420px,100%);background:#171c24;border:1px solid #2b3441;border-radius:18px;padding:28px}.brand{font-size:26px;font-weight:900;letter-spacing:.5px}.sub{color:#9aa7b5;margin:8px 0 24px}.field{display:block;margin:12px 0}.field span{display:block;font-size:13px;color:#aeb8c4;margin-bottom:7px}.field input{width:100%;padding:13px;border-radius:10px;border:1px solid #354151;background:#0f141b;color:white}.primary{width:100%;padding:13px;border:0;border-radius:10px;background:#fff;color:#111;font-weight:800;cursor:pointer}.err{min-height:20px;color:#ff8b8b;font-size:13px;margin-top:12px}.app{max-width:1450px;margin:auto;padding:20px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px}.top .brand{font-size:22px}.user{display:flex;align-items:center;gap:10px;color:#aeb8c4}.ghost{border:1px solid #364252;background:#171c24;color:white;border-radius:9px;padding:9px 12px;cursor:pointer}.centers{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.center{border:1px solid #364252;background:#171c24;color:#dce3ea;border-radius:10px;padding:10px 14px;cursor:pointer}.center.active{background:#fff;color:#111}.status{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}.metric,.panel{background:#171c24;border:1px solid #2b3441;border-radius:14px;padding:16px}.metric small{color:#9aa7b5}.metric b{display:block;font-size:24px;margin-top:7px}.panel h3{margin:0 0 12px}.riders{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rider{background:#11161d;border:1px solid #2b3441;border-radius:11px;padding:12px}.rider strong{display:flex;justify-content:space-between}.on{color:#6fe29c}.off{color:#8e9aa8}.mini{margin-top:8px;color:#aeb8c4;font-size:13px}.foot{color:#7f8b98;font-size:12px;margin-top:12px}@media(max-width:850px){.status{grid-template-columns:repeat(2,1fr)}.riders{grid-template-columns:1fr}.top{align-items:flex-start}}
+</style>
+</head>
+<body>
+<section id="login" class="login">
+ <form class="card" id="loginForm">
+  <div class="brand">SUPERSONIC</div><div class="sub">Enterprise 운영 대시보드</div>
+  <label class="field"><span>아이디</span><input id="username" autocomplete="username" required></label>
+  <label class="field"><span>비밀번호</span><input id="password" type="password" autocomplete="current-password" required></label>
+  <button class="primary">로그인</button><div id="loginError" class="err"></div>
+ </form>
+</section>
+<section id="app" class="app hidden">
+ <header class="top"><div><div class="brand">SUPERSONIC Enterprise</div><div class="sub" style="margin:4px 0 0">권한 기반 3분 LIVE</div></div>
+ <div class="user"><span id="who"></span><button class="ghost" id="logout">로그아웃</button></div></header>
+ <nav id="centers" class="centers"></nav>
+ <div class="status">
+  <div class="metric"><small>센터</small><b id="mCenter">-</b></div>
+  <div class="metric"><small>등록 기사</small><b id="mRiders">-</b></div>
+  <div class="metric"><small>접속중</small><b id="mOnline">-</b></div>
+  <div class="metric"><small>마지막 수집</small><b id="mAge">-</b></div>
+ </div>
+ <section class="panel"><h3>기사 현황</h3><div id="riders" class="riders"></div><div id="empty" class="foot"></div></section>
+ <div class="foot">LIVE는 3분마다 API를 통해 갱신합니다. 브라우저는 Firebase에 직접 접근하지 않습니다.</div>
+</section>
+<script>
+const REFRESH_MS=180000;
+let ME=null,CENTERS=[],CURRENT=null,TIMER=null,LOADING=false;
+async function api(path,opt={}){
+ const r=await fetch(path,{...opt,credentials:'same-origin',headers:{'Content-Type':'application/json',...(opt.headers||{})}});
+ let j={};try{j=await r.json()}catch(e){}
+ if(r.status===401){showLogin();throw new Error('LOGIN_REQUIRED')}
+ if(!r.ok)throw new Error(j.error||('HTTP_'+r.status));return j;
+}
+function showLogin(){clearInterval(TIMER);TIMER=null;document.getElementById('app').classList.add('hidden');document.getElementById('login').classList.remove('hidden')}
+function showApp(){document.getElementById('login').classList.add('hidden');document.getElementById('app').classList.remove('hidden')}
+function ageText(sec){if(sec==null)return '-';sec=Number(sec);if(sec<60)return sec+'초';return Math.floor(sec/60)+'분 '+(sec%60)+'초'}
+function n(v){return Number(v||0).toLocaleString()}
+function renderCenters(){
+ const el=document.getElementById('centers');
+ el.innerHTML=CENTERS.map(c=>`<button class="center ${CURRENT===c.slug?'active':''}" data-slug="${c.slug}">${c.name}</button>`).join('');
+ el.querySelectorAll('button').forEach(b=>b.onclick=()=>selectCenter(b.dataset.slug));
+}
+async function selectCenter(slug){CURRENT=slug;renderCenters();await loadLive(true)}
+async function loadLive(force=false){
+ if(!CURRENT||LOADING||document.hidden)return;LOADING=true;
+ try{
+  const [live,status]=await Promise.all([api('/api/live?center='+encodeURIComponent(CURRENT)),api('/api/system/status?center='+encodeURIComponent(CURRENT))]);
+  const c=CENTERS.find(x=>x.slug===CURRENT),d=live.data||{},r=Array.isArray(d.riders)?d.riders:[];
+  document.getElementById('mCenter').textContent=c?.name||CURRENT;
+  document.getElementById('mRiders').textContent=n(r.length);
+  document.getElementById('mOnline').textContent=n(r.filter(x=>x.isOnline).length);
+  document.getElementById('mAge').textContent=ageText(status.ageSeconds);
+  document.getElementById('riders').innerHTML=r.map(x=>`<div class="rider"><strong><span>${escapeHtml(x.name||'-')}</span><span class="${x.isOnline?'on':'off'}">${x.isOnline?'접속중':'운행종료'}</span></strong><div class="mini">${escapeHtml(x.team||'신규')} · 완료 ${n(x.complete)} · 수락률 ${escapeHtml(String(x.acceptRate??'-'))}%</div></div>`).join('');
+  document.getElementById('empty').textContent=r.length?'':'표시할 기사 데이터가 없습니다.';
+ }catch(e){document.getElementById('empty').textContent='데이터 조회 실패: '+e.message}
+ finally{LOADING=false}
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function boot(){
+ try{
+  const me=await api('/api/me');ME=me;const cs=await api('/api/centers');CENTERS=cs.centers||[];
+  document.getElementById('who').textContent=`${me.user.username} · ${me.user.role}`;
+  CURRENT=CENTERS[0]?.slug||null;showApp();renderCenters();await loadLive(true);
+  clearInterval(TIMER);TIMER=setInterval(loadLive,REFRESH_MS);
+ }catch(e){showLogin()}
+}
+document.getElementById('loginForm').onsubmit=async e=>{
+ e.preventDefault();const box=document.getElementById('loginError');box.textContent='';
+ try{await api('/api/auth/login',{method:'POST',body:JSON.stringify({username:username.value.trim(),password:password.value})});password.value='';await boot()}
+ catch(err){box.textContent=err.message==='INVALID_LOGIN'?'아이디 또는 비밀번호를 확인하세요.':'로그인에 실패했습니다.'}
+};
+document.getElementById('logout').onclick=async()=>{try{await api('/api/auth/logout',{method:'POST',body:'{}'})}catch(e){}showLogin()};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&CURRENT)loadLive(true)});
+boot();
+</script>
+</body></html>

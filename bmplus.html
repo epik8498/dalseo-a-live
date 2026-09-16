@@ -316,28 +316,39 @@ function normalizeTeams(){
   }
 }
 function buildWeekly(){
-  const ws=DATA&&DATA.weeklySummary;
-  if(ws&&Array.isArray(ws.days)){
-    return{
-      complete:num(ws.complete),
-      bad:num(ws.badTotal),
-      acceptRate:num(ws.acceptRate),
-      spare:num(ws.spareRejects)
-    };
-  }
-
-  // 구버전 데이터 fallback: 현재 수요일~화요일 주차만 계산
+  // 상단 주간 요약은 KST 기준 현재 수요일~화요일 주차만 합산합니다.
+  // DATA.weeklySummary의 aggregate가 지난주 값으로 남아 있어도 사용하지 않습니다.
   const rows=Array.isArray(WEEKLY)?WEEKLY:[];
-  const nowDate=DATA?.businessDate||isoLocal(new Date());
-  const start=weekStartWed(nowDate);
+  const kstParts=new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date());
+  const kstMap={};
+  kstParts.forEach(p=>{if(p.type!=='literal')kstMap[p.type]=p.value});
+  const today=`${kstMap.year}-${kstMap.month}-${kstMap.day}`;
+  const start=weekStartWed(today);
   const end=dateAdd(start,6);
-  const currentRows=rows.filter(r=>r&&r.businessDate>=start&&r.businessDate<=end);
+  const currentRows=rows.filter(r=>r&&r.businessDate>=start&&r.businessDate<=end&&r.businessDate!==today);
 
   let complete=0,b=0;
   currentRows.forEach(r=>{
     complete+=num(r.totalComplete);
     b+=bad(r);
   });
+
+  // 오늘 LIVE 값은 businessDate가 실제 오늘로 넘어온 경우에만 더합니다.
+  // 서버가 아직 어제 날짜라면 지난주 숫자를 새 주차에 이월하지 않습니다.
+  if(DATA&&String(DATA.businessDate||'')===today){
+    const total=DATA.total||{};
+    complete+=num(total.complete);
+    b+=bad(total);
+  }else{
+    // 오늘 확정 레코드가 이미 있는 특수 상황에서는 그것만 사용합니다.
+    const todayRow=rows.find(r=>r&&r.businessDate===today);
+    if(todayRow){
+      complete+=num(todayRow.totalComplete);
+      b+=bad(todayRow);
+    }
+  }
 
   return{
     complete,

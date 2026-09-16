@@ -8384,61 +8384,61 @@
     "businessDate": "2026-08-25",
     "weekStart": "2026-08-19",
     "weekEnd": "2026-08-25",
-    "closedAt": "2026-08-25 21:25:37",
-    "totalComplete": 931,
-    "totalReject": 58,
-    "totalCancel": 18,
+    "closedAt": "2026-08-26 05:58:53",
+    "totalComplete": 1195,
+    "totalReject": 100,
+    "totalCancel": 20,
     "riderFault": 0,
     "morning": 235,
     "afternoon": 254,
     "evening": 326,
-    "midnight": 111,
+    "midnight": 297,
     "morningExcluded": 5,
-    "midnightExcluded": 0,
-    "excluded": 5,
+    "midnightExcluded": 78,
+    "excluded": 83,
     "periodTargets": {
       "morning": 190,
       "afternoon": 180,
       "evening": 300,
       "midnight": 230
     },
-    "acceptRate": 92.5,
-    "spareRejects": 156,
+    "acceptRate": 90.9,
+    "spareRejects": 178,
     "total": {
-      "complete": 931,
-      "reject": 58,
-      "cancel": 18,
+      "complete": 1195,
+      "reject": 100,
+      "cancel": 20,
       "riderFault": 0,
       "morning": 235,
       "afternoon": 254,
       "evening": 326,
-      "midnight": 111,
+      "midnight": 297,
       "morningExcluded": 5,
-      "midnightExcluded": 0,
-      "excluded": 5,
+      "midnightExcluded": 78,
+      "excluded": 83,
       "count": 165,
-      "onlineCount": 24,
-      "acceptRate": 92.5,
-      "spareRejects": 156
+      "onlineCount": 3,
+      "acceptRate": 90.9,
+      "spareRejects": 178
     },
     "teams": {
       "성공": {
         "summary": {
-          "complete": 250,
-          "reject": 14,
+          "complete": 300,
+          "reject": 19,
           "cancel": 3,
           "riderFault": 0,
           "morning": 69,
           "afternoon": 53,
           "evening": 93,
-          "midnight": 33,
+          "midnight": 83,
           "morningExcluded": 2,
           "midnightExcluded": 0,
           "excluded": 2,
           "count": 45,
-          "onlineCount": 7,
-          "acceptRate": 93.6,
-          "spareRejects": 45
+          "onlineCount": 0,
+          "acceptRate": 93.2,
+          "spareRejects": 53
         },
         "targets": {
           "morning": 62,
@@ -8451,21 +8451,21 @@
       },
       "상생": {
         "summary": {
-          "complete": 121,
-          "reject": 9,
-          "cancel": 2,
+          "complete": 161,
+          "reject": 11,
+          "cancel": 3,
           "riderFault": 0,
           "morning": 31,
           "afternoon": 40,
           "evening": 42,
-          "midnight": 8,
+          "midnight": 27,
           "morningExcluded": 0,
-          "midnightExcluded": 0,
-          "excluded": 0,
+          "midnightExcluded": 21,
+          "excluded": 21,
           "count": 30,
-          "onlineCount": 1,
-          "acceptRate": 91.7,
-          "spareRejects": 19
+          "onlineCount": 0,
+          "acceptRate": 92.0,
+          "spareRejects": 26
         },
         "targets": {
           "morning": 24,
@@ -8478,21 +8478,21 @@
       },
       "BM": {
         "summary": {
-          "complete": 183,
-          "reject": 16,
+          "complete": 239,
+          "reject": 25,
           "cancel": 5,
           "riderFault": 0,
           "morning": 44,
           "afternoon": 41,
           "evening": 75,
-          "midnight": 23,
+          "midnight": 54,
           "morningExcluded": 0,
-          "midnightExcluded": 0,
-          "excluded": 0,
+          "midnightExcluded": 25,
+          "excluded": 25,
           "count": 25,
-          "onlineCount": 5,
-          "acceptRate": 89.7,
-          "spareRejects": 24
+          "onlineCount": 2,
+          "acceptRate": 88.8,
+          "spareRejects": 29
         },
         "targets": {
           "morning": 43,
@@ -8505,21 +8505,21 @@
       },
       "서구": {
         "summary": {
-          "complete": 362,
-          "reject": 19,
-          "cancel": 8,
+          "complete": 495,
+          "reject": 45,
+          "cancel": 9,
           "riderFault": 0,
           "morning": 91,
           "afternoon": 120,
-          "evening": 107,
-          "midnight": 41,
+          "evening": 116,
+          "midnight": 133,
           "morningExcluded": 3,
-          "midnightExcluded": 0,
-          "excluded": 3,
-          "count": 64,
-          "onlineCount": 11,
-          "acceptRate": 93.1,
-          "spareRejects": 63
+          "midnightExcluded": 32,
+          "excluded": 35,
+          "count": 65,
+          "onlineCount": 1,
+          "acceptRate": 90.2,
+          "spareRejects": 69
         },
         "targets": {
           "morning": 62,
@@ -8559,21 +8559,1477 @@
       },
       "미분류": {
         "summary": {
-          "complete": 15,
+          "complete": 0,
           "reject": 0,
           "cancel": 0,
           "riderFault": 0,
           "morning": 0,
           "afternoon": 0,
-          "evening": 9,
-          "midnight": 6,
+          "evening": 0,
+          "midnight": 0,
           "morningExcluded": 0,
           "midnightExcluded": 0,
           "excluded": 0,
-          "count": 1,
+          "count": 0,
           "onlineCount": 0,
-          "acceptRate": 100.0,
-          "spareRejects": 3
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-26",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-27 05:59:26",
+    "totalComplete": 1354,
+    "totalReject": 74,
+    "totalCancel": 36,
+    "riderFault": 0,
+    "morning": 234,
+    "afternoon": 309,
+    "evening": 402,
+    "midnight": 323,
+    "morningExcluded": 4,
+    "midnightExcluded": 82,
+    "excluded": 86,
+    "periodTargets": {
+      "morning": 190,
+      "afternoon": 180,
+      "evening": 300,
+      "midnight": 230
+    },
+    "acceptRate": 92.5,
+    "spareRejects": 228,
+    "total": {
+      "complete": 1354,
+      "reject": 74,
+      "cancel": 36,
+      "riderFault": 0,
+      "morning": 234,
+      "afternoon": 309,
+      "evening": 402,
+      "midnight": 323,
+      "morningExcluded": 4,
+      "midnightExcluded": 82,
+      "excluded": 86,
+      "count": 165,
+      "onlineCount": 2,
+      "acceptRate": 92.5,
+      "spareRejects": 228
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 288,
+          "reject": 26,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 52,
+          "afternoon": 77,
+          "evening": 88,
+          "midnight": 66,
+          "morningExcluded": 3,
+          "midnightExcluded": 2,
+          "excluded": 5,
+          "count": 45,
+          "onlineCount": 0,
+          "acceptRate": 90.0,
+          "spareRejects": 40
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 140,
+          "reject": 10,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 26,
+          "afternoon": 38,
+          "evening": 63,
+          "midnight": 13,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 30,
+          "onlineCount": 0,
+          "acceptRate": 88.6,
+          "spareRejects": 17
+        },
+        "targets": {
+          "morning": 24,
+          "afternoon": 23,
+          "evening": 38,
+          "midnight": 29,
+          "total": 114,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 188,
+          "reject": 9,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 58,
+          "afternoon": 41,
+          "evening": 46,
+          "midnight": 23,
+          "morningExcluded": 0,
+          "midnightExcluded": 20,
+          "excluded": 20,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 92.6,
+          "spareRejects": 32
+        },
+        "targets": {
+          "morning": 43,
+          "afternoon": 41,
+          "evening": 68,
+          "midnight": 52,
+          "total": 204,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 738,
+          "reject": 29,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 98,
+          "afternoon": 153,
+          "evening": 205,
+          "midnight": 221,
+          "morningExcluded": 1,
+          "midnightExcluded": 60,
+          "excluded": 61,
+          "count": 65,
+          "onlineCount": 1,
+          "acceptRate": 94.3,
+          "spareRejects": 139
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-27",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-28 05:58:50",
+    "totalComplete": 1613,
+    "totalReject": 158,
+    "totalCancel": 56,
+    "riderFault": 1,
+    "morning": 300,
+    "afternoon": 312,
+    "evening": 449,
+    "midnight": 466,
+    "morningExcluded": 2,
+    "midnightExcluded": 84,
+    "excluded": 86,
+    "periodTargets": {
+      "morning": 190,
+      "afternoon": 180,
+      "evening": 300,
+      "midnight": 230
+    },
+    "acceptRate": 88.2,
+    "spareRejects": 188,
+    "total": {
+      "complete": 1613,
+      "reject": 158,
+      "cancel": 56,
+      "riderFault": 1,
+      "morning": 300,
+      "afternoon": 312,
+      "evening": 449,
+      "midnight": 466,
+      "morningExcluded": 2,
+      "midnightExcluded": 84,
+      "excluded": 86,
+      "count": 164,
+      "onlineCount": 0,
+      "acceptRate": 88.2,
+      "spareRejects": 188
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 481,
+          "reject": 54,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 104,
+          "afternoon": 100,
+          "evening": 138,
+          "midnight": 116,
+          "morningExcluded": 0,
+          "midnightExcluded": 23,
+          "excluded": 23,
+          "count": 45,
+          "onlineCount": 0,
+          "acceptRate": 88.7,
+          "spareRejects": 59
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 226,
+          "reject": 9,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 54,
+          "afternoon": 56,
+          "evening": 60,
+          "midnight": 56,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 29,
+          "onlineCount": 0,
+          "acceptRate": 88.6,
+          "spareRejects": 27
+        },
+        "targets": {
+          "morning": 24,
+          "afternoon": 23,
+          "evening": 38,
+          "midnight": 29,
+          "total": 114,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 202,
+          "reject": 37,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 54,
+          "afternoon": 32,
+          "evening": 64,
+          "midnight": 52,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 25,
+          "onlineCount": 0,
+          "acceptRate": 80.2,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 43,
+          "afternoon": 41,
+          "evening": 68,
+          "midnight": 52,
+          "total": 204,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 704,
+          "reject": 58,
+          "cancel": 16,
+          "riderFault": 1,
+          "morning": 88,
+          "afternoon": 124,
+          "evening": 187,
+          "midnight": 242,
+          "morningExcluded": 2,
+          "midnightExcluded": 61,
+          "excluded": 63,
+          "count": 65,
+          "onlineCount": 0,
+          "acceptRate": 90.4,
+          "spareRejects": 101
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-28",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-29 05:59:24",
+    "totalComplete": 1468,
+    "totalReject": 127,
+    "totalCancel": 54,
+    "riderFault": 0,
+    "morning": 238,
+    "afternoon": 357,
+    "evening": 339,
+    "midnight": 471,
+    "morningExcluded": 5,
+    "midnightExcluded": 58,
+    "excluded": 63,
+    "periodTargets": {
+      "morning": 210,
+      "afternoon": 210,
+      "evening": 320,
+      "midnight": 260
+    },
+    "acceptRate": 89.0,
+    "spareRejects": 186,
+    "total": {
+      "complete": 1468,
+      "reject": 127,
+      "cancel": 54,
+      "riderFault": 0,
+      "morning": 238,
+      "afternoon": 357,
+      "evening": 339,
+      "midnight": 471,
+      "morningExcluded": 5,
+      "midnightExcluded": 58,
+      "excluded": 63,
+      "count": 164,
+      "onlineCount": 3,
+      "acceptRate": 89.0,
+      "spareRejects": 186
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 434,
+          "reject": 43,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 91,
+          "afternoon": 121,
+          "evening": 82,
+          "midnight": 134,
+          "morningExcluded": 0,
+          "midnightExcluded": 6,
+          "excluded": 6,
+          "count": 45,
+          "onlineCount": 1,
+          "acceptRate": 89.5,
+          "spareRejects": 57
+        },
+        "targets": {
+          "morning": 69,
+          "afternoon": 69,
+          "evening": 104,
+          "midnight": 85,
+          "total": 327,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 215,
+          "reject": 3,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 43,
+          "afternoon": 55,
+          "evening": 50,
+          "midnight": 53,
+          "morningExcluded": 0,
+          "midnightExcluded": 14,
+          "excluded": 14,
+          "count": 29,
+          "onlineCount": 0,
+          "acceptRate": 90.3,
+          "spareRejects": 30
+        },
+        "targets": {
+          "morning": 27,
+          "afternoon": 27,
+          "evening": 40,
+          "midnight": 33,
+          "total": 127,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 191,
+          "reject": 36,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 45,
+          "afternoon": 44,
+          "evening": 74,
+          "midnight": 23,
+          "morningExcluded": 5,
+          "midnightExcluded": 0,
+          "excluded": 5,
+          "count": 25,
+          "onlineCount": 2,
+          "acceptRate": 80.9,
+          "spareRejects": 2
+        },
+        "targets": {
+          "morning": 48,
+          "afternoon": 48,
+          "evening": 72,
+          "midnight": 59,
+          "total": 227,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 628,
+          "reject": 45,
+          "cancel": 17,
+          "riderFault": 0,
+          "morning": 59,
+          "afternoon": 137,
+          "evening": 133,
+          "midnight": 261,
+          "morningExcluded": 0,
+          "midnightExcluded": 38,
+          "excluded": 38,
+          "count": 65,
+          "onlineCount": 0,
+          "acceptRate": 91.0,
+          "spareRejects": 95
+        },
+        "targets": {
+          "morning": 69,
+          "afternoon": 69,
+          "evening": 104,
+          "midnight": 85,
+          "total": 327,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-29",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-30 05:59:01",
+    "totalComplete": 2019,
+    "totalReject": 157,
+    "totalCancel": 52,
+    "riderFault": 1,
+    "morning": 528,
+    "afternoon": 336,
+    "evening": 487,
+    "midnight": 532,
+    "morningExcluded": 22,
+    "midnightExcluded": 114,
+    "excluded": 136,
+    "periodTargets": {
+      "morning": 270,
+      "afternoon": 220,
+      "evening": 360,
+      "midnight": 250
+    },
+    "acceptRate": 90.6,
+    "spareRejects": 294,
+    "total": {
+      "complete": 2019,
+      "reject": 157,
+      "cancel": 52,
+      "riderFault": 1,
+      "morning": 528,
+      "afternoon": 336,
+      "evening": 487,
+      "midnight": 532,
+      "morningExcluded": 22,
+      "midnightExcluded": 114,
+      "excluded": 136,
+      "count": 164,
+      "onlineCount": 3,
+      "acceptRate": 90.6,
+      "spareRejects": 294
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 593,
+          "reject": 58,
+          "cancel": 8,
+          "riderFault": 1,
+          "morning": 150,
+          "afternoon": 114,
+          "evening": 151,
+          "midnight": 145,
+          "morningExcluded": 17,
+          "midnightExcluded": 16,
+          "excluded": 33,
+          "count": 45,
+          "onlineCount": 0,
+          "acceptRate": 89.8,
+          "spareRejects": 81
+        },
+        "targets": {
+          "morning": 88,
+          "afternoon": 72,
+          "evening": 117,
+          "midnight": 82,
+          "total": 359,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 261,
+          "reject": 10,
+          "cancel": 20,
+          "riderFault": 0,
+          "morning": 73,
+          "afternoon": 31,
+          "evening": 80,
+          "midnight": 64,
+          "morningExcluded": 0,
+          "midnightExcluded": 13,
+          "excluded": 13,
+          "count": 29,
+          "onlineCount": 0,
+          "acceptRate": 89.7,
+          "spareRejects": 35
+        },
+        "targets": {
+          "morning": 34,
+          "afternoon": 28,
+          "evening": 45,
+          "midnight": 32,
+          "total": 139,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 334,
+          "reject": 49,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 95,
+          "afternoon": 53,
+          "evening": 92,
+          "midnight": 69,
+          "morningExcluded": 5,
+          "midnightExcluded": 20,
+          "excluded": 25,
+          "count": 25,
+          "onlineCount": 2,
+          "acceptRate": 84.8,
+          "spareRejects": 23
+        },
+        "targets": {
+          "morning": 61,
+          "afternoon": 50,
+          "evening": 81,
+          "midnight": 57,
+          "total": 249,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 831,
+          "reject": 40,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 210,
+          "afternoon": 138,
+          "evening": 164,
+          "midnight": 254,
+          "morningExcluded": 0,
+          "midnightExcluded": 65,
+          "excluded": 65,
+          "count": 65,
+          "onlineCount": 1,
+          "acceptRate": 94.0,
+          "spareRejects": 154
+        },
+        "targets": {
+          "morning": 88,
+          "afternoon": 72,
+          "evening": 117,
+          "midnight": 82,
+          "total": 359,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-30",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-31 05:58:22",
+    "totalComplete": 1816,
+    "totalReject": 127,
+    "totalCancel": 61,
+    "riderFault": 0,
+    "morning": 465,
+    "afternoon": 415,
+    "evening": 463,
+    "midnight": 359,
+    "morningExcluded": 31,
+    "midnightExcluded": 83,
+    "excluded": 114,
+    "periodTargets": {
+      "morning": 290,
+      "afternoon": 220,
+      "evening": 350,
+      "midnight": 240
+    },
+    "acceptRate": 90.6,
+    "spareRejects": 266,
+    "total": {
+      "complete": 1816,
+      "reject": 127,
+      "cancel": 61,
+      "riderFault": 0,
+      "morning": 465,
+      "afternoon": 415,
+      "evening": 463,
+      "midnight": 359,
+      "morningExcluded": 31,
+      "midnightExcluded": 83,
+      "excluded": 114,
+      "count": 164,
+      "onlineCount": 3,
+      "acceptRate": 90.6,
+      "spareRejects": 266
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 576,
+          "reject": 53,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 171,
+          "afternoon": 158,
+          "evening": 150,
+          "midnight": 89,
+          "morningExcluded": 4,
+          "midnightExcluded": 4,
+          "excluded": 8,
+          "count": 45,
+          "onlineCount": 0,
+          "acceptRate": 89.7,
+          "spareRejects": 78
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 72,
+          "evening": 114,
+          "midnight": 78,
+          "total": 359,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 251,
+          "reject": 11,
+          "cancel": 16,
+          "riderFault": 0,
+          "morning": 64,
+          "afternoon": 58,
+          "evening": 68,
+          "midnight": 61,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 29,
+          "onlineCount": 0,
+          "acceptRate": 90.3,
+          "spareRejects": 35
+        },
+        "targets": {
+          "morning": 37,
+          "afternoon": 28,
+          "evening": 44,
+          "midnight": 30,
+          "total": 139,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 336,
+          "reject": 30,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 70,
+          "afternoon": 51,
+          "evening": 109,
+          "midnight": 65,
+          "morningExcluded": 14,
+          "midnightExcluded": 27,
+          "excluded": 41,
+          "count": 25,
+          "onlineCount": 2,
+          "acceptRate": 88.4,
+          "spareRejects": 40
+        },
+        "targets": {
+          "morning": 66,
+          "afternoon": 50,
+          "evening": 79,
+          "midnight": 54,
+          "total": 249,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 653,
+          "reject": 33,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 160,
+          "afternoon": 148,
+          "evening": 136,
+          "midnight": 144,
+          "morningExcluded": 13,
+          "midnightExcluded": 52,
+          "excluded": 65,
+          "count": 65,
+          "onlineCount": 1,
+          "acceptRate": 92.8,
+          "spareRejects": 112
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 72,
+          "evening": 114,
+          "midnight": 78,
+          "total": 359,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-08-31",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-09-01 05:59:30",
+    "totalComplete": 1486,
+    "totalReject": 80,
+    "totalCancel": 42,
+    "riderFault": 0,
+    "morning": 281,
+    "afternoon": 284,
+    "evening": 486,
+    "midnight": 367,
+    "morningExcluded": 7,
+    "midnightExcluded": 61,
+    "excluded": 68,
+    "periodTargets": {
+      "morning": 190,
+      "afternoon": 180,
+      "evening": 300,
+      "midnight": 230
+    },
+    "acceptRate": 92.4,
+    "spareRejects": 249,
+    "total": {
+      "complete": 1486,
+      "reject": 80,
+      "cancel": 42,
+      "riderFault": 0,
+      "morning": 281,
+      "afternoon": 284,
+      "evening": 486,
+      "midnight": 367,
+      "morningExcluded": 7,
+      "midnightExcluded": 61,
+      "excluded": 68,
+      "count": 164,
+      "onlineCount": 2,
+      "acceptRate": 92.4,
+      "spareRejects": 249
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 447,
+          "reject": 35,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 112,
+          "afternoon": 104,
+          "evening": 131,
+          "midnight": 95,
+          "morningExcluded": 0,
+          "midnightExcluded": 5,
+          "excluded": 5,
+          "count": 45,
+          "onlineCount": 0,
+          "acceptRate": 91.0,
+          "spareRejects": 67
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 270,
+          "reject": 2,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 43,
+          "afternoon": 38,
+          "evening": 99,
+          "midnight": 75,
+          "morningExcluded": 1,
+          "midnightExcluded": 14,
+          "excluded": 15,
+          "count": 29,
+          "onlineCount": 0,
+          "acceptRate": 94.7,
+          "spareRejects": 52
+        },
+        "targets": {
+          "morning": 24,
+          "afternoon": 23,
+          "evening": 38,
+          "midnight": 29,
+          "total": 114,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 198,
+          "reject": 16,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 50,
+          "afternoon": 38,
+          "evening": 66,
+          "midnight": 38,
+          "morningExcluded": 6,
+          "midnightExcluded": 0,
+          "excluded": 6,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 86.8,
+          "spareRejects": 19
+        },
+        "targets": {
+          "morning": 43,
+          "afternoon": 41,
+          "evening": 68,
+          "midnight": 52,
+          "total": 204,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 571,
+          "reject": 27,
+          "cancel": 6,
+          "riderFault": 0,
+          "morning": 76,
+          "afternoon": 104,
+          "evening": 190,
+          "midnight": 159,
+          "morningExcluded": 0,
+          "midnightExcluded": 42,
+          "excluded": 42,
+          "count": 65,
+          "onlineCount": 1,
+          "acceptRate": 94.5,
+          "spareRejects": 109
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      }
+    }
+  },
+  {
+    "area": "중구A",
+    "slug": "vic",
+    "businessDate": "2026-09-01",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-09-01 23:44:37",
+    "totalComplete": 1199,
+    "totalReject": 86,
+    "totalCancel": 55,
+    "riderFault": 0,
+    "morning": 225,
+    "afternoon": 214,
+    "evening": 469,
+    "midnight": 280,
+    "morningExcluded": 11,
+    "midnightExcluded": 0,
+    "excluded": 11,
+    "periodTargets": {
+      "morning": 190,
+      "afternoon": 180,
+      "evening": 300,
+      "midnight": 230
+    },
+    "acceptRate": 89.5,
+    "spareRejects": 158,
+    "total": {
+      "complete": 1199,
+      "reject": 86,
+      "cancel": 55,
+      "riderFault": 0,
+      "morning": 225,
+      "afternoon": 214,
+      "evening": 469,
+      "midnight": 280,
+      "morningExcluded": 11,
+      "midnightExcluded": 0,
+      "excluded": 11,
+      "count": 164,
+      "onlineCount": 10,
+      "acceptRate": 89.5,
+      "spareRejects": 158
+    },
+    "teams": {
+      "성공": {
+        "summary": {
+          "complete": 412,
+          "reject": 38,
+          "cancel": 22,
+          "riderFault": 0,
+          "morning": 80,
+          "afternoon": 65,
+          "evening": 149,
+          "midnight": 107,
+          "morningExcluded": 11,
+          "midnightExcluded": 0,
+          "excluded": 11,
+          "count": 45,
+          "onlineCount": 3,
+          "acceptRate": 87.3,
+          "spareRejects": 43
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "상생": {
+        "summary": {
+          "complete": 154,
+          "reject": 3,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 32,
+          "afternoon": 38,
+          "evening": 57,
+          "midnight": 27,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 29,
+          "onlineCount": 1,
+          "acceptRate": 92.8,
+          "spareRejects": 26
+        },
+        "targets": {
+          "morning": 24,
+          "afternoon": 23,
+          "evening": 38,
+          "midnight": 29,
+          "total": 114,
+          "sets": 1.25
+        }
+      },
+      "BM": {
+        "summary": {
+          "complete": 155,
+          "reject": 14,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 34,
+          "afternoon": 27,
+          "evening": 67,
+          "midnight": 27,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 25,
+          "onlineCount": 0,
+          "acceptRate": 85.6,
+          "spareRejects": 12
+        },
+        "targets": {
+          "morning": 43,
+          "afternoon": 41,
+          "evening": 68,
+          "midnight": 52,
+          "total": 204,
+          "sets": 2.25
+        }
+      },
+      "서구": {
+        "summary": {
+          "complete": 478,
+          "reject": 31,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 79,
+          "afternoon": 84,
+          "evening": 196,
+          "midnight": 119,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 65,
+          "onlineCount": 6,
+          "acceptRate": 91.7,
+          "spareRejects": 76
+        },
+        "targets": {
+          "morning": 62,
+          "afternoon": 59,
+          "evening": 98,
+          "midnight": 75,
+          "total": 294,
+          "sets": 3.25
+        }
+      },
+      "룰랄": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
+        },
+        "targets": {
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "total": 0,
+          "sets": 0
+        }
+      },
+      "미분류": {
+        "summary": {
+          "complete": 0,
+          "reject": 0,
+          "cancel": 0,
+          "riderFault": 0,
+          "morning": 0,
+          "afternoon": 0,
+          "evening": 0,
+          "midnight": 0,
+          "morningExcluded": 0,
+          "midnightExcluded": 0,
+          "excluded": 0,
+          "count": 0,
+          "onlineCount": 0,
+          "acceptRate": 100,
+          "spareRejects": 0
         },
         "targets": {
           "morning": 0,

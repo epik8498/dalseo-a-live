@@ -5078,61 +5078,61 @@
     "businessDate": "2026-08-25",
     "weekStart": "2026-08-19",
     "weekEnd": "2026-08-25",
-    "closedAt": "2026-08-25 21:27:06",
-    "totalComplete": 1415,
-    "totalReject": 122,
-    "totalCancel": 48,
-    "riderFault": 0,
+    "closedAt": "2026-08-26 05:59:51",
+    "totalComplete": 1660,
+    "totalReject": 141,
+    "totalCancel": 52,
+    "riderFault": 2,
     "morning": 362,
     "afternoon": 346,
-    "evening": 525,
-    "midnight": 165,
+    "evening": 523,
+    "midnight": 383,
     "morningExcluded": 30,
-    "midnightExcluded": 0,
-    "excluded": 30,
+    "midnightExcluded": 29,
+    "excluded": 59,
     "periodTargets": {
       "morning": 247,
       "afternoon": 234,
       "evening": 390,
       "midnight": 299
     },
-    "acceptRate": 89.3,
-    "spareRejects": 183,
+    "acceptRate": 89.5,
+    "spareRejects": 220,
     "total": {
-      "complete": 1415,
-      "reject": 122,
-      "cancel": 48,
-      "riderFault": 0,
+      "complete": 1660,
+      "reject": 141,
+      "cancel": 52,
+      "riderFault": 2,
       "morning": 362,
       "afternoon": 346,
-      "evening": 525,
-      "midnight": 165,
+      "evening": 523,
+      "midnight": 383,
       "morningExcluded": 30,
-      "midnightExcluded": 0,
-      "excluded": 30,
+      "midnightExcluded": 29,
+      "excluded": 59,
       "count": 216,
-      "onlineCount": 45,
-      "acceptRate": 89.3,
-      "spareRejects": 183
+      "onlineCount": 2,
+      "acceptRate": 89.5,
+      "spareRejects": 220
     },
     "teams": {
       "마음1": {
         "summary": {
-          "complete": 750,
-          "reject": 68,
-          "cancel": 24,
-          "riderFault": 0,
+          "complete": 885,
+          "reject": 80,
+          "cancel": 26,
+          "riderFault": 2,
           "morning": 182,
           "afternoon": 176,
-          "evening": 288,
-          "midnight": 97,
+          "evening": 286,
+          "midnight": 205,
           "morningExcluded": 20,
-          "midnightExcluded": 0,
-          "excluded": 20,
+          "midnightExcluded": 29,
+          "excluded": 49,
           "count": 152,
-          "onlineCount": 24,
+          "onlineCount": 1,
           "acceptRate": 89.1,
-          "spareRejects": 95
+          "spareRejects": 113
         },
         "targets": {
           "morning": 133,
@@ -5145,21 +5145,21 @@
       },
       "마음3": {
         "summary": {
-          "complete": 508,
-          "reject": 40,
-          "cancel": 20,
+          "complete": 597,
+          "reject": 42,
+          "cancel": 21,
           "riderFault": 0,
           "morning": 135,
           "afternoon": 129,
           "evening": 182,
-          "midnight": 56,
+          "midnight": 145,
           "morningExcluded": 6,
           "midnightExcluded": 0,
           "excluded": 6,
           "count": 42,
-          "onlineCount": 15,
-          "acceptRate": 89.4,
-          "spareRejects": 67
+          "onlineCount": 0,
+          "acceptRate": 90.5,
+          "spareRejects": 86
         },
         "targets": {
           "morning": 95,
@@ -5172,21 +5172,2688 @@
       },
       "마음4": {
         "summary": {
-          "complete": 157,
-          "reject": 14,
-          "cancel": 4,
+          "complete": 178,
+          "reject": 19,
+          "cancel": 5,
           "riderFault": 0,
           "morning": 45,
           "afternoon": 41,
           "evening": 55,
-          "midnight": 12,
+          "midnight": 33,
           "morningExcluded": 4,
           "midnightExcluded": 0,
           "excluded": 4,
           "count": 22,
-          "onlineCount": 6,
+          "onlineCount": 1,
+          "acceptRate": 88.1,
+          "spareRejects": 20
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-26",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-27 05:58:15",
+    "totalComplete": 1647,
+    "totalReject": 235,
+    "totalCancel": 68,
+    "riderFault": 0,
+    "morning": 375,
+    "afternoon": 344,
+    "evening": 510,
+    "midnight": 366,
+    "morningExcluded": 29,
+    "midnightExcluded": 23,
+    "excluded": 52,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 84.5,
+    "spareRejects": 108,
+    "total": {
+      "complete": 1647,
+      "reject": 235,
+      "cancel": 68,
+      "riderFault": 0,
+      "morning": 375,
+      "afternoon": 344,
+      "evening": 510,
+      "midnight": 366,
+      "morningExcluded": 29,
+      "midnightExcluded": 23,
+      "excluded": 52,
+      "count": 217,
+      "onlineCount": 1,
+      "acceptRate": 84.5,
+      "spareRejects": 108
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 877,
+          "reject": 151,
+          "cancel": 41,
+          "riderFault": 0,
+          "morning": 198,
+          "afternoon": 196,
+          "evening": 240,
+          "midnight": 200,
+          "morningExcluded": 20,
+          "midnightExcluded": 23,
+          "excluded": 43,
+          "count": 151,
+          "onlineCount": 1,
+          "acceptRate": 82.0,
+          "spareRejects": 27
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 560,
+          "reject": 52,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 134,
+          "afternoon": 126,
+          "evening": 184,
+          "midnight": 108,
+          "morningExcluded": 8,
+          "midnightExcluded": 0,
+          "excluded": 8,
+          "count": 42,
+          "onlineCount": 0,
+          "acceptRate": 88.9,
+          "spareRejects": 70
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 210,
+          "reject": 32,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 43,
+          "afternoon": 22,
+          "evening": 86,
+          "midnight": 58,
+          "morningExcluded": 1,
+          "midnightExcluded": 0,
+          "excluded": 1,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 83.7,
+          "spareRejects": 11
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-27",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-28 05:58:58",
+    "totalComplete": 1812,
+    "totalReject": 332,
+    "totalCancel": 98,
+    "riderFault": 1,
+    "morning": 358,
+    "afternoon": 369,
+    "evening": 497,
+    "midnight": 491,
+    "morningExcluded": 29,
+    "midnightExcluded": 73,
+    "excluded": 102,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 80.8,
+    "spareRejects": 22,
+    "total": {
+      "complete": 1812,
+      "reject": 332,
+      "cancel": 98,
+      "riderFault": 1,
+      "morning": 358,
+      "afternoon": 369,
+      "evening": 497,
+      "midnight": 491,
+      "morningExcluded": 29,
+      "midnightExcluded": 73,
+      "excluded": 102,
+      "count": 219,
+      "onlineCount": 1,
+      "acceptRate": 80.8,
+      "spareRejects": 22
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 988,
+          "reject": 233,
+          "cancel": 60,
+          "riderFault": 1,
+          "morning": 197,
+          "afternoon": 198,
+          "evening": 266,
+          "midnight": 257,
+          "morningExcluded": 18,
+          "midnightExcluded": 57,
+          "excluded": 75,
+          "count": 153,
+          "onlineCount": 1,
+          "acceptRate": 77.1,
+          "spareRejects": -47
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 650,
+          "reject": 66,
+          "cancel": 27,
+          "riderFault": 0,
+          "morning": 108,
+          "afternoon": 129,
+          "evening": 185,
+          "midnight": 206,
+          "morningExcluded": 6,
+          "midnightExcluded": 16,
+          "excluded": 22,
+          "count": 42,
+          "onlineCount": 0,
+          "acceptRate": 87.5,
+          "spareRejects": 69
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 174,
+          "reject": 33,
+          "cancel": 11,
+          "riderFault": 0,
+          "morning": 53,
+          "afternoon": 42,
+          "evening": 46,
+          "midnight": 28,
+          "morningExcluded": 5,
+          "midnightExcluded": 0,
+          "excluded": 5,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 79.8,
+          "spareRejects": -1
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-28",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-29 05:58:10",
+    "totalComplete": 2108,
+    "totalReject": 191,
+    "totalCancel": 67,
+    "riderFault": 0,
+    "morning": 424,
+    "afternoon": 490,
+    "evening": 569,
+    "midnight": 517,
+    "morningExcluded": 40,
+    "midnightExcluded": 71,
+    "excluded": 111,
+    "periodTargets": {
+      "morning": 273,
+      "afternoon": 273,
+      "evening": 416,
+      "midnight": 338
+    },
+    "acceptRate": 89.1,
+    "spareRejects": 269,
+    "total": {
+      "complete": 2108,
+      "reject": 191,
+      "cancel": 67,
+      "riderFault": 0,
+      "morning": 424,
+      "afternoon": 490,
+      "evening": 569,
+      "midnight": 517,
+      "morningExcluded": 40,
+      "midnightExcluded": 71,
+      "excluded": 111,
+      "count": 219,
+      "onlineCount": 2,
+      "acceptRate": 89.1,
+      "spareRejects": 269
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1186,
+          "reject": 118,
+          "cancel": 24,
+          "riderFault": 0,
+          "morning": 256,
+          "afternoon": 272,
+          "evening": 294,
+          "midnight": 278,
+          "morningExcluded": 28,
+          "midnightExcluded": 61,
+          "excluded": 89,
+          "count": 153,
+          "onlineCount": 2,
+          "acceptRate": 89.3,
+          "spareRejects": 154
+        },
+        "targets": {
+          "morning": 147,
+          "afternoon": 147,
+          "evening": 224,
+          "midnight": 182,
+          "total": 700,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 697,
+          "reject": 53,
+          "cancel": 29,
+          "riderFault": 0,
+          "morning": 116,
+          "afternoon": 173,
+          "evening": 186,
+          "midnight": 207,
+          "morningExcluded": 5,
+          "midnightExcluded": 10,
+          "excluded": 15,
+          "count": 42,
+          "onlineCount": 0,
+          "acceptRate": 89.5,
+          "spareRejects": 92
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 130,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 225,
+          "reject": 20,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 52,
+          "afternoon": 45,
+          "evening": 89,
+          "midnight": 32,
+          "morningExcluded": 7,
+          "midnightExcluded": 0,
+          "excluded": 7,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 86.9,
+          "spareRejects": 22
+        },
+        "targets": {
+          "morning": 21,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 26,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-29",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-30 05:59:20",
+    "totalComplete": 2163,
+    "totalReject": 261,
+    "totalCancel": 78,
+    "riderFault": 0,
+    "morning": 640,
+    "afternoon": 426,
+    "evening": 554,
+    "midnight": 453,
+    "morningExcluded": 37,
+    "midnightExcluded": 57,
+    "excluded": 94,
+    "periodTargets": {
+      "morning": 351,
+      "afternoon": 286,
+      "evening": 468,
+      "midnight": 325
+    },
+    "acceptRate": 86.5,
+    "spareRejects": 201,
+    "total": {
+      "complete": 2163,
+      "reject": 261,
+      "cancel": 78,
+      "riderFault": 0,
+      "morning": 640,
+      "afternoon": 426,
+      "evening": 554,
+      "midnight": 453,
+      "morningExcluded": 37,
+      "midnightExcluded": 57,
+      "excluded": 94,
+      "count": 219,
+      "onlineCount": 1,
+      "acceptRate": 86.5,
+      "spareRejects": 201
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1225,
+          "reject": 159,
+          "cancel": 46,
+          "riderFault": 0,
+          "morning": 406,
+          "afternoon": 234,
+          "evening": 309,
+          "midnight": 219,
+          "morningExcluded": 20,
+          "midnightExcluded": 41,
+          "excluded": 61,
+          "count": 153,
+          "onlineCount": 0,
+          "acceptRate": 85.7,
+          "spareRejects": 101
+        },
+        "targets": {
+          "morning": 189,
+          "afternoon": 154,
+          "evening": 252,
+          "midnight": 175,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 701,
+          "reject": 74,
+          "cancel": 24,
+          "riderFault": 0,
+          "morning": 177,
+          "afternoon": 146,
+          "evening": 188,
+          "midnight": 169,
+          "morningExcluded": 8,
+          "midnightExcluded": 13,
+          "excluded": 21,
+          "count": 42,
+          "onlineCount": 1,
+          "acceptRate": 87.7,
+          "spareRejects": 77
+        },
+        "targets": {
+          "morning": 135,
+          "afternoon": 110,
+          "evening": 180,
+          "midnight": 125,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 237,
+          "reject": 28,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 57,
+          "afternoon": 46,
+          "evening": 57,
+          "midnight": 65,
+          "morningExcluded": 9,
+          "midnightExcluded": 3,
+          "excluded": 12,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 86.8,
+          "spareRejects": 23
+        },
+        "targets": {
+          "morning": 27,
+          "afternoon": 22,
+          "evening": 36,
+          "midnight": 25,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-30",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-08-31 05:57:45",
+    "totalComplete": 2190,
+    "totalReject": 214,
+    "totalCancel": 102,
+    "riderFault": 0,
+    "morning": 693,
+    "afternoon": 462,
+    "evening": 607,
+    "midnight": 386,
+    "morningExcluded": 34,
+    "midnightExcluded": 57,
+    "excluded": 91,
+    "periodTargets": {
+      "morning": 377,
+      "afternoon": 286,
+      "evening": 455,
+      "midnight": 312
+    },
+    "acceptRate": 87.4,
+    "spareRejects": 231,
+    "total": {
+      "complete": 2190,
+      "reject": 214,
+      "cancel": 102,
+      "riderFault": 0,
+      "morning": 693,
+      "afternoon": 462,
+      "evening": 607,
+      "midnight": 386,
+      "morningExcluded": 34,
+      "midnightExcluded": 57,
+      "excluded": 91,
+      "count": 220,
+      "onlineCount": 1,
+      "acceptRate": 87.4,
+      "spareRejects": 231
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1210,
+          "reject": 86,
+          "cancel": 42,
+          "riderFault": 0,
+          "morning": 398,
+          "afternoon": 259,
+          "evening": 310,
+          "midnight": 215,
+          "morningExcluded": 25,
+          "midnightExcluded": 52,
+          "excluded": 77,
+          "count": 153,
+          "onlineCount": 1,
+          "acceptRate": 90.4,
+          "spareRejects": 174
+        },
+        "targets": {
+          "morning": 203,
+          "afternoon": 154,
+          "evening": 245,
+          "midnight": 168,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 741,
+          "reject": 96,
+          "cancel": 46,
+          "riderFault": 0,
+          "morning": 204,
+          "afternoon": 163,
+          "evening": 222,
+          "midnight": 143,
+          "morningExcluded": 6,
+          "midnightExcluded": 3,
+          "excluded": 9,
+          "count": 42,
+          "onlineCount": 0,
+          "acceptRate": 83.9,
+          "spareRejects": 43
+        },
+        "targets": {
+          "morning": 145,
+          "afternoon": 110,
+          "evening": 175,
+          "midnight": 120,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 239,
+          "reject": 32,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 91,
+          "afternoon": 40,
+          "evening": 75,
+          "midnight": 28,
+          "morningExcluded": 3,
+          "midnightExcluded": 2,
+          "excluded": 5,
+          "count": 25,
+          "onlineCount": 0,
+          "acceptRate": 83.9,
+          "spareRejects": 13
+        },
+        "targets": {
+          "morning": 29,
+          "afternoon": 22,
+          "evening": 35,
+          "midnight": 24,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-08-31",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-09-01 05:57:52",
+    "totalComplete": 1679,
+    "totalReject": 185,
+    "totalCancel": 48,
+    "riderFault": 0,
+    "morning": 358,
+    "afternoon": 404,
+    "evening": 447,
+    "midnight": 370,
+    "morningExcluded": 34,
+    "midnightExcluded": 71,
+    "excluded": 105,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 87.8,
+    "spareRejects": 186,
+    "total": {
+      "complete": 1679,
+      "reject": 185,
+      "cancel": 48,
+      "riderFault": 0,
+      "morning": 358,
+      "afternoon": 404,
+      "evening": 447,
+      "midnight": 370,
+      "morningExcluded": 34,
+      "midnightExcluded": 71,
+      "excluded": 105,
+      "count": 219,
+      "onlineCount": 1,
+      "acceptRate": 87.8,
+      "spareRejects": 186
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 975,
+          "reject": 89,
+          "cancel": 25,
+          "riderFault": 0,
+          "morning": 191,
+          "afternoon": 211,
+          "evening": 268,
+          "midnight": 224,
+          "morningExcluded": 24,
+          "midnightExcluded": 62,
+          "excluded": 86,
+          "count": 152,
+          "onlineCount": 0,
+          "acceptRate": 89.5,
+          "spareRejects": 129
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 487,
+          "reject": 51,
+          "cancel": 18,
+          "riderFault": 0,
+          "morning": 120,
+          "afternoon": 132,
+          "evening": 113,
+          "midnight": 106,
+          "morningExcluded": 7,
+          "midnightExcluded": 9,
+          "excluded": 16,
+          "count": 42,
+          "onlineCount": 0,
+          "acceptRate": 87.6,
+          "spareRejects": 52
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 217,
+          "reject": 45,
+          "cancel": 5,
+          "riderFault": 0,
+          "morning": 47,
+          "afternoon": 61,
+          "evening": 66,
+          "midnight": 40,
+          "morningExcluded": 3,
+          "midnightExcluded": 0,
+          "excluded": 3,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 81.3,
+          "spareRejects": 4
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-01",
+    "weekStart": "2026-08-26",
+    "weekEnd": "2026-09-01",
+    "closedAt": "2026-09-02 05:59:53",
+    "totalComplete": 1764,
+    "totalReject": 195,
+    "totalCancel": 44,
+    "riderFault": 0,
+    "morning": 350,
+    "afternoon": 419,
+    "evening": 575,
+    "midnight": 350,
+    "morningExcluded": 18,
+    "midnightExcluded": 58,
+    "excluded": 76,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 88.1,
+    "spareRejects": 202,
+    "total": {
+      "complete": 1764,
+      "reject": 195,
+      "cancel": 44,
+      "riderFault": 0,
+      "morning": 350,
+      "afternoon": 419,
+      "evening": 575,
+      "midnight": 350,
+      "morningExcluded": 18,
+      "midnightExcluded": 58,
+      "excluded": 76,
+      "count": 220,
+      "onlineCount": 1,
+      "acceptRate": 88.1,
+      "spareRejects": 202
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1109,
+          "reject": 125,
+          "cancel": 27,
+          "riderFault": 0,
+          "morning": 216,
+          "afternoon": 260,
+          "evening": 351,
+          "midnight": 221,
+          "morningExcluded": 12,
+          "midnightExcluded": 55,
+          "excluded": 67,
+          "count": 153,
+          "onlineCount": 0,
+          "acceptRate": 87.9,
+          "spareRejects": 125
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 487,
+          "reject": 43,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 98,
+          "afternoon": 127,
+          "evening": 161,
+          "midnight": 95,
+          "morningExcluded": 3,
+          "midnightExcluded": 3,
+          "excluded": 6,
+          "count": 42,
+          "onlineCount": 1,
+          "acceptRate": 90.4,
+          "spareRejects": 69
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 168,
+          "reject": 27,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 36,
+          "afternoon": 32,
+          "evening": 63,
+          "midnight": 34,
+          "morningExcluded": 3,
+          "midnightExcluded": 0,
+          "excluded": 3,
+          "count": 25,
+          "onlineCount": 0,
+          "acceptRate": 82.8,
+          "spareRejects": 7
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-02",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-03 05:58:07",
+    "totalComplete": 1485,
+    "totalReject": 209,
+    "totalCancel": 44,
+    "riderFault": 0,
+    "morning": 308,
+    "afternoon": 294,
+    "evening": 508,
+    "midnight": 342,
+    "morningExcluded": 19,
+    "midnightExcluded": 15,
+    "excluded": 34,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 85.4,
+    "spareRejects": 118,
+    "total": {
+      "complete": 1485,
+      "reject": 209,
+      "cancel": 44,
+      "riderFault": 0,
+      "morning": 308,
+      "afternoon": 294,
+      "evening": 508,
+      "midnight": 342,
+      "morningExcluded": 19,
+      "midnightExcluded": 15,
+      "excluded": 34,
+      "count": 219,
+      "onlineCount": 1,
+      "acceptRate": 85.4,
+      "spareRejects": 118
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 742,
+          "reject": 115,
+          "cancel": 23,
+          "riderFault": 0,
+          "morning": 145,
+          "afternoon": 165,
+          "evening": 264,
+          "midnight": 151,
+          "morningExcluded": 5,
+          "midnightExcluded": 13,
+          "excluded": 18,
+          "count": 154,
+          "onlineCount": 1,
+          "acceptRate": 84.3,
+          "spareRejects": 47
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 572,
+          "reject": 47,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 113,
+          "afternoon": 97,
+          "evening": 188,
+          "midnight": 164,
+          "morningExcluded": 8,
+          "midnightExcluded": 2,
+          "excluded": 10,
+          "count": 40,
+          "onlineCount": 0,
+          "acceptRate": 90.6,
+          "spareRejects": 84
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 171,
+          "reject": 47,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 50,
+          "afternoon": 32,
+          "evening": 56,
+          "midnight": 27,
+          "morningExcluded": 6,
+          "midnightExcluded": 0,
+          "excluded": 6,
+          "count": 25,
+          "onlineCount": 0,
+          "acceptRate": 75.3,
+          "spareRejects": -14
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-03",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-04 05:59:41",
+    "totalComplete": 1681,
+    "totalReject": 158,
+    "totalCancel": 41,
+    "riderFault": 0,
+    "morning": 292,
+    "afternoon": 370,
+    "evening": 500,
+    "midnight": 452,
+    "morningExcluded": 27,
+    "midnightExcluded": 34,
+    "excluded": 61,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 89.4,
+    "spareRejects": 221,
+    "total": {
+      "complete": 1681,
+      "reject": 158,
+      "cancel": 41,
+      "riderFault": 0,
+      "morning": 292,
+      "afternoon": 370,
+      "evening": 500,
+      "midnight": 452,
+      "morningExcluded": 27,
+      "midnightExcluded": 34,
+      "excluded": 61,
+      "count": 219,
+      "onlineCount": 2,
+      "acceptRate": 89.4,
+      "spareRejects": 221
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 921,
+          "reject": 83,
+          "cancel": 21,
+          "riderFault": 0,
+          "morning": 136,
+          "afternoon": 209,
+          "evening": 266,
+          "midnight": 263,
+          "morningExcluded": 14,
+          "midnightExcluded": 27,
+          "excluded": 41,
+          "count": 155,
+          "onlineCount": 2,
+          "acceptRate": 89.9,
+          "spareRejects": 126
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 565,
+          "reject": 29,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 116,
+          "afternoon": 120,
+          "evening": 165,
+          "midnight": 148,
+          "morningExcluded": 10,
+          "midnightExcluded": 6,
+          "excluded": 16,
+          "count": 40,
+          "onlineCount": 0,
+          "acceptRate": 93.1,
+          "spareRejects": 99
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 195,
+          "reject": 46,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 40,
+          "afternoon": 41,
+          "evening": 69,
+          "midnight": 41,
+          "morningExcluded": 3,
+          "midnightExcluded": 1,
+          "excluded": 4,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 78.6,
+          "spareRejects": -5
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-04",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-05 05:58:36",
+    "totalComplete": 1852,
+    "totalReject": 223,
+    "totalCancel": 76,
+    "riderFault": 0,
+    "morning": 330,
+    "afternoon": 349,
+    "evening": 562,
+    "midnight": 566,
+    "morningExcluded": 26,
+    "midnightExcluded": 75,
+    "excluded": 101,
+    "periodTargets": {
+      "morning": 273,
+      "afternoon": 273,
+      "evening": 416,
+      "midnight": 338
+    },
+    "acceptRate": 86.1,
+    "spareRejects": 164,
+    "total": {
+      "complete": 1852,
+      "reject": 223,
+      "cancel": 76,
+      "riderFault": 0,
+      "morning": 330,
+      "afternoon": 349,
+      "evening": 562,
+      "midnight": 566,
+      "morningExcluded": 26,
+      "midnightExcluded": 75,
+      "excluded": 101,
+      "count": 219,
+      "onlineCount": 1,
+      "acceptRate": 86.1,
+      "spareRejects": 164
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1075,
+          "reject": 133,
+          "cancel": 45,
+          "riderFault": 0,
+          "morning": 182,
+          "afternoon": 234,
+          "evening": 305,
+          "midnight": 326,
+          "morningExcluded": 17,
+          "midnightExcluded": 67,
+          "excluded": 84,
+          "count": 155,
+          "onlineCount": 1,
+          "acceptRate": 85.8,
+          "spareRejects": 90
+        },
+        "targets": {
+          "morning": 147,
+          "afternoon": 147,
+          "evening": 224,
+          "midnight": 182,
+          "total": 700,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 578,
+          "reject": 37,
+          "cancel": 22,
+          "riderFault": 0,
+          "morning": 112,
+          "afternoon": 72,
+          "evening": 191,
+          "midnight": 189,
+          "morningExcluded": 7,
+          "midnightExcluded": 7,
+          "excluded": 14,
+          "count": 40,
+          "onlineCount": 0,
+          "acceptRate": 90.7,
+          "spareRejects": 85
+        },
+        "targets": {
+          "morning": 105,
+          "afternoon": 105,
+          "evening": 160,
+          "midnight": 130,
+          "total": 500,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 199,
+          "reject": 53,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 36,
+          "afternoon": 43,
+          "evening": 66,
+          "midnight": 51,
+          "morningExcluded": 2,
+          "midnightExcluded": 1,
+          "excluded": 3,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 76.2,
+          "spareRejects": -13
+        },
+        "targets": {
+          "morning": 21,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 26,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-05",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-06 05:59:59",
+    "totalComplete": 2284,
+    "totalReject": 236,
+    "totalCancel": 82,
+    "riderFault": 0,
+    "morning": 581,
+    "afternoon": 377,
+    "evening": 658,
+    "midnight": 559,
+    "morningExcluded": 42,
+    "midnightExcluded": 71,
+    "excluded": 113,
+    "periodTargets": {
+      "morning": 351,
+      "afternoon": 286,
+      "evening": 468,
+      "midnight": 325
+    },
+    "acceptRate": 87.8,
+    "spareRejects": 253,
+    "total": {
+      "complete": 2284,
+      "reject": 236,
+      "cancel": 82,
+      "riderFault": 0,
+      "morning": 581,
+      "afternoon": 377,
+      "evening": 658,
+      "midnight": 559,
+      "morningExcluded": 42,
+      "midnightExcluded": 71,
+      "excluded": 113,
+      "count": 219,
+      "onlineCount": 3,
+      "acceptRate": 87.8,
+      "spareRejects": 253
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1308,
+          "reject": 144,
+          "cancel": 54,
+          "riderFault": 0,
+          "morning": 335,
+          "afternoon": 215,
+          "evening": 355,
+          "midnight": 330,
+          "morningExcluded": 19,
+          "midnightExcluded": 58,
+          "excluded": 77,
+          "count": 155,
+          "onlineCount": 2,
+          "acceptRate": 86.9,
+          "spareRejects": 129
+        },
+        "targets": {
+          "morning": 189,
+          "afternoon": 154,
+          "evening": 252,
+          "midnight": 175,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 739,
+          "reject": 53,
+          "cancel": 19,
+          "riderFault": 0,
+          "morning": 189,
+          "afternoon": 127,
+          "evening": 227,
+          "midnight": 175,
+          "morningExcluded": 14,
+          "midnightExcluded": 7,
+          "excluded": 21,
+          "count": 40,
+          "onlineCount": 1,
+          "acceptRate": 91.1,
+          "spareRejects": 112
+        },
+        "targets": {
+          "morning": 135,
+          "afternoon": 110,
+          "evening": 180,
+          "midnight": 125,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 237,
+          "reject": 39,
+          "cancel": 9,
+          "riderFault": 0,
+          "morning": 57,
+          "afternoon": 35,
+          "evening": 76,
+          "midnight": 54,
+          "morningExcluded": 9,
+          "midnightExcluded": 6,
+          "excluded": 15,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 83.2,
+          "spareRejects": 11
+        },
+        "targets": {
+          "morning": 27,
+          "afternoon": 22,
+          "evening": 36,
+          "midnight": 25,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-06",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-07 05:57:58",
+    "totalComplete": 2134,
+    "totalReject": 214,
+    "totalCancel": 81,
+    "riderFault": 0,
+    "morning": 582,
+    "afternoon": 408,
+    "evening": 605,
+    "midnight": 431,
+    "morningExcluded": 58,
+    "midnightExcluded": 44,
+    "excluded": 102,
+    "periodTargets": {
+      "morning": 377,
+      "afternoon": 286,
+      "evening": 455,
+      "midnight": 312
+    },
+    "acceptRate": 87.9,
+    "spareRejects": 238,
+    "total": {
+      "complete": 2134,
+      "reject": 214,
+      "cancel": 81,
+      "riderFault": 0,
+      "morning": 582,
+      "afternoon": 408,
+      "evening": 605,
+      "midnight": 431,
+      "morningExcluded": 58,
+      "midnightExcluded": 44,
+      "excluded": 102,
+      "count": 218,
+      "onlineCount": 3,
+      "acceptRate": 87.9,
+      "spareRejects": 238
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1259,
+          "reject": 144,
+          "cancel": 59,
+          "riderFault": 0,
+          "morning": 313,
+          "afternoon": 233,
+          "evening": 381,
+          "midnight": 257,
+          "morningExcluded": 35,
+          "midnightExcluded": 34,
+          "excluded": 69,
+          "count": 154,
+          "onlineCount": 2,
+          "acceptRate": 86.1,
+          "spareRejects": 111
+        },
+        "targets": {
+          "morning": 203,
+          "afternoon": 154,
+          "evening": 245,
+          "midnight": 168,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 596,
+          "reject": 38,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 194,
+          "afternoon": 119,
+          "evening": 146,
+          "midnight": 112,
+          "morningExcluded": 15,
+          "midnightExcluded": 10,
+          "excluded": 25,
+          "count": 40,
+          "onlineCount": 1,
+          "acceptRate": 92.8,
+          "spareRejects": 103
+        },
+        "targets": {
+          "morning": 145,
+          "afternoon": 110,
+          "evening": 175,
+          "midnight": 120,
+          "total": 550,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 279,
+          "reject": 32,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 75,
+          "afternoon": 56,
+          "evening": 78,
+          "midnight": 62,
+          "morningExcluded": 8,
+          "midnightExcluded": 0,
+          "excluded": 8,
+          "count": 24,
+          "onlineCount": 0,
+          "acceptRate": 85.8,
+          "spareRejects": 23
+        },
+        "targets": {
+          "morning": 29,
+          "afternoon": 22,
+          "evening": 35,
+          "midnight": 24,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-07",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-08 05:57:56",
+    "totalComplete": 1573,
+    "totalReject": 153,
+    "totalCancel": 37,
+    "riderFault": 1,
+    "morning": 283,
+    "afternoon": 326,
+    "evening": 470,
+    "midnight": 432,
+    "morningExcluded": 43,
+    "midnightExcluded": 45,
+    "excluded": 88,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 89.2,
+    "spareRejects": 202,
+    "total": {
+      "complete": 1573,
+      "reject": 153,
+      "cancel": 37,
+      "riderFault": 1,
+      "morning": 283,
+      "afternoon": 326,
+      "evening": 470,
+      "midnight": 432,
+      "morningExcluded": 43,
+      "midnightExcluded": 45,
+      "excluded": 88,
+      "count": 220,
+      "onlineCount": 1,
+      "acceptRate": 89.2,
+      "spareRejects": 202
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 883,
+          "reject": 76,
+          "cancel": 23,
+          "riderFault": 0,
+          "morning": 163,
+          "afternoon": 169,
+          "evening": 256,
+          "midnight": 265,
+          "morningExcluded": 29,
+          "midnightExcluded": 27,
+          "excluded": 56,
+          "count": 155,
+          "onlineCount": 0,
+          "acceptRate": 89.9,
+          "spareRejects": 121
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 487,
+          "reject": 35,
+          "cancel": 10,
+          "riderFault": 0,
+          "morning": 91,
+          "afternoon": 133,
+          "evening": 127,
+          "midnight": 107,
+          "morningExcluded": 14,
+          "midnightExcluded": 15,
+          "excluded": 29,
+          "count": 40,
+          "onlineCount": 0,
+          "acceptRate": 91.5,
+          "spareRejects": 76
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 203,
+          "reject": 42,
+          "cancel": 4,
+          "riderFault": 1,
+          "morning": 29,
+          "afternoon": 24,
+          "evening": 87,
+          "midnight": 60,
+          "morningExcluded": 0,
+          "midnightExcluded": 3,
+          "excluded": 3,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 81.2,
+          "spareRejects": 3
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-08",
+    "weekStart": "2026-09-02",
+    "weekEnd": "2026-09-08",
+    "closedAt": "2026-09-09 05:58:00",
+    "totalComplete": 1590,
+    "totalReject": 169,
+    "totalCancel": 45,
+    "riderFault": 0,
+    "morning": 316,
+    "afternoon": 297,
+    "evening": 520,
+    "midnight": 371,
+    "morningExcluded": 40,
+    "midnightExcluded": 64,
+    "excluded": 104,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 88.1,
+    "spareRejects": 183,
+    "total": {
+      "complete": 1590,
+      "reject": 169,
+      "cancel": 45,
+      "riderFault": 0,
+      "morning": 316,
+      "afternoon": 297,
+      "evening": 520,
+      "midnight": 371,
+      "morningExcluded": 40,
+      "midnightExcluded": 64,
+      "excluded": 104,
+      "count": 219,
+      "onlineCount": 2,
+      "acceptRate": 88.1,
+      "spareRejects": 183
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1010,
+          "reject": 102,
+          "cancel": 27,
+          "riderFault": 0,
+          "morning": 195,
+          "afternoon": 191,
+          "evening": 352,
+          "midnight": 210,
+          "morningExcluded": 22,
+          "midnightExcluded": 37,
+          "excluded": 59,
+          "count": 155,
+          "onlineCount": 1,
+          "acceptRate": 88.7,
+          "spareRejects": 123
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 357,
+          "reject": 33,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 85,
+          "afternoon": 66,
+          "evening": 78,
+          "midnight": 106,
+          "morningExcluded": 16,
+          "midnightExcluded": 27,
+          "excluded": 43,
+          "count": 39,
+          "onlineCount": 0,
           "acceptRate": 89.7,
-          "spareRejects": 21
+          "spareRejects": 48
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 223,
+          "reject": 34,
+          "cancel": 10,
+          "riderFault": 0,
+          "morning": 36,
+          "afternoon": 40,
+          "evening": 90,
+          "midnight": 55,
+          "morningExcluded": 2,
+          "midnightExcluded": 0,
+          "excluded": 2,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 83.5,
+          "spareRejects": 11
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-09",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-10 05:58:31",
+    "totalComplete": 1780,
+    "totalReject": 166,
+    "totalCancel": 49,
+    "riderFault": 1,
+    "morning": 310,
+    "afternoon": 331,
+    "evening": 628,
+    "midnight": 460,
+    "morningExcluded": 33,
+    "midnightExcluded": 35,
+    "excluded": 68,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 89.2,
+    "spareRejects": 229,
+    "total": {
+      "complete": 1780,
+      "reject": 166,
+      "cancel": 49,
+      "riderFault": 1,
+      "morning": 310,
+      "afternoon": 331,
+      "evening": 628,
+      "midnight": 460,
+      "morningExcluded": 33,
+      "midnightExcluded": 35,
+      "excluded": 68,
+      "count": 219,
+      "onlineCount": 4,
+      "acceptRate": 89.2,
+      "spareRejects": 229
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1071,
+          "reject": 90,
+          "cancel": 29,
+          "riderFault": 1,
+          "morning": 183,
+          "afternoon": 202,
+          "evening": 383,
+          "midnight": 248,
+          "morningExcluded": 21,
+          "midnightExcluded": 31,
+          "excluded": 52,
+          "count": 155,
+          "onlineCount": 2,
+          "acceptRate": 89.9,
+          "spareRejects": 147
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 489,
+          "reject": 39,
+          "cancel": 7,
+          "riderFault": 0,
+          "morning": 86,
+          "afternoon": 98,
+          "evening": 159,
+          "midnight": 154,
+          "morningExcluded": 8,
+          "midnightExcluded": 4,
+          "excluded": 12,
+          "count": 39,
+          "onlineCount": 1,
+          "acceptRate": 91.4,
+          "spareRejects": 76
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 220,
+          "reject": 37,
+          "cancel": 13,
+          "riderFault": 0,
+          "morning": 41,
+          "afternoon": 31,
+          "evening": 86,
+          "midnight": 58,
+          "morningExcluded": 4,
+          "midnightExcluded": 0,
+          "excluded": 4,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 81.5,
+          "spareRejects": 5
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-10",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-11 05:58:58",
+    "totalComplete": 1800,
+    "totalReject": 163,
+    "totalCancel": 58,
+    "riderFault": 2,
+    "morning": 289,
+    "afternoon": 344,
+    "evening": 643,
+    "midnight": 475,
+    "morningExcluded": 31,
+    "midnightExcluded": 32,
+    "excluded": 63,
+    "periodTargets": {
+      "morning": 247,
+      "afternoon": 234,
+      "evening": 390,
+      "midnight": 299
+    },
+    "acceptRate": 89.0,
+    "spareRejects": 227,
+    "total": {
+      "complete": 1800,
+      "reject": 163,
+      "cancel": 58,
+      "riderFault": 2,
+      "morning": 289,
+      "afternoon": 344,
+      "evening": 643,
+      "midnight": 475,
+      "morningExcluded": 31,
+      "midnightExcluded": 32,
+      "excluded": 63,
+      "count": 220,
+      "onlineCount": 7,
+      "acceptRate": 89.0,
+      "spareRejects": 227
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1097,
+          "reject": 87,
+          "cancel": 33,
+          "riderFault": 2,
+          "morning": 168,
+          "afternoon": 220,
+          "evening": 388,
+          "midnight": 281,
+          "morningExcluded": 17,
+          "midnightExcluded": 20,
+          "excluded": 37,
+          "count": 156,
+          "onlineCount": 3,
+          "acceptRate": 90.0,
+          "spareRejects": 152
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 492,
+          "reject": 31,
+          "cancel": 17,
+          "riderFault": 0,
+          "morning": 89,
+          "afternoon": 90,
+          "evening": 182,
+          "midnight": 128,
+          "morningExcluded": 11,
+          "midnightExcluded": 9,
+          "excluded": 20,
+          "count": 39,
+          "onlineCount": 3,
+          "acceptRate": 91.1,
+          "spareRejects": 75
+        },
+        "targets": {
+          "morning": 95,
+          "afternoon": 90,
+          "evening": 150,
+          "midnight": 115,
+          "total": 450,
+          "sets": 5
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 211,
+          "reject": 45,
+          "cancel": 8,
+          "riderFault": 0,
+          "morning": 32,
+          "afternoon": 34,
+          "evening": 73,
+          "midnight": 66,
+          "morningExcluded": 3,
+          "midnightExcluded": 3,
+          "excluded": 6,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 79.9,
+          "spareRejects": -1
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-11",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-12 05:59:58",
+    "totalComplete": 1968,
+    "totalReject": 236,
+    "totalCancel": 64,
+    "riderFault": 0,
+    "morning": 322,
+    "afternoon": 397,
+    "evening": 651,
+    "midnight": 501,
+    "morningExcluded": 42,
+    "midnightExcluded": 49,
+    "excluded": 91,
+    "periodTargets": {
+      "morning": 252,
+      "afternoon": 252,
+      "evening": 384,
+      "midnight": 312
+    },
+    "acceptRate": 86.8,
+    "spareRejects": 192,
+    "total": {
+      "complete": 1968,
+      "reject": 236,
+      "cancel": 64,
+      "riderFault": 0,
+      "morning": 322,
+      "afternoon": 397,
+      "evening": 651,
+      "midnight": 501,
+      "morningExcluded": 42,
+      "midnightExcluded": 49,
+      "excluded": 91,
+      "count": 219,
+      "onlineCount": 5,
+      "acceptRate": 86.8,
+      "spareRejects": 192
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1180,
+          "reject": 152,
+          "cancel": 47,
+          "riderFault": 0,
+          "morning": 162,
+          "afternoon": 265,
+          "evening": 389,
+          "midnight": 287,
+          "morningExcluded": 30,
+          "midnightExcluded": 41,
+          "excluded": 71,
+          "count": 154,
+          "onlineCount": 2,
+          "acceptRate": 85.6,
+          "spareRejects": 96
+        },
+        "targets": {
+          "morning": 147,
+          "afternoon": 147,
+          "evening": 224,
+          "midnight": 182,
+          "total": 700,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 587,
+          "reject": 36,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 122,
+          "afternoon": 107,
+          "evening": 184,
+          "midnight": 160,
+          "morningExcluded": 6,
+          "midnightExcluded": 8,
+          "excluded": 14,
+          "count": 40,
+          "onlineCount": 2,
+          "acceptRate": 92.2,
+          "spareRejects": 96
+        },
+        "targets": {
+          "morning": 84,
+          "afternoon": 84,
+          "evening": 128,
+          "midnight": 104,
+          "total": 400,
+          "sets": 4
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 201,
+          "reject": 48,
+          "cancel": 3,
+          "riderFault": 0,
+          "morning": 38,
+          "afternoon": 25,
+          "evening": 78,
+          "midnight": 54,
+          "morningExcluded": 6,
+          "midnightExcluded": 0,
+          "excluded": 6,
+          "count": 25,
+          "onlineCount": 1,
+          "acceptRate": 79.8,
+          "spareRejects": -1
+        },
+        "targets": {
+          "morning": 21,
+          "afternoon": 21,
+          "evening": 32,
+          "midnight": 26,
+          "total": 100,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-12",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-13 01:00:46",
+    "totalComplete": 2488,
+    "totalReject": 230,
+    "totalCancel": 92,
+    "riderFault": 0,
+    "morning": 651,
+    "afternoon": 416,
+    "evening": 745,
+    "midnight": 603,
+    "morningExcluded": 47,
+    "midnightExcluded": 20,
+    "excluded": 67,
+    "periodTargets": {
+      "morning": 324,
+      "afternoon": 264,
+      "evening": 432,
+      "midnight": 300
+    },
+    "acceptRate": 88.5,
+    "spareRejects": 300,
+    "total": {
+      "complete": 2488,
+      "reject": 230,
+      "cancel": 92,
+      "riderFault": 0,
+      "morning": 651,
+      "afternoon": 416,
+      "evening": 745,
+      "midnight": 603,
+      "morningExcluded": 47,
+      "midnightExcluded": 20,
+      "excluded": 67,
+      "count": 219,
+      "onlineCount": 8,
+      "acceptRate": 88.5,
+      "spareRejects": 300
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1443,
+          "reject": 127,
+          "cancel": 54,
+          "riderFault": 0,
+          "morning": 391,
+          "afternoon": 257,
+          "evening": 416,
+          "midnight": 329,
+          "morningExcluded": 28,
+          "midnightExcluded": 16,
+          "excluded": 44,
+          "count": 160,
+          "onlineCount": 5,
+          "acceptRate": 88.9,
+          "spareRejects": 179
+        },
+        "targets": {
+          "morning": 189,
+          "afternoon": 154,
+          "evening": 252,
+          "midnight": 175,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 788,
+          "reject": 58,
+          "cancel": 28,
+          "riderFault": 0,
+          "morning": 200,
+          "afternoon": 126,
+          "evening": 240,
+          "midnight": 207,
+          "morningExcluded": 12,
+          "midnightExcluded": 3,
+          "excluded": 15,
+          "count": 38,
+          "onlineCount": 1,
+          "acceptRate": 90.2,
+          "spareRejects": 111
+        },
+        "targets": {
+          "morning": 108,
+          "afternoon": 88,
+          "evening": 144,
+          "midnight": 100,
+          "total": 440,
+          "sets": 4
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 257,
+          "reject": 45,
+          "cancel": 10,
+          "riderFault": 0,
+          "morning": 60,
+          "afternoon": 33,
+          "evening": 89,
+          "midnight": 67,
+          "morningExcluded": 7,
+          "midnightExcluded": 1,
+          "excluded": 8,
+          "count": 21,
+          "onlineCount": 2,
+          "acceptRate": 82.4,
+          "spareRejects": 9
+        },
+        "targets": {
+          "morning": 27,
+          "afternoon": 22,
+          "evening": 36,
+          "midnight": 25,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-13",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-14 01:00:27",
+    "totalComplete": 2331,
+    "totalReject": 256,
+    "totalCancel": 88,
+    "riderFault": 0,
+    "morning": 638,
+    "afternoon": 448,
+    "evening": 741,
+    "midnight": 442,
+    "morningExcluded": 35,
+    "midnightExcluded": 21,
+    "excluded": 56,
+    "periodTargets": {
+      "morning": 348,
+      "afternoon": 264,
+      "evening": 420,
+      "midnight": 288
+    },
+    "acceptRate": 87.1,
+    "spareRejects": 238,
+    "total": {
+      "complete": 2331,
+      "reject": 256,
+      "cancel": 88,
+      "riderFault": 0,
+      "morning": 638,
+      "afternoon": 448,
+      "evening": 741,
+      "midnight": 442,
+      "morningExcluded": 35,
+      "midnightExcluded": 21,
+      "excluded": 56,
+      "count": 219,
+      "onlineCount": 8,
+      "acceptRate": 87.1,
+      "spareRejects": 238
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 1296,
+          "reject": 143,
+          "cancel": 50,
+          "riderFault": 0,
+          "morning": 344,
+          "afternoon": 271,
+          "evening": 392,
+          "midnight": 245,
+          "morningExcluded": 20,
+          "midnightExcluded": 18,
+          "excluded": 38,
+          "count": 160,
+          "onlineCount": 7,
+          "acceptRate": 87.0,
+          "spareRejects": 131
+        },
+        "targets": {
+          "morning": 203,
+          "afternoon": 154,
+          "evening": 245,
+          "midnight": 168,
+          "total": 770,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 745,
+          "reject": 77,
+          "cancel": 26,
+          "riderFault": 0,
+          "morning": 205,
+          "afternoon": 134,
+          "evening": 247,
+          "midnight": 142,
+          "morningExcluded": 14,
+          "midnightExcluded": 3,
+          "excluded": 17,
+          "count": 38,
+          "onlineCount": 1,
+          "acceptRate": 87.9,
+          "spareRejects": 83
+        },
+        "targets": {
+          "morning": 116,
+          "afternoon": 88,
+          "evening": 140,
+          "midnight": 96,
+          "total": 440,
+          "sets": 4
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 290,
+          "reject": 36,
+          "cancel": 12,
+          "riderFault": 0,
+          "morning": 89,
+          "afternoon": 43,
+          "evening": 102,
+          "midnight": 55,
+          "morningExcluded": 1,
+          "midnightExcluded": 0,
+          "excluded": 1,
+          "count": 21,
+          "onlineCount": 0,
+          "acceptRate": 85.8,
+          "spareRejects": 24
+        },
+        "targets": {
+          "morning": 29,
+          "afternoon": 22,
+          "evening": 35,
+          "midnight": 24,
+          "total": 110,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-14",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-15 01:00:31",
+    "totalComplete": 1603,
+    "totalReject": 183,
+    "totalCancel": 52,
+    "riderFault": 0,
+    "morning": 302,
+    "afternoon": 376,
+    "evening": 537,
+    "midnight": 349,
+    "morningExcluded": 28,
+    "midnightExcluded": 7,
+    "excluded": 35,
+    "periodTargets": {
+      "morning": 228,
+      "afternoon": 216,
+      "evening": 360,
+      "midnight": 276
+    },
+    "acceptRate": 87.2,
+    "spareRejects": 165,
+    "total": {
+      "complete": 1603,
+      "reject": 183,
+      "cancel": 52,
+      "riderFault": 0,
+      "morning": 302,
+      "afternoon": 376,
+      "evening": 537,
+      "midnight": 349,
+      "morningExcluded": 28,
+      "midnightExcluded": 7,
+      "excluded": 35,
+      "count": 218,
+      "onlineCount": 8,
+      "acceptRate": 87.2,
+      "spareRejects": 165
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 985,
+          "reject": 78,
+          "cancel": 33,
+          "riderFault": 0,
+          "morning": 167,
+          "afternoon": 225,
+          "evening": 335,
+          "midnight": 233,
+          "morningExcluded": 14,
+          "midnightExcluded": 7,
+          "excluded": 21,
+          "count": 160,
+          "onlineCount": 7,
+          "acceptRate": 89.9,
+          "spareRejects": 135
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 421,
+          "reject": 65,
+          "cancel": 14,
+          "riderFault": 0,
+          "morning": 97,
+          "afternoon": 101,
+          "evening": 127,
+          "midnight": 85,
+          "morningExcluded": 11,
+          "midnightExcluded": 0,
+          "excluded": 11,
+          "count": 38,
+          "onlineCount": 0,
+          "acceptRate": 84.2,
+          "spareRejects": 26
+        },
+        "targets": {
+          "morning": 76,
+          "afternoon": 72,
+          "evening": 120,
+          "midnight": 92,
+          "total": 360,
+          "sets": 4
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 197,
+          "reject": 40,
+          "cancel": 5,
+          "riderFault": 0,
+          "morning": 38,
+          "afternoon": 50,
+          "evening": 75,
+          "midnight": 31,
+          "morningExcluded": 3,
+          "midnightExcluded": 0,
+          "excluded": 3,
+          "count": 20,
+          "onlineCount": 1,
+          "acceptRate": 81.4,
+          "spareRejects": 4
+        },
+        "targets": {
+          "morning": 19,
+          "afternoon": 18,
+          "evening": 30,
+          "midnight": 23,
+          "total": 90,
+          "sets": 1
+        }
+      }
+    }
+  },
+  {
+    "area": "마음 달서A",
+    "slug": "maeuma",
+    "businessDate": "2026-09-15",
+    "weekStart": "2026-09-09",
+    "weekEnd": "2026-09-15",
+    "closedAt": "2026-09-16 01:02:04",
+    "totalComplete": 1667,
+    "totalReject": 174,
+    "totalCancel": 59,
+    "riderFault": 0,
+    "morning": 319,
+    "afternoon": 336,
+    "evening": 581,
+    "midnight": 422,
+    "morningExcluded": 28,
+    "midnightExcluded": 23,
+    "excluded": 51,
+    "periodTargets": {
+      "morning": 228,
+      "afternoon": 216,
+      "evening": 360,
+      "midnight": 276
+    },
+    "acceptRate": 87.7,
+    "spareRejects": 183,
+    "total": {
+      "complete": 1667,
+      "reject": 174,
+      "cancel": 59,
+      "riderFault": 0,
+      "morning": 319,
+      "afternoon": 336,
+      "evening": 581,
+      "midnight": 422,
+      "morningExcluded": 28,
+      "midnightExcluded": 23,
+      "excluded": 51,
+      "count": 218,
+      "onlineCount": 10,
+      "acceptRate": 87.7,
+      "spareRejects": 183
+    },
+    "teams": {
+      "마음1": {
+        "summary": {
+          "complete": 964,
+          "reject": 104,
+          "cancel": 41,
+          "riderFault": 0,
+          "morning": 181,
+          "afternoon": 214,
+          "evening": 347,
+          "midnight": 236,
+          "morningExcluded": 15,
+          "midnightExcluded": 13,
+          "excluded": 28,
+          "count": 159,
+          "onlineCount": 8,
+          "acceptRate": 86.9,
+          "spareRejects": 96
+        },
+        "targets": {
+          "morning": 133,
+          "afternoon": 126,
+          "evening": 210,
+          "midnight": 161,
+          "total": 630,
+          "sets": 7
+        }
+      },
+      "마음3": {
+        "summary": {
+          "complete": 484,
+          "reject": 43,
+          "cancel": 15,
+          "riderFault": 0,
+          "morning": 107,
+          "afternoon": 85,
+          "evening": 146,
+          "midnight": 127,
+          "morningExcluded": 9,
+          "midnightExcluded": 10,
+          "excluded": 19,
+          "count": 38,
+          "onlineCount": 1,
+          "acceptRate": 89.3,
+          "spareRejects": 63
+        },
+        "targets": {
+          "morning": 76,
+          "afternoon": 72,
+          "evening": 120,
+          "midnight": 92,
+          "total": 360,
+          "sets": 4
+        }
+      },
+      "마음4": {
+        "summary": {
+          "complete": 219,
+          "reject": 27,
+          "cancel": 3,
+          "riderFault": 0,
+          "morning": 31,
+          "afternoon": 37,
+          "evening": 88,
+          "midnight": 59,
+          "morningExcluded": 4,
+          "midnightExcluded": 0,
+          "excluded": 4,
+          "count": 21,
+          "onlineCount": 1,
+          "acceptRate": 88.0,
+          "spareRejects": 24
         },
         "targets": {
           "morning": 19,

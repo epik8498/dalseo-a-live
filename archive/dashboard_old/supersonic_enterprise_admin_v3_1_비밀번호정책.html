@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SUPERSONIC Enterprise Admin</title>
+<style>
+:root{--red:#e60012;--bg:#f4f5f7;--card:#fff;--text:#111;--muted:#72767e;--line:#e3e5e8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,'Noto Sans KR',sans-serif;font-weight:700}
+button,input,select{font:inherit}.wrap{max-width:1180px;margin:0 auto;padding:24px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.brand{font-size:28px;font-weight:1000;font-style:italic;color:var(--red)}.sub{font-size:14px;color:var(--muted);margin-top:5px}.top-actions{display:flex;gap:8px}
+.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:1000;cursor:pointer}.btn.red{background:var(--red);color:#fff}.btn.dark{background:#161616;color:#fff}.btn.soft{background:#fff;border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:18px;align-items:start}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
+.card h2{font-size:19px;margin:0 0 15px}.field{margin:12px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafafa;font-size:13px}.check input{width:auto}
+.notice{font-size:12px;line-height:1.55;color:var(--muted);margin-top:8px}.flash{display:none;margin-bottom:14px;border-radius:12px;padding:12px 14px;font-size:14px}.flash.ok{display:block;background:#e9fff2;color:#08783f}.flash.err{display:block;background:#fff0f0;color:#b6000f}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:750px}th,td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line);font-size:13px;vertical-align:middle}th{color:var(--muted);font-size:12px;background:#fafafa}
+.badge{display:inline-block;border-radius:999px;padding:5px 8px;font-size:11px;background:#f0f1f3}.badge.on{background:#e9fff2;color:#08783f}.badge.off{background:#fff0f0;color:#b6000f}
+.user-actions{display:flex;gap:6px;flex-wrap:wrap}.small{padding:7px 9px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px;font-weight:900}
+.tenant-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.tenant-chip{font-size:12px;background:#f4f4f5;border:1px solid var(--line);padding:7px 9px;border-radius:9px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;align-items:center;justify-content:center;padding:16px}.modal-bg.show{display:flex}.modal{width:min(620px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:18px;padding:20px}.modal h3{margin:0 0 12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.protected{color:var(--muted);font-size:11px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.row2{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap"><div class="top"><div><div class="brand">SUPERSONIC ADMIN</div><div class="sub">업체 · 계정 · DP · 기능 권한 관리</div></div><div class="top-actions"><button class="btn soft" onclick="location.href='/'">관제판</button><button class="btn dark" onclick="logout()">로그아웃</button></div></div>
+<div id="flash" class="flash"></div><div class="grid"><div>
+<div class="card" id="tenantCreateCard"><h2>업체 생성</h2><div class="field"><label>업체명</label><input id="tenantName" placeholder="예: ONNA+ 달서지사"></div><div class="field"><label>업체 ID (선택)</label><input id="tenantId" placeholder="비우면 자동 생성"></div><button class="btn red" style="width:100%" onclick="createTenant()">업체 생성</button><div class="notice">업체 ID는 영문/숫자/하이픈/밑줄만 사용합니다.</div><div class="tenant-list" id="tenantList"></div></div>
+<div class="card" style="margin-top:18px"><h2>계정 발급</h2><div class="field"><label>아이디</label><input id="newUsername" autocomplete="off" placeholder="영문/숫자 3자 이상"></div><div class="field"><label>초기 비밀번호</label><input id="newPassword" type="password" autocomplete="new-password" placeholder="10자 이상 · 문자종류 3개 이상"></div><div class="row2"><div class="field"><label>업체</label><select id="newTenant"></select></div><div class="field"><label>역할</label><select id="newRole"></select></div></div><div class="field"><label>허용 DP</label><div class="checks" id="newCenters"></div></div><div class="field"><label>허용 기능</label><div class="checks" id="newFeatures"></div></div><button class="btn red" style="width:100%" onclick="createUser()">계정 발급</button><div class="notice" id="grantNotice">비밀번호: 10자 이상, 대문자·소문자·숫자·특수문자 중 3종류 이상. 아이디 포함 금지.<br>기사관리 권한을 켜면 개인정보 권한도 서버에서 자동 포함됩니다.</div></div>
+</div><div class="card"><h2>계정 관리 <span id="count" style="font-size:13px;color:var(--muted)"></span></h2><div class="table-wrap"><table><thead><tr><th>아이디</th><th>업체</th><th>역할</th><th>허용 DP</th><th>상태</th><th>관리</th></tr></thead><tbody id="userRows"></tbody></table></div></div></div></div>
+<div class="modal-bg" id="editModal"><div class="modal"><h3>계정 권한 수정</h3><input type="hidden" id="editUserId"><div class="field"><label>아이디</label><input id="editUsername" disabled></div><div class="row2"><div class="field"><label>업체</label><select id="editTenant"></select></div><div class="field"><label>역할</label><select id="editRole"></select></div></div><div class="field"><label>허용 DP</label><div class="checks" id="editCenters"></div></div><div class="field"><label>허용 기능</label><div class="checks" id="editFeatures"></div></div><div class="field"><label>계정 상태</label><select id="editActive"><option value="1">사용</option><option value="0">중지</option></select></div><div class="notice">저장하면 해당 계정의 기존 로그인 세션은 즉시 종료됩니다.</div><div class="modal-actions"><button class="btn soft" onclick="closeEdit()">취소</button><button class="btn red" onclick="saveEdit()">저장</button></div></div></div>
+<script>
+let STATE={tenants:[],users:[],centers:[],roles:[],currentUserId:null,adminMode:"SUPER",canCreateTenant:false,currentTenantId:null};
+const FEATURES=[['view','운영현황'],['weekly','주간실적'],['settlement','주간정산'],['personal','개인정보'],['manage','기사관리'],['sms','단체문자']];
+function passwordPolicyError(password,username=''){
+  if(password.length<10)return '비밀번호는 10자 이상이어야 합니다.';
+  if(password.length>128)return '비밀번호는 128자 이하여야 합니다.';
+  if(/\s/.test(password))return '비밀번호에는 공백을 사용할 수 없습니다.';
+  let classes=0;
+  if(/[a-z]/.test(password))classes++;
+  if(/[A-Z]/.test(password))classes++;
+  if(/[0-9]/.test(password))classes++;
+  if(/[^A-Za-z0-9]/.test(password))classes++;
+  if(classes<3)return '대문자·소문자·숫자·특수문자 중 3종류 이상을 포함하세요.';
+  const u=(username||'').replace(/[^A-Za-z0-9]/g,'').toLowerCase();
+  const p=password.replace(/[^A-Za-z0-9]/g,'').toLowerCase();
+  if(u.length>=3&&p.includes(u))return '비밀번호에 아이디를 그대로 포함할 수 없습니다.';
+  return '';
+}
+function passwordApiMessage(code){
+  return {
+    PASSWORD_TOO_SHORT:'비밀번호는 10자 이상이어야 합니다.',
+    PASSWORD_TOO_LONG:'비밀번호는 128자 이하여야 합니다.',
+    PASSWORD_WHITESPACE_NOT_ALLOWED:'비밀번호에는 공백을 사용할 수 없습니다.',
+    PASSWORD_COMPLEXITY:'대문자·소문자·숫자·특수문자 중 3종류 이상을 포함하세요.',
+    PASSWORD_CONTAINS_USERNAME:'비밀번호에 아이디를 그대로 포함할 수 없습니다.',
+    PASSWORD_TOO_COMMON:'너무 흔한 비밀번호는 사용할 수 없습니다.'
+  }[code]||code;
+}
+
+async function api(path,opt={}){const r=await fetch(path,{credentials:'same-origin',headers:{'Content-Type':'application/json',...(opt.headers||{})},...opt});let j={};try{j=await r.json()}catch(e){}if(r.status===401){location.href='/';throw new Error('LOGIN_REQUIRED')}if(!r.ok||!j.ok)throw new Error(j.message||passwordApiMessage(j.error)||('HTTP_'+r.status));return j}
+function flash(msg,ok=true){const e=document.getElementById('flash');e.className='flash '+(ok?'ok':'err');e.textContent=msg;clearTimeout(flash.t);flash.t=setTimeout(()=>{e.className='flash'},3500)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function tenantName(id){return STATE.tenants.find(x=>x.id===id)?.name||id}
+function permFeatures(u){const set=new Set();(u.permissions||[]).forEach(p=>{if(p.can_view)set.add('view');if(p.can_view_weekly)set.add('weekly');if(p.can_view_settlement)set.add('settlement');if(p.can_view_personal)set.add('personal');if(p.can_manage_riders)set.add('manage');if(p.can_send_sms)set.add('sms')});return set}
+function checkboxHtml(items,prefix,selected=new Set()){return items.map(([v,label])=>`<label class="check"><input type="checkbox" id="${prefix}_${v}" value="${esc(v)}" ${selected.has(v)?'checked':''}> ${esc(label)}</label>`).join('')}
+function selectedChecks(prefix,values){return values.filter(v=>document.getElementById(prefix+'_'+v)?.checked)}
+function render(){
+const tenantCard=document.getElementById('tenantCreateCard');if(tenantCard)tenantCard.style.display=STATE.canCreateTenant?'block':'none';
+const sub=document.querySelector('.sub');if(sub)sub.textContent=STATE.adminMode==='HQ'?'본사 계정 · 허용 DP · 지사 권한 관리':'업체 · 계정 · DP · 기능 권한 관리';
+document.getElementById('count').textContent=`${STATE.users.length}개 계정`;document.getElementById('tenantList').innerHTML=STATE.tenants.map(t=>`<span class="tenant-chip">${esc(t.name)} · ${esc(t.id)}</span>`).join('');
+const tenantOpts=STATE.tenants.filter(t=>t.active).map(t=>`<option value="${esc(t.id)}">${esc(t.name)} (${esc(t.id)})</option>`).join('');document.getElementById('newTenant').innerHTML=tenantOpts;document.getElementById('editTenant').innerHTML=tenantOpts;
+document.getElementById('newTenant').disabled=STATE.adminMode==='HQ';document.getElementById('editTenant').disabled=STATE.adminMode==='HQ';
+const roleOpts=STATE.roles.map(r=>`<option value="${esc(r)}">${esc(r)}</option>`).join('');document.getElementById('newRole').innerHTML=roleOpts;document.getElementById('editRole').innerHTML=roleOpts;
+const centers=STATE.centers.map(c=>[c.slug,`${c.name} · ${c.dpCode}`]);document.getElementById('newCenters').innerHTML=checkboxHtml(centers,'nc');document.getElementById('editCenters').innerHTML=checkboxHtml(centers,'ec');document.getElementById('newFeatures').innerHTML=checkboxHtml(FEATURES,'nf',new Set(['view','weekly']));const gn=document.getElementById('grantNotice');if(gn)gn.textContent=STATE.adminMode==='HQ'?'본사 계정은 자신의 업체·허용 DP·보유 기능 범위 안에서만 지사 계정을 발급할 수 있습니다. 기사관리 권한은 개인정보 권한을 자동 포함합니다.':'기사관리 권한을 켜면 개인정보 권한도 서버에서 자동 포함됩니다.';document.getElementById('editFeatures').innerHTML=checkboxHtml(FEATURES,'ef');
+document.getElementById('userRows').innerHTML=STATE.users.map(u=>{const names=(u.permissions||[]).map(p=>STATE.centers.find(c=>c.slug===p.center_slug)?.name||p.center_slug).join(', ');const isMe=u.isCurrent;const manageable=!!u.manageable;return `<tr><td><b>${esc(u.username)}</b>${isMe?'<div class="protected">현재 관리자 · 보호됨</div>':''}</td><td>${esc(tenantName(u.tenant_id))}</td><td><span class="badge">${esc(u.role)}</span></td><td>${esc(names||'-')}</td><td><span class="badge ${u.active?'on':'off'}">${u.active?'사용':'중지'}</span></td><td>${manageable?`<div class="user-actions"><button class="small" onclick="openEdit('${u.id}')">권한 수정</button><button class="small" onclick="resetPassword('${u.id}','${esc(u.username)}')">비밀번호 재설정</button></div>`:'<span class="protected">수정 제한</span>'}</td></tr>`}).join('')}
+async function load(){try{STATE=await api('/api/admin/overview');render()}catch(e){flash('관리자 정보를 불러오지 못했습니다: '+e.message,false)}}
+async function createTenant(){const name=document.getElementById('tenantName').value.trim();const id=document.getElementById('tenantId').value.trim();if(!name){flash('업체명을 입력하세요.',false);return}try{await api('/api/admin/tenant/create',{method:'POST',body:JSON.stringify({name,id})});document.getElementById('tenantName').value='';document.getElementById('tenantId').value='';flash('업체를 생성했습니다.');await load()}catch(e){flash('업체 생성 실패: '+e.message,false)}}
+async function createUser(){const username=document.getElementById('newUsername').value.trim();const password=document.getElementById('newPassword').value;const tenantId=document.getElementById('newTenant').value;const role=document.getElementById('newRole').value;const centers=selectedChecks('nc',STATE.centers.map(c=>c.slug));const features=selectedChecks('nf',FEATURES.map(x=>x[0]));const pwErr=passwordPolicyError(password,username);if(pwErr){flash(pwErr,false);return}if(!centers.length){flash('허용 DP를 하나 이상 선택하세요.',false);return}try{await api('/api/admin/user/create',{method:'POST',body:JSON.stringify({username,password,tenantId,role,centers,features})});document.getElementById('newUsername').value='';document.getElementById('newPassword').value='';flash('계정을 발급했습니다.');await load()}catch(e){flash('계정 발급 실패: '+e.message,false)}}
+function openEdit(id){const u=STATE.users.find(x=>x.id===id);if(!u||!u.manageable)return;document.getElementById('editUserId').value=u.id;document.getElementById('editUsername').value=u.username;document.getElementById('editTenant').value=u.tenant_id;document.getElementById('editRole').value=u.role;document.getElementById('editActive').value=u.active?'1':'0';const cset=new Set((u.permissions||[]).map(p=>p.center_slug));STATE.centers.forEach(c=>{const e=document.getElementById('ec_'+c.slug);if(e)e.checked=cset.has(c.slug)});const fset=permFeatures(u);FEATURES.forEach(([f])=>{const e=document.getElementById('ef_'+f);if(e)e.checked=fset.has(f)});document.getElementById('editModal').classList.add('show')}
+function closeEdit(){document.getElementById('editModal').classList.remove('show')}
+async function saveEdit(){const userId=document.getElementById('editUserId').value;const tenantId=document.getElementById('editTenant').value;const role=document.getElementById('editRole').value;const active=document.getElementById('editActive').value==='1';const centers=selectedChecks('ec',STATE.centers.map(c=>c.slug));const features=selectedChecks('ef',FEATURES.map(x=>x[0]));if(!centers.length){flash('허용 DP를 하나 이상 선택하세요.',false);return}try{await api('/api/admin/user/update',{method:'POST',body:JSON.stringify({userId,tenantId,role,active,centers,features})});closeEdit();flash('계정 권한을 저장했습니다.');await load()}catch(e){flash('권한 저장 실패: '+e.message,false)}}
+async function resetPassword(userId,username){const password=prompt(username+' 계정의 새 비밀번호를 입력하세요.\n10자 이상 · 대/소문자/숫자/특수문자 중 3종류 이상');if(password===null)return;const pwErr=passwordPolicyError(password,username);if(pwErr){flash(pwErr,false);return}if(!confirm(username+' 계정의 비밀번호를 재설정할까요? 기존 로그인은 즉시 종료됩니다.'))return;try{await api('/api/admin/user/reset-password',{method:'POST',body:JSON.stringify({userId,password})});flash('비밀번호를 재설정했습니다. 기존 로그인도 종료했습니다.')}catch(e){flash('비밀번호 재설정 실패: '+e.message,false)}}
+async function logout(){try{await api('/api/auth/logout',{method:'POST',body:'{}'})}catch(e){}location.href='/'}
+document.getElementById('editModal').addEventListener('click',e=>{if(e.target.id==='editModal')closeEdit()});load();
+</script></body></html>

@@ -1718,8 +1718,94 @@ async function loadData(){
     if(box)box.innerHTML=`<div class="error">화면 초기화 중 오류가 발생했습니다.<br>${e.message||'알 수 없는 오류'}</div>`;
   }
 }
-function buildWeeklySummary(){const rows=Array.isArray(WEEKLY)?WEEKLY:[];const byDate=Object.fromEntries(rows.map(x=>[x.businessDate,x]));let days=[];let labels=['수','목','금','토','일','월','화'];let baseDates=[];if(DATA&&DATA.weeklySummary&&DATA.weeklySummary.days){baseDates=DATA.weeklySummary.days.map(x=>x.businessDate)}else{let last=rows.length?new Date(rows[rows.length-1].businessDate):new Date();let day=last.getDay();let diff=(day-3+7)%7;let start=new Date(last);start.setDate(last.getDate()-diff);for(let i=0;i<7;i++){let d=new Date(start);d.setDate(start.getDate()+i);baseDates.push(d.toISOString().slice(0,10))}}
-let totals={complete:0,bad:0,spare:0,excluded:0};days=baseDates.map((dk,i)=>{let r=byDate[dk]||{};let complete=Number(r.totalComplete||0),bad=badTotal(r),excluded=Number(r.excluded||r.totalExcluded||0),rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);let periodTargets=r.periodTargets||((DATA&&DATA.weeklySummary&&DATA.weeklySummary.days&&DATA.weeklySummary.days[i])?Object.fromEntries(DATA.weeklySummary.days[i].periods.map(p=>[p.key,p.goal])):{});let periods=PERIODS.map(([key,,label])=>{let done=Number(r[key]||0),goal=Number(periodTargets[key]||0);return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal}});let has=!!r.businessDate;let failPeriods=periods.filter(p=>p.fail);let ok=has&&failPeriods.length===0;totals.complete+=complete;totals.bad+=bad;totals.excluded+=excluded;return{label:labels[i]||'',date:dk,has,complete,bad,excluded,rate,spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),periods,ok,failPeriods,closedAt:r.closedAt||''}});totals.spare=spare(totals.complete,totals.bad);totals.rate=acceptRate(totals.complete,totals.bad);if(!totals.excluded&&DATA&&DATA.total&&DATA.total.excluded!=null)totals.excluded=Number(DATA.total.excluded||0);return{days,start:baseDates[0]||'-',end:baseDates[baseDates.length-1]||'-',...totals}}
+function buildWeeklySummary(){
+  const rows=Array.isArray(WEEKLY)?WEEKLY:[];
+
+  // 주차 경계는 브라우저/서버의 잔여 weeklySummary 값과 무관하게
+  // 한국시간(KST) 기준 매주 수요일 00:00에 새 주차로 전환합니다.
+  const kstParts=new Intl.DateTimeFormat('en-US',{
+    timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date());
+  const kstMap={};
+  kstParts.forEach(p=>{if(p.type!=='literal')kstMap[p.type]=p.value});
+  const currentDate=`${kstMap.year}-${kstMap.month}-${kstMap.day}`;
+  const currentStart=wedStart(currentDate);
+  const currentEnd=addYmd(currentStart,6);
+  const baseDates=Array.from({length:7},(_,i)=>addYmd(currentStart,i));
+
+  // 확정 주간기록도 반드시 현재 수~화 범위만 사용합니다.
+  const byDate={};
+  rows.forEach(r=>{
+    if(!r||!r.businessDate)return;
+    if(r.businessDate<currentStart||r.businessDate>currentEnd)return;
+    byDate[r.businessDate]={...r};
+  });
+
+  // live weeklySummary는 날짜가 현재 주차에 속하는 항목만 보조자료로 사용합니다.
+  // 지난주 weeklySummary가 서버에 남아 있어도 새 주차 합계에는 절대 섞이지 않습니다.
+  const liveDays=(DATA&&DATA.weeklySummary&&Array.isArray(DATA.weeklySummary.days))?DATA.weeklySummary.days:[];
+  const liveByDate={};
+  liveDays.forEach(r=>{
+    if(!r||!r.businessDate)return;
+    if(r.businessDate<currentStart||r.businessDate>currentEnd)return;
+    const normalized={...r};
+    if(normalized.totalComplete==null&&normalized.complete!=null)normalized.totalComplete=normalized.complete;
+    liveByDate[r.businessDate]=normalized;
+    byDate[r.businessDate]={...(byDate[r.businessDate]||{}),...normalized};
+  });
+
+  // 오늘 LIVE 값은 당일 확정 JSON이 생기기 전에도 즉시 주간 상단 요약에 반영합니다.
+  // 단, DATA.businessDate가 아직 어제라면 어제 숫자를 오늘(새 주차)에 이월하지 않습니다.
+  const dataDate=DATA&&DATA.businessDate?String(DATA.businessDate):'';
+  if(dataDate===currentDate){
+    const total=(DATA&&DATA.total&&typeof DATA.total==='object')?DATA.total:{};
+    const existing=byDate[currentDate]||{};
+    const has=(k)=>Object.prototype.hasOwnProperty.call(total,k)&&total[k]!=null;
+    byDate[currentDate]={
+      ...existing,
+      businessDate:currentDate,
+      totalComplete:has('complete')?Number(total.complete||0):Number(existing.totalComplete||existing.complete||0),
+      totalReject:has('totalReject')?Number(total.totalReject||0):(has('reject')?Number(total.reject||0):Number(existing.totalReject||existing.reject||0)),
+      totalCancel:has('totalCancel')?Number(total.totalCancel||0):(has('cancel')?Number(total.cancel||0):Number(existing.totalCancel||existing.cancel||0)),
+      riderFault:has('riderFault')?Number(total.riderFault||0):Number(existing.riderFault||0),
+      excluded:has('excluded')?Number(total.excluded||0):Number(existing.excluded||existing.totalExcluded||0),
+      acceptRate:has('acceptRate')?Number(total.acceptRate||0):existing.acceptRate,
+      spareRejects:has('spareRejects')?Number(total.spareRejects||0):existing.spareRejects
+    };
+  }
+
+  const labels=['수','목','금','토','일','월','화'];
+  let totals={complete:0,bad:0,spare:0,excluded:0};
+  const days=baseDates.map((dk,i)=>{
+    const r=byDate[dk]||{};
+    const complete=Number(r.totalComplete||r.complete||0);
+    const bad=badTotal(r);
+    const excluded=Number(r.excluded||r.totalExcluded||0);
+    const rate=r.acceptRate!=null?Number(r.acceptRate):acceptRate(complete,bad);
+    const liveTemplate=liveByDate[dk]||{};
+    const periodTargets=r.periodTargets||liveTemplate.periodTargets||(
+      Array.isArray(liveTemplate.periods)?Object.fromEntries(liveTemplate.periods.map(p=>[p.key,p.goal])):{}
+    );
+    const periods=PERIODS.map(([key,,label])=>{
+      const done=Number(r[key]||0),goal=Number(periodTargets[key]||0);
+      return{key,label,done,goal,fail:!!r.businessDate&&goal>0&&done<goal,ok:!!r.businessDate&&goal>0&&done>=goal};
+    });
+    const has=!!r.businessDate;
+    const failPeriods=periods.filter(p=>p.fail);
+    const ok=has&&failPeriods.length===0;
+    totals.complete+=complete;
+    totals.bad+=bad;
+    totals.excluded+=excluded;
+    return{
+      label:labels[i]||'',date:dk,has,complete,bad,excluded,rate,
+      spare:r.spareRejects!=null?Number(r.spareRejects):spare(complete,bad),
+      periods,ok,failPeriods,closedAt:r.closedAt||''
+    };
+  });
+  totals.spare=spare(totals.complete,totals.bad);
+  totals.rate=acceptRate(totals.complete,totals.bad);
+  return{days,start:currentStart,end:currentEnd,...totals};
+}
 
 function safeWeeklySummary(){
   try{

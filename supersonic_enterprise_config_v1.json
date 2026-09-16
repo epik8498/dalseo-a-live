@@ -1,0 +1,62 @@
+{
+  "service": {
+    "name": "SUPERSONIC Enterprise",
+    "api_host": "127.0.0.1",
+    "api_port": 8787,
+    "session_hours": 12,
+    "stale_after_seconds": 240,
+    "secure_cookie": false,
+    "allowed_origins": [
+      "http://127.0.0.1:8787",
+      "http://localhost:8787",
+      "https://app.tnt-live.com"
+    ]
+  },
+  "centers": {
+    "dalseoa": {
+      "name": "달서A",
+      "dp_code": "DP2506234693",
+      "live_path": "/live-lite/dalseoa",
+      "weekly_path": "/weekly/dalseoa",
+      "team_map_path": "/settings/dalseoa/teamMap",
+      "teams": [
+        "소닉팀",
+        "달서팀",
+        "신규"
+      ],
+      "settlement_unit": 250
+    },
+    "dalseob": {
+      "name": "달서B",
+      "dp_code": "DP2602028125",
+      "live_path": "/live-lite/dalseob",
+      "weekly_path": "/weekly/dalseob",
+      "team_map_path": "/settings/dalseob/teamMap",
+      "teams": [
+        "소닉팀",
+        "넘버팀",
+        "마음팀",
+        "성공드림",
+        "신규"
+      ],
+      "settlement_unit": 250
+    },
+    "junggua": {
+      "name": "중구A",
+      "dp_code": "DP2505305786",
+      "live_path": "/live-lite/junggua",
+      "weekly_path": "/weekly/junggua",
+      "team_map_path": "/settings/junggua/teamMap",
+      "teams": [
+        "슈퍼",
+        "성공",
+        "직영",
+        "BM",
+        "상생",
+        "나르미",
+        "신규"
+      ],
+      "settlement_unit": 350
+    }
+  }
+}

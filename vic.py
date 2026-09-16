@@ -685,9 +685,9 @@ CENTER_CONFIGS = [
         "center_code": "DP2602028125",
         "team_order": ["슈", "넘", "마", "미분류"],
         "area_config": {
-            "슈": 2.5,
-            "넘": 5.5,
-            "마": 5.0,
+            "슈": 2.7,
+            "넘": 5.8,
+            "마": 4.5,
             "미분류": 0,
         },
         "team_map_path": "/settings/dalseob_onna/teamMap",

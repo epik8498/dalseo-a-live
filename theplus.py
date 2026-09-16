@@ -57,7 +57,7 @@ CENTER_CONFIGS = [{
     ],
     'center_code': 'DP2509099587',
     'team_order': ['더플러스', '썬더', '몬스터', '신규'],
-    'area_config': {'더플러스': 4.0, '썬더': 1.0, '몬스터': 3.0, '신규': 0},
+    'area_config': {'더플러스': 5.0, '썬더': 1.0, '몬스터': 3.0, '신규': 0},
     'team_map_path': '/settings/theplus/teamMap',
     'live_path': '/live/theplus',
     'weekly_path': '/weekly/theplus',
@@ -322,18 +322,19 @@ def team_of(name, phone="", user_id="", allow_name_fallback=True):
             print("teamMap 로드/마이그레이션 실패:", e)
             TEAM_MAP_CACHE = {}
 
-    # 기존 THE+ 정책 보존: 고정 명단은 Firebase보다 우선합니다.
-    # 단, 동명이인이 실제 수집 roster에 있으면 이름만으로 어느 기사인지 판정하지 않습니다.
-    if allow_name_fallback and name:
-        for team, names in REQUIRED_TEAM_RIDERS.items():
-            if name in {norm(x) for x in names}:
-                return team
-
-    # 전화번호/userId 고유키로 저장된 기사 이동값을 적용합니다.
+    # 기사관리에서 저장한 전화번호/userId 기반 팀 이동값을 가장 먼저 적용합니다.
+    # 고정 명단 기사도 관리자가 이동한 경우 해당 이동값이 유지되어야 합니다.
     for lookup_key in stable_team_keys(phone, user_id):
         candidate = normalize_team_for_area(TEAM_MAP_CACHE.get(lookup_key), AREA_NAME)
         if candidate in TEAM_ORDER:
             return candidate
+
+    # THE+ 고정 명단은 실제 수집된 기사에 대한 기본 팀 분류용으로만 사용합니다.
+    # 동명이인이 실제 수집 roster에 있으면 이름만으로 어느 기사인지 판정하지 않습니다.
+    if allow_name_fallback and name:
+        for team, names in REQUIRED_TEAM_RIDERS.items():
+            if name in {norm(x) for x in names}:
+                return team
 
     # 기존 이름 teamMap은 동명이인이 아닌 경우에만 하위호환으로 허용합니다.
     if allow_name_fallback and name:
@@ -997,17 +998,11 @@ def finalize_rider_identity_and_teams(riders):
     return riders
 
 def ensure_required_rider_cards(riders):
-    existing_names = {norm(r.get("name", "")) for r in riders if r.get("name")}
-    added = []
-    for team, names in REQUIRED_TEAM_RIDERS.items():
-        for name in names:
-            clean_name = norm(name)
-            if clean_name and clean_name not in existing_names:
-                riders.append(empty_rider_card(clean_name, team))
-                added.append(clean_name)
-                existing_names.add(clean_name)
-    if added:
-        print("카드 보강 추가 기사:", ", ".join(added))
+    """
+    하위호환용 함수입니다.
+    THE+ 기사 수는 배민비즈에서 실제 수집된 roster만 사용하므로
+    고정 명단의 누락 기사를 가상 카드로 추가하지 않습니다.
+    """
     return riders
 
 def collect_all_pages_by_dom(page):
@@ -1062,11 +1057,11 @@ def collect_all_pages_by_dom(page):
             print("새 고유 기사 없음. 마지막 페이지로 판단하고 종료")
             break
 
+    # 기사 수는 배민비즈 기사 실적 화면에서 실제 수집된 기사만 사용합니다.
+    # REQUIRED_TEAM_RIDERS는 팀 기본 분류에만 사용하고, 해지된 기사를 빈 카드로 다시 만들지 않습니다.
     all_riders = dedupe_riders(all_riders, "최종 수집")
-    all_riders = ensure_required_rider_cards(all_riders)
-    all_riders = dedupe_riders(all_riders, "카드 보강 후")
     all_riders = finalize_rider_identity_and_teams(all_riders)
-    print(f"전체 카드 기사 수: {len(all_riders)}")
+    print(f"전체 실제 기사 수: {len(all_riders)}")
     phones = [normalize_phone(r.get("phone", "")) for r in all_riders if r.get("phone")]
     if len(phones) != len(set(phones)):
         print("중복 휴대폰 감지:", [p for p in sorted(set(phones)) if phones.count(p) > 1])
