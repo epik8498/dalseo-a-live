@@ -529,6 +529,37 @@ function setManageFilter(team){
 }
 
 
+
+/* ===== 기사이동 공통 안전 식별키 ===== */
+function manageFirebaseSafeKey(value){
+  return String(value||'').trim().replace(/[.#$\[\]\/]/g,'_');
+}
+function manageStableRiderKeys(r){
+  const keys=[];
+  const phone=String(r?.phone||'').replace(/\D/g,'');
+  if(phone)keys.push('phone_'+phone);
+  const userId=manageFirebaseSafeKey(r?.userId||'');
+  if(userId)keys.push('uid_'+userId);
+  return [...new Set(keys)];
+}
+function manageRiderKey(r){
+  const explicit=String(r?.riderKey||'').trim();
+  if(explicit && (explicit.startsWith('phone_')||explicit.startsWith('uid_')))return explicit;
+  return manageStableRiderKeys(r)[0]||'';
+}
+function manageUniqueRiders(list){
+  const out=[];
+  const seen=new Set();
+  for(const r of (Array.isArray(list)?list:[])){
+    const key=manageRiderKey(r);
+    if(!key){out.push(r);continue;}
+    if(seen.has(key))continue;
+    seen.add(key);
+    out.push(r);
+  }
+  return out;
+}
+
 /* ===== 기사관리: 자동갱신 중 저장 전 팀 선택값 보호 ===== */
 window.__MANAGE_DRAFTS=window.__MANAGE_DRAFTS||{};
 function manageDraftAreaKey(){
@@ -543,11 +574,9 @@ function loadManageDrafts(){
 }
 function saveManageDrafts(){try{sessionStorage.setItem(manageDraftStorageKey(),JSON.stringify(window.__MANAGE_DRAFTS||{}))}catch(e){}}
 function manageDraftKeyForRider(r){
-  try{if(typeof riderTeamMapKey==='function')return riderTeamMapKey(r)}catch(e){}
-  const p=String(r?.phone||'').replace(/\D/g,''); if(p)return 'phone_'+p;
-  const u=String(r?.userId||'').trim(); if(u)return 'uid_'+u;
-  return '';
+  return manageRiderKey(r);
 }
+
 function setManageDraft(key,team){if(!key)return;loadManageDrafts();window.__MANAGE_DRAFTS[key]=team;saveManageDrafts()}
 function getManageDraft(key,fallback){loadManageDrafts();return key&&Object.prototype.hasOwnProperty.call(window.__MANAGE_DRAFTS,key)?window.__MANAGE_DRAFTS[key]:fallback}
 function reconcileManageDrafts(){
@@ -568,40 +597,67 @@ function renderManage(){
     ).join('');
   }
 
-  let list=[...riders()];
+  let list=manageUniqueRiders(riders());
   if(MANAGE_FILTER!=='전체'){
     list=list.filter(r=>r.team===MANAGE_FILTER);
   }
   list.sort((a,b)=>String(a.name||'').localeCompare(String(b.name||''),'ko'));
 
-  box.innerHTML=list.length?list.map(r=>`
+  box.innerHTML=list.length?list.map(r=>{
+    const riderKey=manageRiderKey(r);
+    const draftKey=manageDraftKeyForRider(r);
+    const locked=!riderKey;
+    return `
     <div class="manage-row">
-      <b>${r.name||'-'}<span class="muted" style="font-size:12px"> · ${r.userId||''}</span></b>
-      <select data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}" data-phone="${String(r.phone||'').replace(/"/g,'&quot;')}" data-user-id="${String(r.userId||'').replace(/"/g,'&quot;')}" data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}" onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)" ${riderTeamMapKey(r)?'':'disabled title="전화번호/기사ID가 없어 안전하게 이동할 수 없습니다."'}>
-        ${TEAM_ORDER.map(t=>`<option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${t}</option>`).join('')}
+      <b>${r.name||'-'}<span class="muted" style="font-size:12px"> · ${r.phone||r.userId||''}${locked?' · 식별정보 없음(이동 잠금)':''}</span></b>
+      <select data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}"
+              data-rider-key="${String(riderKey).replace(/"/g,'&quot;')}"
+              data-current-team="${String(r.team||'').replace(/"/g,'&quot;')}"
+              data-draft-key="${String(draftKey).replace(/"/g,'&quot;')}"
+              onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)"
+              ${locked?'disabled title="전화번호/기사ID 없음 · 이동 잠금"':''}>
+        ${TEAM_ORDER.map(t=>`<option value="${t}" ${getManageDraft(draftKey,r.team)===t?'selected':''}>${t}</option>`).join('')}
       </select>
-    </div>
-  `).join(''):'<div class="muted">기사 데이터가 없습니다.</div>';
+    </div>`;
+  }).join(''):'<div class="muted">기사 데이터가 없습니다.</div>';
 }
 
 const TEAMMAP_API='https://dalseo-a-live.vercel.app/api/save-teammap';
 
 async function saveTeamMap(){
   const selects=[...document.querySelectorAll('#manageList select')];
-  const currentByKey={};
-  riders().forEach(r=>{
-    const key=riderTeamMapKey(r);
-    if(key)currentByKey[key]=r.team||'';
-  });
+  if(!selects.length){
+    alert('저장할 기사 정보가 없습니다.');
+    return;
+  }
 
   const changes={};
+  const localChanges={};
+  const blocked=[];
+
   selects.forEach(sel=>{
-    const team=sel.value;
-    const key=sel.getAttribute('data-rider-key')||'';
-    if(!key||!team)return;
-    if(currentByKey[key]===team)return;
+    if(sel.disabled)return;
+
+    const name=String(sel.getAttribute('data-rider-name')||'').trim();
+    const key=String(sel.getAttribute('data-rider-key')||'').trim();
+    const currentTeam=String(sel.getAttribute('data-current-team')||'').trim();
+    const team=String(sel.value||'').trim();
+
+    if(!team || team===currentTeam)return;
+
+    if(!(key.startsWith('phone_') || key.startsWith('uid_'))){
+      blocked.push(name||'신원정보 없는 기사');
+      return;
+    }
+
     changes[key]=team;
+    localChanges[key]=team;
   });
+
+  if(blocked.length){
+    alert('전화번호/기사ID가 확인되지 않아 이동할 수 없는 기사가 있습니다:\n'+blocked.join(', '));
+    return;
+  }
 
   if(!Object.keys(changes).length){
     alert('변경된 기사가 없습니다.');
@@ -610,6 +666,8 @@ async function saveTeamMap(){
 
   const saveButton=document.querySelector('.manage-save');
   const originalText=saveButton?.textContent||'팀 변경 저장';
+  const controller=new AbortController();
+  const timeoutId=setTimeout(()=>controller.abort(),15000);
 
   try{
     if(saveButton){
@@ -617,15 +675,14 @@ async function saveTeamMap(){
       saveButton.textContent='저장 중...';
     }
 
-    // BMPLUS도 다른 기존 지사와 동일하게 서버 API를 통해 저장합니다.
-    // 브라우저에서 Firebase에 직접 쓰지 않습니다.
     const res=await fetch(TEAMMAP_API,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         area:AREA_KEY,
         changes
-      })
+      }),
+      signal:controller.signal
     });
 
     const raw=await res.text();
@@ -637,33 +694,34 @@ async function saveTeamMap(){
     }
 
     (DATA?.riders||[]).forEach(r=>{
-      const key=riderTeamMapKey(r);
-      if(key&&changes[key])r.team=changes[key];
+      const key=manageRiderKey(r);
+      if(key&&localChanges[key])r.team=localChanges[key];
     });
 
     loadManageDrafts();
-    Object.keys(changes).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
+    Object.keys(localChanges).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
     saveManageDrafts();
 
     renderAll();
-    alert(`팀 변경 저장 완료 (${Object.keys(changes).length}명)`);
+    alert(`팀 변경 저장 완료 (${Object.keys(localChanges).length}명)`);
 
-    // 수집기가 다음 주기에 최신 팀맵을 반영한 뒤 다시 읽습니다.
-    setTimeout(()=>loadData({forceWeekly:false}),65000);
+    // 서버에서 live/live-lite까지 즉시 갱신되므로 바로 재조회합니다.
+    await loadData({forceWeekly:false});
   }catch(e){
     console.error('팀 변경 저장 오류',e);
-    alert('저장 오류: '+(e.message||e));
+    const msg=(e&&e.name==='AbortError')
+      ?'서버 응답 시간이 초과되었습니다. /api/save-teammap 배포 상태를 확인하세요.'
+      :(e?.message||e);
+    alert('팀 변경 저장 실패: '+msg);
   }finally{
+    clearTimeout(timeoutId);
     if(saveButton){
       saveButton.disabled=false;
       saveButton.textContent=originalText;
     }
   }
 }
-function smsGroupHtml(teamName,list){let html=`<div class="sms-team"><h3 style="margin:0 0 10px">${teamName} (${list.length}명)</h3>`;for(let i=0;i<list.length;i+=99){const g=list.slice(i,i+99),label=String.fromCharCode(65+i/99),phones=g.map(x=>x.phone).join(',');html+=`<div class="sms-group"><b>${label}그룹 (${g.length}명)</b><div class="phone-list">${g.map(x=>`${x.name} ${x.phone}`).join(' · ')}</div><div class="sms-actions"><button onclick="copyText('${phones}')">번호 복사</button><a href="sms:${phones}">문자앱 열기</a></div></div>`}return html+'</div>'}
-function openSmsModal(){const base=filteredRiders().filter(r=>r.phone).map(r=>({team:r.team,name:r.name,phone:String(r.phone).replace(/\D/g,'')}));let html=TEAM_ORDER.map(t=>smsGroupHtml(t,base.filter(x=>x.team===t))).join('');document.getElementById('smsGroups').innerHTML=html;document.getElementById('smsModal').classList.add('show')}
-function closeSmsModal(){document.getElementById('smsModal').classList.remove('show')}function copyText(t){navigator.clipboard?.writeText(t);alert('복사했습니다.')}
-function openUnclassifiedManage(){MANAGE_FILTER='미분류';switchPage('manage');renderManage()}
+
 function renderAll(){
   document.getElementById('topUpdate').textContent='마지막 업데이트: '+(DATA.updatedAt||'-');
   const unclassified=(DATA?.riders||[]).filter(r=>r.team==='미분류');
