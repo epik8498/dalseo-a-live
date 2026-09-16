@@ -2268,12 +2268,12 @@ function renderManageList(){
             <small>${r.phone||r.userId||''}</small>
           </div>
           <select class="manage-team-select"
+                  data-rider-name="${String(r.name||'').replace(/"/g,'&quot;')}"
                   data-rider-key="${String(riderTeamMapKey(r)).replace(/"/g,'&quot;')}"
-                  data-phone="${String(r.phone||'').replace(/"/g,'&quot;')}"
-                  data-user-id="${String(r.userId||'').replace(/"/g,'&quot;')}"
+                  data-current-team="${String(r.team||'').replace(/"/g,'&quot;')}"
                   data-draft-key="${String(manageDraftKeyForRider(r)).replace(/"/g,'&quot;')}"
                   onchange="setManageDraft(this.getAttribute('data-draft-key'),this.value)"
-                  ${riderTeamMapKey(r)?'':'disabled title="식별정보 없음(이동 잠금)"'}>
+                  ${riderTeamMapKey(r)?'':'disabled title="전화번호/기사ID 없음 · 이동 잠금"'}>
             ${teams.map(t=>`
               <option value="${t}" ${getManageDraft(manageDraftKeyForRider(r),r.team)===t?'selected':''}>${cfg.labels[t]||t}</option>
             `).join('')}
@@ -2298,69 +2298,89 @@ async function saveTeamMap(){
 
   const changes={};
   const localChanges={};
+  const blocked=[];
+
   selects.forEach(sel=>{
-    const team=sel.value;
-    const canonical=sel.getAttribute('data-rider-key')||'';
-    const phone=String(sel.getAttribute('data-phone')||'').replace(/\D/g,'');
-    const userId=firebaseSafeTeamKey(sel.getAttribute('data-user-id')||'');
-    if(!canonical||!team)return;
-    // 전화번호와 userId가 둘 다 있으면 두 별칭을 모두 저장합니다.
-    if(phone)changes['phone_'+phone]=team;
-    if(userId)changes['uid_'+userId]=team;
-    localChanges[canonical]=team;
+    const name=String(sel.getAttribute('data-rider-name')||'').trim();
+    const key=String(sel.getAttribute('data-rider-key')||'').trim();
+    const currentTeam=String(sel.getAttribute('data-current-team')||'').trim();
+    const team=String(sel.value||'').trim();
+
+    if(!team || team===currentTeam)return;
+
+    if(!(key.startsWith('phone_') || key.startsWith('uid_'))){
+      blocked.push(name||'신원정보 없는 기사');
+      return;
+    }
+
+    changes[key]=team;
+    localChanges[key]=team;
   });
 
-  if(!Object.keys(localChanges).length){
-    alert('고유 식별정보가 있는 저장 대상이 없습니다.');
+  if(blocked.length){
+    alert('전화번호/기사ID가 확인되지 않아 이동할 수 없는 기사가 있습니다:\n'+blocked.join(', '));
+    return;
+  }
+
+  if(!Object.keys(changes).length){
+    alert('변경된 기사가 없습니다.');
     return;
   }
 
   const btn=document.querySelector('#manageList .manage-save-btn');
-  if(btn){btn.disabled=true;btn.innerText='저장중...';}
+  if(btn){
+    btn.disabled=true;
+    btn.innerText='저장중...';
+  }
+
+  const controller=new AbortController();
+  const timeoutId=setTimeout(()=>controller.abort(),15000);
 
   try{
-    let saved=false;
-    let apiError='';
-    try{
-      const res=await fetch('/api/save-teammap',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({area:areaCfg().key,changes})
-      });
-      const text=await res.text();
-      let result={};try{result=text?JSON.parse(text):{};}catch(e){}
-      if(res.ok&&result.ok!==false)saved=true;
-      else apiError=result.error||text||('HTTP '+res.status);
-    }catch(e){apiError=e.message||String(e);}
+    const res=await fetch('/api/save-teammap',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({area:areaCfg().key,changes}),
+      signal:controller.signal
+    });
 
-    if(!saved){
-      const url=`${FIREBASE_BASE}/settings/${areaCfg().key}/teamMap.json`;
-      const res=await fetch(url,{
-        method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(changes)
-      });
-      if(!res.ok){
-        const text=await res.text();
-        throw new Error(`팀맵 저장 실패 · API: ${apiError||'-'} · Firebase: ${text||res.status}`);
-      }
+    const text=await res.text();
+    let result={};
+    try{result=text?JSON.parse(text):{};}catch(e){}
+
+    if(!res.ok){
+      throw new Error(result.error||text||('HTTP '+res.status));
+    }
+    if(result.ok===false){
+      throw new Error(result.error||'저장 실패');
     }
 
-    uniqueRidersForDisplay(DATA.riders||[]).forEach(r=>{
-      const key=riderTeamMapKey(r);
-      if(key&&localChanges[key])r.team=localChanges[key];
+    (DATA.riders||[]).forEach(r=>{
+      const key=String(r.riderKey||manageDraftKeyForRider(r)||'').trim();
+      if(localChanges[key])r.team=localChanges[key];
     });
 
     loadManageDrafts();
-    Object.keys(localChanges).forEach(k=>delete window.__MANAGE_DRAFTS[k]);
+    Object.keys(localChanges).forEach(k=>{delete window.__MANAGE_DRAFTS[k];});
     saveManageDrafts();
 
     alert(`팀 변경 저장 완료 (${Object.keys(localChanges).length}명)`);
+
     await loadData({forceWeekly:false});
     switchPage('manage');
     renderManageList();
   }catch(e){
     console.error('기사 팀 변경 저장 오류',e);
-    alert('저장 오류: '+(e.message||e));
+    const msg=(e&&e.name==='AbortError')
+      ?'서버 응답 시간이 초과되었습니다. /api/save-teammap 배포 상태를 확인하세요.'
+      :(e?.message||e);
+    alert('팀 변경 저장 실패: '+msg);
   }finally{
-    if(btn){btn.disabled=false;btn.innerText='팀 변경 저장';}
+    clearTimeout(timeoutId);
+    if(btn){
+      btn.disabled=false;
+      btn.innerText='팀 변경 저장';
+    }
   }
 }
 
